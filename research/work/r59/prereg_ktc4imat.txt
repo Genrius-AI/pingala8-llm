@@ -1,0 +1,17 @@
+Pre-registration: IQ2_KT (ktm recipe, B3's bytes 1,245,914,752 B) with an imatrix from B3's own C4 calibration text. Written 2026-10-18 02:24 IST,
+before the imatrix, quantize or any evaluation. Script: research/detail/kt_c4imat.sh sha256 19d499cc96314d4b69c78607b769d37988c59eca2900d697d9f8eb112f7b705d.
+Question (review_icml_ac_r59 W3): B3's layer Hessians come from C4 (models/r35_hcal.txt, first 512 x 2048 tokens); IQ2_KT's imatrix came
+from other text. Is B3's held-out C4 margin (-0.046 +- 0.010, 66/73) partly a calibration-domain advantage?
+Measured before this file: ktm WT2 18.6481, C4 28.0002; B3 WT2 18.0660, C4 26.7548; B3 vs ktm WT2 -0.032 +- 0.011, C4 -0.046 +- 0.010.
+Predictions (80% intervals; CALC from the size of imatrix-text effects on 2-bit llama.cpp files, about 0.5-2% ppl):
+Q1 ktc4imat WT2 ppl 18.75 [18.45, 19.05] (C4 calibration usually costs a little on WikiText).
+Q2 ktc4imat C4 ppl 27.70 [27.30, 28.05].
+Q3 paired C4 dNLL B3 - ktc4imat: -0.035 [-0.050, -0.015].
+Q4 paired WT2 dNLL B3 - ktc4imat: -0.036 [-0.055, -0.015].
+Decision rules:
+E1 If the C4 paired 95% interval (naive and autocorrelation-corrected) is below 0, the paper keeps "B3 beats IQ2_KT on held-out C4" and adds
+   "also when IQ2_KT is calibrated on the same C4 text".
+E2 If either C4 interval covers 0, the paper states that the C4 margin is not separated from a calibration-domain effect, and the held-out
+   claim is reported as a tie under matched calibration.
+E3 If ktc4imat beats B3 on C4 (both intervals above 0), the held-out claim is withdrawn.
+E4 Whatever the outcome, the WikiText-2 comparison with matched calibration is reported next to the original ktm row.

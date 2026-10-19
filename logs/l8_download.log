@@ -1,0 +1,35 @@
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Downloading 'model-00003-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/d8e9504dd4e4a146d484c52a97584ec14dac92237c46b064934af67a85e7d383.incomplete'
+Downloading 'model-00004-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/e4486f35c040f683f7d790354f66c169c109eb9fa0954a4a35d7c458a108405d.incomplete'
+Downloading 'model-00002-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/c28b25e7541751056ee126627e007f8d4288319733285e9f7b17b9ff6eb313f0.incomplete'
+Downloading 'model-00001-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/f8b9704ab09cdeb097aa4a0a24bca96f906eec36bad63ab495bc21475058601b.incomplete'
+Downloading 'config.json' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/2a9e131b00e3cdf49fb230a17400519d4e098414.incomplete'
+Downloading '.gitattributes' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/52373fe24473b1aa44333d318f578ae6bf04b49b.incomplete'
+Downloading 'README.md' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/d2b4bcb543396eb47653b74d3473cc892235ee10.incomplete'
+Downloading 'generation_config.json' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/3cb2c4d47bba1c6a15655862910ca217e1a40812.incomplete'
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/2a9e131b00e3cdf49fb230a17400519d4e098414
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/52373fe24473b1aa44333d318f578ae6bf04b49b
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/d2b4bcb543396eb47653b74d3473cc892235ee10
+Fetching 12 files:   8%|#         | 1/12 [00:00<00:07,  1.42it/s]Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/3cb2c4d47bba1c6a15655862910ca217e1a40812
+Downloading 'tokenizer.json' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b.incomplete'
+Downloading 'special_tokens_map.json' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/68b10c7f0a479eae0c358eac6a14959b3f9acdf1.incomplete'
+Downloading 'model.safetensors.index.json' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/0fd8120f1c6acddc268ebc2583058efaf699a771.incomplete'
+Downloading 'tokenizer_config.json' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/193429ed119d6246336a149bc56bb217f2adff3e.incomplete'
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/68b10c7f0a479eae0c358eac6a14959b3f9acdf1
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/0fd8120f1c6acddc268ebc2583058efaf699a771
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/193429ed119d6246336a149bc56bb217f2adff3e
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Downloading 'model-00001-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/f8b9704ab09cdeb097aa4a0a24bca96f906eec36bad63ab495bc21475058601b.incomplete' (resume from 155677097/4976698672)
+Downloading 'model-00003-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/d8e9504dd4e4a146d484c52a97584ec14dac92237c46b064934af67a85e7d383.incomplete' (resume from 471451701/4915916176)
+Downloading 'model-00004-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/e4486f35c040f683f7d790354f66c169c109eb9fa0954a4a35d7c458a108405d.incomplete' (resume from 133949865/1168138808)
+Downloading 'model-00002-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/c28b25e7541751056ee126627e007f8d4288319733285e9f7b17b9ff6eb313f0.incomplete' (resume from 176075326/4999802720)
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Downloading 'model-00002-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/c28b25e7541751056ee126627e007f8d4288319733285e9f7b17b9ff6eb313f0.incomplete' (resume from 176075326/4999802720)
+Downloading 'model-00001-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/f8b9704ab09cdeb097aa4a0a24bca96f906eec36bad63ab495bc21475058601b.incomplete' (resume from 155677097/4976698672)
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/c28b25e7541751056ee126627e007f8d4288319733285e9f7b17b9ff6eb313f0
+Downloading 'model-00003-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/d8e9504dd4e4a146d484c52a97584ec14dac92237c46b064934af67a85e7d383.incomplete' (resume from 471451701/4915916176)
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/f8b9704ab09cdeb097aa4a0a24bca96f906eec36bad63ab495bc21475058601b
+Fetching 12 files:  42%|#####     | 5/12 [13:43<19:12, 164.64s/it]Downloading 'model-00004-of-00004.safetensors' to '~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/e4486f35c040f683f7d790354f66c169c109eb9fa0954a4a35d7c458a108405d.incomplete' (resume from 133949865/1168138808)
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/e4486f35c040f683f7d790354f66c169c109eb9fa0954a4a35d7c458a108405d
+Download complete. Moving file to ~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/blobs/d8e9504dd4e4a146d484c52a97584ec14dac92237c46b064934af67a85e7d383
+Fetching 12 files:  58%|######    | 7/12 [21:18<15:37, 187.50s/it]Fetching 12 files: 100%|##########| 12/12 [21:18<00:00, 106.52s/it]
+~/repo/hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+L8_DL_DONE 11:23:21

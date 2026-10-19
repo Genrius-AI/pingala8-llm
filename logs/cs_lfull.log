@@ -1,0 +1,39 @@
+2026-10-18 15:10:24 log restarted for run 3 (run 1 13:00-14:12 in logs/cs_lfull.run1.log; h17 + run 2 14:12-15:05 in logs/cs_lfull.run2.log; run 2 stopped by slice_guard 15:05:51, Windows free commit 0 GB, layers 0-18 kept, stats 133)
+2026-10-18 15:10:24 resume pid 545257 NSEQ 256 NEV 32 stats 133
+2026-10-18 15:37:18 BUILD rc=143 
+2026-10-18 15:37:18 BLOCKER build rc=143 or blob count
+2026-10-18 15:39:01 run 3 stopped by slice_guard 15:37:18 (free commit 1 GB); layers 0-21 kept (stats 154). Run 4 with research/detail/build_reclaim.sh (file-only cgroup reclaim of the build scope)
+2026-10-18 15:39:01 resume pid 554942 NSEQ 256 NEV 32 stats 154
+2026-10-18 16:02:11 BUILD rc=143 
+2026-10-18 16:02:11 BLOCKER build rc=143 or blob count
+2026-10-18 16:03:31 run 4 stopped by slice_guard 16:02:08 (free commit 1 GB); layers 0-22 kept (stats 161). Run 5 with build_reclaim2.sh (memory.high 6.5G on the build scope + 3 s reclaim)
+2026-10-18 16:03:31 resume pid 562681 NSEQ 256 NEV 32 stats 161
+2026-10-18 16:27:50 BUILD rc=143 
+2026-10-18 16:27:50 BLOCKER build rc=143 or blob count
+2026-10-18 20:00:23 chain_1850 resume try 1 (free commit 16 GB)
+2026-10-18 20:00:24 resume pid 662221 NSEQ 256 NEV 32 stats 168
+2026-10-18 20:48:28 BUILD rc=0 SUMMARY vrc n 224 blobs 1844792832 B geomean Dev/IQ2_XXS-Dev IQ 0.4463 all 0.4883 geomean Dw 0.052680 maxratio>=0.9 224/224 min 0.9053
+2026-10-18 20:48:28 NOTE blk.19.ffn_up.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 20:48:29 NOTE blk.26.ffn_gate.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 20:48:29 NOTE blk.30.attn_q.weight larger than shipped (4356112 vs 4354064)
+2026-10-18 20:48:29 NOTE blk.31.ffn_gate.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 21:00:26 recover after VM restart: blobs 225 (need 225); re-running cs_lassemble.sh lfull
+2026-10-18 21:00:27 NOTE blk.19.ffn_up.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 21:00:27 NOTE blk.26.ffn_gate.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 21:00:27 NOTE blk.30.attn_q.weight larger than shipped (4356112 vs 4354064)
+2026-10-18 21:00:27 NOTE blk.31.ffn_gate.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 21:23:22 DELTA lfull DELTA tensors_with_delta 56/224 entries 248 bytes_fp16 1488 bytes_f32 1984; fp16-delta max |W+d16 - clamp(W)| = 7.6115e-05 (blk.1.ffn_down.weight)
+2026-10-18 21:23:39 PLAN TOTAL 2388210816 B; budget 2399212576 -> margin +11001760 B (OK); vs container 0: +2388210816 B; max shard 994298432 (OK 1e9)
+2026-10-18 21:31:09 NATIVE lfull NATIVE TOTAL 2388210816 B budget 2399212576 margin +11001760 vs container 0 +2388210816; tensors 853 t 205s | VERIFY shards 3 tensors in file 853 expected 853; mismatches 0 []; split.count 3 vr.ns 108 vr.trl 2 PASS
+2026-10-18 22:25:35 SMOKE4 lfull  (shipped: [1]11.19 [2]6490; pass [2] < 20)
+2026-10-18 22:25:35 GATE FAIL lfull
+2026-10-18 22:25:35 end
+2026-10-18 22:27:44 SMOKE4 lfull [1]9.4856 [2]10.5680 [3]9.2419 [4]8.5583  (shipped: [1]11.19 [2]6490; pass [2] < 20)
+2026-10-18 22:27:44 GATE PASS lfull -> 70-window r36_hfj
+2026-10-18 22:34:15 HFJ lfull [70]9.1419 (IQ2_XXS 12.3500, IQ2_KT 10.0375)
+2026-10-18 22:34:16 PAIRED lfull vs l8_iq2: dNLL -0.3008 +/- 0.0088 (95%), first better on 70/70 | mean -0.3008 naive +/-0.0088 lag1 +0.11 neff 56.1 corrected +/-0.0098 blockboot(B=5) [-0.3107,-0.2927]
+2026-10-18 22:34:16 PAIRED lfull vs ktllama_LK1: dNLL -0.0935 +/- 0.0056 (95%), first better on 70/70 | mean -0.0935 naive +/-0.0056 lag1 -0.12 neff 89.5 corrected +/-0.0049 blockboot(B=5) [-0.0988,-0.0883]
+2026-10-18 22:34:17 PAIRED lfull vs cs_a6: dNLL -0.1274 +/- 0.0051 (95%), first better on 70/70 | mean -0.1274 naive +/-0.0051 lag1 +0.09 neff 58.7 corrected +/-0.0055 blockboot(B=5) [-0.1330,-0.1220]
+2026-10-18 22:34:18 PAIRED lfull vs cs_h17: dNLL -0.0431 +/- 0.0028 (95%), first better on 70/70 | mean -0.0431 naive +/-0.0028 lag1 +0.08 neff 59.7 corrected +/-0.0031 blockboot(B=5) [-0.0464,-0.0397]
+2026-10-18 22:35:45 lfull gates rc=0: 2026-10-18 22:34:18 G1 PASS bytes 2388210816 <= IQ2_KT 2389350432 (diff 1139616) G3 PASS window2 ub1 11.759 batched 11.774 dln -0.0013 (limit 0.02) vs IQ2_KT w2 -0.0682 nats (limit 0.10) 
+2026-10-18 22:35:45 verdict end

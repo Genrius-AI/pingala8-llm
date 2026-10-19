@@ -1,0 +1,4 @@
+2026-10-18 13:00:22 start pid 503466 NSEQ 256 NEV 32
+2026-10-18 13:00:22 disk C: free 15940 MB, vhdx slack 23515 MB, need 20208 MB (incl. 12000 floor)
+2026-10-18 14:12:36 BUILD rc=143 
+2026-10-18 14:12:36 BLOCKER build rc=143 or blob count

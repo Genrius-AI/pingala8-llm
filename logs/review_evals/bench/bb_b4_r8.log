@@ -1,0 +1,16 @@
+0.00.411.631 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 252 bpw_used 2.13321 tiles 443520 class_share c0:0.0000 c1:0.0000 c2:0.0000 c3:0.9466 c4:0.0274 c5:0.0000 c6:0.0260 c7:0.0000
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+
+llama_batched_bench: n_kv_max = 4096, n_batch = 2048, n_ubatch = 512, flash_attn = 1, is_pp_shared = 0, is_tg_separate = 0, n_gpu_layers = 99, n_threads = 20, n_threads_batch = 20
+
+|    PP |     TG |    B |   N_KV |   T_PP s | S_PP t/s |   T_TG s | S_TG t/s |      T s |    S t/s |
+|-------|--------|------|--------|----------|----------|----------|----------|----------|----------|
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+|   128 |    128 |    1 |    256 |    0.065 |  1976.62 |    0.675 |   189.59 |    0.740 |   346.00 |
+|   128 |    128 |    2 |    512 |    0.066 |  3906.01 |    4.112 |    62.26 |    4.177 |   122.57 |
+|   128 |    128 |    4 |   1024 |    0.100 |  5100.57 |    4.115 |   124.43 |    4.215 |   242.93 |
+|   128 |    128 |    8 |   2048 |    0.224 |  4581.64 |    4.352 |   235.27 |    4.576 |   447.56 |
+

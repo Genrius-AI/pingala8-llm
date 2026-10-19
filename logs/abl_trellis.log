@@ -1,0 +1,56 @@
+2026-10-18 16:36:24 [vri0] start pid 576804 C: free 15651 MB; START_MB 14000 STOP_MB 12500 PEAK_MB 2500; ETA from B4 4B rates: build 33-90 min, native 13-25, smoke 2-3, hfjoin 2 x 8-10, paired < 1: 65-140 min
+2026-10-18 16:36:25 [vri0] binaries: llama-perplexity 3703e10deab4f714 2026-10-18 04:01:22; libggml-cuda 76168fad1ee5016e 2026-10-05 14:18:16 (B4 hfjoin ran 2026-10-18 12:35)
+2026-10-18 16:36:26 [vri0] tables rc=0 TABLES research/work/r48k3/tables_vri -> work/abl_tr/vri0/tab: keys ['A', 'B', 'c'] A (256, 4) c_src [0, 0, 0, 0] -> [0, 0, 0, 0]; src A==B False; A[:4] [[-5, 4, -23, 37], [27, 20, 13, 20], [29, -15, 3, -26], [-17, 8, 27, 26]]; src B[:4] (dropped) [[-8, 0, -34, 41], [40, 31, 14, 23], [31, -21, 3, -35], [-26, 6, 41, 25]]; G {'1': 24.482336512409688, '2': 23.444365763449994, '3': 23.444365763449994,
+2026-10-18 16:36:26 [vri0] build try 1: fresh
+2026-10-18 16:39:24 [vri0] EARLY layers 0-1 geomean Dev/ModelA 0.3148 vs B4 0.2773 (ratio 1.135; prereg about 1.1)
+2026-10-18 16:42:34 [vri0] BUILD try 1 rc=143 
+2026-10-18 16:43:34 [vri0] build try 2: resuming from work/abl_tr/vri0/f1o/stats.json
+2026-10-18 16:43:40 [vri0] stopped by lead after BUILD try 1 rc=143 (commit 1 GB, VM risk); re-queued as gpu_pre14 job 4, gated on free commit >= 13 GB; layers kept for resume
+2026-10-18 16:44:34 [vri0] abl_trellis vri0 STOPPED by signal
+2026-10-18 17:53:57 [vri0] start pid 608678 C: free 16278 MB; START_MB 14000 STOP_MB 12500 PEAK_MB 2500; ETA from B4 4B rates: build 33-90 min, native 13-25, smoke 2-3, hfjoin 2 x 8-10, paired < 1: 65-140 min
+2026-10-18 17:53:57 [vri0] binaries: llama-perplexity 3703e10deab4f714 2026-10-18 04:01:22; libggml-cuda 76168fad1ee5016e 2026-10-05 14:18:16 (B4 hfjoin ran 2026-10-18 12:35)
+2026-10-18 17:53:57 [vri0] build try 1: resuming from work/abl_tr/vri0/f1o/stats.json
+2026-10-18 18:13:33 [vri0] BUILD try 1 rc=143 
+2026-10-18 18:14:23 [vri0] stopped by lead after try-1 kill at 18:13 (commit 1 GB); testing whether torch's VRAM cache costs Windows commit
+2026-10-18 18:14:33 [vri0] abl_trellis vri0 STOPPED by signal
+2026-10-18 18:19:22 [vri0] start pid 620538 C: free 16269 MB; START_MB 14000 STOP_MB 12500 PEAK_MB 3900; ETA from B4 4B rates: build 33-90 min, native 13-25, smoke 2-3, hfjoin 2 x 8-10, paired < 1: 65-140 min
+2026-10-18 18:19:22 [vri0] BLOCKER disk: C: free 16269 MB < 16400 MB needed for the steps ahead (build: X 2880 + blobs 927 MiB; native +1185 MiB); free disk or pass a lower STOP_MB
+2026-10-18 18:19:22 [vri0] abl_trellis vri0 STOPPED rc=3
+2026-10-18 18:22:41 [vri0] start pid 621820 C: free 16269 MB; START_MB 14000 STOP_MB 12500 PEAK_MB 2500; ETA from B4 4B rates: build 33-90 min, native 13-25, smoke 2-3, hfjoin 2 x 8-10, paired < 1: 65-140 min
+2026-10-18 18:22:42 [vri0] binaries: llama-perplexity 3703e10deab4f714 2026-10-18 04:01:22; libggml-cuda 76168fad1ee5016e 2026-10-05 14:18:16 (B4 hfjoin ran 2026-10-18 12:35)
+2026-10-18 18:22:42 [vri0] build try 1: resuming from work/abl_tr/vri0/f1o/stats.json
+2026-10-18 18:42:00 [vri0] BUILD try 1 rc=0 SUMMARY abl n 252 blobs 972043712 B geomean Dev/ModelA IQ 0.3671 all 0.4049 geomean Dw 0.060057 maxratio>=0.9 229/252 min 0.8447
+2026-10-18 18:42:01 [vri0] BYTES blobs 972043712 B (B4 972043712 B, diff 0); tensors whose blob size != B4's: 0/252 
+2026-10-18 18:42:01 [vri0] PROXY n 252 sum Dev arm 5.6952 B4 5.1006 rho 1.1166 dS +0.5947; class-3 n 212 rho 1.1156; class-4/6 n 40 rho 1.1479; Hessian check ModelA_Dev max rel diff 0.0e+00, 0 tensors off; Dev-implied dNLL +0.033..+0.064 (prereg vri0: rho 1.107 [1.08, 1.14], 0 tensors off, Dev-implied +0.025..+0.076)
+2026-10-18 18:43:04 [vri0] scan try 1 rc=1 
+2026-10-18 18:43:04 [vri0] BLOCKER scan (see logs/abl_tr/vri0/scan.log)
+2026-10-18 18:43:04 [vri0] abl_trellis vri0 STOPPED rc=5
+2026-10-18 18:48:21 [vri0] start pid 632246 C: free 16259 MB; START_MB 14000 STOP_MB 12500 PEAK_MB 2500; ETA from B4 4B rates: build 33-90 min, native 13-25, smoke 2-3, hfjoin 2 x 8-10, paired < 1: 65-140 min
+2026-10-18 18:48:22 [vri0] binaries: llama-perplexity 3703e10deab4f714 2026-10-18 04:01:22; libggml-cuda 76168fad1ee5016e 2026-10-05 14:18:16 (B4 hfjoin ran 2026-10-18 12:35)
+2026-10-18 18:48:23 [vri0] BYTES blobs 972043712 B (B4 972043712 B, diff 0); tensors whose blob size != B4's: 0/252 
+2026-10-18 18:48:23 [vri0] PROXY n 252 sum Dev arm 5.6952 B4 5.1006 rho 1.1166 dS +0.5947; class-3 n 212 rho 1.1156; class-4/6 n 40 rho 1.1479; Hessian check ModelA_Dev max rel diff 0.0e+00, 0 tensors off; Dev-implied dNLL +0.033..+0.064 (prereg vri0: rho 1.107 [1.08, 1.14], 0 tensors off, Dev-implied +0.025..+0.076)
+2026-10-18 18:48:25 [vri0] scan try 1 rc=0 SCAN b3p blobs that are the same file as b3: 0/252; differ: ['blk.0.attn_q.weight', 'blk.0.attn_k.weight', 'blk.0.attn_v.weight', 'blk.0.attn_output.weight', 'blk.0.ffn_gate.weight', 'blk.0.ffn_up.wei
+2026-10-18 18:49:52 [vri0] delta try 1 rc=0 DELTA b3p tensors_with_delta 72/252 entries 565 (B3 233221, -232656); bytes_f32 4520
+2026-10-18 18:50:00 [vri0] plan try 1 rc=1 
+2026-10-18 18:50:00 [vri0] BLOCKER plan (see logs/abl_tr/vri0/plan.log)
+2026-10-18 18:50:00 [vri0] abl_trellis vri0 STOPPED rc=5
+2026-10-18 18:54:48 [vri0] start pid 635409 C: free 16256 MB; START_MB 14000 STOP_MB 12500 PEAK_MB 2500; ETA from B4 4B rates: build 33-90 min, native 13-25, smoke 2-3, hfjoin 2 x 8-10, paired < 1: 65-140 min
+2026-10-18 18:54:49 [vri0] binaries: llama-perplexity 3703e10deab4f714 2026-10-18 04:01:22; libggml-cuda 76168fad1ee5016e 2026-10-05 14:18:16 (B4 hfjoin ran 2026-10-18 12:35)
+2026-10-18 18:54:49 [vri0] BYTES blobs 972043712 B (B4 972043712 B, diff 0); tensors whose blob size != B4's: 0/252 
+2026-10-18 18:54:49 [vri0] PROXY n 252 sum Dev arm 5.6952 B4 5.1006 rho 1.1166 dS +0.5947; class-3 n 212 rho 1.1156; class-4/6 n 40 rho 1.1479; Hessian check ModelA_Dev max rel diff 0.0e+00, 0 tensors off; Dev-implied dNLL +0.033..+0.064 (prereg vri0: rho 1.107 [1.08, 1.14], 0 tensors off, Dev-implied +0.025..+0.076)
+2026-10-18 18:55:01 [vri0] plan try 1 rc=0 PLAN layout saving on B3 (v2 -> VR3): 3999296 B; B3+ VR3 vs B3 -2764960 B, vs IQ2_XXS -3470400 B (size-matched); B3+ in the v2 layout would be +528800 B vs IQ2_XXS (OVER)
+2026-10-18 19:01:55 [vri0] check try 1 rc=0 CHECK SUMMARY 252/252 PASS t 412s
+2026-10-18 19:04:03 [vri0] build try 1 rc=0 NATIVE3 TOTAL 1243150912 B vs B3 -2764960 vs IQ2_XXS -3470400 (OK); tensors 795 t 120s
+2026-10-18 19:06:17 [vri0] verify try 1 rc=0 VERIFY3 shards 2 tensors 795 expected 795; mismatches 0 []; vr_prm tensors 0; vr.layout 3 PASS
+2026-10-18 19:06:17 [vri0] NATIVE vri0 1243150912 B (B4 1243153792 B, diff -2880 B); clamp delta entries 565 (B4 entries 561)
+2026-10-18 19:06:46 [vri0] SMOKE [2] 21.2880 [4]15.9843 (B4 [2] 19.6539; prereg 19.6-21.5; stop above 30)
+2026-10-18 19:15:14 [vri0] HFJ vri0 [73]17.9551 (prereg vri0 17.41 [17.06, 17.94]; B4 original [73]16.6413)
+2026-10-18 19:22:38 [vri0] CONTROL logs/r36_hfj_abl_ctl_b4.log [73]16.6413 (original B4 [73]16.6413; repeat - original +0.0000)
+2026-10-18 19:22:40 [vri0] PAIRED vri0 - control, 73 windows: dNLL +0.0760 +/- 0.0103 (95%), first better on 3/73
+2026-10-18 19:22:40 [vri0] ACORR vri0 - control, 73 windows: mean +0.0760 naive +/-0.0103 lag1 +0.28 neff 41.3 corrected +/-0.0137 blockboot(B=5) [+0.0617,+0.0866]
+2026-10-18 19:22:40 [vri0] PAIRED vri0 - control, first 70 windows: dNLL +0.0732 +/- 0.0102 (95%), first better on 3/70
+2026-10-18 19:22:40 [vri0] PAIRED vri0 - original B4 run: dNLL +0.0760 +/- 0.0103 (95%), first better on 3/73
+2026-10-18 19:22:40 [vri0] PAIRED vri0 - IQ2_XXS: dNLL -0.4658 +/- 0.0198 (95%), first better on 73/73
+2026-10-18 19:22:40 [vri0] DECISION vri0: d +0.0760 [+0.0623, +0.0897] nats (lag-1 corrected 95%), 14.0% of the B4 gain over IQ2_XXS (0.5418); LOAD-BEARING, MINOR (< 15% of the B4 gain): indian-math-base 1 passed; keep the trellis as a measured component, title/abstract must not attribute B4 to it; prediction MISSED, find why before the next run [0.025, 0.075]
+2026-10-18 19:22:40 [vri0] CLEANUP blobs and native file deleted (logs: logs/abl_tr/vri0, logs/r36_hfj_abl_vri0_native.log, logs/r36_hfj_abl_ctl_b4.log; tables: work/abl_tr/vri0/tab); C: free 16253 MB
+2026-10-18 19:22:40 [vri0] abl_trellis vri0 finished end

@@ -1,0 +1,328 @@
+R52a build: ARMS [('roff', 8, 'research/work/r48k3', 'rateoff', None)] ENC all NSEQ 256 NEV 32 S1 [0, 0, 0, 0, 2, 3, 2, 4] S2 [0, 0, 0, 0, 0, 0, 0, 2] avb AVB 2.0625 saved 28753920 B over IQ base 880525995 B (x1.03266)
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1301216 > 131072). Running this sequence through the model will result in indexing errors
+PROP 0 [30s] enc True
+roff     blk.0.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0461) Dw 0.07847 Dfit 0.004359 Dev 0.004513 ModelA_Dev 0.017232 Dev/A 0.2619 maxWq/maxw 0.8988 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.7s gpumax 3.10
+roff     blk.0.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0454) Dw 0.07342 Dfit 0.004345 Dev 0.004497 ModelA_Dev 0.017674 Dev/A 0.2545 maxWq/maxw 1.0009 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.10
+roff     blk.0.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00843 Dfit 0.002155 Dev 0.002214 ModelA_Dev 0.004067 Dev/A 0.5443 maxWq/maxw 1.0007 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.4s gpumax 3.10
+roff     blk.0.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.08570 Dfit 0.008876 Dev 0.009148 ModelA_Dev 0.022620 Dev/A 0.4044 maxWq/maxw 1.0009 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.10
+roff     blk.0.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.11111 Dfit 0.018207 Dev 0.018499 ModelA_Dev 0.052000 Dev/A 0.3558 maxWq/maxw 1.0009 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.10
+roff     blk.0.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.11185 Dfit 0.021913 Dev 0.022277 ModelA_Dev 0.061627 Dev/A 0.3615 maxWq/maxw 1.0007 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.10
+roff     blk.0.ffn_down.weight        Q2_K    blob 2.5739 bpw (base 2.6250) Dw 0.04059 Dfit 0.009655 Dev 0.010896 ModelA_Dev 0.027858 Dev/A 0.3911 maxWq/maxw 0.9381 hist [0, 0, 0, 0, 97280, 0, 0, 0] floor 0 t_q 18.1s gpumax 3.66
+LAYER 0 roff [75s] geomean Dev/ModelA all-so-far 0.3569 bytes 28384752 maxmem 3.66 GB
+PROP 1 [116s] enc True
+roff     blk.1.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0456) Dw 0.07728 Dfit 0.003501 Dev 0.003613 ModelA_Dev 0.016083 Dev/A 0.2247 maxWq/maxw 1.0013 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.0s gpumax 3.66
+roff     blk.1.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0463) Dw 0.06992 Dfit 0.002958 Dev 0.003054 ModelA_Dev 0.014674 Dev/A 0.2081 maxWq/maxw 1.0011 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.6s gpumax 3.66
+roff     blk.1.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00848 Dfit 0.001122 Dev 0.001147 ModelA_Dev 0.002492 Dev/A 0.4601 maxWq/maxw 0.9933 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.4s gpumax 3.66
+roff     blk.1.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0504) Dw 0.10328 Dfit 0.012203 Dev 0.012688 ModelA_Dev 0.043413 Dev/A 0.2923 maxWq/maxw 0.9803 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.1.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.01029 Dfit 0.000146 Dev 0.000149 ModelA_Dev 0.004188 Dev/A 0.0356 maxWq/maxw 0.9184 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.1.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0462) Dw 0.06930 Dfit 0.007099 Dev 0.007313 ModelA_Dev 0.036799 Dev/A 0.1987 maxWq/maxw 0.9878 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.1.ffn_down.weight        Q2_K    blob 2.5739 bpw (base 2.6250) Dw 0.01268 Dfit 0.009214 Dev 0.012322 ModelA_Dev 0.025471 Dev/A 0.4838 maxWq/maxw 1.0007 hist [0, 0, 0, 0, 97280, 0, 0, 0] floor 0 t_q 19.2s gpumax 3.66
+LAYER 1 roff [161s] geomean Dev/ModelA all-so-far 0.2773 bytes 56769504 maxmem 3.66 GB
+PROP 2 [212s] enc True
+roff     blk.2.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0457) Dw 0.09761 Dfit 0.007757 Dev 0.007946 ModelA_Dev 0.023937 Dev/A 0.3320 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.2.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0460) Dw 0.08819 Dfit 0.007653 Dev 0.007842 ModelA_Dev 0.025292 Dev/A 0.3101 maxWq/maxw 1.0012 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 2.0s gpumax 3.66
+roff     blk.2.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00922 Dfit 0.001935 Dev 0.001973 ModelA_Dev 0.002904 Dev/A 0.6794 maxWq/maxw 0.9779 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.4s gpumax 3.66
+roff     blk.2.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0498) Dw 0.10455 Dfit 0.017956 Dev 0.018778 ModelA_Dev 0.057806 Dev/A 0.3249 maxWq/maxw 0.9247 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.2.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0456) Dw 0.00793 Dfit 0.000158 Dev 0.000162 ModelA_Dev 0.005004 Dev/A 0.0324 maxWq/maxw 0.9120 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.2.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.05948 Dfit 0.005745 Dev 0.005905 ModelA_Dev 0.034248 Dev/A 0.1724 maxWq/maxw 0.8809 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.2.ffn_down.weight        Q2_K    blob 2.5739 bpw (base 2.6250) Dw 0.01143 Dfit 0.005154 Dev 0.006012 ModelA_Dev 0.031755 Dev/A 0.1893 maxWq/maxw 0.9968 hist [0, 0, 0, 0, 97280, 0, 0, 0] floor 0 t_q 17.5s gpumax 3.66
+LAYER 2 roff [257s] geomean Dev/ModelA all-so-far 0.2562 bytes 85154256 maxmem 3.66 GB
+PROP 3 [297s] enc True
+roff     blk.3.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0459) Dw 0.08625 Dfit 0.005220 Dev 0.005363 ModelA_Dev 0.018851 Dev/A 0.2845 maxWq/maxw 1.0011 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.3.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0461) Dw 0.07883 Dfit 0.005053 Dev 0.005196 ModelA_Dev 0.019349 Dev/A 0.2685 maxWq/maxw 1.0007 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.3.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00835 Dfit 0.001785 Dev 0.001826 ModelA_Dev 0.002998 Dev/A 0.6092 maxWq/maxw 0.9867 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.3.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0496) Dw 0.10293 Dfit 0.018101 Dev 0.018961 ModelA_Dev 0.055424 Dev/A 0.3421 maxWq/maxw 1.0012 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.3.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0453) Dw 0.01025 Dfit 0.000360 Dev 0.000370 ModelA_Dev 0.004749 Dev/A 0.0778 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.3.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.07894 Dfit 0.015131 Dev 0.015548 ModelA_Dev 0.063294 Dev/A 0.2457 maxWq/maxw 1.0011 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.5s gpumax 3.66
+roff     blk.3.ffn_down.weight        Q2_K    blob 2.5739 bpw (base 2.6250) Dw 0.03437 Dfit 0.019943 Dev 0.026455 ModelA_Dev 0.054764 Dev/A 0.4831 maxWq/maxw 0.9956 hist [0, 0, 0, 0, 97280, 0, 0, 0] floor 0 t_q 16.1s gpumax 3.66
+LAYER 3 roff [341s] geomean Dev/ModelA all-so-far 0.2628 bytes 113539008 maxmem 3.66 GB
+PROP 4 [366s] enc True
+roff     blk.4.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0459) Dw 0.09412 Dfit 0.009309 Dev 0.009510 ModelA_Dev 0.025997 Dev/A 0.3658 maxWq/maxw 0.9959 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.4.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0463) Dw 0.09259 Dfit 0.009931 Dev 0.010160 ModelA_Dev 0.029913 Dev/A 0.3397 maxWq/maxw 0.9583 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.4.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00882 Dfit 0.002592 Dev 0.002639 ModelA_Dev 0.003430 Dev/A 0.7694 maxWq/maxw 0.9986 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.4.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.10731 Dfit 0.024134 Dev 0.024560 ModelA_Dev 0.071117 Dev/A 0.3453 maxWq/maxw 0.9296 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.4.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0454) Dw 0.02324 Dfit 0.001086 Dev 0.001112 ModelA_Dev 0.008503 Dev/A 0.1307 maxWq/maxw 1.0008 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.4.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.09224 Dfit 0.027554 Dev 0.028164 ModelA_Dev 0.085188 Dev/A 0.3306 maxWq/maxw 1.0013 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.4s gpumax 3.66
+roff     blk.4.ffn_down.weight        IQ2_XXS blob 2.0739 bpw (base 2.0539) Dw 0.06549 Dfit 0.026665 Dev 0.030304 ModelA_Dev 0.067736 Dev/A 0.4474 maxWq/maxw 1.0007 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.8s gpumax 3.66
+LAYER 4 roff [407s] geomean Dev/ModelA all-so-far 0.2782 bytes 140367280 maxmem 3.66 GB
+PROP 5 [441s] enc True
+roff     blk.5.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0454) Dw 0.08942 Dfit 0.008114 Dev 0.008214 ModelA_Dev 0.023826 Dev/A 0.3448 maxWq/maxw 1.0011 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.5.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0461) Dw 0.08447 Dfit 0.006432 Dev 0.006516 ModelA_Dev 0.019809 Dev/A 0.3289 maxWq/maxw 1.0013 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.5.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00845 Dfit 0.002079 Dev 0.002117 ModelA_Dev 0.003050 Dev/A 0.6943 maxWq/maxw 1.0007 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.5.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.10832 Dfit 0.022618 Dev 0.022939 ModelA_Dev 0.069827 Dev/A 0.3285 maxWq/maxw 0.9947 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.9s gpumax 3.66
+roff     blk.5.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.02005 Dfit 0.002256 Dev 0.002300 ModelA_Dev 0.014179 Dev/A 0.1623 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.5s gpumax 3.66
+roff     blk.5.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0453) Dw 0.10283 Dfit 0.046606 Dev 0.047261 ModelA_Dev 0.108916 Dev/A 0.4339 maxWq/maxw 0.9624 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.5.ffn_down.weight        IQ2_XXS blob 2.0739 bpw (base 2.0536) Dw 0.08571 Dfit 0.037709 Dev 0.040023 ModelA_Dev 0.080588 Dev/A 0.4966 maxWq/maxw 0.9590 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.0s gpumax 3.66
+LAYER 5 roff [481s] geomean Dev/ModelA all-so-far 0.2914 bytes 167195552 maxmem 3.66 GB
+PROP 6 [517s] enc True
+roff     blk.6.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0458) Dw 0.08020 Dfit 0.009062 Dev 0.009108 ModelA_Dev 0.029258 Dev/A 0.3113 maxWq/maxw 0.9646 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.6.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0459) Dw 0.07673 Dfit 0.007578 Dev 0.007636 ModelA_Dev 0.024517 Dev/A 0.3115 maxWq/maxw 1.0012 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.6.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00786 Dfit 0.002449 Dev 0.002471 ModelA_Dev 0.004000 Dev/A 0.6176 maxWq/maxw 1.0001 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 5.1s gpumax 3.66
+roff     blk.6.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0498) Dw 0.10744 Dfit 0.023636 Dev 0.024152 ModelA_Dev 0.064072 Dev/A 0.3769 maxWq/maxw 1.0009 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.6.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0456) Dw 0.01064 Dfit 0.003681 Dev 0.003671 ModelA_Dev 0.012102 Dev/A 0.3034 maxWq/maxw 0.9076 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.6.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.10214 Dfit 0.049201 Dev 0.049505 ModelA_Dev 0.105412 Dev/A 0.4696 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.6.ffn_down.weight        IQ2_XXS blob 2.0739 bpw (base 2.0598) Dw 0.00104 Dfit 0.000230 Dev 0.000224 ModelA_Dev 0.006019 Dev/A 0.0373 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 13.4s gpumax 3.66
+LAYER 6 roff [558s] geomean Dev/ModelA all-so-far 0.2891 bytes 194023824 maxmem 3.66 GB
+PROP 7 [594s] enc True
+roff     blk.7.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0454) Dw 0.06620 Dfit 0.006711 Dev 0.006722 ModelA_Dev 0.022511 Dev/A 0.2986 maxWq/maxw 1.0013 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.7.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0465) Dw 0.06917 Dfit 0.007511 Dev 0.007559 ModelA_Dev 0.029163 Dev/A 0.2592 maxWq/maxw 1.0009 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.7.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00833 Dfit 0.002723 Dev 0.002740 ModelA_Dev 0.003857 Dev/A 0.7103 maxWq/maxw 1.0008 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.7.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0501) Dw 0.09832 Dfit 0.034785 Dev 0.035412 ModelA_Dev 0.092888 Dev/A 0.3812 maxWq/maxw 0.8580 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.7.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.00978 Dfit 0.003863 Dev 0.003841 ModelA_Dev 0.012096 Dev/A 0.3175 maxWq/maxw 0.9821 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.7.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.10185 Dfit 0.055334 Dev 0.055650 ModelA_Dev 0.109310 Dev/A 0.5091 maxWq/maxw 0.9207 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.7.ffn_down.weight        IQ2_XXS blob 2.0739 bpw (base 2.0536) Dw 0.09306 Dfit 0.053928 Dev 0.056656 ModelA_Dev 0.099043 Dev/A 0.5720 maxWq/maxw 0.9347 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 13.2s gpumax 3.66
+LAYER 7 roff [633s] geomean Dev/ModelA all-so-far 0.3019 bytes 220852096 maxmem 3.66 GB
+PROP 8 [673s] enc True
+roff     blk.8.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0461) Dw 0.07208 Dfit 0.009372 Dev 0.009381 ModelA_Dev 0.025453 Dev/A 0.3686 maxWq/maxw 0.9698 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.8.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0460) Dw 0.08001 Dfit 0.012477 Dev 0.012526 ModelA_Dev 0.037962 Dev/A 0.3300 maxWq/maxw 1.0013 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.8.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00871 Dfit 0.003226 Dev 0.003227 ModelA_Dev 0.003646 Dev/A 0.8851 maxWq/maxw 1.0008 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.8.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0495) Dw 0.10241 Dfit 0.041762 Dev 0.043213 ModelA_Dev 0.107779 Dev/A 0.4009 maxWq/maxw 0.9724 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.8.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.08985 Dfit 0.021399 Dev 0.021476 ModelA_Dev 0.041702 Dev/A 0.5150 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.1s gpumax 3.66
+roff     blk.8.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.10178 Dfit 0.056090 Dev 0.056430 ModelA_Dev 0.103889 Dev/A 0.5432 maxWq/maxw 0.9739 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.7s gpumax 3.66
+roff     blk.8.ffn_down.weight        IQ2_XXS blob 2.0739 bpw (base 2.0536) Dw 0.09306 Dfit 0.056742 Dev 0.058440 ModelA_Dev 0.099859 Dev/A 0.5852 maxWq/maxw 0.9568 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.7s gpumax 3.66
+LAYER 8 roff [712s] geomean Dev/ModelA all-so-far 0.3188 bytes 247680368 maxmem 3.66 GB
+PROP 9 [759s] enc True
+roff     blk.9.attn_q.weight          IQ2_XXS blob 2.0750 bpw (base 2.0459) Dw 0.07147 Dfit 0.009986 Dev 0.010073 ModelA_Dev 0.028154 Dev/A 0.3578 maxWq/maxw 1.0009 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 4.0s gpumax 3.66
+roff     blk.9.attn_k.weight          IQ2_XXS blob 2.0860 bpw (base 2.0462) Dw 0.07893 Dfit 0.013898 Dev 0.014105 ModelA_Dev 0.042148 Dev/A 0.3346 maxWq/maxw 1.0013 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.9.attn_v.weight          Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00867 Dfit 0.003593 Dev 0.003628 ModelA_Dev 0.004097 Dev/A 0.8854 maxWq/maxw 1.0007 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.9.attn_output.weight     IQ2_XXS blob 2.0756 bpw (base 2.0499) Dw 0.09828 Dfit 0.039206 Dev 0.041703 ModelA_Dev 0.114036 Dev/A 0.3657 maxWq/maxw 0.9771 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.6s gpumax 3.66
+roff     blk.9.ffn_gate.weight        IQ2_XXS blob 2.0735 bpw (base 2.0460) Dw 0.07239 Dfit 0.011260 Dev 0.011405 ModelA_Dev 0.022735 Dev/A 0.5017 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.6s gpumax 3.66
+roff     blk.9.ffn_up.weight          IQ2_XXS blob 2.0735 bpw (base 2.0452) Dw 0.10008 Dfit 0.057439 Dev 0.058202 ModelA_Dev 0.105266 Dev/A 0.5529 maxWq/maxw 1.0011 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.7s gpumax 3.66
+roff     blk.9.ffn_down.weight        IQ2_XXS blob 2.0739 bpw (base 2.0543) Dw 0.09464 Dfit 0.048169 Dev 0.051739 ModelA_Dev 0.096312 Dev/A 0.5372 maxWq/maxw 0.9731 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 14.4s gpumax 3.66
+LAYER 9 roff [801s] geomean Dev/ModelA all-so-far 0.3321 bytes 274508640 maxmem 3.66 GB
+PROP 10 [828s] enc True
+roff     blk.10.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0455) Dw 0.06701 Dfit 0.009200 Dev 0.009408 ModelA_Dev 0.025011 Dev/A 0.3761 maxWq/maxw 1.0008 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 4.2s gpumax 3.66
+roff     blk.10.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0459) Dw 0.07520 Dfit 0.012239 Dev 0.012528 ModelA_Dev 0.037829 Dev/A 0.3312 maxWq/maxw 1.0010 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.8s gpumax 3.66
+roff     blk.10.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00879 Dfit 0.003506 Dev 0.003584 ModelA_Dev 0.003821 Dev/A 0.9381 maxWq/maxw 0.9946 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.10.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.10009 Dfit 0.044181 Dev 0.047043 ModelA_Dev 0.131631 Dev/A 0.3574 maxWq/maxw 0.9812 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.9s gpumax 3.66
+roff     blk.10.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0456) Dw 0.08115 Dfit 0.013766 Dev 0.014177 ModelA_Dev 0.027357 Dev/A 0.5182 maxWq/maxw 0.9512 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.10.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0456) Dw 0.10085 Dfit 0.055787 Dev 0.057227 ModelA_Dev 0.104559 Dev/A 0.5473 maxWq/maxw 0.9590 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 9.5s gpumax 3.66
+roff     blk.10.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0538) Dw 0.09726 Dfit 0.044622 Dev 0.049234 ModelA_Dev 0.095062 Dev/A 0.5179 maxWq/maxw 0.9718 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 18.8s gpumax 3.66
+LAYER 10 roff [880s] geomean Dev/ModelA all-so-far 0.3436 bytes 301336912 maxmem 3.66 GB
+PROP 11 [913s] enc True
+roff     blk.11.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0460) Dw 0.07401 Dfit 0.008829 Dev 0.009190 ModelA_Dev 0.025118 Dev/A 0.3659 maxWq/maxw 0.9445 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.11.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0458) Dw 0.08149 Dfit 0.011916 Dev 0.012383 ModelA_Dev 0.038047 Dev/A 0.3255 maxWq/maxw 0.8879 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.11.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00903 Dfit 0.003269 Dev 0.003397 ModelA_Dev 0.003971 Dev/A 0.8556 maxWq/maxw 0.9819 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.11.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0504) Dw 0.10084 Dfit 0.042878 Dev 0.046111 ModelA_Dev 0.127002 Dev/A 0.3631 maxWq/maxw 1.0013 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.7s gpumax 3.66
+roff     blk.11.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0457) Dw 0.08673 Dfit 0.016723 Dev 0.017360 ModelA_Dev 0.033598 Dev/A 0.5167 maxWq/maxw 0.9313 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.11.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.10198 Dfit 0.055389 Dev 0.057430 ModelA_Dev 0.107124 Dev/A 0.5361 maxWq/maxw 0.9401 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.9s gpumax 3.66
+roff     blk.11.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0537) Dw 0.09708 Dfit 0.047184 Dev 0.051561 ModelA_Dev 0.096546 Dev/A 0.5341 maxWq/maxw 0.9134 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.8s gpumax 3.66
+LAYER 11 roff [953s] geomean Dev/ModelA all-so-far 0.3530 bytes 328165184 maxmem 3.66 GB
+PROP 12 [983s] enc True
+roff     blk.12.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0452) Dw 0.07069 Dfit 0.007552 Dev 0.007864 ModelA_Dev 0.023588 Dev/A 0.3334 maxWq/maxw 1.0008 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.12.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0456) Dw 0.07874 Dfit 0.010126 Dev 0.010565 ModelA_Dev 0.036772 Dev/A 0.2873 maxWq/maxw 0.9535 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.12.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00868 Dfit 0.002870 Dev 0.002993 ModelA_Dev 0.004025 Dev/A 0.7435 maxWq/maxw 0.9917 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.12.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0502) Dw 0.09504 Dfit 0.026776 Dev 0.028659 ModelA_Dev 0.106201 Dev/A 0.2699 maxWq/maxw 1.0013 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.12.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0452) Dw 0.08560 Dfit 0.017327 Dev 0.018006 ModelA_Dev 0.036589 Dev/A 0.4921 maxWq/maxw 1.0007 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.12.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0452) Dw 0.10171 Dfit 0.050769 Dev 0.052794 ModelA_Dev 0.102150 Dev/A 0.5168 maxWq/maxw 0.9324 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.12.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0540) Dw 0.09462 Dfit 0.045915 Dev 0.049388 ModelA_Dev 0.097418 Dev/A 0.5070 maxWq/maxw 0.8876 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 20.4s gpumax 3.66
+LAYER 12 roff [1032s] geomean Dev/ModelA all-so-far 0.3580 bytes 354993456 maxmem 3.66 GB
+PROP 13 [1068s] enc True
+roff     blk.13.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0457) Dw 0.07042 Dfit 0.007285 Dev 0.007549 ModelA_Dev 0.022595 Dev/A 0.3341 maxWq/maxw 0.9257 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 4.0s gpumax 3.66
+roff     blk.13.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0461) Dw 0.07739 Dfit 0.011177 Dev 0.011645 ModelA_Dev 0.037142 Dev/A 0.3135 maxWq/maxw 0.9706 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.13.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00841 Dfit 0.002169 Dev 0.002258 ModelA_Dev 0.003219 Dev/A 0.7016 maxWq/maxw 0.9950 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.13.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0504) Dw 0.09917 Dfit 0.028016 Dev 0.029673 ModelA_Dev 0.106162 Dev/A 0.2795 maxWq/maxw 1.0012 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.13.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0457) Dw 0.08493 Dfit 0.016959 Dev 0.017604 ModelA_Dev 0.037538 Dev/A 0.4690 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.13.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.10243 Dfit 0.047155 Dev 0.048762 ModelA_Dev 0.098160 Dev/A 0.4968 maxWq/maxw 0.9610 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.13.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0538) Dw 0.09782 Dfit 0.045226 Dev 0.047938 ModelA_Dev 0.100149 Dev/A 0.4787 maxWq/maxw 0.9830 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 13.7s gpumax 3.66
+LAYER 13 roff [1109s] geomean Dev/ModelA all-so-far 0.3621 bytes 381821728 maxmem 3.66 GB
+PROP 14 [1144s] enc True
+roff     blk.14.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0460) Dw 0.06471 Dfit 0.006617 Dev 0.006815 ModelA_Dev 0.020979 Dev/A 0.3248 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.14.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0461) Dw 0.06914 Dfit 0.008832 Dev 0.009115 ModelA_Dev 0.033199 Dev/A 0.2746 maxWq/maxw 1.0013 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.14.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00815 Dfit 0.002368 Dev 0.002432 ModelA_Dev 0.003353 Dev/A 0.7253 maxWq/maxw 1.0007 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.14.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0501) Dw 0.09539 Dfit 0.034392 Dev 0.036156 ModelA_Dev 0.133924 Dev/A 0.2700 maxWq/maxw 1.0010 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.14.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0453) Dw 0.07609 Dfit 0.015075 Dev 0.015575 ModelA_Dev 0.033744 Dev/A 0.4616 maxWq/maxw 0.8928 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.14.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.10133 Dfit 0.048230 Dev 0.049587 ModelA_Dev 0.099846 Dev/A 0.4966 maxWq/maxw 0.8976 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.4s gpumax 3.66
+roff     blk.14.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0545) Dw 0.09525 Dfit 0.044694 Dev 0.047133 ModelA_Dev 0.102618 Dev/A 0.4593 maxWq/maxw 0.9435 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 14.1s gpumax 3.66
+LAYER 14 roff [1186s] geomean Dev/ModelA all-so-far 0.3649 bytes 408650000 maxmem 3.66 GB
+PROP 15 [1222s] enc True
+roff     blk.15.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0455) Dw 0.06094 Dfit 0.006769 Dev 0.006955 ModelA_Dev 0.024266 Dev/A 0.2866 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.15.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0464) Dw 0.06580 Dfit 0.008669 Dev 0.008926 ModelA_Dev 0.037464 Dev/A 0.2382 maxWq/maxw 0.9325 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.15.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00794 Dfit 0.002095 Dev 0.002151 ModelA_Dev 0.003059 Dev/A 0.7033 maxWq/maxw 1.0013 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.4s gpumax 3.66
+roff     blk.15.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0495) Dw 0.09499 Dfit 0.035317 Dev 0.036935 ModelA_Dev 0.162181 Dev/A 0.2277 maxWq/maxw 0.9776 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.15.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0454) Dw 0.07849 Dfit 0.016989 Dev 0.017523 ModelA_Dev 0.038081 Dev/A 0.4601 maxWq/maxw 1.0008 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.15.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0452) Dw 0.10134 Dfit 0.046647 Dev 0.047755 ModelA_Dev 0.097271 Dev/A 0.4909 maxWq/maxw 0.9351 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.8s gpumax 3.66
+roff     blk.15.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0546) Dw 0.09567 Dfit 0.045544 Dev 0.047382 ModelA_Dev 0.102534 Dev/A 0.4621 maxWq/maxw 0.8945 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.6s gpumax 3.66
+LAYER 15 roff [1261s] geomean Dev/ModelA all-so-far 0.3658 bytes 435478272 maxmem 3.66 GB
+PROP 16 [1291s] enc True
+roff     blk.16.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0457) Dw 0.06113 Dfit 0.008705 Dev 0.008888 ModelA_Dev 0.026887 Dev/A 0.3306 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.16.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0463) Dw 0.05930 Dfit 0.010735 Dev 0.010987 ModelA_Dev 0.042048 Dev/A 0.2613 maxWq/maxw 0.9386 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.16.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00804 Dfit 0.002835 Dev 0.002879 ModelA_Dev 0.003409 Dev/A 0.8444 maxWq/maxw 1.0008 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.16.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0498) Dw 0.09991 Dfit 0.042176 Dev 0.044108 ModelA_Dev 0.156314 Dev/A 0.2822 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.16.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.07242 Dfit 0.014956 Dev 0.015383 ModelA_Dev 0.033353 Dev/A 0.4612 maxWq/maxw 1.0009 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.16.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0457) Dw 0.09927 Dfit 0.045417 Dev 0.046430 ModelA_Dev 0.094321 Dev/A 0.4923 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.9s gpumax 3.66
+roff     blk.16.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0627) Dw 0.00060 Dfit 0.000353 Dev 0.000355 ModelA_Dev 0.006289 Dev/A 0.0565 maxWq/maxw 1.0008 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.5s gpumax 3.66
+LAYER 16 roff [1331s] geomean Dev/ModelA all-so-far 0.3622 bytes 462306544 maxmem 3.66 GB
+PROP 17 [1353s] enc True
+roff     blk.17.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0457) Dw 0.06320 Dfit 0.008974 Dev 0.009189 ModelA_Dev 0.028496 Dev/A 0.3225 maxWq/maxw 0.9260 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.17.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0457) Dw 0.06252 Dfit 0.010786 Dev 0.011055 ModelA_Dev 0.041359 Dev/A 0.2673 maxWq/maxw 0.9377 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.17.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00816 Dfit 0.002533 Dev 0.002588 ModelA_Dev 0.003447 Dev/A 0.7508 maxWq/maxw 0.9571 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.4s gpumax 3.66
+roff     blk.17.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0496) Dw 0.09577 Dfit 0.033114 Dev 0.035302 ModelA_Dev 0.163945 Dev/A 0.2153 maxWq/maxw 0.9317 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.9s gpumax 3.66
+roff     blk.17.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0453) Dw 0.07718 Dfit 0.016060 Dev 0.016618 ModelA_Dev 0.037999 Dev/A 0.4373 maxWq/maxw 0.9127 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.17.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0456) Dw 0.10091 Dfit 0.043210 Dev 0.044419 ModelA_Dev 0.094377 Dev/A 0.4707 maxWq/maxw 0.8883 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.9s gpumax 3.66
+roff     blk.17.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0537) Dw 0.09794 Dfit 0.045591 Dev 0.048237 ModelA_Dev 0.107205 Dev/A 0.4499 maxWq/maxw 0.9865 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 18.0s gpumax 3.66
+LAYER 17 roff [1404s] geomean Dev/ModelA all-so-far 0.3635 bytes 489134816 maxmem 3.66 GB
+PROP 18 [1436s] enc True
+roff     blk.18.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0457) Dw 0.06066 Dfit 0.007754 Dev 0.007975 ModelA_Dev 0.026656 Dev/A 0.2992 maxWq/maxw 0.9821 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.18.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0461) Dw 0.05883 Dfit 0.009191 Dev 0.009435 ModelA_Dev 0.039425 Dev/A 0.2393 maxWq/maxw 1.0009 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.18.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00815 Dfit 0.002387 Dev 0.002443 ModelA_Dev 0.003499 Dev/A 0.6983 maxWq/maxw 0.9975 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.18.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0492) Dw 0.10219 Dfit 0.035669 Dev 0.037693 ModelA_Dev 0.178945 Dev/A 0.2106 maxWq/maxw 1.0012 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.9s gpumax 3.66
+roff     blk.18.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0460) Dw 0.08041 Dfit 0.016673 Dev 0.017192 ModelA_Dev 0.040055 Dev/A 0.4292 maxWq/maxw 0.9744 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.1s gpumax 3.66
+roff     blk.18.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0453) Dw 0.10222 Dfit 0.043200 Dev 0.044349 ModelA_Dev 0.096164 Dev/A 0.4612 maxWq/maxw 0.9638 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.1s gpumax 3.66
+roff     blk.18.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0540) Dw 0.09021 Dfit 0.042639 Dev 0.044350 ModelA_Dev 0.103721 Dev/A 0.4276 maxWq/maxw 0.9448 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.9s gpumax 3.66
+LAYER 18 roff [1477s] geomean Dev/ModelA all-so-far 0.3637 bytes 515963088 maxmem 3.66 GB
+PROP 19 [1509s] enc True
+roff     blk.19.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0463) Dw 0.06476 Dfit 0.006942 Dev 0.007131 ModelA_Dev 0.025350 Dev/A 0.2813 maxWq/maxw 0.9350 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.19.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0466) Dw 0.06484 Dfit 0.008228 Dev 0.008457 ModelA_Dev 0.041078 Dev/A 0.2059 maxWq/maxw 1.0012 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.19.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00866 Dfit 0.002690 Dev 0.002747 ModelA_Dev 0.004265 Dev/A 0.6441 maxWq/maxw 1.0007 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.19.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.09980 Dfit 0.021477 Dev 0.022642 ModelA_Dev 0.105994 Dev/A 0.2136 maxWq/maxw 0.9803 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.7s gpumax 3.66
+roff     blk.19.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.08100 Dfit 0.016148 Dev 0.016587 ModelA_Dev 0.041964 Dev/A 0.3953 maxWq/maxw 0.9217 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.19.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.10344 Dfit 0.039814 Dev 0.040708 ModelA_Dev 0.095407 Dev/A 0.4267 maxWq/maxw 0.9187 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.19.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0544) Dw 0.09579 Dfit 0.042207 Dev 0.043964 ModelA_Dev 0.105439 Dev/A 0.4170 maxWq/maxw 0.9649 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.9s gpumax 3.66
+LAYER 19 roff [1549s] geomean Dev/ModelA all-so-far 0.3626 bytes 542791360 maxmem 3.66 GB
+PROP 20 [1576s] enc True
+roff     blk.20.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0455) Dw 0.06183 Dfit 0.007385 Dev 0.007570 ModelA_Dev 0.028723 Dev/A 0.2635 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.20.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0460) Dw 0.05432 Dfit 0.008594 Dev 0.008809 ModelA_Dev 0.046148 Dev/A 0.1909 maxWq/maxw 1.0007 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.20.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00842 Dfit 0.002307 Dev 0.002358 ModelA_Dev 0.004162 Dev/A 0.5665 maxWq/maxw 1.0005 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.20.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0495) Dw 0.09820 Dfit 0.037361 Dev 0.038936 ModelA_Dev 0.178934 Dev/A 0.2176 maxWq/maxw 0.9507 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 4.7s gpumax 3.66
+roff     blk.20.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.07645 Dfit 0.015098 Dev 0.015487 ModelA_Dev 0.038282 Dev/A 0.4045 maxWq/maxw 0.9760 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.20.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0454) Dw 0.10358 Dfit 0.042031 Dev 0.042993 ModelA_Dev 0.096742 Dev/A 0.4444 maxWq/maxw 0.9377 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.20.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0538) Dw 0.09648 Dfit 0.046838 Dev 0.048927 ModelA_Dev 0.110405 Dev/A 0.4432 maxWq/maxw 0.9619 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.0s gpumax 3.66
+LAYER 20 roff [1616s] geomean Dev/ModelA all-so-far 0.3613 bytes 569619632 maxmem 3.66 GB
+PROP 21 [1651s] enc True
+roff     blk.21.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0458) Dw 0.06573 Dfit 0.007907 Dev 0.008096 ModelA_Dev 0.029733 Dev/A 0.2723 maxWq/maxw 0.9960 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.7s gpumax 3.66
+roff     blk.21.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0464) Dw 0.05538 Dfit 0.007472 Dev 0.007666 ModelA_Dev 0.047016 Dev/A 0.1630 maxWq/maxw 0.9987 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 1.0s gpumax 3.66
+roff     blk.21.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00853 Dfit 0.002416 Dev 0.002476 ModelA_Dev 0.004726 Dev/A 0.5239 maxWq/maxw 0.9951 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.7s gpumax 3.66
+roff     blk.21.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.09924 Dfit 0.034787 Dev 0.036219 ModelA_Dev 0.160636 Dev/A 0.2255 maxWq/maxw 0.9592 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.9s gpumax 3.66
+roff     blk.21.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.07548 Dfit 0.014353 Dev 0.014735 ModelA_Dev 0.038079 Dev/A 0.3870 maxWq/maxw 0.9937 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.21.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0457) Dw 0.10486 Dfit 0.042495 Dev 0.043379 ModelA_Dev 0.098245 Dev/A 0.4415 maxWq/maxw 0.8348 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.9s gpumax 3.66
+roff     blk.21.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0545) Dw 0.09359 Dfit 0.044821 Dev 0.046588 ModelA_Dev 0.107648 Dev/A 0.4328 maxWq/maxw 0.8760 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 13.7s gpumax 3.66
+LAYER 21 roff [1695s] geomean Dev/ModelA all-so-far 0.3596 bytes 596447904 maxmem 3.66 GB
+PROP 22 [1736s] enc True
+roff     blk.22.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0455) Dw 0.06465 Dfit 0.007067 Dev 0.007246 ModelA_Dev 0.028258 Dev/A 0.2564 maxWq/maxw 0.9703 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.22.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0460) Dw 0.05842 Dfit 0.008847 Dev 0.009066 ModelA_Dev 0.049145 Dev/A 0.1845 maxWq/maxw 0.9771 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.22.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00926 Dfit 0.003276 Dev 0.003344 ModelA_Dev 0.005909 Dev/A 0.5659 maxWq/maxw 0.9916 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.22.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0502) Dw 0.10083 Dfit 0.033376 Dev 0.035614 ModelA_Dev 0.173261 Dev/A 0.2056 maxWq/maxw 0.9516 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.9s gpumax 3.66
+roff     blk.22.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.07637 Dfit 0.011632 Dev 0.012050 ModelA_Dev 0.034444 Dev/A 0.3498 maxWq/maxw 1.0006 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.22.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0454) Dw 0.10426 Dfit 0.033508 Dev 0.034432 ModelA_Dev 0.085232 Dev/A 0.4040 maxWq/maxw 0.9022 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.8s gpumax 3.66
+roff     blk.22.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0541) Dw 0.08958 Dfit 0.038394 Dev 0.040346 ModelA_Dev 0.105714 Dev/A 0.3817 maxWq/maxw 0.9721 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.9s gpumax 3.66
+LAYER 22 roff [1776s] geomean Dev/ModelA all-so-far 0.3575 bytes 623276176 maxmem 3.66 GB
+PROP 23 [1820s] enc True
+roff     blk.23.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0461) Dw 0.06827 Dfit 0.007350 Dev 0.007572 ModelA_Dev 0.028458 Dev/A 0.2661 maxWq/maxw 0.9485 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.23.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0459) Dw 0.05940 Dfit 0.007736 Dev 0.007972 ModelA_Dev 0.047345 Dev/A 0.1684 maxWq/maxw 0.9790 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.23.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00947 Dfit 0.003106 Dev 0.003197 ModelA_Dev 0.006486 Dev/A 0.4929 maxWq/maxw 0.9730 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 5.4s gpumax 3.66
+roff     blk.23.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0497) Dw 0.10190 Dfit 0.032290 Dev 0.034507 ModelA_Dev 0.132349 Dev/A 0.2607 maxWq/maxw 0.9062 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.23.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0456) Dw 0.07130 Dfit 0.011016 Dev 0.011465 ModelA_Dev 0.031495 Dev/A 0.3640 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.23.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.10203 Dfit 0.032644 Dev 0.033667 ModelA_Dev 0.082227 Dev/A 0.4094 maxWq/maxw 0.8566 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.23.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0545) Dw 0.08675 Dfit 0.039106 Dev 0.041820 ModelA_Dev 0.097873 Dev/A 0.4273 maxWq/maxw 0.9620 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.7s gpumax 3.66
+LAYER 23 roff [1859s] geomean Dev/ModelA all-so-far 0.3560 bytes 650104448 maxmem 3.66 GB
+PROP 24 [1906s] enc True
+roff     blk.24.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0457) Dw 0.07053 Dfit 0.007618 Dev 0.007897 ModelA_Dev 0.029959 Dev/A 0.2636 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.24.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0465) Dw 0.06834 Dfit 0.010338 Dev 0.010765 ModelA_Dev 0.057323 Dev/A 0.1878 maxWq/maxw 0.9777 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.24.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00915 Dfit 0.002832 Dev 0.002944 ModelA_Dev 0.007260 Dev/A 0.4055 maxWq/maxw 1.0009 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.4s gpumax 3.66
+roff     blk.24.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.09918 Dfit 0.022553 Dev 0.025218 ModelA_Dev 0.089167 Dev/A 0.2828 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.6s gpumax 3.66
+roff     blk.24.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.06654 Dfit 0.011063 Dev 0.011668 ModelA_Dev 0.031714 Dev/A 0.3679 maxWq/maxw 1.0009 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.24.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0453) Dw 0.10056 Dfit 0.032337 Dev 0.033786 ModelA_Dev 0.082035 Dev/A 0.4119 maxWq/maxw 1.0013 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 7.8s gpumax 3.66
+roff     blk.24.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0541) Dw 0.08391 Dfit 0.037979 Dev 0.042387 ModelA_Dev 0.092640 Dev/A 0.4575 maxWq/maxw 0.9362 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.1s gpumax 3.66
+LAYER 24 roff [1948s] geomean Dev/ModelA all-so-far 0.3547 bytes 676932720 maxmem 3.66 GB
+PROP 25 [1990s] enc True
+roff     blk.25.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0451) Dw 0.08231 Dfit 0.009077 Dev 0.009477 ModelA_Dev 0.033227 Dev/A 0.2852 maxWq/maxw 1.0008 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.25.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0462) Dw 0.08122 Dfit 0.011177 Dev 0.011711 ModelA_Dev 0.050587 Dev/A 0.2315 maxWq/maxw 0.9981 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.25.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00966 Dfit 0.003106 Dev 0.003252 ModelA_Dev 0.005477 Dev/A 0.5936 maxWq/maxw 0.9926 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.6s gpumax 3.66
+roff     blk.25.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0494) Dw 0.10356 Dfit 0.032088 Dev 0.033375 ModelA_Dev 0.106343 Dev/A 0.3138 maxWq/maxw 1.0013 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 5.2s gpumax 3.66
+roff     blk.25.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.06355 Dfit 0.011366 Dev 0.012028 ModelA_Dev 0.031833 Dev/A 0.3779 maxWq/maxw 0.9383 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.25.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.10077 Dfit 0.034802 Dev 0.036415 ModelA_Dev 0.085081 Dev/A 0.4280 maxWq/maxw 0.9647 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.7s gpumax 3.66
+roff     blk.25.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0544) Dw 0.08336 Dfit 0.043620 Dev 0.047529 ModelA_Dev 0.098343 Dev/A 0.4833 maxWq/maxw 0.9457 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.7s gpumax 3.66
+LAYER 25 roff [2030s] geomean Dev/ModelA all-so-far 0.3553 bytes 703760992 maxmem 3.66 GB
+PROP 26 [2079s] enc True
+roff     blk.26.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0454) Dw 0.07867 Dfit 0.010428 Dev 0.010911 ModelA_Dev 0.036070 Dev/A 0.3025 maxWq/maxw 0.9699 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.26.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0456) Dw 0.07958 Dfit 0.014383 Dev 0.015099 ModelA_Dev 0.061292 Dev/A 0.2463 maxWq/maxw 1.0009 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.6s gpumax 3.66
+roff     blk.26.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00912 Dfit 0.003567 Dev 0.003730 ModelA_Dev 0.005996 Dev/A 0.6220 maxWq/maxw 1.0013 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.3s gpumax 3.66
+roff     blk.26.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0498) Dw 0.10230 Dfit 0.040801 Dev 0.044014 ModelA_Dev 0.109136 Dev/A 0.4033 maxWq/maxw 0.9391 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.7s gpumax 3.66
+roff     blk.26.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.06102 Dfit 0.011339 Dev 0.012005 ModelA_Dev 0.029694 Dev/A 0.4043 maxWq/maxw 0.9056 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.26.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0456) Dw 0.09823 Dfit 0.037267 Dev 0.039028 ModelA_Dev 0.086418 Dev/A 0.4516 maxWq/maxw 0.9043 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.1s gpumax 3.66
+roff     blk.26.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0539) Dw 0.08120 Dfit 0.042767 Dev 0.047613 ModelA_Dev 0.094618 Dev/A 0.5032 maxWq/maxw 0.9952 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.9s gpumax 3.66
+LAYER 26 roff [2119s] geomean Dev/ModelA all-so-far 0.3570 bytes 730589264 maxmem 3.66 GB
+PROP 27 [2167s] enc True
+roff     blk.27.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0454) Dw 0.08263 Dfit 0.010358 Dev 0.010838 ModelA_Dev 0.035055 Dev/A 0.3092 maxWq/maxw 0.9433 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.27.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0465) Dw 0.08274 Dfit 0.013118 Dev 0.013784 ModelA_Dev 0.050830 Dev/A 0.2712 maxWq/maxw 0.9657 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.27.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00953 Dfit 0.003421 Dev 0.003599 ModelA_Dev 0.006232 Dev/A 0.5775 maxWq/maxw 0.9994 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 6.1s gpumax 3.66
+roff     blk.27.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0500) Dw 0.10462 Dfit 0.035157 Dev 0.037869 ModelA_Dev 0.115220 Dev/A 0.3287 maxWq/maxw 0.9513 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.27.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0460) Dw 0.06296 Dfit 0.011664 Dev 0.012331 ModelA_Dev 0.030168 Dev/A 0.4087 maxWq/maxw 1.0010 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.27.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0457) Dw 0.09703 Dfit 0.035876 Dev 0.037513 ModelA_Dev 0.082300 Dev/A 0.4558 maxWq/maxw 0.9403 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.27.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0539) Dw 0.07883 Dfit 0.041635 Dev 0.046694 ModelA_Dev 0.095925 Dev/A 0.4868 maxWq/maxw 0.9363 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.0s gpumax 3.66
+LAYER 27 roff [2210s] geomean Dev/ModelA all-so-far 0.3582 bytes 757417536 maxmem 3.66 GB
+PROP 28 [2254s] enc True
+roff     blk.28.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0456) Dw 0.08342 Dfit 0.009713 Dev 0.010225 ModelA_Dev 0.033099 Dev/A 0.3089 maxWq/maxw 0.9792 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.28.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0458) Dw 0.07982 Dfit 0.010470 Dev 0.010993 ModelA_Dev 0.056101 Dev/A 0.1960 maxWq/maxw 1.0008 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.6s gpumax 3.66
+roff     blk.28.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00940 Dfit 0.003069 Dev 0.003235 ModelA_Dev 0.005747 Dev/A 0.5629 maxWq/maxw 0.9909 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.28.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0503) Dw 0.10628 Dfit 0.038922 Dev 0.040661 ModelA_Dev 0.134202 Dev/A 0.3030 maxWq/maxw 0.9592 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.28.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.06692 Dfit 0.012492 Dev 0.013145 ModelA_Dev 0.031936 Dev/A 0.4116 maxWq/maxw 0.9165 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.0s gpumax 3.66
+roff     blk.28.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.09517 Dfit 0.033243 Dev 0.034705 ModelA_Dev 0.075296 Dev/A 0.4609 maxWq/maxw 0.9271 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.28.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0545) Dw 0.07739 Dfit 0.038805 Dev 0.042234 ModelA_Dev 0.090971 Dev/A 0.4643 maxWq/maxw 0.9183 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.5s gpumax 3.66
+LAYER 28 roff [2292s] geomean Dev/ModelA all-so-far 0.3585 bytes 784245808 maxmem 3.66 GB
+PROP 29 [2339s] enc True
+roff     blk.29.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0455) Dw 0.08333 Dfit 0.010698 Dev 0.011210 ModelA_Dev 0.039699 Dev/A 0.2824 maxWq/maxw 0.9291 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.29.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0460) Dw 0.08454 Dfit 0.014071 Dev 0.014782 ModelA_Dev 0.067063 Dev/A 0.2204 maxWq/maxw 0.9821 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.29.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00715 Dfit 0.002436 Dev 0.002558 ModelA_Dev 0.005922 Dev/A 0.4319 maxWq/maxw 1.0007 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.29.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0499) Dw 0.10831 Dfit 0.038012 Dev 0.041923 ModelA_Dev 0.101495 Dev/A 0.4131 maxWq/maxw 1.0011 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.7s gpumax 3.66
+roff     blk.29.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0454) Dw 0.06500 Dfit 0.012328 Dev 0.012935 ModelA_Dev 0.029941 Dev/A 0.4320 maxWq/maxw 0.8949 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.29.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0452) Dw 0.09511 Dfit 0.036120 Dev 0.037693 ModelA_Dev 0.079436 Dev/A 0.4745 maxWq/maxw 0.9053 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 5.2s gpumax 3.66
+roff     blk.29.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0540) Dw 0.07532 Dfit 0.037487 Dev 0.041753 ModelA_Dev 0.079839 Dev/A 0.5230 maxWq/maxw 0.8114 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.8s gpumax 3.66
+LAYER 29 roff [2380s] geomean Dev/ModelA all-so-far 0.3593 bytes 811074080 maxmem 3.66 GB
+PROP 30 [2419s] enc True
+roff     blk.30.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0456) Dw 0.08702 Dfit 0.009448 Dev 0.009878 ModelA_Dev 0.034017 Dev/A 0.2904 maxWq/maxw 0.9752 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.30.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0461) Dw 0.08894 Dfit 0.011564 Dev 0.012174 ModelA_Dev 0.047830 Dev/A 0.2545 maxWq/maxw 0.9334 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.30.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00923 Dfit 0.003649 Dev 0.003833 ModelA_Dev 0.006361 Dev/A 0.6026 maxWq/maxw 1.0009 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.30.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0496) Dw 0.09920 Dfit 0.026064 Dev 0.028969 ModelA_Dev 0.082750 Dev/A 0.3501 maxWq/maxw 1.0010 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.7s gpumax 3.66
+roff     blk.30.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0454) Dw 0.06904 Dfit 0.013605 Dev 0.014205 ModelA_Dev 0.032841 Dev/A 0.4325 maxWq/maxw 0.9189 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 7.1s gpumax 3.66
+roff     blk.30.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0453) Dw 0.09410 Dfit 0.033574 Dev 0.035064 ModelA_Dev 0.074212 Dev/A 0.4725 maxWq/maxw 0.9423 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.8s gpumax 3.66
+roff     blk.30.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0542) Dw 0.07477 Dfit 0.032456 Dev 0.034900 ModelA_Dev 0.071692 Dev/A 0.4868 maxWq/maxw 0.9570 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.6s gpumax 3.66
+LAYER 30 roff [2459s] geomean Dev/ModelA all-so-far 0.3605 bytes 837902352 maxmem 3.66 GB
+PROP 31 [2493s] enc True
+roff     blk.31.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0460) Dw 0.08574 Dfit 0.008625 Dev 0.009026 ModelA_Dev 0.031927 Dev/A 0.2827 maxWq/maxw 0.9712 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.31.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0462) Dw 0.09262 Dfit 0.013321 Dev 0.014031 ModelA_Dev 0.062725 Dev/A 0.2237 maxWq/maxw 0.9347 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.31.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00817 Dfit 0.003050 Dev 0.003206 ModelA_Dev 0.006400 Dev/A 0.5009 maxWq/maxw 0.9897 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.7s gpumax 3.66
+roff     blk.31.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0497) Dw 0.10512 Dfit 0.037409 Dev 0.044029 ModelA_Dev 0.106434 Dev/A 0.4137 maxWq/maxw 0.9692 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 5.1s gpumax 3.66
+roff     blk.31.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0460) Dw 0.07276 Dfit 0.015583 Dev 0.016233 ModelA_Dev 0.036584 Dev/A 0.4437 maxWq/maxw 1.0007 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.31.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.09441 Dfit 0.035586 Dev 0.037132 ModelA_Dev 0.077649 Dev/A 0.4782 maxWq/maxw 0.9457 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 6.9s gpumax 3.66
+roff     blk.31.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0538) Dw 0.07437 Dfit 0.036582 Dev 0.039991 ModelA_Dev 0.075119 Dev/A 0.5324 maxWq/maxw 0.9518 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.1s gpumax 3.66
+LAYER 31 roff [2539s] geomean Dev/ModelA all-so-far 0.3615 bytes 864730624 maxmem 3.66 GB
+PROP 32 [2580s] enc True
+roff     blk.32.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0455) Dw 0.09028 Dfit 0.009196 Dev 0.009595 ModelA_Dev 0.034823 Dev/A 0.2756 maxWq/maxw 0.9709 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.32.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0465) Dw 0.09275 Dfit 0.012125 Dev 0.012711 ModelA_Dev 0.056792 Dev/A 0.2238 maxWq/maxw 1.0010 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.32.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00792 Dfit 0.002934 Dev 0.003078 ModelA_Dev 0.006392 Dev/A 0.4815 maxWq/maxw 0.9978 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.5s gpumax 3.66
+roff     blk.32.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0494) Dw 0.10753 Dfit 0.031709 Dev 0.036285 ModelA_Dev 0.095634 Dev/A 0.3794 maxWq/maxw 1.0011 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.8s gpumax 3.66
+roff     blk.32.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0457) Dw 0.07442 Dfit 0.017090 Dev 0.017770 ModelA_Dev 0.040062 Dev/A 0.4436 maxWq/maxw 0.9917 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.32.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0452) Dw 0.09337 Dfit 0.034768 Dev 0.036341 ModelA_Dev 0.075728 Dev/A 0.4799 maxWq/maxw 0.9685 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.32.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0544) Dw 0.07697 Dfit 0.041038 Dev 0.045102 ModelA_Dev 0.084877 Dev/A 0.5314 maxWq/maxw 0.9938 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 16.5s gpumax 3.66
+LAYER 32 roff [2623s] geomean Dev/ModelA all-so-far 0.3622 bytes 891558896 maxmem 3.66 GB
+PROP 33 [2654s] enc True
+roff     blk.33.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0454) Dw 0.08465 Dfit 0.009121 Dev 0.009529 ModelA_Dev 0.037536 Dev/A 0.2539 maxWq/maxw 0.9060 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 5.2s gpumax 3.66
+roff     blk.33.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0465) Dw 0.08999 Dfit 0.015660 Dev 0.016491 ModelA_Dev 0.068951 Dev/A 0.2392 maxWq/maxw 1.0011 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.33.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00575 Dfit 0.002271 Dev 0.002375 ModelA_Dev 0.005748 Dev/A 0.4132 maxWq/maxw 0.9930 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 4.0s gpumax 3.66
+roff     blk.33.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0497) Dw 0.10784 Dfit 0.035928 Dev 0.044152 ModelA_Dev 0.112916 Dev/A 0.3910 maxWq/maxw 1.0007 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 4.7s gpumax 3.66
+roff     blk.33.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.07331 Dfit 0.015996 Dev 0.016634 ModelA_Dev 0.038262 Dev/A 0.4348 maxWq/maxw 0.9021 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 9.0s gpumax 3.66
+roff     blk.33.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0455) Dw 0.09058 Dfit 0.028672 Dev 0.029866 ModelA_Dev 0.063795 Dev/A 0.4682 maxWq/maxw 0.9705 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.33.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0538) Dw 0.07566 Dfit 0.037007 Dev 0.040339 ModelA_Dev 0.080345 Dev/A 0.5021 maxWq/maxw 0.9835 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 14.1s gpumax 3.66
+LAYER 33 roff [2704s] geomean Dev/ModelA all-so-far 0.3625 bytes 918387168 maxmem 3.66 GB
+PROP 34 [2740s] enc True
+roff     blk.34.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0452) Dw 0.09105 Dfit 0.009353 Dev 0.009785 ModelA_Dev 0.034104 Dev/A 0.2869 maxWq/maxw 0.9663 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.2s gpumax 3.66
+roff     blk.34.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0462) Dw 0.08920 Dfit 0.011780 Dev 0.012304 ModelA_Dev 0.054010 Dev/A 0.2278 maxWq/maxw 0.9796 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 0.7s gpumax 3.66
+roff     blk.34.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00836 Dfit 0.003040 Dev 0.003184 ModelA_Dev 0.005573 Dev/A 0.5714 maxWq/maxw 1.0010 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 3.6s gpumax 3.66
+roff     blk.34.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0502) Dw 0.09435 Dfit 0.014283 Dev 0.015841 ModelA_Dev 0.068630 Dev/A 0.2308 maxWq/maxw 1.0013 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.9s gpumax 3.66
+roff     blk.34.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0451) Dw 0.06893 Dfit 0.011676 Dev 0.012138 ModelA_Dev 0.030721 Dev/A 0.3951 maxWq/maxw 0.9157 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 4.9s gpumax 3.66
+roff     blk.34.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0458) Dw 0.08460 Dfit 0.014890 Dev 0.015535 ModelA_Dev 0.036531 Dev/A 0.4252 maxWq/maxw 1.0007 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 7.1s gpumax 3.66
+roff     blk.34.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0541) Dw 0.06736 Dfit 0.009097 Dev 0.010077 ModelA_Dev 0.025481 Dev/A 0.3955 maxWq/maxw 1.0013 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 11.7s gpumax 3.66
+LAYER 34 roff [2781s] geomean Dev/ModelA all-so-far 0.3620 bytes 945215440 maxmem 3.66 GB
+PROP 35 [2807s] enc True
+roff     blk.35.attn_q.weight         IQ2_XXS blob 2.0750 bpw (base 2.0457) Dw 0.08209 Dfit 0.006596 Dev 0.006907 ModelA_Dev 0.022069 Dev/A 0.3130 maxWq/maxw 0.9698 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 2.1s gpumax 3.66
+roff     blk.35.attn_k.weight         IQ2_XXS blob 2.0860 bpw (base 2.0459) Dw 0.08724 Dfit 0.008326 Dev 0.008775 ModelA_Dev 0.030910 Dev/A 0.2839 maxWq/maxw 0.9899 hist [0, 0, 0, 10240, 0, 0, 0, 0] floor 0 t_q 1.4s gpumax 3.66
+roff     blk.35.attn_v.weight         Q4_K    blob 4.0860 bpw (base 4.5000) Dw 0.00938 Dfit 0.003879 Dev 0.004051 ModelA_Dev 0.005940 Dev/A 0.6820 maxWq/maxw 1.0011 hist [0, 0, 0, 0, 0, 0, 10240, 0] floor 0 t_q 6.4s gpumax 3.66
+roff     blk.35.attn_output.weight    IQ2_XXS blob 2.0756 bpw (base 2.0505) Dw 0.10328 Dfit 0.014123 Dev 0.014864 ModelA_Dev 0.053256 Dev/A 0.2791 maxWq/maxw 0.9843 hist [0, 0, 0, 40960, 0, 0, 0, 0] floor 0 t_q 7.1s gpumax 3.66
+roff     blk.35.ffn_gate.weight       IQ2_XXS blob 2.0735 bpw (base 2.0459) Dw 0.05013 Dfit 0.005820 Dev 0.006080 ModelA_Dev 0.020579 Dev/A 0.2954 maxWq/maxw 0.8939 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 15.3s gpumax 3.66
+roff     blk.35.ffn_up.weight         IQ2_XXS blob 2.0735 bpw (base 2.0454) Dw 0.06816 Dfit 0.012021 Dev 0.012505 ModelA_Dev 0.035147 Dev/A 0.3558 maxWq/maxw 0.9591 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 12.5s gpumax 3.66
+roff     blk.35.ffn_down.weight       IQ2_XXS blob 2.0739 bpw (base 2.0548) Dw 0.03929 Dfit 0.002751 Dev 0.003250 ModelA_Dev 0.018222 Dev/A 0.1783 maxWq/maxw 1.0013 hist [0, 0, 0, 97280, 0, 0, 0, 0] floor 0 t_q 23.3s gpumax 3.66
+LAYER 35 roff [2884s] geomean Dev/ModelA all-so-far 0.3606 bytes 972043712 maxmem 3.66 GB
+SUMMARY roff n 252 blobs 972043712 B geomean Dev/ModelA IQ 0.3283 all 0.3606 geomean Dw 0.054011 maxratio>=0.9 237/252 min 0.8114
+GATES done [2885s]

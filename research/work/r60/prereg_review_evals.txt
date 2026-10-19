@@ -1,0 +1,74 @@
+PRE-REGISTRATION: review evals on Qwen3-4B - B4 zero-shot, KL of the strongest IQ2_KT, one-session speed (blind review r60 W2/W3/W4, Q2,
+shortest-path steps 3 and 6; research/agents/review_icml_blind_r60.md)
+Written 2026-10-18 ~20:45 IST by the R60 solver BEFORE any run of the script. Nothing below is a result.
+Script: research/detail/review_evals.sh. Report: research/agents/solver_review_evals_r60.md. Log: logs/review_evals.log.
+
+0. FILES (the script checks sha256 / bytes and runs a 4-window determinism smoke against the paper run before any job)
+ B4    work/csq/native/4B-csq-vr3-0000{1,2}-of-00002.gguf, sha256 in logs/csq/build.log; shipped fork binary research/kernels/llama_f44/build/bin
+       with the native env of cs_lassemble.sh:40; paper run logs/r36_hfj_csq_native.log [1]16.0556 [2]19.6539 [3]16.9107 [4]14.7582.
+ B4mc  the same file on work/gemv_mc/build/bin with GGML_VR_MC=1 (multi-column VR GEMV; T1 bit-exact per column, logs/gemv_mc_test.log 19:27;
+       T2 accepted post hoc against 2x the batch-1 noise floor, logs/gemv_noise_floor.log 19:56).
+ KTc   work/ktc4/qwen3-4B-IQ2_KT-ktm-c4imat.gguf, 1,245,914,752 B (ktm recipe, C4-calibrated imatrix), WT2 [73]18.1480 (logs/r36_hfj_ktc4imat.log),
+       C4 [73]27.1512 (logs/r59/c4_ktc4imat.log); ext/ik_llama.cpp binary. The tuned R1 file was deleted (samepath_b4.sh:27).
+ IQ2_XXS work/r45b/4B-IQ2_XXS-r45b.gguf on the fork binary with GGML_F44=0 (excl_bench_1018.sh arm mnXX).
+ Extra speed rows = the other rows of tab:speed_main: B3+, B3, Model B, IQ2_KT at B3's bytes (ktm_keep), Q4_K_M (excl_bench_1018.sh paths).
+
+1. J2 KLD-72 OF KTc (protocol of \BfourKLD = logs/csq_evals.log, kld_kt_1018.sh)
+ 6 parts x 12 chunks of 512 of datasets/r59_wt2_p{1..6}.raw; base logits from stock llama-perplexity on work/r57/qwen3-4B-Q8_0.gguf; each part's
+ base PPL must equal logs/r59/base_p*.log to the printed digits (else BLOCKER, no number). KTc scored with ik_llama. Combined: mean of the 6 part
+ means, s.e. sqrt(sum se^2)/6 (results.tex:29). Base file ~1.1 GB per part, deleted after each part; C: must be >= 14,000 MB before each part.
+ Basis: IQ2_KT at B3's bytes (ktm) 0.8759 at WT2 18.6481; re-tuned R1 0.8523 at 18.2721 (results.tex:60-61; logs/kld_kt_1018.log): 1.18 KL per
+ nat of WT2 NLL. KTc is ln(18.1480/18.6481) = -0.0272 nats below ktm -> 0.876 - 0.032 = 0.844.
+ PREDICTION KTc KLD72 0.845, 80% [0.815, 0.870]; top-1 agreement 64-67% (ktm part 1 63.8%, B4 part 1 71.3%).
+ RULE: the abstract's "lowest KL" (main_icml.tex:69) stays iff KTc - B4 > 2 s.e. of the difference (B4 0.5852 +- 0.0084). Predicted: holds
+ (margin ~0.26 vs s.e. ~0.013).
+
+2. J1 / J1b ZERO-SHOT
+ Settings = the B3+ row (logs/r59_zs_b3p.log, r59_zs.sh NATIVE=1): -ngl 99 -c 2048 -b 2048; HellaSwag 1000 tasks; WinoGrande 1267; ARC-E and ARC-C
+ validation with -b 512 -np 5; full MMLU 14,042 (datasets/zs/mmlu-test-full.bin). KTc: same command lines on ik_llama (ZSBIN), MMLU with
+ --no-escape (ktm_mmluF_noesc.sh: ik's escape processing shifts the binary task file).
+ Basis: across our files the 5-task average tracks KL: Q8_0 (KL 0) 56.27; Model B (0.695) 49.13; B3+ (0.769) 48.16; B3 (0.793) 47.78;
+ IQ2_KT at B3's bytes (0.876) 45.99; IQ2_XXS (1.397) 41.86 (tab:zs_main, main_icml.tex:300-306; KL macros results.tex:11-14, 59-60). B4 KL 0.585.
+ Per task: B3+ + 0.184 KL x the slope of the B3+ -> Q8_0 chord; ARC-E lowered for the flat-build ARC-E deficit (B3+ is 4.2 points below its
+ KL-expected ARC-E; B3 5.6 below Model B).
+ PREDICTIONS B4 (80%): HS 57.0 [54.5, 59.5]; WG 62.0 [60.2, 63.8]; ARC-E 56.5 [53.5, 59.5]; ARC-C 39.5 [36.0, 43.0]; MMLU 34.3 [33.6, 35.0];
+   average 49.9 [48.7, 51.2] (Model B 49.13; B3+ 48.16).
+ PREDICTION KTc average 46.4 [45.3, 47.5] (KTM 45.99 + 0.031 KL x the KTM -> Q8_0 chord).
+ Q2 (review): B4 average >= Model B average: predicted yes (P ~0.75). B4 above KTc by more than 1 s.e. of the difference on >= 2 tasks:
+   predicted 4 of 5 [2, 5]. s.e. of a difference = sqrt(se_a^2 + se_b^2), unpaired (conservative: same items).
+ RULE: Q2 met -> add the B4 and KTc rows to tab:zs_main and replace "flat builds do not carry their PPL lead" (main_icml.tex:70) by B4's numbers;
+   Q2 not met -> add both rows and state which task(s) B4's lead does not carry to, with the numbers.
+ NOTE (paper, not this run): the s.e. row of tab:zs_main prints HS +-3.1, a 95% half-width; the other columns are 1 s.e. (HS 1 s.e. = 1.57,
+   from logs/pe52/zs_modelB_native_hs.log [51.70, 57.86]). The script uses 1 s.e. everywhere.
+
+3. J3 ONE-SESSION SPEED
+ One bin/job holds the GPU lock for the whole bench; waits up to 60 min for no other GPU app; nvidia-smi dmon throughout; PRE line with clocks,
+ power and temperature before every run. NR = 10 rounds, arm order rotated by one each round. Per round: llama-bench pp512 and tg128
+ (-ngl 99 -fa 1 -ctk f16 -ctv f16 -r 5) for b4, b4mc, xxs, ktc and the extra rows; llama-batched-bench (-fa on -c 4096 -b 2048 -ub 512
+ -npp 128 -ntg 128 -npl 1,2,4,8; S_TG = aggregate decode tok/s) for b4, b4mc, xxs, ktc. After the rounds: one ubatch sweep pass (pp64,
+ -b 2048, -ub 1..32, -r 3) per arm. Statistic: per-round paired ratio (same round); mean, 95% t-interval with df = n - 1 (excl_bench_1018.sh
+ looked up the t of df = n - 2: its intervals were ~2% too wide), median, min, max and the 10 per-round values.
+ PREDICTIONS (mean of the per-round ratio, 80%):
+  tg128  B4/XXS 1.10 [1.04, 1.16] (samepath C2 1.109 [1.099, 1.119], logs/samepath_b4.log 17:36); KTc/XXS 0.99 [0.94, 1.04] (ktm 0.984,
+         logs/excl_bench_1018 EXCL; kt 1.003 in C2); B4/KTc 1.11 [1.05, 1.17]; B4mc/B4 1.00 [0.98, 1.02] (the ncols = 1 code is unchanged;
+         gemv_mc T3 npl 1 1.014).
+  pp512  B4/XXS 0.73 [0.70, 0.76] (B3+ 0.724, B4/B3+ 1.009 in logs/csq_bench.log); KTc/XXS 0.94 [0.90, 0.97] (ktm 0.939).
+  extra tg128 rows: B3+ 1.09 [1.03, 1.15]; B3 1.00 [0.95, 1.05]; Model B 1.03 [0.98, 1.08]; KTM 0.99 [0.94, 1.04]; Q4_K_M 0.76 [0.71, 0.81].
+  batched npl 2 / 4 / 8: B4mc/XXS 0.96 [0.85, 1.08] / 1.10 [0.98, 1.22] / 1.14 [1.02, 1.26] (gemv_mc T3 medians 0.953 / 1.115 / 1.132);
+         B4mc/B4 5.2 [4.5, 6.0] / 4.3 [3.7, 5.0] / 3.2 [2.8, 3.7]; B4mc/KTc 1.5 [1.25, 1.8] / 1.5 [1.25, 1.8] / 1.6 [1.3, 1.9]
+         (samepath C3 KT/XXS 0.64 / 0.72 / 0.69).
+  session: IQ2_XXS tg128 median 165 [135, 205] tok/s (seen 139.4 to 203.1, review W3); CV of the tg128 ratios over rounds < 4%.
+ RULES:
+  (a) tab:speed_main takes every row from this session (one IQ2_XXS reference, same rounds); the caption prints this session's IQ2_XXS tok/s;
+      earlier sessions go to the appendix as the cross-session spread.
+  (b) batch 1: B4/XXS tg128 lower bound > 1.00 -> "B4 decodes at batch 1 at m [lo, hi] x IQ2_XXS"; else "matches IQ2_XXS". This replaces the
+      abstract's 1.005-1.10x (B3/B3+) figure (W2).
+  (c) batched: any npl in {2, 4, 8} with B4mc/XXS upper bound < 0.90 keeps "batched decoding is slower at npl k"; otherwise "the multi-column
+      kernel closes the batched gap (m2 / m4 / m8)", labelled post hoc because its T2 gate was relaxed after the run.
+  (d) a run with OTHER=yes is flagged; a mean outside its 80% interval is reported as a miss together with the session's IQ2_XXS tok/s.
+
+4. ETA (measured rates; ledger overrun ratio actual/high 0.48-0.51 on the last two jobs, so no widening)
+ preflight 3-5 min (3 commit readings, two 4-window smokes: abl_trellis smoke 29 s) -> J2 2-4 (csq_evals.log: 6 parts in 85 s) -> J1 19-26
+ (B3+ zero-shot 21.1 min, logs/r59_zs_b3p.log) -> J3 20-30 (180 llama-bench runs at 3.9 s, excl_bench_1018 pre.log; 40 batched runs at
+ 10.5-12.5 s, samepath C3 and gemv_mc T3; sweep ~1 min; + up to 60 if another GPU app runs) -> J1b 8-12 (ik: HS 85 s, WG 12 s, ARC-E 7 s,
+ MMLU 311 s of compute, logs/pe52/zs_ktm_*). Total 55-80 min after the GPU lock is free and free commit >= 9 GB.

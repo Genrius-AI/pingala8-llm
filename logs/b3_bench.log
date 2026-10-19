@@ -1,0 +1,28 @@
+BENCH b3 pp512 r1 rc=0
+BENCH b3 tg128 r1 rc=0
+BENCH mB pp512 r1 rc=0
+BENCH mB tg128 r1 rc=0
+BENCH mnXX pp512 r1 rc=0
+BENCH mnXX tg128 r1 rc=0
+BENCH ikKTeq pp512 r1 rc=1
+BENCH ikKTeq tg128 r1 rc=1
+BENCH mB pp512 r2 rc=0
+BENCH mB tg128 r2 rc=0
+BENCH mnXX pp512 r2 rc=0
+BENCH mnXX tg128 r2 rc=0
+BENCH ikKTeq pp512 r2 rc=1
+BENCH ikKTeq tg128 r2 rc=1
+BENCH b3 pp512 r2 rc=0
+BENCH b3 tg128 r2 rc=0
+BENCH mnXX pp512 r3 rc=0
+BENCH mnXX tg128 r3 rc=0
+BENCH ikKTeq pp512 r3 rc=1
+BENCH ikKTeq tg128 r3 rc=1
+BENCH b3 pp512 r3 rc=0
+BENCH b3 tg128 r3 rc=0
+BENCH mB pp512 r3 rc=0
+BENCH mB tg128 r3 rc=0
+2026-10-17 17:43 SUMMARY (recomputed from logs/excl_bench/*.json written 17:02-17:04 by this run; shared GPU, indicative; script globbed the wrong dir):
+SHARED pp512 b3/IQ2_XXS median 0.653 rounds [0.653, 0.628, 0.975]; mB/IQ2_XXS median 0.680 rounds [0.241, 0.680, 1.025]; xxs tok/s [5448.9, 5470.8, 4141.1]
+SHARED tg128 b3/IQ2_XXS median 1.164 rounds [1.221, 1.164, 1.049]; mB/IQ2_XXS median 1.087 rounds [1.209, 0.933, 1.087]; xxs tok/s [105.2, 117.1, 116.7]
+NOTE ikKTeq arm failed rc=1 (file absent); the 17:02 run overwrote the earlier exclusive JSONs in logs/excl_bench/ - their EXCL summary lines are preserved in logs/excl_bench.log

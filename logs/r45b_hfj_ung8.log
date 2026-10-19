@@ -1,0 +1,12 @@
+0.00.774.435 I Will perform strided perplexity calculation -> adjusting context size from 2049 to 4096
+0.01.655.528 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.320.712 I cmn          init: llama threadpool init, n_threads = 20
+0.05.420.549 I 
+0.05.423.063 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.05.423.079 I perplexity_v2: tokenizing the input ..
+0.06.034.622 I perplexity_v2: have 299078 tokens. Calculation chunk = 4096
+0.06.034.664 I perplexity_v2: computing over 73 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.10.320.151 I perplexity_v2: 4.29 seconds per pass - ETA 5.20 minutes
+[1]14.2882,[2]18.4881,[3]15.8831,[4]13.8788,[5]14.5464,[6]14.6627,[7]14.8445,[8]14.9235,[9]15.1903,[10]14.7407,[11]14.9568,[12]14.9608,[13]15.1697,[14]15.6205,[15]15.7136,[16]15.4774,[17]15.2342,[18]15.0015,[19]14.5355,[20]14.1676,[21]14.0718,[22]14.4893,[23]14.8819,[24]15.0555,[25]15.0518,[26]15.0002,[27]14.8671,[28]14.6611,[29]14.3757,[30]14.3036,[31]14.4090,[32]14.5918,[33]14.5594,[34]14.6040,[35]14.5884,[36]14.5588,[37]14.7467,[38]14.7685,[39]14.7535,[40]14.8092,[41]14.8157,[42]14.6457,[43]14.6258,[44]14.6109,[45]14.6808,[46]14.8766,[47]15.0812,[48]15.2481,[49]15.3509,[50]15.3793,[51]15.4002,[52]15.4546,[53]15.5298,[54]15.5957,[55]15.5754,[56]15.5426,[57]15.4943,[58]15.5498,[59]15.6084,[60]15.5751,[61]15.5556,[62]15.4577,[63]15.4891,[64]15.4597,[65]15.3954,[66]15.4210,[67]15.3827,[68]15.4314,[69]15.3203,[70]15.3066,[71]15.3754,[72]15.4131,[73]15.4768,
+
+MODEL work/r45b/4B-r45b-ung8.gguf sha256 8a9f7fd065483e456a82383085ae720f70717135b6fd2b9a713217a7cd21ed39 (appended after the run; carrier unchanged since the eval)

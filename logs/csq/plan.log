@@ -1,0 +1,5 @@
+PLAN B3_v2: TOTAL 1245915872 B (vs B3 +0; vs IQ2_XXS -705440); shards [997459456, 248456416] headers [5986532, 17934]; tensors 1291; by kind {'raw': 268191744, 'vr': 965718400, 'prm': 2211840, 'c': 1916928, 'didx': 936096, 'dval': 936096, 'signs': 256}
+PLAN B3_v3: TOTAL 1241916576 B (vs B3 -3999296; vs IQ2_XXS -4704736); shards [994491680, 247424896] headers [5976608, 14525]; tensors 1039; by kind {'raw': 268191744, 'vr': 963944320, 'c': 1916928, 'didx': 936096, 'dval': 936096, 'signs': 256}
+PLAN B3p_v3: TOTAL 1243153792 B (vs B3 -2762080; vs IQ2_XXS -3467520); shards [995833472, 247320320] headers [5968302, 10737]; tensors 829; by kind {'raw': 268191744, 'vr': 967057280, 'c': 1916928, 'didx': 4256, 'dval': 4256, 'signs': 256}
+PLAN B3p_v2: TOTAL 1247153024 B (vs B3 +1237152; vs IQ2_XXS +531712); shards [992331456, 254821568] headers [5978012, 14360]; tensors 1081; by kind {'raw': 268191744, 'vr': 968831360, 'prm': 2211840, 'c': 1916928, 'didx': 4256, 'dval': 4256, 'signs': 256}
+PLAN layout saving on B3 (v2 -> VR3): 3999296 B; B3+ VR3 vs B3 -2762080 B, vs IQ2_XXS -3467520 B (size-matched); B3+ in the v2 layout would be +531712 B vs IQ2_XXS (OVER)

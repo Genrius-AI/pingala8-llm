@@ -1,0 +1,12 @@
+R56 mirror control pre-registration (written 2026-10-14 19:31 IST, before any mirror build, proxy or ppl number). Source: research/agents/reviewer_r56_rateoff.md "Clean control".
+Question: at EQUAL per-tensor bytes, do per-tile rate classes help or hurt ppl? The rate-off arm (roff, work/r52a/f1) scored ppl 17.7897 vs shipped Pingala-8 19.1036,
+but with +0.597% bytes, bytes moved from attn_v into the 212 IQ2 slots, byte carry off (r52a_build.py carry cy=0) and nsal=0.
+Arm "mirror" (r52a_build.py mode mirror): standard per-tile rate-class allocator (r48k alloc), byte carry ON, nsal=0 (no salient floor), 8 states, tables research/work/r48k3,
+per-tensor byte target = roff blob bytes of the same tensor (work/r52a/f1/stats.json, v == roff) minus MARGIN 96; everything else as the f1 build (NSEQ 512, NEV 32, DAMP 0.1, ALPHA 1.05, shifts as r52a_full.sh).
+Run: GJ2=1 research/detail/r52a_full.sh f3 mirror:8:research/work/r48k3:mirror   (driver research/detail/r56_mirror_drive.sh)
+Predicted (CALC/untested): ppl(mirror) = 18.3, 80% interval 17.4-19.1. Total linear-blob bytes within 0.01% of roff (972,043,712 B; expected 972,019,520 +- carry).
+Decision on D = ppl(mirror) - 17.7897:
+  D <= -0.18 : classes are load-bearing at equal bytes; keep them, quote the measured %, replace the 1.73x (layers 0-2) by the all-tensor figure 1.30x.
+  |D| < 0.18 : tie; say "weight-error only" (classes do not matter for ppl at equal bytes).
+  D >= +0.18 : the claim flips; ship flat class 3 (rate-off), trimming >= 758,752 B (about 3% of tiles to class 2) to get under IQ2_XXS bytes.
+Odds stated by the reviewer before the run: classes-on still loses at equal bytes 55%, wins by more than 1% 45%.

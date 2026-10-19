@@ -1,0 +1,3 @@
+2026-10-19 05:38:48 manual pairing (queue pair() could not read the chunk count from these builds' logs; NW set from the [N] count)
+WT2 B4 - KT NW=70: dNLL -0.1034 +/- 0.0068 (95%), first better on 70/70 | mean -0.1034 naive +/-0.0068 lag1 +0.09 neff 58.4 corrected +/-0.0074 blockboot(B=5) [-0.1099,-0.0969]
+C4 B4 - KT NW=71: dNLL -0.1480 +/- 0.0161 (95%), first better on 70/71 | mean -0.1480 naive +/-0.0161 lag1 -0.02 neff 74.6 corrected +/-0.0157 blockboot(B=5) [-0.1690,-0.1339]

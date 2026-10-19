@@ -1,0 +1,8 @@
+2026-10-17 17:00:18 r59_ktm start sid 71261
+2026-10-17 17:10:02 QUANT rc=0 bytes=1245914752 predicted=1245914752 B3=1245915872 types: 
+2026-10-17 17:10:14 sha256 3ba644610211341ce19545fceee163078034e0b06da89c9998b74c426746cc73
+2026-10-17 17:15:22 IKXXS cross-binary: [73]28.6037 vs mainline 28.6083; paired: dNLL -0.0002 +/- 0.0006 (95%), first better on 39/73
+2026-10-17 17:23:46 PPL KTM [73]18.6481
+2026-10-17 17:23:47 PAIRED B3 vs KT-b3match: dNLL -0.0317 +/- 0.0110 (95%), first better on 53/73
+2026-10-17 17:23:47 r59_ktm end; left in work/r59kt: imatrix_convert.log ktm.sha256 ktm_keep.gguf ppl_drive.log quant.cmd quant.log 
+2026-10-17 19:14:47 C4 ktm rc=0 last [73]28.0002 | B3 vs KTM: dNLL -0.0455 +/- 0.0100 (95%), first better on 66/73 | mean -0.0455 naive +/-0.0100 lag1 +0.12 neff 56.8 corrected +/-0.0113 blockboot(B=5) [-0.0562,-0.0369]

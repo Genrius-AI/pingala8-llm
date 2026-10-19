@@ -1,0 +1,4 @@
+PLAN shards 3: l31-8b-pingala8-flat-vrnative-cslfull-00001-of-00003.gguf 994298432 B (227 tensors, header 7831583 B); l31-8b-pingala8-flat-vrnative-cslfull-00002-of-00003.gguf 991815584 B (438 tensors, header 23408 B); l31-8b-pingala8-flat-vrnative-cslfull-00003-of-00003.gguf 402096800 B (188 tensors, header 10195 B)
+PLAN tensors 853 (linears 224); data bytes by kind (32-aligned): {'raw': 534610176, 'vr': 1840487424, 'prm': 2752512, 'c': 2490368, 'didx': 2432, 'dval': 2432, 'signs': 256}
+PLAN TOTAL 2388210816 B; budget 2399212576 -> margin +11001760 B (OK); vs container 0: +2388210816 B; max shard 994298432 (OK 1e9)
+PLAN alt 'padded slot' layout (linears keep mix type/shape, VR bytes + zero pad): linear data 1856765952 vs tight 1840487424 -> total >= 2404489344 B (OVER budget)

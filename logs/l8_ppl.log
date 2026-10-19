@@ -1,0 +1,2 @@
+PPL_MODEL -m work/llama8b/l31-8b-IQ2_XXS.gguf label l8_iq2
+HFJ l8_iq2 rc=0 last [70]12.3500 computing over 70 chunks, n_ctx=4096 

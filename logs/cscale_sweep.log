@@ -1,0 +1,98 @@
+2026-10-19 07:31:07 cscale_sweep start pid 444961 SWEEP 'c1' C4 1 GPUFRAC 0.36; C: free 15732 MB; free commit 12 GB. ETA from measured rates (B4 cs_qfull.log, abl_trellis.log): preflight 2-3 min, P0 4-8, per arm build 45-60 + native 13-25 + smoke 1 + hfjoin 8-10 + C4 7-9 = 75-105 min; 2 arms 2h35-3h40 plus commit gates
+2026-10-19 07:31:12 binaries: llama-perplexity 3703e10deab4f714 libggml-cuda 76168fad1ee5016e (abl_trellis 18:22: 3703e10deab4f714 / 76168fad1ee5016e)
+2026-10-19 07:31:12 gate B4 smoke: free commit 12 GB (need 8 on 3 readings)
+2026-10-19 07:32:20 gate B4 smoke open (free commit 15 GB)
+2026-10-19 07:32:45 B4 SMOKE SAME '[1]16.0556 [2]19.6539 [3]16.9107 [4]14.7582 ': pairing against the paper runs logs/r36_hfj_csq_native.log and logs/r59/c4_csq.log
+2026-10-19 07:32:46 gate P0 new: free commit 10 GB (need 11 on 3 readings)
+2026-10-19 07:34:26 gate P0 new open (free commit 15 GB)
+2026-10-19 07:37:55 P0 new rc=0 SUMMARY roff n 14 blobs 56769504 B geomean Dev/ModelA IQ 0.2252 all 0.2773 geomean Dw 0.043609 maxratio>=0.9 13/14 min 0.8988
+2026-10-19 07:37:55 P0 PASS: cs_build_p.py at CSA 1/6, CSB 1/3 reproduces B4's 14 layer-0-1 blobs byte for byte (all-so-far 0.2773; B4 0.2773); the copy is exact and the build is deterministic at GPUFRAC 0.36
+2026-10-19 07:37:55 [c1] arm start pid 446040: c = 1, no column prescale (attribution control, advisor r63), c = s^(0) E^(-0); pairing reference WT2 logs/r36_hfj_csq_native.log, C4 logs/r59/c4_csq.log; prereg d -0.003 [-0.015, 0.010], layers 0-1 ratio 0.99 [0.85, 1.20], sum-Dev ratio 0.99 [0.95, 1.05]
+2026-10-19 07:37:55 [c1] build try 1: fresh
+2026-10-19 07:37:56 [c1] gate build c1 try 1: free commit 10 GB (need 11 on 3 readings)
+2026-10-19 07:39:37 [c1] gate build c1 try 1 open (free commit 16 GB)
+2026-10-19 07:44:26 [c1] EARLY layers 0-1 geomean Dev/ModelA 0.2712 vs B4 0.2773 (ratio 0.978; prereg 0.99 [0.85, 1.20])
+2026-10-19 07:56:42 [c1] BUILD try 1 rc=143 
+2026-10-19 07:57:48 [c1] build try 2: resuming from work/cs_sweep/c1/f1o/stats.json
+2026-10-19 07:57:49 [c1] gate build c1 try 2: free commit 15 GB (need 11 on 3 readings)
+2026-10-19 07:58:56 [c1] gate build c1 try 2 open (free commit 15 GB)
+2026-10-19 08:17:26 [c1] BUILD try 2 rc=143 
+2026-10-19 08:18:32 [c1] build try 3: resuming from work/cs_sweep/c1/f1o/stats.json
+2026-10-19 08:18:33 [c1] gate build c1 try 3: free commit 14 GB (need 11 on 3 readings)
+2026-10-19 08:19:40 [c1] gate build c1 try 3 open (free commit 15 GB)
+2026-10-19 08:39:13 [c1] BUILD try 3 rc=143 
+2026-10-19 08:40:18 [c1] BLOCKER build (see logs/cs_sweep/c1/build.tensors; a rerun resumes at the last finished layer)
+2026-10-19 08:40:18 [c1] arm c1 STOPPED rc=5
+2026-10-19 08:40:18 arm c1 rc=5 in 62 min: 
+2026-10-19 08:40:18 STOP: arm c1 ended with rc=5 (disk, commit gate, bytes or build failure); later arms not started
+2026-10-19 08:40:18 TABLE alpha 1/3 (B4, CMODE=opt, s^(1/6) E^(-1/3)): WT2 [73]16.6413 C4 [73]24.3639 d 0 (reference; sum Dev 5.1006)
+2026-10-19 08:40:18 TABLE c1 c = 1, no column prescale (attribution control, advisor r63): no result
+2026-10-19 08:40:18 Q3 NO DATA
+2026-10-19 08:40:18 cscale_sweep exit rc=0 SWEEP 'c1' C: free 15743 MB end
+2026-10-19 08:40:33 another cscale_sweep.sh holds logs/cscale_sweep.lock; exiting
+2026-10-19 08:40:50 cscale_sweep start pid 460374 SWEEP 'c1' C4 1 GPUFRAC 0.36; C: free 15743 MB; free commit 14 GB. ETA from measured rates (B4 cs_qfull.log, abl_trellis.log): preflight 2-3 min, P0 4-8, per arm build 45-60 + native 13-25 + smoke 1 + hfjoin 8-10 + C4 7-9 = 75-105 min; 2 arms 2h35-3h40 plus commit gates
+2026-10-19 08:40:54 binaries: llama-perplexity 3703e10deab4f714 libggml-cuda 76168fad1ee5016e (abl_trellis 18:22: 3703e10deab4f714 / 76168fad1ee5016e)
+2026-10-19 08:40:55 gate B4 smoke: free commit 13 GB (need 8 on 3 readings)
+2026-10-19 08:42:03 gate B4 smoke open (free commit 13 GB)
+2026-10-19 08:42:32 B4 SMOKE SAME '[1]16.0556 [2]19.6539 [3]16.9107 [4]14.7582 ': pairing against the paper runs logs/r36_hfj_csq_native.log and logs/r59/c4_csq.log
+2026-10-19 08:42:32 P0 already done: P0 PASS: cs_build_p.py at CSA 1/6, CSB 1/3 reproduces B4's 14 layer-0-1 blobs byte for byte (all-so-far 0.2773; B4 0.2773); the copy is exact and the build is deterministic at GPUFRAC 0.36
+2026-10-19 08:42:32 [c1] arm start pid 460861: c = 1, no column prescale (attribution control, advisor r63), c = s^(0) E^(-0); pairing reference WT2 logs/r36_hfj_csq_native.log, C4 logs/r59/c4_csq.log; prereg d -0.003 [-0.015, 0.010], layers 0-1 ratio 0.99 [0.85, 1.20], sum-Dev ratio 0.99 [0.95, 1.05]
+2026-10-19 08:42:32 [c1] build try 1: resuming from work/cs_sweep/c1/f1o/stats.json
+2026-10-19 08:42:32 [c1] gate build c1 try 1: free commit 9 GB (need 11 on 3 readings)
+2026-10-19 08:44:14 [c1] gate build c1 try 1 open (free commit 14 GB)
+2026-10-19 08:59:58 [c1] BUILD try 1 rc=0 SUMMARY roff n 252 blobs 972043712 B geomean Dev/ModelA IQ 0.3316 all 0.3672 geomean Dw 0.057081 maxratio>=0.9 229/252 min 0.8010
+2026-10-19 08:59:58 [c1] CSCALE CMODE pow CSA 0.0 CSB 0.0
+2026-10-19 08:59:59 [c1] BYTES blobs 972043712 B (B4 972043712 B, diff 0); tensors whose blob size != B4's: 0/252
+2026-10-19 08:59:59 [c1] PROXY n 252 sum Dev arm 5.1386 B4 5.1006 rho 1.0075 dS +0.0381; layers 0-1 sum-Dev rho 0.9697; Hessian check ModelA_Dev max rel diff 0.0e+00, 0 tensors off; Dev-implied dNLL +0.0022..+0.0049 (bridge 0.058..0.128 nats per unit sum Dev: B3+ -> B4 and abl_trellis vri0; prereg sum-Dev ratio 0.99 [0.95, 1.05])
+2026-10-19 09:00:01 [c1] scan try 1 rc=1 
+2026-10-19 09:00:01 [c1] BLOCKER scan (see logs/cs_sweep/c1/scan.log)
+2026-10-19 09:00:01 [c1] arm c1 STOPPED rc=5
+2026-10-19 09:00:01 arm c1 rc=5 in 17 min: 
+2026-10-19 09:00:01 STOP: arm c1 ended with rc=5 (disk, commit gate, bytes or build failure); later arms not started
+2026-10-19 09:00:01 TABLE alpha 1/3 (B4, CMODE=opt, s^(1/6) E^(-1/3)): WT2 [73]16.6413 C4 [73]24.3639 d 0 (reference; sum Dev 5.1006)
+2026-10-19 09:00:01 TABLE c1 c = 1, no column prescale (attribution control, advisor r63): no result
+2026-10-19 09:00:01 Q3 NO DATA
+2026-10-19 09:00:01 cscale_sweep exit rc=0 SWEEP 'c1' C: free 15732 MB end
+2026-10-19 09:50:40 cscale_sweep start pid 470148 SWEEP 'c1' C4 1 GPUFRAC 0.36; C: free 15721 MB; free commit 22 GB. ETA from measured rates (B4 cs_qfull.log, abl_trellis.log): preflight 2-3 min, P0 4-8, per arm build 45-60 + native 13-25 + smoke 1 + hfjoin 8-10 + C4 7-9 = 75-105 min; 2 arms 2h35-3h40 plus commit gates
+2026-10-19 09:50:40 WARN research/detail/cs_qnative.py changed since the B4 build or this prereg (sha256 ab323769c8e944e9, was a083752b5d1b4cc0)
+2026-10-19 09:50:45 binaries: llama-perplexity 3703e10deab4f714 libggml-cuda 76168fad1ee5016e (abl_trellis 18:22: 3703e10deab4f714 / 76168fad1ee5016e)
+2026-10-19 09:50:45 gate B4 smoke: free commit 20 GB (need 8 on 3 readings)
+2026-10-19 09:51:54 gate B4 smoke open (free commit 21 GB)
+2026-10-19 09:52:23 B4 SMOKE SAME '[1]16.0556 [2]19.6539 [3]16.9107 [4]14.7582 ': pairing against the paper runs logs/r36_hfj_csq_native.log and logs/r59/c4_csq.log
+2026-10-19 09:52:23 P0 already done: P0 already done: P0 PASS: cs_build_p.py at CSA 1/6, CSB 1/3 reproduces B4's 14 layer-0-1 blobs byte for byte (all-so-far 0.2773; B4 0.2773); the copy is exact and the build is deterministic at GPUFRAC
+2026-10-19 09:52:23 [c1] arm start pid 470596: c = 1, no column prescale (attribution control, advisor r63), c = s^(0) E^(-0); pairing reference WT2 logs/r36_hfj_csq_native.log, C4 logs/r59/c4_csq.log; prereg d -0.003 [-0.015, 0.010], layers 0-1 ratio 0.99 [0.85, 1.20], sum-Dev ratio 0.99 [0.95, 1.05]
+2026-10-19 09:52:23 [c1] CSCALE CMODE pow CSA 0.0 CSB 0.0
+2026-10-19 09:52:24 [c1] BYTES blobs 972043712 B (B4 972043712 B, diff 0); tensors whose blob size != B4's: 0/252
+2026-10-19 09:52:24 [c1] PROXY n 252 sum Dev arm 5.1386 B4 5.1006 rho 1.0075 dS +0.0381; layers 0-1 sum-Dev rho 0.9697; Hessian check ModelA_Dev max rel diff 0.0e+00, 0 tensors off; Dev-implied dNLL +0.0022..+0.0049 (bridge 0.058..0.128 nats per unit sum Dev: B3+ -> B4 and abl_trellis vri0; prereg sum-Dev ratio 0.99 [0.95, 1.05])
+2026-10-19 09:52:28 [c1] scan try 1 rc=0 SCAN b3p blobs that are the same file as b3: 0/252; differ: ['blk.0.attn_q.weight', 'blk.0.attn_k.weight', 'blk.0.attn_v.weight', 'blk.0.attn_output.weight', 'blk.0.ffn_gate.weight', 'blk.0.ffn_up.wei
+2026-10-19 09:53:51 [c1] delta try 1 rc=0 DELTA b3p tensors_with_delta 51/252 entries 81 (B3 233221, -233140); bytes_f32 648
+2026-10-19 09:54:04 [c1] plan try 1 rc=0 PLAN layout saving on B3 (v2 -> VR3): 3999296 B; B3+ VR3 vs B3 -2771552 B, vs IQ2_XXS -3476992 B (size-matched); B3+ in the v2 layout would be +522272 B vs IQ2_XXS (OVER)
+2026-10-19 10:00:47 [c1] check try 1 rc=0 CHECK SUMMARY 252/252 PASS t 402s
+2026-10-19 10:02:56 [c1] build try 1 rc=0 NATIVE3 TOTAL 1243144320 B vs B3 -2771552 vs IQ2_XXS -3476992 (OK); tensors 753 t 122s
+2026-10-19 10:05:14 [c1] verify try 1 rc=0 VERIFY3 shards 2 tensors 753 expected 753; mismatches 0 []; vr_prm tensors 0; vr.layout 3 PASS
+2026-10-19 10:05:14 [c1] NATIVE c1 1243144320 B (B4 1243153792 B, diff -9472 B); clamp delta entries 81 (B4 entries 561)
+2026-10-19 10:05:15 [c1] gate smoke c1: free commit 15 GB (need 8 on 3 readings)
+2026-10-19 10:06:20 [c1] gate smoke c1 open (free commit 15 GB)
+2026-10-19 10:06:49 [c1] SMOKE [2] 18.9217 [4]14.4848 (B4 [2] 19.6539; stop above 30)
+2026-10-19 10:06:49 [c1] gate hfjoin c1: free commit 12 GB (need 8 on 3 readings)
+2026-10-19 10:07:57 [c1] gate hfjoin c1 open (free commit 19 GB)
+2026-10-19 10:14:41 [c1] HFJ c1 [73]16.5794 (B4 [73]16.6413; prereg 16.59 [16.39, 16.81])
+2026-10-19 10:14:42 [c1] gate C4 c1: free commit 12 GB (need 8 on 3 readings)
+2026-10-19 10:15:50 [c1] gate C4 c1 open (free commit 18 GB)
+2026-10-19 10:22:56 [c1] C4 c1 [73]25.5560 (B4 [73]24.3639)
+2026-10-19 10:22:58 [c1] PAIRED WT2 c1 - B4: dNLL -0.0037 +/- 0.0078 (95%), first better on 41/73
+2026-10-19 10:22:58 [c1] ACORR WT2 c1 - B4: mean -0.0037 naive +/-0.0078 lag1 +0.15 neff 53.5 corrected +/-0.0091 blockboot(B=5) [-0.0120,+0.0078]
+2026-10-19 10:22:58 [c1] PAIRED WT2 c1 - IQ2_KT(C4-cal): dNLL -0.0904 +/- 0.0099 (95%), first better on 72/73
+2026-10-19 10:22:58 [c1] PAIRED WT2 c1 - IQ2_XXS: dNLL -0.5455 +/- 0.0181 (95%), first better on 73/73
+2026-10-19 10:22:59 [c1] PAIRED C4 c1 - B4: dNLL +0.0478 +/- 0.0048 (95%), first better on 1/73
+2026-10-19 10:22:59 [c1] ACORR C4 c1 - B4: mean +0.0478 naive +/-0.0048 lag1 -0.07 neff 83.3 corrected +/-0.0045 blockboot(B=5) [+0.0433,+0.0516]
+2026-10-19 10:22:59 [c1] PAIRED C4 c1 - IQ2_KT(C4-cal): dNLL -0.0605 +/- 0.0084 (95%), first better on 69/73
+2026-10-19 10:22:59 [c1] DECISION c1: WT2 d -0.0037 [-0.0128, +0.0054] nats (lag-1 corrected 95%), within 0.01 nats of B4, not separated; C4 +0.0478 [+0.0433, +0.0523] above 0; prediction -0.003 [-0.015, +0.010] held
+2026-10-19 10:22:59 [c1] CLEANUP blobs deleted (logs: logs/cs_sweep/c1, logs/r36_hfj_csw_c1_native.log, logs/r59/c4_csw_c1.log); C: free 15724 MB
+2026-10-19 10:22:59 [c1] arm c1 finished
+2026-10-19 10:22:59 arm c1 rc=0 in 30 min: WT2 d -0.0037 [-0.0128, +0.0054] nats (lag-1 corrected 95%), within 0.01 nats of B4, not separated; C4 +0.0478 [+0.0433, +0.0523] above 0; prediction -0.003 [-0.015, +0.010] held
+2026-10-19 10:22:59 TABLE alpha 1/3 (B4, CMODE=opt, s^(1/6) E^(-1/3)): WT2 [73]16.6413 C4 [73]24.3639 d 0 (reference; sum Dev 5.1006)
+2026-10-19 10:22:59 TABLE c1 c = 1, no column prescale (attribution control, advisor r63), s^(0) E^(-0): WT2 [73]16.5794 C4 [73]25.5560 | d WT2 -0.0037 +- 0.0091, d C4 +0.0478 +- 0.0045 (arm - B4, lag-1 corrected 95%) | sum-Dev ratio 1.0075
+2026-10-19 10:22:59 Q3 MET: every tested neighbour is within 0.01 nats of alpha 1/3 or worse (best neighbour c1 d -0.0037). Paper rule R1: state that the derived exponent is within 0.01 nats of the best of {1/4, 1/3, 1/2} on WikiText-2 (C4 in the table), cite SmoothQuant/AWQ for the family
+2026-10-19 10:22:59 ATTRIBUTION c1: BETWEEN (WT2 -0.0037 +- 0.0091, C4 +0.0478 +- 0.0045): rule A4, report the numbers; the scale is not separated from c=1 by the rules
+2026-10-19 10:22:59 cscale_sweep exit rc=0 SWEEP 'c1' C: free 15724 MB end

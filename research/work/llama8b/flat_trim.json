@@ -1,0 +1,60 @@
+{
+ "moved": [
+  "blk.4.ffn_down.weight",
+  "blk.6.ffn_down.weight",
+  "blk.8.ffn_down.weight"
+ ],
+ "saving_each": 3670016,
+ "rank": [
+  [
+   "blk.4.ffn_down.weight",
+   511041.578078093
+  ],
+  [
+   "blk.5.ffn_down.weight",
+   740020.5654838819
+  ],
+  [
+   "blk.6.ffn_down.weight",
+   921037.690988749
+  ],
+  [
+   "blk.7.ffn_down.weight",
+   1029904.0506613422
+  ],
+  [
+   "blk.8.ffn_down.weight",
+   1133267.6270875002
+  ],
+  [
+   "blk.9.ffn_down.weight",
+   1307881.3920114671
+  ],
+  [
+   "blk.10.ffn_down.weight",
+   1338363.4025885838
+  ],
+  [
+   "blk.11.ffn_down.weight",
+   1406276.1599692758
+  ],
+  [
+   "blk.12.ffn_down.weight",
+   1555800.234703531
+  ],
+  [
+   "blk.13.ffn_down.weight",
+   1942162.8782688845
+  ],
+  [
+   "blk.14.ffn_down.weight",
+   2262766.3554033525
+  ],
+  [
+   "blk.15.ffn_down.weight",
+   2906270.967855278
+  ]
+ ],
+ "median": 83046887.69301218,
+ "rule": "3 smallest sum_ij w^2*imatrix_j among ffn_* L4-30, <=1 per layer, not adjacent"
+}

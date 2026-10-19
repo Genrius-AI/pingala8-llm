@@ -1,0 +1,44 @@
+2026-10-18 16:44:37 samepath_b4 start pid 580646 C: free 15656 MB; B4 work/csq/native/4B-csq-vr3-00001-of-00002.gguf; KT IQ2_KT-b3bytes work/r59kt/ktm_keep.gguf; gates win 0.02 mean 0.005
+2026-10-18 16:44:42 A0 preflight PASS: B4 shards match logs/csq/build.log sha256; C: free 15656 MB
+2026-10-18 16:49:06 b4_ub1_8 rc=0 wall 264 s, first window 38.56 s, last [8]16.1025
+2026-10-18 16:50:01 b4_bat_8 rc=0 wall 55 s, first window 3.98 s, last [8]16.0620
+2026-10-18 16:50:01 A CMP b4 mean +0.0025 mean|d| 0.0031 max|d| 0.0063 worst w5 gate(win < 0.02, mean < 0.005) PASS | w1 -0.0024 w2 +0.0039 w3 +0.0035 w4 +0.0009 w5 +0.0063 w6 +0.0018 w7 +0.0037 w8 +0.0025
+2026-10-18 16:50:01 A2 determinism SAME: fresh batched windows 1-8 = the paper run (logs/r36_hfj_csq_native.log)
+2026-10-18 16:50:02 A3 IQ2_XXS ub1 reused from logs/ub1_1018/xxs.log (ub1_check_1018.sh, stock binary, same command line)
+2026-10-18 16:50:02 A3 CTRL CMP IQ2_XXS mean +0.0003 mean|d| 0.0036 max|d| 0.0063 worst w4 gate(win < 0.02, mean < 0.005) PASS | w1 +0.0035 w2 +0.0006 w3 +0.0051 w4 +0.0063 w5 -0.0047 w6 -0.0021 w7 -0.0015 w8 -0.0047
+2026-10-18 16:54:21 kt_ub1_8 rc=0 wall 259 s, first window 29.02 s, last [8]18.1961
+2026-10-18 16:54:21 A4 CTRL CMP IQ2_KT-b3bytes mean -0.0006 mean|d| 0.0012 max|d| 0.0032 worst w3 gate(win < 0.02, mean < 0.005) PASS | w1 -0.0010 w2 -0.0031 w3 -0.0032 w4 +0.0013 w5 +0.0001 w6 +0.0003 w7 +0.0009 w8 +0.0000
+2026-10-18 16:54:22 A GATE B4 PASS (worst window w5); ub1 rate 38.56 s/window, wall 264 s for 8 windows
+2026-10-18 16:54:22 CHOSEN b4 work/csq/native/4B-csq-vr3-00001-of-00002.gguf (batched reference logs/r36_hfj_csq_native.log)
+2026-10-18 16:54:22 C1 predicted ub1 73-window time 46.9 min (38.56 s/window x 73 + 0 s load)
+2026-10-18 17:33:38 c1_b4_ub1_73 rc=0 wall 2356 s, first window 28.60 s, last [73]16.6844
+2026-10-18 17:33:40 C1 measured 39.3 min; ub1 [73]16.6844 vs batched [73]16.6413 rel +0.259% | paired dNLL +0.0026 +/- 0.0006 (95%), first better on 14/73 | mean +0.0026 naive +/-0.0006 lag1 +0.18 neff 50.9 corrected +/-0.0007 blockboot(B=5) [+0.0020,+0.0033]
+2026-10-18 17:33:40 C1 PAIRED ub1 b4 vs IQ2_KT-b3bytes(batched): dNLL -0.1113 +/- 0.0097 (95%), first better on 73/73
+2026-10-18 17:33:40 C1 PAIRED ub1 b4 vs IQ2_XXS(batched): dNLL -0.5392 +/- 0.0197 (95%), first better on 73/73
+2026-10-18 17:36:19 C2 bench rc=0 (30 of 30 runs rc=0)
+2026-10-18 17:36:19 C2 path check: GEMV hook active in the B4 bench
+C2 tg128 b4 n 10 mean 182.8 tok/s 95%CI [181.7, 183.8] median 183.0
+C2 tg128 xxs n 10 mean 164.8 tok/s 95%CI [163.7, 165.9] median 164.7
+C2 tg128 kt n 10 mean 165.3 tok/s 95%CI [163.8, 166.7] median 166.2
+C2 ratio b4/xxs n 10 mean 1.109 95%CI [1.099, 1.119] (per-round paired)
+C2 ratio kt/xxs n 10 mean 1.003 95%CI [0.992, 1.014] (per-round paired)
+C2 ratio b4/kt n 10 mean 1.106 95%CI [1.094, 1.117] (per-round paired)
+2026-10-18 17:36:19 C2 OTHER=yes on 0 of 30 runs
+2026-10-18 17:36:25 C3 fork llama-batched-bench build rc=0, shipped bin/ files unchanged
+2026-10-18 17:36:29 C3 ik llama-batched-bench build rc=0, shipped bin/ files unchanged
+2026-10-18 17:38:04 C3 batched-bench rc=0
+C3 npl 1 aggregate tg tok/s (median of 3) b4 180.8 xxs 172.9 kt 176.1 | b4/xxs 1.046 b4/kt 1.027
+C3 npl 2 aggregate tg tok/s (median of 3) b4 57.4 xxs 304.4 kt 193.7 | b4/xxs 0.189 b4/kt 0.297
+C3 npl 4 aggregate tg tok/s (median of 3) b4 112.9 xxs 425.3 kt 306.6 | b4/xxs 0.266 b4/kt 0.368
+C3 npl 8 aggregate tg tok/s (median of 3) b4 222.0 xxs 633.9 kt 440.4 | b4/xxs 0.350 b4/kt 0.504
+2026-10-18 17:38:04 PAPER quality and speed on the same path: ppl 16.6844 (ub1, 73 windows, b4 work/csq/native/4B-csq-vr3-00001-of-00002.gguf), tg 182.8 [181.7, 183.8] tok/s (tg128, 10 exclusive rounds, 95% CI)
+2026-10-18 17:40:10 C4 p1 ub1 Mean KLD: 0.516478 ± 0.018453
+2026-10-18 17:42:12 C4 p2 ub1 Mean KLD: 0.630495 ± 0.021747
+2026-10-18 17:44:17 C4 p3 ub1 Mean KLD: 0.595687 ± 0.021403
+2026-10-18 17:46:22 C4 p4 ub1 Mean KLD: 0.569766 ± 0.019917
+2026-10-18 17:48:26 C4 p5 ub1 Mean KLD: 0.599676 ± 0.021598
+2026-10-18 17:50:33 C4 p6 ub1 Mean KLD: 0.604931 ± 0.020749
+C4 KLD72 b4 ub1 0.5862 +- 0.0084
+C4 KLD72 b4 batched 0.5852 +- 0.0084
+2026-10-18 17:50:34 summary: gate PASS, chosen b4; C2 ratio b4/xxs n 10 mean 1.109 95%CI [1.099, 1.119] (per-round paired); C3 npl 2 aggregate tg tok/s (median of 3) b4 57.4 xxs 304.4 kt 193.7 | b4/xxs 0.189 b4/kt 0.297
+2026-10-18 17:50:34 samepath_b4 exit rc=0 C: free 15617 MB (start 15656) end

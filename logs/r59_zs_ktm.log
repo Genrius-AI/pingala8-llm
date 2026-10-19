@@ -1,0 +1,7 @@
+START ktm 19:04:27 bin ext/ik_llama.cpp/build-cuda/bin env 'env' -m work/r59kt/ktm_keep.gguf
+RES ktm WG 19:15:00 Final Winogrande score(1267 tasks): 58.8003 +/- 1.3833
+RES ktm arc-easy 19:22:33 Final result: 50.5263 +/- 2.0960
+RES ktm arc-challenge 19:30:59 Final result: 34.4482 +/- 2.7528
+RES ktm mmluF 19:37:04 
+RES ktm HS 19:38:29 
+DONE ktm 19:38:29

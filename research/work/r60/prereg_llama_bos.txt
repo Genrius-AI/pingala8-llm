@@ -1,0 +1,11 @@
+PREREG 2026-10-19 00:45 IST (written before any run): Llama-3.1-8B B4 (work/cs/native_lfull, 2,388,210,816 B) vs IQ2_KT-LK1 (2,389,350,432 B,
+from Q8_0) vs IQ2_XXS (2,399,212,576 B) under STANDARD llama-perplexity evaluation with a BOS at every chunk (-c 4096, no --ppl-stride),
+WikiText-2 test, HF-joined text (datasets/wikitext2_test_hfjoin.raw), all chunks; binaries as in the paper (B4: fork with native env;
+IQ2_KT: ik_llama.cpp; IQ2_XXS: mainline). Second text: C4 held-out part (datasets/c4_val_part.raw), same BOS-per-chunk mode.
+Motivation: blind reviews r61/r61b/r62 (W4): the Llama result uses windows without BOS and a calibration with BOS-less sequences (MIXBOS);
+the earlier flat build lost to IQ2_KT under BOS-per-chunk (validation text). B4 has never been evaluated with BOS per chunk.
+PREDICTION (80%): WikiText-2 BOS-per-chunk dNLL(B4 - IQ2_KT) = -0.07 [-0.10, -0.03]; C4 dNLL(B4 - IQ2_KT) = -0.06 [-0.10, -0.02].
+RULE: the Llama claim "B4 beats IQ2_KT" stands under standard evaluation only if the paired dNLL against IQ2_KT is negative with a
+95% interval (lag-1 corrected) excluding zero on WikiText-2 BOS-per-chunk. If it covers zero: report a tie under standard evaluation and
+qualify the abstract. If positive and excluding zero: report the loss, and the abstract's Llama claim is limited to the BOS-less protocol.
+C4 is reported either way. No other file, setting or text is tried after seeing results.

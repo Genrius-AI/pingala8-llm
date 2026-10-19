@@ -1,0 +1,69 @@
+PREREG same-path B4 (review_icml_final_r59 W2, W6) - written 2026-10-18 15:50 IST, before any run of research/detail/samepath_b4.sh
+Author: architect (arch_samepath_r60). Log of the run: logs/samepath_b4.log. Nothing below is a result.
+
+FILE UNDER TEST
+B4 = work/csq/native/4B-csq-vr3-0000{1,2}-of-00002.gguf, 1,243,153,792 B, shard sha256 4611812769...ab44243 / ded47243d3...a70300ff8
+(logs/csq/build.log). Batched (PPC2 slab) ppl [73]16.6413 (logs/r36_hfj_csq_native.log). Note: the Qwen hfjoin text has 73 windows,
+not 70 (70 is Llama-8B); every "70-window" step of the brief is the 73-window run here.
+Kernel env (cs_lassemble.sh:40, csq_evals.sh:8): GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1
+GGML_VR_PRMG=1 GGML_VR_PPC=2, binary research/kernels/llama_f44/build/bin. ub1 = same command line (r36_hfj.sh) plus -ub 1.
+
+EVIDENCE FOR THE PREDICTION (grep only; per-window dNLL = ub1 minus batched, from the cumulative [k] values)
+| file | clamp-delta entries blk.0-6 ffn_gate (total) | source | ub1 window 4 | other windows | 8-window mean / mean|d| |
+| B3 | 455+42397+17675+15817+45222+11306+15428 = 148,300 (233,221) | logs/csq/delta.log "B3 f4 version" | +0.0796 | -0.002..+0.009 | +0.0127 / 0.0134 (logs/ub1_1018/b3.log) |
+| B3+ | 455+42397+17675+15817+34081+8661+15428 = 134,514 (219,435) | logs/b3p/delta.log, scan.log | +0.1953 | w1-3 +0.0046 -0.0034 -0.0004 | w1-4 only (work/gemv_dbg/logs/g9) |
+| Model B | 403+1+0+39+3443+32+162 = 4,080 (27,437) | work/gemv_dbg/logs/sidecheck_mB.txt | -0.0052 | -0.007..+0.004 | -0.0040 / 0.0049 (logs/ub1_1018/mB.log) |
+| IQ2_XXS | none (stock MMVQ vs MMQ) | - | +0.0063 | -0.005..+0.005 | +0.0003 / 0.0035 (logs/ub1_1018/xxs.log) |
+| B4 | 1+0+0+8+1+1+0 = 11 (561) | logs/csq/delta.log lines 7-49 | ? | ? | ? |
+B4 has 4 orders of magnitude fewer clamp-delta entries in the localized tensors than B3/B3+ and 370x fewer than Model B (no gap).
+Caveat: the count is a weak predictor inside the high-count regime (B3+ has 9% fewer entries than B3 but a 2.4x larger GEMV gap), and the
+mechanism inside the tensors is OPEN (arch_gemv_b3gap_r59 H5 80%).
+
+PREDICTIONS (stage A, 8 windows, B4 ub1 vs batched)
+P1 window 4 dNLL in [-0.010, +0.015]; P(any window |dNLL| >= 0.02) = 0.15.
+P2 8-window mean |dNLL| = 0.004 [0.002, 0.008]; P(mean |dNLL| >= 0.005) = 0.35 (Model B, a healthy native file, sits at 0.0049 and stock
+   IQ2_XXS at 0.0035, so the 0.005 limit is at the measured path-noise floor). P(stage A PASS) = 0.55.
+P3 controls: IQ2_XXS reuses logs/ub1_1018/xxs.log (0.0035); IQ2_KT ub1 (never run) mean |dNLL| <= 0.005, all windows < 0.02.
+P4 ub1 rate 27.7-29.4 s/window (B3+ 27.72 s/pass g9, B3 29.39 s/pass ub1_1018/b3.log); 73-window ub1 run 34-37 min.
+P5 73-window ub1 ppl 16.64 [16.54, 16.77]; paired ub1-vs-batched dNLL over 73 windows +0.000 [-0.006, +0.008].
+P6 exclusive tg128 (10 rounds, -r 5, excl_bench_1018 flags) B4 190-198 tok/s, B4/IQ2_XXS 1.08-1.12 (csq_bench 195.6, B3+ excl 191.9,
+   IQ2_XXS 174.2, IQ2_KT b3-bytes 174.4; logs/csq_bench.log, logs/excl_bench_1018.log).
+P7 batched-bench aggregate tg (npp 128, ntg 128): B4 npl1 185-200, npl2 40-60, npl4 100-125, npl8 200-250 tok/s; IQ2_XXS npl2 300-370,
+   npl4 450-580, npl8 600-700 (proxy: excl_bench_1018 pp64 -ub sweep). So B4 at npl 2-8 is predicted 0.3-0.4x IQ2_XXS (W6 stands).
+P8 KLD-72 at ub1 0.585 [0.575, 0.600] vs batched 0.5852 (logs/csq_evals.log).
+
+DECISION RULES (fixed now)
+Gate A (brief): every B4 window |dNLL| < 0.02 AND 8-window mean |dNLL| < 0.005 -> stage C on B4. Otherwise stage B.
+Stage B (added sub-gates; a localized re-encode cannot fix a diffuse path difference):
+ B0 FAIL-SINK = some window |dNLL| >= 0.02; FAIL-DIFFUSE = all < 0.02 but mean |dNLL| >= 0.005. DIFFUSE -> no re-encode, stage C on B4.
+ B1 (SINK only) localization on the worst window w with the debug copy (work/gemv_dbg/build/bin, G8/G12 protocol, PPL_FIRST_CHUNK=w-1):
+    PPC2 (reference), PPC0 (exact weights, batched), PPC0 + PPC2 on blk.0-6 ffn_gate. gap = NLL - NLL(PPC2).
+    PPC0 gap < 0.02 -> LOC=gemv (activation path, not the weights): no re-encode, kernel HANDOFF, stage C on B4.
+    PPC0 gap >= 0.02 and gate06 gap < 0.02 -> LOC=gate06 (re-encode blk.0-6 ffn_gate).
+    else run PPC2 on blk.0-6 ffn_*: gap < 0.02 -> LOC=ffn06 (re-encode blk.0-6 ffn_gate/up/down); else LOC=none: stage C on B4.
+ B2 re-encode (research/detail/samepath_genc.py). The report's fix (a) cannot be applied to B4 as written: rate-on gives per-tile classes,
+    which the VR3 layout cannot hold (one class per tensor, cs_qnative.py header; vr.layout is file-global and the loader rejects vr_prm in a
+    layout-3 file, llama-model-loader.cpp:1891-1894), and its wide-clamp goal is already met (11 entries). So B2 keeps rate-off and the shipped
+    class (byte-identical blobs) and changes the one input that targets the localized mechanism: the fit Hessian of each re-encoded tensor
+    gets its position-0 (attention-sink) rows re-weighted to SINKW = 0.10 of its trace (shipped: 256 of 524,288 rows, 0.05%). Untested.
+    Self-test first: the "ref" arm (shipped settings) must reproduce every shipped blob (BITEXACT, or NUMERIC = same bytes and Dev within 1%).
+    Proxy gate (untested thresholds): geomean D0 (eval-sink error) fix/ref <= 0.5 AND geomean Dev fix/ref <= 1.25, blob bytes equal.
+    Then assemble under a NEW name (work/samepath/native/4B-csq-sinkfix-vr3-*), verify, re-run stage A on it, then 73-window batched.
+ Replace rule: the fixed file replaces B4 in the paper iff (i) its stage A passes Gate A, (ii) paired batched dNLL (fixed - B4, 73 windows,
+    r59_paired.py) mean <= +h95 (its own 95% half-width), i.e. batched ppl <= 16.6413 * exp(h95), and (iii) the 7 re-encoded blobs have the
+    shipped sizes and the file total is <= shipped + 4,096 B and <= IQ2_XXS 1,246,622,976 B. Otherwise B4 stays and the fixed file is deleted.
+Stage C (always, on the chosen file): 73-window ub1 ppl, measured time vs time predicted from the stage-A rate; exclusive tg128 10 rounds
+ with 95% t-intervals vs IQ2_XXS and IQ2_KT; batched-bench npl 1,2,4,8 (built only if the dry-run shows no shipped object is rebuilt);
+ KLD-72 at ub1. IQ2_KT file: R1 (18.2721) was deleted after ktfair (work/ktfair holds no gguf), so the default is work/r59kt/ktm_keep.gguf
+ (IQ2_KT at B3 bytes, 18.6481, logs/r36_hfj_r59_ktm.log); KT=path overrides.
+
+WHAT THE PAPER SAYS
+Case PASS: "Quality and speed on the same path: ppl X at micro-batch 1 (the token-generation GEMV), tg Y tok/s [CI]; the batched
+ Q8_0-slab ppl 16.64 agrees within Z% over 73 windows (paired dNLL D +/- h)." Batched-bench table answers W6 as measured (expected loss).
+Case FAIL-DIFFUSE (no window >= 0.02): headline quality = the ub1 73-window ppl (the deployed decode); the batched number is labelled
+ "Q8_0-slab path" with the paired difference; no re-encode claim.
+Case FAIL-SINK, fixed file passes the replace rule: B4 is replaced by the fixed file (7 tensors re-encoded with a sink-weighted Hessian,
+ same class and bytes); all B4 numbers that came from the old file are re-run or marked.
+Case FAIL-SINK, no fix (LOC gemv/none, proxy or self-test fail, or replace rule fails): the paper reports the ub1 73-window ppl as B4's
+ quality, states the sink-window gap and its localization, and keeps the batched number only as the slab-path figure.
+In every case the line printed by stage C, "quality and speed on the same path: ppl X (ub1), tg Y tok/s", is the paper's number.

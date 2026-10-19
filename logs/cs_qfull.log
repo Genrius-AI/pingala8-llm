@@ -1,0 +1,14 @@
+2026-10-18 11:33:06 start pid 482006
+2026-10-18 12:22:03 BUILD rc=0 SUMMARY roff n 252 blobs 972043712 B geomean Dev/ModelA IQ 0.3283 all 0.3606 geomean Dw 0.054011 maxratio>=0.9 237/252 min 0.8114
+2026-10-18 12:22:06 scan try 1 rc=0 SCAN b3p blobs that are the same file as b3: 0/252; differ: ['blk.0.attn_q.weight', 'blk.0.attn_k.weight', 'blk.0.attn_v.weight', 'blk.0.attn_output.weight', 'blk.0.ffn_gate.weight', 'blk.0.ffn_up.wei
+2026-10-18 12:23:41 delta try 1 rc=0 DELTA b3p tensors_with_delta 89/252 entries 561 (B3 233221, -232660); bytes_f32 4488
+2026-10-18 12:24:08 plan try 1 rc=0 PLAN layout saving on B3 (v2 -> VR3): 3999296 B; B3+ VR3 vs B3 -2762080 B, vs IQ2_XXS -3467520 B (size-matched); B3+ in the v2 layout would be +531712 B vs IQ2_XXS (OVER)
+2026-10-18 12:31:02 check try 1 rc=0 CHECK SUMMARY 252/252 PASS t 412s
+2026-10-18 12:33:11 build try 1 rc=0 NATIVE3 TOTAL 1243153792 B vs B3 -2762080 vs IQ2_XXS -3467520 (OK); tensors 829 t 121s
+2026-10-18 12:35:31 verify try 1 rc=0 VERIFY3 shards 2 tensors 829 expected 829; mismatches 0 []; vr_prm tensors 0; vr.layout 3 PASS
+2026-10-18 12:35:31 NATIVE csq 1243153792 B (B3+ 1,244,919,264; IQ2_XXS 1,246,622,976?)
+2026-10-18 12:43:27 HFJ csq [73]16.6413 (prereg 17.45 [17.00, 17.85]; B3+ 17.78)
+2026-10-18 12:43:27 PAIRED csq vs B3+: dNLL -0.0659 +/- 0.0093 (95%), first better on 70/73
+2026-10-18 12:43:27 PAIRED csq vs IQ2_KT-eq: dNLL -0.1122 +/- 0.0093 (95%), first better on 73/73
+2026-10-18 12:43:27 PAIRED csq vs IQ2_XXS: dNLL -0.5418 +/- 0.0197 (95%), first better on 73/73
+2026-10-18 12:43:27 end

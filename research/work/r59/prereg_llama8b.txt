@@ -1,0 +1,27 @@
+Pre-registration: Llama-3.1-8B flat Model B (blind application of the Qwen/Gemma flat rule). Written 2026-10-17 21:39 IST,
+before the build finished (checkpoint at layer 16 of 32; no Model B Llama perplexity or KL exists yet). Plain ASCII.
+
+Frozen inputs (sha256):
+d647229b016a567f0f4852ace2bc6928b0973eba45cb85489721ac0d51b958f1  research/detail/l8_trim.py
+3059989ed25350516a2db27aeee8f68ec4771d874d1cf048ebe382b13e30d3df  research/detail/l8_build.sh
+339c6395ea5110df776ca3763d9e5d8eb246185cf1d5e20f6fdb1ec10575447c  research/detail/r48l_build.py
+853de10aea4aee54c001b151d7a296abb66823b9f4a16dcd89bb58b4f8b52170  research/detail/l8_drive.sh
+b9dd5436446419692e341faf5a0a1b50bedadfdcfa561a97dbde0c87048f1cb6  research/detail/r36_hfj.sh
+Trim rule: research/detail/l8_trim.py header (a-priori, 3 class steps 3->2 on the smallest calibration-weighted-energy ffn tensors of layers 4..30).
+No change to these files is allowed before the Llama numbers land; any change voids this pre-registration and must be reported.
+
+Protocol: research/detail/r36_hfj.sh (WikiText-2 test hfjoin, -c 2049 --ppl-stride 4095, 70 windows for the Llama tokenizer), paired per-window
+dNLL with research/detail/r59_paired.py (adapted to 70 windows) and research/detail/r59_acorr.py (lag-1 corrected interval, block bootstrap).
+
+Measured before this file: IQ2_XXS 12.3500 (logs/r36_hfj_l8_iq2.log [70]).
+
+Predictions (CALC from the Qwen3-4B and Gemma-3-4B ratios; 80% intervals):
+P1 Q8_0 reference perplexity: 5.95 [5.60, 6.40].
+P2 Model B (carrier) perplexity: 9.6 [8.6, 10.9]  (ratio to IQ2_XXS 0.78 [0.70, 0.88]; Qwen B3/IQ2_XXS 0.632, Gemma exp(-0.123) = 0.884).
+P3 paired dNLL Model B - IQ2_XXS: -0.25 [-0.36, -0.12] nats per token.
+P4 native kernel perplexity within 2% of the carrier (l8_drive.sh rule).
+
+Decision rules:
+D1 "Model B beats IQ2_XXS on Llama-3.1-8B" only if the 95% interval of P3 lies below zero with both the naive and the autocorrelation-corrected interval.
+D2 P2 outside [8.6, 10.9] is reported as a missed prediction, in either direction.
+D3 If D1 fails, the paper states that the flat rule did not transfer to Llama-3.1-8B.

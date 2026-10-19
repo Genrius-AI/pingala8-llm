@@ -1,0 +1,10 @@
+PPL_MODEL -m work/r52a/4B-vrc8-avq4.gguf sha256 faf9e6010a27592007fd7173ee636746d88784121afefb10a16dbf595db4786c variant vrc8_avq4
+HFJ r52a_vrc8_avq4 rc=0 last [73]19.2186 computing over 73 chunks, n_ctx=4096 
+PPL_MODEL -m work/r52a/f1/4B-roff.gguf sha256 1e692e288e8b1968cd1958ea67607aa24d355522def88cc1f97e029c50053ccd variant roff
+HFJ r52a_roff rc=0 last [73]17.7897 computing over 73 chunks, n_ctx=4096 
+PPL_MODEL -m work/r52a/f1/4B-s4.gguf sha256 ee8f5b8ff0042365bd83385e5dc76405ea24fb6166313737aa628aa8ad1161cd variant s4
+HFJ r52a_s4 rc=0 last [73]20.1419 computing over 73 chunks, n_ctx=4096 
+PPL_MODEL -m work/r52a/f3/4B-mirror.gguf sha256 af8d6ac993fca621c3b25f03d7efded5dc015029deef277140160e91962dc8e3 variant mirror
+HFJ r52a_mirror rc=0 last [73]18.2302 computing over 73 chunks, n_ctx=4096 
+PPL_MODEL -m work/r52a/f4/4B-flat.gguf sha256 a6209560db68dae9cef51b03edb905455e939d4cb310d4f48ceca0e6b2b4218b variant flat
+HFJ r52a_flat rc=0 last [73]18.5738 computing over 73 chunks, n_ctx=4096 

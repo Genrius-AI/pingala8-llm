@@ -1,0 +1,7 @@
+START b4 22:45:34 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/csq/native/4B-csq-vr3-00001-of-00002.gguf
+RES b4 HS 22:46:51 1000 57.70000000% [54.6142%, 60.7268%]
+RES b4 WG 22:47:27 Final Winogrande score(1267 tasks): 63.7727 +/- 1.3509
+RES b4 arc-easy 22:48:00 Final result: 60.8772 +/- 2.0459
+RES b4 arc-challenge 22:48:21 Final result: 37.7926 +/- 2.8088
+RES b4 mmluF 23:02:58 Final result: 34.0122 +/- 0.3998
+DONE b4 23:02:58

@@ -1,0 +1,9 @@
+R59 B3 held-out pre-registration (lead, 2026-10-17 17:00 IST, written BEFORE the KLD-72, C4 and KT-size-matched runs exist)
+B3 = work/r59b3/native/4B-b3-vrnative (1,245,915,872 B; WikiText-2 ppl 18.0660 MEASURED logs/r36_hfj_r59_b3_native.log). B3 was chosen after B2 (POST-HOC).
+P1 KLD-72 (Q8_0 base, ctx 512, 72 chunks): B3 mean KLD 0.60, 80% [0.54, 0.66]; IQ2_KT-eq 0.785, 80% [0.74, 0.83]; Model B 0.64 [0.60, 0.68].
+   Claim "B3 lower KLD than IQ2_KT-eq" only if the difference exceeds 2 combined standard errors.
+P2 C4 validation (held-out text, r36_hfj protocol): paired dNLL B3 - IQ2_KT-eq = -0.020, 80% [-0.050, +0.010].
+   B3's WikiText-2 win is confirmed on held-out text only if the 95% CI of the paired dNLL is < 0; otherwise reported as not confirmed.
+P3 IQ2_KT size-matched to B3 (same DP recipe procedure as r56, budget = B3 bytes, file <= 1,245,915,872 B): WikiText-2 ppl 18.50, 80% [18.38, 18.60].
+   B3 beats it if paired dNLL 95% CI < 0 (predicted dNLL -0.024, 80% [-0.036, -0.010]). If not, the paper says B3 ties IQ2_KT at equal bytes.
+P4 (added 17:24 IST, before any run) zero-shot (pe52 protocol: HS 1000, WG 1267, ARC-E, ARC-C, MMLU subset): B3 within 1 s.e. of Model B on each task, average over the 5 tasks +0.5 points [-1.0, +2.0] vs Model B; B3 vs IQ2_KT size-matched: average +0.5 [-1.5, +2.5] (no directional claim unless a task difference exceeds 1.96 combined s.e.).

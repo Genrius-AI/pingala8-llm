@@ -1,0 +1,16 @@
+2026-10-18 14:18:19 run 1 (13:00-14:12, killed by slice_guard at layer 18) archived in logs/cs_lfull.run1.log; early read h17 + resume continue here
+2026-10-18 14:15:47 H17 chain start pid 530225
+2026-10-18 14:29:12 DELTA lfull DELTA tensors_with_delta 59/224 entries 386 bytes_fp16 2316 bytes_f32 3088; fp16-delta max |W+d16 - clamp(W)| = 5.1737e-04 (blk.31.ffn_down.weight)
+2026-10-18 14:29:48 PLAN TOTAL 2388236896 B; budget 2399212576 -> margin +10975680 B (OK); vs container 0: +2388236896 B; max shard 994298432 (OK 1e9)
+2026-10-18 14:36:40 NATIVE lfull NATIVE TOTAL 2388236896 B budget 2399212576 margin +10975680 vs container 0 +2388236896; tensors 859 t 190s | VERIFY shards 3 tensors in file 859 expected 859; mismatches 0 []; split.count 3 vr.ns 108 vr.trl 2 PASS
+2026-10-18 14:37:06 SMOKE4 lfull [1]9.8415 [2]10.9996 [3]9.6187 [4]8.9338  (shipped: [1]11.19 [2]6490; pass [2] < 20)
+2026-10-18 14:37:06 GATE PASS lfull -> 70-window r36_hfj
+2026-10-18 14:44:08 HFJ lfull [70]9.5447 (IQ2_XXS 12.3500, IQ2_KT 10.0375)
+2026-10-18 14:44:09 PAIRED lfull vs l8_iq2: dNLL -0.2577 +/- 0.0082 (95%), first better on 70/70 | mean -0.2577 naive +/-0.0082 lag1 +0.05 neff 62.7 corrected +/-0.0086 blockboot(B=5) [-0.2669,-0.2505]
+2026-10-18 14:44:10 PAIRED lfull vs ktllama_LK1: dNLL -0.0503 +/- 0.0057 (95%), first better on 69/70 | mean -0.0503 naive +/-0.0057 lag1 -0.15 neff 93.9 corrected +/-0.0049 blockboot(B=5) [-0.0562,-0.0449]
+2026-10-18 14:44:10 PAIRED lfull vs cs_a6: dNLL -0.0843 +/- 0.0042 (95%), first better on 70/70 | mean -0.0843 naive +/-0.0042 lag1 +0.21 neff 45.9 corrected +/-0.0052 blockboot(B=5) [-0.0894,-0.0802]
+2026-10-18 14:44:10 H17 hybrid vs a6 dNLL -0.0843 (rule: > -0.008 STOP, <= -0.016 RESUME, between RESUME marginal)
+2026-10-18 14:44:11 H17 DECISION RESUME B4
+2026-10-18 14:44:11 resume pid 537747 NSEQ 256 NEV 32 stats 126
+2026-10-18 15:05:52 BUILD rc=143 
+2026-10-18 15:05:52 BLOCKER build rc=143 or blob count

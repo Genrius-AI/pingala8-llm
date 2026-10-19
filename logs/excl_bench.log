@@ -1,0 +1,22 @@
+BENCH mB pp512 r1 rc=0
+BENCH mB tg128 r1 rc=0
+BENCH mnXX pp512 r1 rc=0
+BENCH mnXX tg128 r1 rc=0
+BENCH ikKTeq pp512 r1 rc=0
+BENCH ikKTeq tg128 r1 rc=0
+BENCH mnXX pp512 r2 rc=0
+BENCH mnXX tg128 r2 rc=0
+BENCH ikKTeq pp512 r2 rc=0
+BENCH ikKTeq tg128 r2 rc=0
+BENCH mB pp512 r2 rc=0
+BENCH mB tg128 r2 rc=0
+BENCH ikKTeq pp512 r3 rc=0
+BENCH ikKTeq tg128 r3 rc=0
+BENCH mB pp512 r3 rc=0
+BENCH mB tg128 r3 rc=0
+BENCH mnXX pp512 r3 rc=0
+BENCH mnXX tg128 r3 rc=0
+EXCL pp512 mB/IQ2_XXS median 0.748 rounds [0.748, 0.677, 0.811] tok/s mB [5046.6, 4796.2, 4851.7] xxs [6748.6, 7083.2, 5985.7]
+EXCL pp512 ikKTeq/IQ2_XXS median 0.948 rounds [0.915, 0.948, 0.997] tok/s ikKTeq [6175.4, 6712.6, 5967.9] xxs [6748.6, 7083.2, 5985.7]
+EXCL tg128 mB/IQ2_XXS median 0.967 rounds [0.967, 0.982, 0.872] tok/s mB [169.8, 171.1, 140.3] xxs [175.7, 174.3, 161.0]
+EXCL tg128 ikKTeq/IQ2_XXS median 1.001 rounds [0.862, 1.001, 1.033] tok/s ikKTeq [151.4, 174.6, 166.3] xxs [175.7, 174.3, 161.0]

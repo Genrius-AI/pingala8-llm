@@ -1,0 +1,10 @@
+  wrote 200/853 blk.6.ffn_gate.weight t 45s
+  wrote 320/853 blk.11.ffn_down.weight t 72s
+  wrote 400/853 blk.14.ffn_up.weight t 94s
+  wrote 440/853 blk.16.attn_v.weight t 101s
+  wrote 480/853 blk.18.attn_k.weight t 111s
+  wrote 800/853 blk.30.attn_k.weight t 184s
+SHARD work/cs/native_lfull/l31-8b-pingala8-flat-vrnative-cslfull-00001-of-00003.gguf 994298432 B sha256 76b39997009a52e35cb31b32a42ad59ec7859c88ccb997d0ae76ed1da4e44686 OK
+SHARD work/cs/native_lfull/l31-8b-pingala8-flat-vrnative-cslfull-00002-of-00003.gguf 991815584 B sha256 fbf44b6f9eac230ff654580592e8881da3dffb78ed98e78c42e1704e15fd2cf0 OK
+SHARD work/cs/native_lfull/l31-8b-pingala8-flat-vrnative-cslfull-00003-of-00003.gguf 402096800 B sha256 8c0146744bc4a91ff067e2cc2fbb2f90fbd0ebb8ee7d279863906a22bc8e67bd OK
+NATIVE TOTAL 2388210816 B budget 2399212576 margin +11001760 vs container 0 +2388210816; tensors 853 t 205s

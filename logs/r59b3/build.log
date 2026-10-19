@@ -1,0 +1,11 @@
+  wrote 200/1291 blk.5.attn_output.weight t 12s
+  wrote 320/1291 blk.8.attn_v.weight t 18s
+  wrote 360/1291 blk.9.ffn_down.weight t 21s
+  wrote 720/1291 blk.20.attn_k.weight t 59s
+  wrote 800/1291 blk.22.attn_q.weight t 74s
+  wrote 920/1291 blk.25.ffn_down.weight t 93s
+  wrote 1120/1291 blk.31.attn_output.weight t 120s
+  wrote 1200/1291 blk.33.ffn_down.weight t 128s
+SHARD work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf 997459456 B sha256 2b924ba35ffece846a5de6b1a4d06fb8a4cf999dc901dacbe9a4926fb09a51d5 OK
+SHARD work/r59b3/native/4B-b3-vrnative-00002-of-00002.gguf 248456416 B sha256 75e203ef9c0ed0d0c50d30ad48b69fc58fbabdae3d211c0643f0f331493f26c6 OK
+NATIVE TOTAL 1245915872 B budget 1246621312 margin +705440 vs container 1240445591 +5470281; tensors 1291 t 150s

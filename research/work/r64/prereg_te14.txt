@@ -1,0 +1,12 @@
+# prereg_te14.txt: cost of a 2-bit token embedding at Qwen3-14B (advisor research/agents/review_r64_advice.md follow-up, option C, mirror form).
+# Written 2026-10-19 05:25 IST, BEFORE the test file or its evaluation exists. Driver research/detail/w1_te14.sh. Plain ASCII.
+# Facts seen: 14B IQ2_KT (QK1) stores token_embd as iq2_kt (logs/q14/kt_design.log), B4 as Q2_K (255,252,480 B, GGUF header);
+#   KT linears 2.1425 b/w, B4 2.1196 (CALC). WT2: B4 9.5684, KT 9.3985, paired B4 - KT +0.0179 (VERDICT LOSS, logs/q14_full.log).
+# Test: the same ik llama-quantize command as logs/q14/kt_quant.cmd plus --token-embedding-type q2_K (linears unchanged; file ~49 MB larger),
+#   WT2 73 windows (r36_hfj.sh, frozen flags) via work/q14/nommap/ik; paired d = KT_teQ2K - KT (r59_paired.py, r59_acorr.py).
+# Mirror of option C (B4 with a 2-bit embedding cannot be built here: the f44 runtime has no IQ2_KT type and IQ2_XXS needs imatrix data the
+#   embedding has none of); it measures the same quantity, the WT2 cost of a ~2.1-bit token embedding against Q2_K on this model.
+# Prediction (my guess, 80%): d = -0.004 [-0.012, 0.000]; P(|d| > 0.005) = 0.35.
+# Rule (advisor r64 follow-up item 3-4): if d < -0.005 (the 2-bit embedding costs > 0.005 nats) -> KILL the 14B diagnosis: KT pays for its extra
+#   linear bytes, so the gap is the code; paper says so and scopes to 4-8B. If -0.005 <= d -> GO to option B (B4 + freed bytes to attn_v), which
+#   counts only at <= -0.01 vs IQ2_KT with the lag-1 interval excluding 0. Single run; the test file is deleted after the evaluation.

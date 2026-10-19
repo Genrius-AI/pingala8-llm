@@ -1,0 +1,1 @@
+DELTA tensors_with_delta 194/252 entries 233221 bytes_fp16 1399326 bytes_f32 1865768; fp16-delta max |W+d16 - clamp(W)| = 2.0020e-02 (blk.16.ffn_down.weight)

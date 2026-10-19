@@ -1,0 +1,485 @@
+FILE iq2 work/r45b/4B-IQ2_XXS-r45b.gguf 1246621312 B
+FILE r45 work/r45b/4B-r45b-ung8.gguf 4280405408 B
+FILE e1r research/work/4B-r36-e1.gguf 4280405408 B
+START 19:55:56 gpu 62, 180 MHz, 810 MHz, 10.46 W vram 441 MiB
+BENCH iq2 kv=f16 round=1 19:55:57 gpu 62, 180 MHz, 810 MHz, 10.31 W
+BENCH_RC iq2 f16 1 rc=0
+BENCHROW arm=iq2 kv=f16 round=1 test=pp512 d=0 median_tps=9137.04 ms_tok=0.109 all=[7279.3, 9201.3, 9090.8, 9163.5, 9137.0]
+BENCHROW arm=iq2 kv=f16 round=1 test=tg128 d=0 median_tps=226.37 ms_tok=4.418 all=[225.5, 225.8, 226.4, 229.8, 227.0]
+BENCHROW arm=iq2 kv=f16 round=1 test=pp512 d=4096 median_tps=7090.02 ms_tok=0.141 all=[6879.6, 6780.7, 7090.0, 7206.2, 7173.2]
+BENCHROW arm=iq2 kv=f16 round=1 test=tg128 d=4096 median_tps=174.95 ms_tok=5.716 all=[180.4, 174.9, 173.1, 175.6, 171.9]
+BENCH iq2 kv=q4_0 round=1 19:56:08 gpu 67, 330 MHz, 11301 MHz, 72.91 W
+BENCH_RC iq2 q4_0 1 rc=0
+BENCHROW arm=iq2 kv=q4_0 round=1 test=pp512 d=0 median_tps=8913.80 ms_tok=0.112 all=[7316.9, 8913.8, 8988.5, 9005.9, 8879.0]
+BENCHROW arm=iq2 kv=q4_0 round=1 test=tg128 d=0 median_tps=214.99 ms_tok=4.651 all=[213.8, 215.0, 215.0, 218.4, 217.1]
+BENCHROW arm=iq2 kv=q4_0 round=1 test=pp512 d=4096 median_tps=6868.85 ms_tok=0.146 all=[6571.5, 6442.8, 6874.3, 6868.9, 6884.4]
+BENCHROW arm=iq2 kv=q4_0 round=1 test=tg128 d=4096 median_tps=161.00 ms_tok=6.211 all=[161.0, 163.5, 163.4, 160.9, 158.6]
+BENCH r45 kv=f16 round=1 19:56:21 gpu 70, 330 MHz, 11301 MHz, 90.14 W
+BENCH_RC r45 f16 1 rc=0
+BENCHROW arm=r45 kv=f16 round=1 test=pp512 d=0 median_tps=8906.61 ms_tok=0.112 all=[8016.8, 8901.2, 8976.1, 9066.5, 8906.6]
+BENCHROW arm=r45 kv=f16 round=1 test=tg128 d=0 median_tps=112.17 ms_tok=8.915 all=[128.1, 127.8, 112.0, 112.2, 112.1]
+BENCHROW arm=r45 kv=f16 round=1 test=pp512 d=4096 median_tps=7009.24 ms_tok=0.143 all=[6721.6, 6361.8, 7030.1, 7015.0, 7009.2]
+BENCHROW arm=r45 kv=f16 round=1 test=tg128 d=4096 median_tps=95.75 ms_tok=10.444 all=[101.3, 99.6, 94.5, 81.2, 95.7]
+BENCH r45 kv=q4_0 round=1 19:56:40 gpu 73, 330 MHz, 11301 MHz, 94.80 W
+BENCH_RC r45 q4_0 1 rc=0
+BENCHROW arm=r45 kv=q4_0 round=1 test=pp512 d=0 median_tps=8762.06 ms_tok=0.114 all=[7086.5, 8762.1, 8703.7, 8795.6, 8800.2]
+BENCHROW arm=r45 kv=q4_0 round=1 test=tg128 d=0 median_tps=127.64 ms_tok=7.835 all=[126.0, 128.8, 128.1, 127.3, 127.6]
+BENCHROW arm=r45 kv=q4_0 round=1 test=pp512 d=4096 median_tps=6595.71 ms_tok=0.152 all=[6437.5, 6269.8, 6649.9, 6595.7, 6631.2]
+BENCHROW arm=r45 kv=q4_0 round=1 test=tg128 d=4096 median_tps=88.48 ms_tok=11.302 all=[97.0, 29.0, 88.5, 92.8, 84.4]
+BENCH e1r kv=f16 round=1 19:56:59 gpu 77, 330 MHz, 9001 MHz, 83.42 W
+BENCH_RC e1r f16 1 rc=0
+BENCHROW arm=e1r kv=f16 round=1 test=pp512 d=0 median_tps=8301.58 ms_tok=0.120 all=[7316.4, 8323.5, 8259.0, 8301.6, 8549.9]
+BENCHROW arm=e1r kv=f16 round=1 test=tg128 d=0 median_tps=129.80 ms_tok=7.704 all=[130.8, 132.1, 129.8, 104.4, 109.6]
+BENCHROW arm=e1r kv=f16 round=1 test=pp512 d=4096 median_tps=6763.44 ms_tok=0.148 all=[6335.3, 5997.7, 6763.4, 6981.8, 6984.1]
+BENCHROW arm=e1r kv=f16 round=1 test=tg128 d=4096 median_tps=82.81 ms_tok=12.076 all=[98.4, 87.8, 81.1, 80.6, 82.8]
+BENCH e1r kv=q4_0 round=1 19:57:17 gpu 86, 330 MHz, 11301 MHz, 98.76 W
+BENCH_RC e1r q4_0 1 rc=0
+BENCHROW arm=e1r kv=q4_0 round=1 test=pp512 d=0 median_tps=8627.50 ms_tok=0.116 all=[7730.6, 8744.1, 8660.7, 8619, 8627.5]
+BENCHROW arm=e1r kv=q4_0 round=1 test=tg128 d=0 median_tps=125.50 ms_tok=7.968 all=[127.6, 125.5, 125.6, 123.4, 105.3]
+BENCHROW arm=e1r kv=q4_0 round=1 test=pp512 d=4096 median_tps=6408.09 ms_tok=0.156 all=[5960.1, 6087.1, 6408.1, 6523.3, 6495.5]
+BENCHROW arm=e1r kv=q4_0 round=1 test=tg128 d=4096 median_tps=92.77 ms_tok=10.780 all=[30.0, 99.8, 92.8, 93.4, 91.8]
+BENCH e1r kv=q4_0 round=2 19:57:35 gpu 83, 330 MHz, 11301 MHz, 98.69 W
+BENCH_RC e1r q4_0 2 rc=0
+BENCHROW arm=e1r kv=q4_0 round=2 test=pp512 d=0 median_tps=8335.84 ms_tok=0.120 all=[7152.5, 8358.1, 8353.4, 8335.8, 7797.2]
+BENCHROW arm=e1r kv=q4_0 round=2 test=tg128 d=0 median_tps=126.28 ms_tok=7.919 all=[126.3, 129.0, 126.6, 125.7, 122.6]
+BENCHROW arm=e1r kv=q4_0 round=2 test=pp512 d=4096 median_tps=6257.85 ms_tok=0.160 all=[6257.9, 6000.9, 5090.7, 6457.8, 6528.5]
+BENCHROW arm=e1r kv=q4_0 round=2 test=tg128 d=4096 median_tps=92.92 ms_tok=10.762 all=[93.4, 93.6, 92.9, 92.8, 92.3]
+BENCH e1r kv=f16 round=2 19:57:51 gpu 78, 330 MHz, 11301 MHz, 62.35 W
+BENCH_RC e1r f16 2 rc=0
+BENCHROW arm=e1r kv=f16 round=2 test=pp512 d=0 median_tps=7679.72 ms_tok=0.130 all=[6847.9, 8259.8, 8241.1, 7440.9, 7679.7]
+BENCHROW arm=e1r kv=f16 round=2 test=tg128 d=0 median_tps=127.13 ms_tok=7.866 all=[130.3, 127.1, 128.8, 126.6, 122.4]
+BENCHROW arm=e1r kv=f16 round=2 test=pp512 d=4096 median_tps=6513.10 ms_tok=0.154 all=[6513.1, 6090.5, 6869.9, 6438.9, 6772.8]
+BENCHROW arm=e1r kv=f16 round=2 test=tg128 d=4096 median_tps=98.75 ms_tok=10.127 all=[97.5, 30.2, 99.2, 99.1, 98.7]
+BENCH r45 kv=q4_0 round=2 19:58:10 gpu 86, 330 MHz, 11301 MHz, 89.60 W
+BENCH_RC r45 q4_0 2 rc=0
+BENCHROW arm=r45 kv=q4_0 round=2 test=pp512 d=0 median_tps=7800.18 ms_tok=0.128 all=[4672.3, 7901.4, 7883.9, 7800.2, 7216.4]
+BENCHROW arm=r45 kv=q4_0 round=2 test=tg128 d=0 median_tps=126.34 ms_tok=7.915 all=[126.3, 127.8, 126.4, 121.2, 110.0]
+BENCHROW arm=r45 kv=q4_0 round=2 test=pp512 d=4096 median_tps=5927.14 ms_tok=0.169 all=[6140.3, 5761.3, 6013.1, 5927.1, 5664.0]
+BENCHROW arm=r45 kv=q4_0 round=2 test=tg128 d=4096 median_tps=93.69 ms_tok=10.674 all=[87.8, 93.7, 93.7, 93.7, 93.5]
+BENCH r45 kv=f16 round=2 19:58:26 gpu 86, 330 MHz, 11301 MHz, 98.80 W
+BENCH_RC r45 f16 2 rc=0
+BENCHROW arm=r45 kv=f16 round=2 test=pp512 d=0 median_tps=8248.88 ms_tok=0.121 all=[7689.8, 8883.3, 8639.6, 8248.9, 7948.5]
+BENCHROW arm=r45 kv=f16 round=2 test=tg128 d=0 median_tps=131.65 ms_tok=7.596 all=[131.5, 131.6, 132.2, 131.9, 119.5]
+BENCHROW arm=r45 kv=f16 round=2 test=pp512 d=4096 median_tps=6702.60 ms_tok=0.149 all=[6310.4, 1997.4, 6745.7, 6866.9, 6702.6]
+BENCHROW arm=r45 kv=f16 round=2 test=tg128 d=4096 median_tps=97.17 ms_tok=10.291 all=[109.9, 30.2, 100.2, 97.2, 96.0]
+BENCH iq2 kv=q4_0 round=2 19:58:46 gpu 79, 1612 MHz, 11301 MHz, 77.27 W
+BENCH_RC iq2 q4_0 2 rc=0
+BENCHROW arm=iq2 kv=q4_0 round=2 test=pp512 d=0 median_tps=7454.12 ms_tok=0.134 all=[7400.5, 8304.9, 7932.4, 7418.9, 7454.1]
+BENCHROW arm=iq2 kv=q4_0 round=2 test=tg128 d=0 median_tps=192.00 ms_tok=5.208 all=[195.9, 192.0, 191.9, 191.4, 192.0]
+BENCHROW arm=iq2 kv=q4_0 round=2 test=pp512 d=4096 median_tps=6043.79 ms_tok=0.165 all=[5392.7, 5313.3, 6043.8, 6395.7, 6065.2]
+BENCHROW arm=iq2 kv=q4_0 round=2 test=tg128 d=4096 median_tps=140.40 ms_tok=7.123 all=[140.6, 139.2, 140.4, 141.6, 139.6]
+BENCH iq2 kv=f16 round=2 19:58:57 gpu 79, 330 MHz, 9001 MHz, 75.32 W
+BENCH_RC iq2 f16 2 rc=0
+BENCHROW arm=iq2 kv=f16 round=2 test=pp512 d=0 median_tps=7294.94 ms_tok=0.137 all=[7158.2, 8249.6, 7673.9, 7281.2, 7294.9]
+BENCHROW arm=iq2 kv=f16 round=2 test=tg128 d=0 median_tps=204.78 ms_tok=4.883 all=[211.0, 204.5, 205.1, 204.8, 204.8]
+BENCHROW arm=iq2 kv=f16 round=2 test=pp512 d=4096 median_tps=6790.37 ms_tok=0.147 all=[6790.4, 6441.6, 6901.1, 6776.0, 6948.5]
+BENCHROW arm=iq2 kv=f16 round=2 test=tg128 d=4096 median_tps=158.78 ms_tok=6.298 all=[161.3, 158.8, 160.2, 158.4, 157.9]
+SERVER vram_iq2_f16_c4096 arm=iq2 kv=f16 np=1 ctx=4096 vram_before=435 vram_loaded=2448 delta_load=2013 MiB
+  BUF vram_iq2_f16_c4096 0.00.797.560 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF vram_iq2_f16_c4096 0.00.797.561 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF vram_iq2_f16_c4096 0.00.970.012 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF vram_iq2_f16_c4096 0.00.974.512 I llama_kv_cache:      CUDA0 KV buffer size =   576.00 MiB
+  BUF vram_iq2_f16_c4096 0.00.982.327 I llama_kv_cache: size =  576.00 MiB (  4096 cells,  36 layers,  1/1 seqs), K (f16):  288.00 MiB, V (f16):  288.00 MiB
+  BUF vram_iq2_f16_c4096 0.00.994.223 I sched_reserve:      CUDA0 compute buffer size =    79.01 MiB
+  BUF vram_iq2_f16_c4096 0.00.994.233 I sched_reserve:  CUDA_Host compute buffer size =    14.01 MiB
+  BUF vram_iq2_f16_c4096 0.01.095.103 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+REP {"tag": "vram_iq2_f16_c4096", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 5.485, "agg_tps": 93.3, "mean_stream_tps": 202.8}
+TPUT {"tag": "vram_iq2_f16_c4096", "conc": 1, "tokens_each": 512, "reps": 1, "agg_tps_median": 93.3, "agg_tps_all": [93.3]}
+PEAK vram_iq2_f16_c4096 vram_peak=2450 MiB base=435 delta_peak=2015 MiB
+SERVER vram_iq2_q4_0_c4096 arm=iq2 kv=q4_0 np=1 ctx=4096 vram_before=435 vram_loaded=2038 delta_load=1603 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.606.547 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.606.547 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.758.239 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.759.830 I llama_kv_cache:      CUDA0 KV buffer size =   162.00 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.765.323 I llama_kv_cache: size =  162.00 MiB (  4096 cells,  36 layers,  1/1 seqs), K (q4_0):   81.00 MiB, V (q4_0):   81.00 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.782.035 I sched_reserve:      CUDA0 compute buffer size =    79.09 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.782.043 I sched_reserve:  CUDA_Host compute buffer size =    14.09 MiB
+  BUF vram_iq2_q4_0_c4096 0.00.879.253 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+REP {"tag": "vram_iq2_q4_0_c4096", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 2.622, "agg_tps": 195.3, "mean_stream_tps": 196.3}
+TPUT {"tag": "vram_iq2_q4_0_c4096", "conc": 1, "tokens_each": 512, "reps": 1, "agg_tps_median": 195.3, "agg_tps_all": [195.3]}
+PEAK vram_iq2_q4_0_c4096 vram_peak=2040 MiB base=435 delta_peak=1605 MiB
+SERVER vram_r45_f16_c4096 arm=r45 kv=f16 np=1 ctx=4096 vram_before=435 vram_loaded=5342 delta_load=4907 MiB
+  BUF vram_r45_f16_c4096 0.00.907.361 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF vram_r45_f16_c4096 0.00.907.362 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF vram_r45_f16_c4096 0.01.591.552 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF vram_r45_f16_c4096 0.01.595.684 I llama_kv_cache:      CUDA0 KV buffer size =   576.00 MiB
+  BUF vram_r45_f16_c4096 0.01.603.840 I llama_kv_cache: size =  576.00 MiB (  4096 cells,  36 layers,  1/1 seqs), K (f16):  288.00 MiB, V (f16):  288.00 MiB
+  BUF vram_r45_f16_c4096 0.01.616.175 I sched_reserve:      CUDA0 compute buffer size =    79.01 MiB
+  BUF vram_r45_f16_c4096 0.01.616.184 I sched_reserve:  CUDA_Host compute buffer size =    14.01 MiB
+  BUF vram_r45_f16_c4096 0.01.737.605 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+REP {"tag": "vram_r45_f16_c4096", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 4.075, "agg_tps": 125.6, "mean_stream_tps": 125.9}
+TPUT {"tag": "vram_r45_f16_c4096", "conc": 1, "tokens_each": 512, "reps": 1, "agg_tps_median": 125.6, "agg_tps_all": [125.6]}
+PEAK vram_r45_f16_c4096 vram_peak=5342 MiB base=435 delta_peak=4907 MiB
+SERVER vram_r45_q4_0_c4096 arm=r45 kv=q4_0 np=1 ctx=4096 vram_before=435 vram_loaded=4932 delta_load=4497 MiB
+  BUF vram_r45_q4_0_c4096 0.00.668.501 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF vram_r45_q4_0_c4096 0.00.668.502 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF vram_r45_q4_0_c4096 0.01.261.084 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF vram_r45_q4_0_c4096 0.01.262.730 I llama_kv_cache:      CUDA0 KV buffer size =   162.00 MiB
+  BUF vram_r45_q4_0_c4096 0.01.265.374 I llama_kv_cache: size =  162.00 MiB (  4096 cells,  36 layers,  1/1 seqs), K (q4_0):   81.00 MiB, V (q4_0):   81.00 MiB
+  BUF vram_r45_q4_0_c4096 0.01.278.833 I sched_reserve:      CUDA0 compute buffer size =    79.09 MiB
+  BUF vram_r45_q4_0_c4096 0.01.278.843 I sched_reserve:  CUDA_Host compute buffer size =    14.09 MiB
+  BUF vram_r45_q4_0_c4096 0.01.377.146 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+REP {"tag": "vram_r45_q4_0_c4096", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 4.15, "agg_tps": 123.4, "mean_stream_tps": 123.7}
+TPUT {"tag": "vram_r45_q4_0_c4096", "conc": 1, "tokens_each": 512, "reps": 1, "agg_tps_median": 123.4, "agg_tps_all": [123.4]}
+PEAK vram_r45_q4_0_c4096 vram_peak=4932 MiB base=435 delta_peak=4497 MiB
+SERVER vram_e1r_f16_c4096 arm=e1r kv=f16 np=1 ctx=4096 vram_before=435 vram_loaded=5342 delta_load=4907 MiB
+  BUF vram_e1r_f16_c4096 0.00.806.173 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF vram_e1r_f16_c4096 0.00.806.175 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF vram_e1r_f16_c4096 0.04.722.065 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF vram_e1r_f16_c4096 0.04.725.828 I llama_kv_cache:      CUDA0 KV buffer size =   576.00 MiB
+  BUF vram_e1r_f16_c4096 0.04.733.708 I llama_kv_cache: size =  576.00 MiB (  4096 cells,  36 layers,  1/1 seqs), K (f16):  288.00 MiB, V (f16):  288.00 MiB
+  BUF vram_e1r_f16_c4096 0.04.759.067 I sched_reserve:      CUDA0 compute buffer size =    79.01 MiB
+  BUF vram_e1r_f16_c4096 0.04.759.075 I sched_reserve:  CUDA_Host compute buffer size =    14.01 MiB
+  BUF vram_e1r_f16_c4096 0.04.917.190 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+REP {"tag": "vram_e1r_f16_c4096", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 4.086, "agg_tps": 125.3, "mean_stream_tps": 125.5}
+TPUT {"tag": "vram_e1r_f16_c4096", "conc": 1, "tokens_each": 512, "reps": 1, "agg_tps_median": 125.3, "agg_tps_all": [125.3]}
+PEAK vram_e1r_f16_c4096 vram_peak=5342 MiB base=435 delta_peak=4907 MiB
+SERVER vram_e1r_q4_0_c4096 arm=e1r kv=q4_0 np=1 ctx=4096 vram_before=435 vram_loaded=4932 delta_load=4497 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.115.640 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.115.641 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.693.016 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.694.415 I llama_kv_cache:      CUDA0 KV buffer size =   162.00 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.698.217 I llama_kv_cache: size =  162.00 MiB (  4096 cells,  36 layers,  1/1 seqs), K (q4_0):   81.00 MiB, V (q4_0):   81.00 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.714.280 I sched_reserve:      CUDA0 compute buffer size =    79.09 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.714.289 I sched_reserve:  CUDA_Host compute buffer size =    14.09 MiB
+  BUF vram_e1r_q4_0_c4096 0.01.940.384 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+REP {"tag": "vram_e1r_q4_0_c4096", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 4.27, "agg_tps": 119.9, "mean_stream_tps": 120.2}
+TPUT {"tag": "vram_e1r_q4_0_c4096", "conc": 1, "tokens_each": 512, "reps": 1, "agg_tps_median": 119.9, "agg_tps_all": [119.9]}
+PEAK vram_e1r_q4_0_c4096 vram_peak=4932 MiB base=435 delta_peak=4497 MiB
+SERVER tput_iq2_f16_np1 arm=iq2 kv=f16 np=1 ctx=1024 vram_before=435 vram_loaded=2014 delta_load=1579 MiB
+  BUF tput_iq2_f16_np1 0.00.922.098 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_f16_np1 0.00.922.099 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_f16_np1 0.01.127.912 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF tput_iq2_f16_np1 0.01.129.546 I llama_kv_cache:      CUDA0 KV buffer size =   144.00 MiB
+  BUF tput_iq2_f16_np1 0.01.131.519 I llama_kv_cache: size =  144.00 MiB (  1024 cells,  36 layers,  1/1 seqs), K (f16):   72.00 MiB, V (f16):   72.00 MiB
+  BUF tput_iq2_f16_np1 0.01.142.716 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_iq2_f16_np1 0.01.142.724 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_iq2_f16_np1 0.01.231.774 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_f16_np1", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 2.387, "agg_tps": 214.5, "mean_stream_tps": 215.2}
+REP {"tag": "tput_iq2_f16_np1", "conc": 1, "rep": 1, "ntok": 512, "wall_s": 2.417, "agg_tps": 211.8, "mean_stream_tps": 212.6}
+REP {"tag": "tput_iq2_f16_np1", "conc": 1, "rep": 2, "ntok": 512, "wall_s": 2.459, "agg_tps": 208.2, "mean_stream_tps": 209.0}
+TPUT {"tag": "tput_iq2_f16_np1", "conc": 1, "tokens_each": 512, "reps": 3, "agg_tps_median": 211.8, "agg_tps_all": [214.5, 211.8, 208.2]}
+PEAK tput_iq2_f16_np1 vram_peak=2016 MiB base=435 delta_peak=1581 MiB
+SERVER tput_iq2_f16_np4 arm=iq2 kv=f16 np=4 ctx=4096 vram_before=435 vram_loaded=2446 delta_load=2011 MiB
+  BUF tput_iq2_f16_np4 0.00.586.042 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_f16_np4 0.00.586.043 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_f16_np4 0.00.742.110 I llama_context:  CUDA_Host  output buffer size =     2.32 MiB
+  BUF tput_iq2_f16_np4 0.00.745.896 I llama_kv_cache:      CUDA0 KV buffer size =   576.00 MiB
+  BUF tput_iq2_f16_np4 0.00.757.931 I llama_kv_cache: size =  576.00 MiB (  1024 cells,  36 layers,  4/4 seqs), K (f16):  288.00 MiB, V (f16):  288.00 MiB
+  BUF tput_iq2_f16_np4 0.00.784.195 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_iq2_f16_np4 0.00.784.218 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_iq2_f16_np4 0.00.941.041 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_f16_np4", "conc": 4, "rep": 0, "ntok": 2048, "wall_s": 3.782, "agg_tps": 541.6, "mean_stream_tps": 135.9}
+REP {"tag": "tput_iq2_f16_np4", "conc": 4, "rep": 1, "ntok": 2048, "wall_s": 3.889, "agg_tps": 526.6, "mean_stream_tps": 132.0}
+REP {"tag": "tput_iq2_f16_np4", "conc": 4, "rep": 2, "ntok": 2048, "wall_s": 4.016, "agg_tps": 510.0, "mean_stream_tps": 127.8}
+TPUT {"tag": "tput_iq2_f16_np4", "conc": 4, "tokens_each": 512, "reps": 3, "agg_tps_median": 526.6, "agg_tps_all": [541.6, 526.6, 510.0]}
+PEAK tput_iq2_f16_np4 vram_peak=2450 MiB base=435 delta_peak=2015 MiB
+SERVER tput_iq2_f16_np8 arm=iq2 kv=f16 np=8 ctx=8192 vram_before=435 vram_loaded=3022 delta_load=2587 MiB
+  BUF tput_iq2_f16_np8 0.00.446.721 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_f16_np8 0.00.446.721 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_f16_np8 0.00.598.072 I llama_context:  CUDA_Host  output buffer size =     4.64 MiB
+  BUF tput_iq2_f16_np8 0.00.605.128 I llama_kv_cache:      CUDA0 KV buffer size =  1152.00 MiB
+  BUF tput_iq2_f16_np8 0.00.618.829 I llama_kv_cache: size = 1152.00 MiB (  1024 cells,  36 layers,  8/8 seqs), K (f16):  576.00 MiB, V (f16):  576.00 MiB
+  BUF tput_iq2_f16_np8 0.00.628.224 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_iq2_f16_np8 0.00.628.232 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_iq2_f16_np8 0.00.744.345 I srv    load_model: initializing, n_slots = 8, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_f16_np8", "conc": 8, "rep": 0, "ntok": 4096, "wall_s": 5.717, "agg_tps": 716.5, "mean_stream_tps": 89.8}
+REP {"tag": "tput_iq2_f16_np8", "conc": 8, "rep": 1, "ntok": 4096, "wall_s": 5.854, "agg_tps": 699.6, "mean_stream_tps": 87.7}
+REP {"tag": "tput_iq2_f16_np8", "conc": 8, "rep": 2, "ntok": 4096, "wall_s": 8.909, "agg_tps": 459.8, "mean_stream_tps": 86.3}
+TPUT {"tag": "tput_iq2_f16_np8", "conc": 8, "tokens_each": 512, "reps": 3, "agg_tps_median": 699.6, "agg_tps_all": [716.5, 699.6, 459.8]}
+PEAK tput_iq2_f16_np8 vram_peak=3030 MiB base=435 delta_peak=2595 MiB
+SERVER tput_iq2_f16_np16 arm=iq2 kv=f16 np=16 ctx=16384 vram_before=435 vram_loaded=4174 delta_load=3739 MiB
+  BUF tput_iq2_f16_np16 0.00.654.547 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_f16_np16 0.00.654.548 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_f16_np16 0.00.809.497 I llama_context:  CUDA_Host  output buffer size =     9.27 MiB
+  BUF tput_iq2_f16_np16 0.00.825.751 I llama_kv_cache:      CUDA0 KV buffer size =  2304.00 MiB
+  BUF tput_iq2_f16_np16 0.00.854.432 I llama_kv_cache: size = 2304.00 MiB (  1024 cells,  36 layers, 16/16 seqs), K (f16): 1152.00 MiB, V (f16): 1152.00 MiB
+  BUF tput_iq2_f16_np16 0.00.866.057 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_iq2_f16_np16 0.00.866.065 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_iq2_f16_np16 0.01.077.407 I srv    load_model: initializing, n_slots = 16, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_f16_np16", "conc": 16, "rep": 0, "ntok": 8192, "wall_s": 7.036, "agg_tps": 1164.3, "mean_stream_tps": 73.2}
+REP {"tag": "tput_iq2_f16_np16", "conc": 16, "rep": 1, "ntok": 8192, "wall_s": 6.964, "agg_tps": 1176.3, "mean_stream_tps": 74.0}
+REP {"tag": "tput_iq2_f16_np16", "conc": 16, "rep": 2, "ntok": 8192, "wall_s": 6.845, "agg_tps": 1196.8, "mean_stream_tps": 75.1}
+TPUT {"tag": "tput_iq2_f16_np16", "conc": 16, "tokens_each": 512, "reps": 3, "agg_tps_median": 1176.3, "agg_tps_all": [1164.3, 1176.3, 1196.8]}
+PEAK tput_iq2_f16_np16 vram_peak=4197 MiB base=435 delta_peak=3762 MiB
+SERVER tput_iq2_q4_0_np1 arm=iq2 kv=q4_0 np=1 ctx=1024 vram_before=436 vram_loaded=1918 delta_load=1482 MiB
+  BUF tput_iq2_q4_0_np1 0.00.747.419 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_q4_0_np1 0.00.747.420 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_q4_0_np1 0.00.937.477 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF tput_iq2_q4_0_np1 0.00.938.045 I llama_kv_cache:      CUDA0 KV buffer size =    40.50 MiB
+  BUF tput_iq2_q4_0_np1 0.00.939.319 I llama_kv_cache: size =   40.50 MiB (  1024 cells,  36 layers,  1/1 seqs), K (q4_0):   20.25 MiB, V (q4_0):   20.25 MiB
+  BUF tput_iq2_q4_0_np1 0.00.957.770 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_iq2_q4_0_np1 0.00.957.782 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_iq2_q4_0_np1 0.01.077.264 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_q4_0_np1", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 2.598, "agg_tps": 197.0, "mean_stream_tps": 197.9}
+REP {"tag": "tput_iq2_q4_0_np1", "conc": 1, "rep": 1, "ntok": 512, "wall_s": 2.64, "agg_tps": 193.9, "mean_stream_tps": 194.8}
+REP {"tag": "tput_iq2_q4_0_np1", "conc": 1, "rep": 2, "ntok": 512, "wall_s": 2.621, "agg_tps": 195.3, "mean_stream_tps": 196.2}
+TPUT {"tag": "tput_iq2_q4_0_np1", "conc": 1, "tokens_each": 512, "reps": 3, "agg_tps_median": 195.3, "agg_tps_all": [197.0, 193.9, 195.3]}
+PEAK tput_iq2_q4_0_np1 vram_peak=1920 MiB base=436 delta_peak=1484 MiB
+SERVER tput_iq2_q4_0_np4 arm=iq2 kv=q4_0 np=4 ctx=4096 vram_before=436 vram_loaded=2038 delta_load=1602 MiB
+  BUF tput_iq2_q4_0_np4 0.02.130.225 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_q4_0_np4 0.02.130.227 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_q4_0_np4 0.02.312.737 I llama_context:  CUDA_Host  output buffer size =     2.32 MiB
+  BUF tput_iq2_q4_0_np4 0.02.314.122 I llama_kv_cache:      CUDA0 KV buffer size =   162.00 MiB
+  BUF tput_iq2_q4_0_np4 0.02.316.548 I llama_kv_cache: size =  162.00 MiB (  1024 cells,  36 layers,  4/4 seqs), K (q4_0):   81.00 MiB, V (q4_0):   81.00 MiB
+  BUF tput_iq2_q4_0_np4 0.02.333.296 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_iq2_q4_0_np4 0.02.333.307 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_iq2_q4_0_np4 0.02.420.952 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_q4_0_np4", "conc": 4, "rep": 0, "ntok": 2048, "wall_s": 7.104, "agg_tps": 288.3, "mean_stream_tps": 123.7}
+REP {"tag": "tput_iq2_q4_0_np4", "conc": 4, "rep": 1, "ntok": 2048, "wall_s": 4.171, "agg_tps": 491.0, "mean_stream_tps": 123.4}
+REP {"tag": "tput_iq2_q4_0_np4", "conc": 4, "rep": 2, "ntok": 2048, "wall_s": 4.239, "agg_tps": 483.2, "mean_stream_tps": 121.2}
+TPUT {"tag": "tput_iq2_q4_0_np4", "conc": 4, "tokens_each": 512, "reps": 3, "agg_tps_median": 483.2, "agg_tps_all": [288.3, 491.0, 483.2]}
+PEAK tput_iq2_q4_0_np4 vram_peak=2042 MiB base=436 delta_peak=1606 MiB
+SERVER tput_iq2_q4_0_np8 arm=iq2 kv=q4_0 np=8 ctx=8192 vram_before=436 vram_loaded=2200 delta_load=1764 MiB
+  BUF tput_iq2_q4_0_np8 0.00.508.715 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_q4_0_np8 0.00.508.715 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_q4_0_np8 0.00.642.125 I llama_context:  CUDA_Host  output buffer size =     4.64 MiB
+  BUF tput_iq2_q4_0_np8 0.00.643.830 I llama_kv_cache:      CUDA0 KV buffer size =   324.00 MiB
+  BUF tput_iq2_q4_0_np8 0.00.647.987 I llama_kv_cache: size =  324.00 MiB (  1024 cells,  36 layers,  8/8 seqs), K (q4_0):  162.00 MiB, V (q4_0):  162.00 MiB
+  BUF tput_iq2_q4_0_np8 0.00.657.529 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_iq2_q4_0_np8 0.00.657.534 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_iq2_q4_0_np8 0.00.714.496 I srv    load_model: initializing, n_slots = 8, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_q4_0_np8", "conc": 8, "rep": 0, "ntok": 4096, "wall_s": 6.132, "agg_tps": 668.0, "mean_stream_tps": 83.7}
+REP {"tag": "tput_iq2_q4_0_np8", "conc": 8, "rep": 1, "ntok": 4096, "wall_s": 6.395, "agg_tps": 640.5, "mean_stream_tps": 80.3}
+REP {"tag": "tput_iq2_q4_0_np8", "conc": 8, "rep": 2, "ntok": 4096, "wall_s": 9.835, "agg_tps": 416.5, "mean_stream_tps": 74.6}
+TPUT {"tag": "tput_iq2_q4_0_np8", "conc": 8, "tokens_each": 512, "reps": 3, "agg_tps_median": 640.5, "agg_tps_all": [668.0, 640.5, 416.5]}
+PEAK tput_iq2_q4_0_np8 vram_peak=2206 MiB base=436 delta_peak=1770 MiB
+SERVER tput_iq2_q4_0_np16 arm=iq2 kv=q4_0 np=16 ctx=16384 vram_before=436 vram_loaded=2538 delta_load=2102 MiB
+  BUF tput_iq2_q4_0_np16 0.00.480.004 I load_tensors:   CPU_Mapped model buffer size =   255.02 MiB
+  BUF tput_iq2_q4_0_np16 0.00.480.005 I load_tensors:        CUDA0 model buffer size =  1183.19 MiB
+  BUF tput_iq2_q4_0_np16 0.00.634.211 I llama_context:  CUDA_Host  output buffer size =     9.27 MiB
+  BUF tput_iq2_q4_0_np16 0.00.637.912 I llama_kv_cache:      CUDA0 KV buffer size =   648.00 MiB
+  BUF tput_iq2_q4_0_np16 0.00.646.624 I llama_kv_cache: size =  648.00 MiB (  1024 cells,  36 layers, 16/16 seqs), K (q4_0):  324.00 MiB, V (q4_0):  324.00 MiB
+  BUF tput_iq2_q4_0_np16 0.00.661.248 I sched_reserve:      CUDA0 compute buffer size =    91.09 MiB
+  BUF tput_iq2_q4_0_np16 0.00.661.298 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_iq2_q4_0_np16 0.00.729.815 I srv    load_model: initializing, n_slots = 16, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_iq2_q4_0_np16", "conc": 16, "rep": 0, "ntok": 8192, "wall_s": 7.995, "agg_tps": 1024.7, "mean_stream_tps": 64.6}
+REP {"tag": "tput_iq2_q4_0_np16", "conc": 16, "rep": 1, "ntok": 8192, "wall_s": 8.746, "agg_tps": 936.6, "mean_stream_tps": 59.1}
+REP {"tag": "tput_iq2_q4_0_np16", "conc": 16, "rep": 2, "ntok": 8192, "wall_s": 8.939, "agg_tps": 916.5, "mean_stream_tps": 57.7}
+TPUT {"tag": "tput_iq2_q4_0_np16", "conc": 16, "tokens_each": 512, "reps": 3, "agg_tps_median": 936.6, "agg_tps_all": [1024.7, 936.6, 916.5]}
+PEAK tput_iq2_q4_0_np16 vram_peak=2544 MiB base=436 delta_peak=2108 MiB
+SERVER tput_r45_f16_np1 arm=r45 kv=f16 np=1 ctx=1024 vram_before=436 vram_loaded=4910 delta_load=4474 MiB
+  BUF tput_r45_f16_np1 0.03.120.976 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_f16_np1 0.03.120.977 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_f16_np1 0.04.546.022 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF tput_r45_f16_np1 0.04.547.750 I llama_kv_cache:      CUDA0 KV buffer size =   144.00 MiB
+  BUF tput_r45_f16_np1 0.04.549.571 I llama_kv_cache: size =  144.00 MiB (  1024 cells,  36 layers,  1/1 seqs), K (f16):   72.00 MiB, V (f16):   72.00 MiB
+  BUF tput_r45_f16_np1 0.04.561.373 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_r45_f16_np1 0.04.561.382 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_r45_f16_np1 0.04.657.475 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_f16_np1", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 5.083, "agg_tps": 100.7, "mean_stream_tps": 100.9}
+REP {"tag": "tput_r45_f16_np1", "conc": 1, "rep": 1, "ntok": 512, "wall_s": 5.734, "agg_tps": 89.3, "mean_stream_tps": 89.5}
+REP {"tag": "tput_r45_f16_np1", "conc": 1, "rep": 2, "ntok": 512, "wall_s": 6.054, "agg_tps": 84.6, "mean_stream_tps": 84.7}
+TPUT {"tag": "tput_r45_f16_np1", "conc": 1, "tokens_each": 512, "reps": 3, "agg_tps_median": 89.3, "agg_tps_all": [100.7, 89.3, 84.6]}
+PEAK tput_r45_f16_np1 vram_peak=4910 MiB base=436 delta_peak=4474 MiB
+SERVER tput_r45_f16_np4 arm=r45 kv=f16 np=4 ctx=4096 vram_before=436 vram_loaded=5342 delta_load=4906 MiB
+  BUF tput_r45_f16_np4 0.00.920.297 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_f16_np4 0.00.920.298 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_f16_np4 0.01.578.116 I llama_context:  CUDA_Host  output buffer size =     2.32 MiB
+  BUF tput_r45_f16_np4 0.01.581.179 I llama_kv_cache:      CUDA0 KV buffer size =   576.00 MiB
+  BUF tput_r45_f16_np4 0.01.590.012 I llama_kv_cache: size =  576.00 MiB (  1024 cells,  36 layers,  4/4 seqs), K (f16):  288.00 MiB, V (f16):  288.00 MiB
+  BUF tput_r45_f16_np4 0.01.599.333 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_r45_f16_np4 0.01.599.334 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_r45_f16_np4 0.01.689.214 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_f16_np4", "conc": 4, "rep": 0, "ntok": 2048, "wall_s": 9.581, "agg_tps": 213.8, "mean_stream_tps": 77.9}
+REP {"tag": "tput_r45_f16_np4", "conc": 4, "rep": 1, "ntok": 2048, "wall_s": 7.371, "agg_tps": 277.8, "mean_stream_tps": 69.7}
+REP {"tag": "tput_r45_f16_np4", "conc": 4, "rep": 2, "ntok": 2048, "wall_s": 7.403, "agg_tps": 276.6, "mean_stream_tps": 69.5}
+TPUT {"tag": "tput_r45_f16_np4", "conc": 4, "tokens_each": 512, "reps": 3, "agg_tps_median": 276.6, "agg_tps_all": [213.8, 277.8, 276.6]}
+PEAK tput_r45_f16_np4 vram_peak=5346 MiB base=436 delta_peak=4910 MiB
+SERVER tput_r45_f16_np8 arm=r45 kv=f16 np=8 ctx=8192 vram_before=436 vram_loaded=5918 delta_load=5482 MiB
+  BUF tput_r45_f16_np8 0.00.731.336 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_f16_np8 0.00.731.344 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_f16_np8 0.01.236.777 I llama_context:  CUDA_Host  output buffer size =     4.64 MiB
+  BUF tput_r45_f16_np8 0.01.242.734 I llama_kv_cache:      CUDA0 KV buffer size =  1152.00 MiB
+  BUF tput_r45_f16_np8 0.01.258.530 I llama_kv_cache: size = 1152.00 MiB (  1024 cells,  36 layers,  8/8 seqs), K (f16):  576.00 MiB, V (f16):  576.00 MiB
+  BUF tput_r45_f16_np8 0.01.266.922 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_r45_f16_np8 0.01.266.951 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_r45_f16_np8 0.01.350.875 I srv    load_model: initializing, n_slots = 8, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_f16_np8", "conc": 8, "rep": 0, "ntok": 4096, "wall_s": 12.26, "agg_tps": 334.1, "mean_stream_tps": 55.2}
+REP {"tag": "tput_r45_f16_np8", "conc": 8, "rep": 1, "ntok": 4096, "wall_s": 9.467, "agg_tps": 432.7, "mean_stream_tps": 54.4}
+REP {"tag": "tput_r45_f16_np8", "conc": 8, "rep": 2, "ntok": 4096, "wall_s": 9.334, "agg_tps": 438.8, "mean_stream_tps": 55.2}
+TPUT {"tag": "tput_r45_f16_np8", "conc": 8, "tokens_each": 512, "reps": 3, "agg_tps_median": 432.7, "agg_tps_all": [334.1, 432.7, 438.8]}
+PEAK tput_r45_f16_np8 vram_peak=5922 MiB base=436 delta_peak=5486 MiB
+SERVER tput_r45_f16_np16 arm=r45 kv=f16 np=16 ctx=16384 vram_before=436 vram_loaded=7070 delta_load=6634 MiB
+  BUF tput_r45_f16_np16 0.01.640.781 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_f16_np16 0.01.640.782 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_f16_np16 0.02.362.219 I llama_context:  CUDA_Host  output buffer size =     9.27 MiB
+  BUF tput_r45_f16_np16 0.02.375.309 I llama_kv_cache:      CUDA0 KV buffer size =  2304.00 MiB
+  BUF tput_r45_f16_np16 0.02.402.664 I llama_kv_cache: size = 2304.00 MiB (  1024 cells,  36 layers, 16/16 seqs), K (f16): 1152.00 MiB, V (f16): 1152.00 MiB
+  BUF tput_r45_f16_np16 0.02.419.306 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_r45_f16_np16 0.02.419.459 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_r45_f16_np16 0.02.572.358 I srv    load_model: initializing, n_slots = 16, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_f16_np16", "conc": 16, "rep": 0, "ntok": 8192, "wall_s": 12.984, "agg_tps": 630.9, "mean_stream_tps": 51.4}
+REP {"tag": "tput_r45_f16_np16", "conc": 16, "rep": 1, "ntok": 8192, "wall_s": 10.683, "agg_tps": 766.8, "mean_stream_tps": 48.3}
+REP {"tag": "tput_r45_f16_np16", "conc": 16, "rep": 2, "ntok": 8192, "wall_s": 11.039, "agg_tps": 742.1, "mean_stream_tps": 46.6}
+TPUT {"tag": "tput_r45_f16_np16", "conc": 16, "tokens_each": 512, "reps": 3, "agg_tps_median": 742.1, "agg_tps_all": [630.9, 766.8, 742.1]}
+PEAK tput_r45_f16_np16 vram_peak=7313 MiB base=436 delta_peak=6877 MiB
+SERVER tput_r45_q4_0_np1 arm=r45 kv=q4_0 np=1 ctx=1024 vram_before=342 vram_loaded=4717 delta_load=4375 MiB
+  BUF tput_r45_q4_0_np1 0.01.277.929 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_q4_0_np1 0.01.277.930 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_q4_0_np1 0.04.787.326 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF tput_r45_q4_0_np1 0.04.788.098 I llama_kv_cache:      CUDA0 KV buffer size =    40.50 MiB
+  BUF tput_r45_q4_0_np1 0.04.788.938 I llama_kv_cache: size =   40.50 MiB (  1024 cells,  36 layers,  1/1 seqs), K (q4_0):   20.25 MiB, V (q4_0):   20.25 MiB
+  BUF tput_r45_q4_0_np1 0.04.802.960 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_r45_q4_0_np1 0.04.802.972 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_r45_q4_0_np1 0.04.891.619 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_q4_0_np1", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 5.804, "agg_tps": 88.2, "mean_stream_tps": 88.4}
+REP {"tag": "tput_r45_q4_0_np1", "conc": 1, "rep": 1, "ntok": 512, "wall_s": 6.248, "agg_tps": 81.9, "mean_stream_tps": 82.1}
+REP {"tag": "tput_r45_q4_0_np1", "conc": 1, "rep": 2, "ntok": 512, "wall_s": 6.575, "agg_tps": 77.9, "mean_stream_tps": 78.0}
+TPUT {"tag": "tput_r45_q4_0_np1", "conc": 1, "tokens_each": 512, "reps": 3, "agg_tps_median": 81.9, "agg_tps_all": [88.2, 81.9, 77.9]}
+PEAK tput_r45_q4_0_np1 vram_peak=4717 MiB base=342 delta_peak=4375 MiB
+SERVER tput_r45_q4_0_np4 arm=r45 kv=q4_0 np=4 ctx=4096 vram_before=338 vram_loaded=4832 delta_load=4494 MiB
+  BUF tput_r45_q4_0_np4 0.00.743.844 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_q4_0_np4 0.00.743.845 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_q4_0_np4 0.02.056.345 I llama_context:  CUDA_Host  output buffer size =     2.32 MiB
+  BUF tput_r45_q4_0_np4 0.02.057.960 I llama_kv_cache:      CUDA0 KV buffer size =   162.00 MiB
+  BUF tput_r45_q4_0_np4 0.02.060.184 I llama_kv_cache: size =  162.00 MiB (  1024 cells,  36 layers,  4/4 seqs), K (q4_0):   81.00 MiB, V (q4_0):   81.00 MiB
+  BUF tput_r45_q4_0_np4 0.02.072.928 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_r45_q4_0_np4 0.02.072.937 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_r45_q4_0_np4 0.02.146.334 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_q4_0_np4", "conc": 4, "rep": 0, "ntok": 2048, "wall_s": 10.389, "agg_tps": 197.1, "mean_stream_tps": 69.2}
+REP {"tag": "tput_r45_q4_0_np4", "conc": 4, "rep": 1, "ntok": 2048, "wall_s": 7.862, "agg_tps": 260.5, "mean_stream_tps": 65.5}
+REP {"tag": "tput_r45_q4_0_np4", "conc": 4, "rep": 2, "ntok": 2048, "wall_s": 7.83, "agg_tps": 261.6, "mean_stream_tps": 65.7}
+TPUT {"tag": "tput_r45_q4_0_np4", "conc": 4, "tokens_each": 512, "reps": 3, "agg_tps_median": 260.5, "agg_tps_all": [197.1, 260.5, 261.6]}
+PEAK tput_r45_q4_0_np4 vram_peak=4836 MiB base=338 delta_peak=4498 MiB
+SERVER tput_r45_q4_0_np8 arm=r45 kv=q4_0 np=8 ctx=8192 vram_before=337 vram_loaded=4994 delta_load=4657 MiB
+  BUF tput_r45_q4_0_np8 0.00.639.389 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_q4_0_np8 0.00.639.389 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_q4_0_np8 0.01.154.046 I llama_context:  CUDA_Host  output buffer size =     4.64 MiB
+  BUF tput_r45_q4_0_np8 0.01.156.450 I llama_kv_cache:      CUDA0 KV buffer size =   324.00 MiB
+  BUF tput_r45_q4_0_np8 0.01.161.737 I llama_kv_cache: size =  324.00 MiB (  1024 cells,  36 layers,  8/8 seqs), K (q4_0):  162.00 MiB, V (q4_0):  162.00 MiB
+  BUF tput_r45_q4_0_np8 0.01.175.555 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_r45_q4_0_np8 0.01.175.570 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_r45_q4_0_np8 0.01.253.596 I srv    load_model: initializing, n_slots = 8, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_q4_0_np8", "conc": 8, "rep": 0, "ntok": 4096, "wall_s": 9.686, "agg_tps": 422.9, "mean_stream_tps": 53.1}
+REP {"tag": "tput_r45_q4_0_np8", "conc": 8, "rep": 1, "ntok": 4096, "wall_s": 12.826, "agg_tps": 319.3, "mean_stream_tps": 52.1}
+REP {"tag": "tput_r45_q4_0_np8", "conc": 8, "rep": 2, "ntok": 4096, "wall_s": 10.032, "agg_tps": 408.3, "mean_stream_tps": 51.3}
+TPUT {"tag": "tput_r45_q4_0_np8", "conc": 8, "tokens_each": 512, "reps": 3, "agg_tps_median": 408.3, "agg_tps_all": [422.9, 319.3, 408.3]}
+PEAK tput_r45_q4_0_np8 vram_peak=4998 MiB base=337 delta_peak=4661 MiB
+SERVER tput_r45_q4_0_np16 arm=r45 kv=q4_0 np=16 ctx=16384 vram_before=337 vram_loaded=5332 delta_load=4995 MiB
+  BUF tput_r45_q4_0_np16 0.00.589.401 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_r45_q4_0_np16 0.00.589.402 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_r45_q4_0_np16 0.01.108.322 I llama_context:  CUDA_Host  output buffer size =     9.27 MiB
+  BUF tput_r45_q4_0_np16 0.01.112.506 I llama_kv_cache:      CUDA0 KV buffer size =   648.00 MiB
+  BUF tput_r45_q4_0_np16 0.01.121.291 I llama_kv_cache: size =  648.00 MiB (  1024 cells,  36 layers, 16/16 seqs), K (q4_0):  324.00 MiB, V (q4_0):  324.00 MiB
+  BUF tput_r45_q4_0_np16 0.01.134.760 I sched_reserve:      CUDA0 compute buffer size =    91.09 MiB
+  BUF tput_r45_q4_0_np16 0.01.134.809 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_r45_q4_0_np16 0.01.217.809 I srv    load_model: initializing, n_slots = 16, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_r45_q4_0_np16", "conc": 16, "rep": 0, "ntok": 8192, "wall_s": 14.105, "agg_tps": 580.8, "mean_stream_tps": 46.2}
+REP {"tag": "tput_r45_q4_0_np16", "conc": 16, "rep": 1, "ntok": 8192, "wall_s": 12.093, "agg_tps": 677.4, "mean_stream_tps": 42.6}
+REP {"tag": "tput_r45_q4_0_np16", "conc": 16, "rep": 2, "ntok": 8192, "wall_s": 12.127, "agg_tps": 675.5, "mean_stream_tps": 42.5}
+TPUT {"tag": "tput_r45_q4_0_np16", "conc": 16, "tokens_each": 512, "reps": 3, "agg_tps_median": 675.5, "agg_tps_all": [580.8, 677.4, 675.5]}
+PEAK tput_r45_q4_0_np16 vram_peak=5338 MiB base=337 delta_peak=5001 MiB
+SERVER tput_e1r_f16_np1 arm=e1r kv=f16 np=1 ctx=1024 vram_before=337 vram_loaded=4810 delta_load=4473 MiB
+  BUF tput_e1r_f16_np1 0.05.503.166 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_f16_np1 0.05.503.167 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_f16_np1 0.08.370.959 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF tput_e1r_f16_np1 0.08.372.845 I llama_kv_cache:      CUDA0 KV buffer size =   144.00 MiB
+  BUF tput_e1r_f16_np1 0.08.374.870 I llama_kv_cache: size =  144.00 MiB (  1024 cells,  36 layers,  1/1 seqs), K (f16):   72.00 MiB, V (f16):   72.00 MiB
+  BUF tput_e1r_f16_np1 0.08.388.711 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_e1r_f16_np1 0.08.388.734 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_e1r_f16_np1 0.08.475.450 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_f16_np1", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 5.934, "agg_tps": 86.3, "mean_stream_tps": 86.4}
+REP {"tag": "tput_e1r_f16_np1", "conc": 1, "rep": 1, "ntok": 512, "wall_s": 6.001, "agg_tps": 85.3, "mean_stream_tps": 85.4}
+REP {"tag": "tput_e1r_f16_np1", "conc": 1, "rep": 2, "ntok": 512, "wall_s": 5.623, "agg_tps": 91.1, "mean_stream_tps": 91.2}
+TPUT {"tag": "tput_e1r_f16_np1", "conc": 1, "tokens_each": 512, "reps": 3, "agg_tps_median": 86.3, "agg_tps_all": [86.3, 85.3, 91.1]}
+PEAK tput_e1r_f16_np1 vram_peak=4810 MiB base=337 delta_peak=4473 MiB
+SERVER tput_e1r_f16_np4 arm=e1r kv=f16 np=4 ctx=4096 vram_before=337 vram_loaded=5242 delta_load=4905 MiB
+  BUF tput_e1r_f16_np4 0.00.678.807 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_f16_np4 0.00.678.808 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_f16_np4 0.01.408.871 I llama_context:  CUDA_Host  output buffer size =     2.32 MiB
+  BUF tput_e1r_f16_np4 0.01.412.319 I llama_kv_cache:      CUDA0 KV buffer size =   576.00 MiB
+  BUF tput_e1r_f16_np4 0.01.419.707 I llama_kv_cache: size =  576.00 MiB (  1024 cells,  36 layers,  4/4 seqs), K (f16):  288.00 MiB, V (f16):  288.00 MiB
+  BUF tput_e1r_f16_np4 0.01.431.240 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_e1r_f16_np4 0.01.431.248 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_e1r_f16_np4 0.01.526.035 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_f16_np4", "conc": 4, "rep": 0, "ntok": 2048, "wall_s": 9.22, "agg_tps": 222.1, "mean_stream_tps": 82.2}
+REP {"tag": "tput_e1r_f16_np4", "conc": 4, "rep": 1, "ntok": 2048, "wall_s": 6.376, "agg_tps": 321.2, "mean_stream_tps": 80.8}
+REP {"tag": "tput_e1r_f16_np4", "conc": 4, "rep": 2, "ntok": 2048, "wall_s": 7.607, "agg_tps": 269.2, "mean_stream_tps": 67.4}
+TPUT {"tag": "tput_e1r_f16_np4", "conc": 4, "tokens_each": 512, "reps": 3, "agg_tps_median": 269.2, "agg_tps_all": [222.1, 321.2, 269.2]}
+PEAK tput_e1r_f16_np4 vram_peak=5246 MiB base=337 delta_peak=4909 MiB
+SERVER tput_e1r_f16_np8 arm=e1r kv=f16 np=8 ctx=8192 vram_before=337 vram_loaded=5818 delta_load=5481 MiB
+  BUF tput_e1r_f16_np8 0.00.629.104 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_f16_np8 0.00.629.104 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_f16_np8 0.01.121.048 I llama_context:  CUDA_Host  output buffer size =     4.64 MiB
+  BUF tput_e1r_f16_np8 0.01.125.687 I llama_kv_cache:      CUDA0 KV buffer size =  1152.00 MiB
+  BUF tput_e1r_f16_np8 0.01.140.769 I llama_kv_cache: size = 1152.00 MiB (  1024 cells,  36 layers,  8/8 seqs), K (f16):  576.00 MiB, V (f16):  576.00 MiB
+  BUF tput_e1r_f16_np8 0.01.147.814 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_e1r_f16_np8 0.01.147.839 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_e1r_f16_np8 0.01.237.721 I srv    load_model: initializing, n_slots = 8, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_f16_np8", "conc": 8, "rep": 0, "ntok": 4096, "wall_s": 8.294, "agg_tps": 493.8, "mean_stream_tps": 62.0}
+REP {"tag": "tput_e1r_f16_np8", "conc": 8, "rep": 1, "ntok": 4096, "wall_s": 11.85, "agg_tps": 345.7, "mean_stream_tps": 57.9}
+REP {"tag": "tput_e1r_f16_np8", "conc": 8, "rep": 2, "ntok": 4096, "wall_s": 8.417, "agg_tps": 486.7, "mean_stream_tps": 61.0}
+TPUT {"tag": "tput_e1r_f16_np8", "conc": 8, "tokens_each": 512, "reps": 3, "agg_tps_median": 486.7, "agg_tps_all": [493.8, 345.7, 486.7]}
+PEAK tput_e1r_f16_np8 vram_peak=5824 MiB base=337 delta_peak=5487 MiB
+SERVER tput_e1r_f16_np16 arm=e1r kv=f16 np=16 ctx=16384 vram_before=337 vram_loaded=6970 delta_load=6633 MiB
+  BUF tput_e1r_f16_np16 0.00.999.447 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_f16_np16 0.00.999.448 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_f16_np16 0.01.600.596 I llama_context:  CUDA_Host  output buffer size =     9.27 MiB
+  BUF tput_e1r_f16_np16 0.01.613.704 I llama_kv_cache:      CUDA0 KV buffer size =  2304.00 MiB
+  BUF tput_e1r_f16_np16 0.01.642.715 I llama_kv_cache: size = 2304.00 MiB (  1024 cells,  36 layers, 16/16 seqs), K (f16): 1152.00 MiB, V (f16): 1152.00 MiB
+  BUF tput_e1r_f16_np16 0.01.653.577 I sched_reserve:      CUDA0 compute buffer size =    76.01 MiB
+  BUF tput_e1r_f16_np16 0.01.653.584 I sched_reserve:  CUDA_Host compute buffer size =    11.01 MiB
+  BUF tput_e1r_f16_np16 0.01.746.772 I srv    load_model: initializing, n_slots = 16, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_f16_np16", "conc": 16, "rep": 0, "ntok": 8192, "wall_s": 9.125, "agg_tps": 897.8, "mean_stream_tps": 56.5}
+REP {"tag": "tput_e1r_f16_np16", "conc": 16, "rep": 1, "ntok": 8192, "wall_s": 12.368, "agg_tps": 662.4, "mean_stream_tps": 54.8}
+REP {"tag": "tput_e1r_f16_np16", "conc": 16, "rep": 2, "ntok": 8192, "wall_s": 9.505, "agg_tps": 861.9, "mean_stream_tps": 54.0}
+TPUT {"tag": "tput_e1r_f16_np16", "conc": 16, "tokens_each": 512, "reps": 3, "agg_tps_median": 861.9, "agg_tps_all": [897.8, 662.4, 861.9]}
+PEAK tput_e1r_f16_np16 vram_peak=6978 MiB base=337 delta_peak=6641 MiB
+SERVER tput_e1r_q4_0_np1 arm=e1r kv=q4_0 np=1 ctx=1024 vram_before=337 vram_loaded=4712 delta_load=4375 MiB
+  BUF tput_e1r_q4_0_np1 0.00.876.348 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_q4_0_np1 0.00.876.349 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_q4_0_np1 0.01.564.516 I llama_context:  CUDA_Host  output buffer size =     0.58 MiB
+  BUF tput_e1r_q4_0_np1 0.01.565.086 I llama_kv_cache:      CUDA0 KV buffer size =    40.50 MiB
+  BUF tput_e1r_q4_0_np1 0.01.566.557 I llama_kv_cache: size =   40.50 MiB (  1024 cells,  36 layers,  1/1 seqs), K (q4_0):   20.25 MiB, V (q4_0):   20.25 MiB
+  BUF tput_e1r_q4_0_np1 0.01.578.351 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_e1r_q4_0_np1 0.01.578.359 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_e1r_q4_0_np1 0.01.701.367 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_q4_0_np1", "conc": 1, "rep": 0, "ntok": 512, "wall_s": 4.264, "agg_tps": 120.1, "mean_stream_tps": 120.3}
+REP {"tag": "tput_e1r_q4_0_np1", "conc": 1, "rep": 1, "ntok": 512, "wall_s": 7.95, "agg_tps": 64.4, "mean_stream_tps": 102.9}
+REP {"tag": "tput_e1r_q4_0_np1", "conc": 1, "rep": 2, "ntok": 512, "wall_s": 4.959, "agg_tps": 103.2, "mean_stream_tps": 103.5}
+TPUT {"tag": "tput_e1r_q4_0_np1", "conc": 1, "tokens_each": 512, "reps": 3, "agg_tps_median": 103.2, "agg_tps_all": [120.1, 64.4, 103.2]}
+PEAK tput_e1r_q4_0_np1 vram_peak=4737 MiB base=337 delta_peak=4400 MiB
+SERVER tput_e1r_q4_0_np4 arm=e1r kv=q4_0 np=4 ctx=4096 vram_before=341 vram_loaded=4836 delta_load=4495 MiB
+  BUF tput_e1r_q4_0_np4 0.00.537.523 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_q4_0_np4 0.00.537.523 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_q4_0_np4 0.01.171.945 I llama_context:  CUDA_Host  output buffer size =     2.32 MiB
+  BUF tput_e1r_q4_0_np4 0.01.173.448 I llama_kv_cache:      CUDA0 KV buffer size =   162.00 MiB
+  BUF tput_e1r_q4_0_np4 0.01.175.936 I llama_kv_cache: size =  162.00 MiB (  1024 cells,  36 layers,  4/4 seqs), K (q4_0):   81.00 MiB, V (q4_0):   81.00 MiB
+  BUF tput_e1r_q4_0_np4 0.01.189.170 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_e1r_q4_0_np4 0.01.189.178 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_e1r_q4_0_np4 0.01.288.766 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_q4_0_np4", "conc": 4, "rep": 0, "ntok": 2048, "wall_s": 5.622, "agg_tps": 364.3, "mean_stream_tps": 91.4}
+REP {"tag": "tput_e1r_q4_0_np4", "conc": 4, "rep": 1, "ntok": 2048, "wall_s": 7.158, "agg_tps": 286.1, "mean_stream_tps": 71.6}
+REP {"tag": "tput_e1r_q4_0_np4", "conc": 4, "rep": 2, "ntok": 2048, "wall_s": 7.145, "agg_tps": 286.6, "mean_stream_tps": 72.0}
+TPUT {"tag": "tput_e1r_q4_0_np4", "conc": 4, "tokens_each": 512, "reps": 3, "agg_tps_median": 286.6, "agg_tps_all": [364.3, 286.1, 286.6]}
+PEAK tput_e1r_q4_0_np4 vram_peak=4840 MiB base=341 delta_peak=4499 MiB
+SERVER tput_e1r_q4_0_np8 arm=e1r kv=q4_0 np=8 ctx=8192 vram_before=341 vram_loaded=4998 delta_load=4657 MiB
+  BUF tput_e1r_q4_0_np8 0.00.779.564 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_q4_0_np8 0.00.779.565 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_q4_0_np8 0.01.479.707 I llama_context:  CUDA_Host  output buffer size =     4.64 MiB
+  BUF tput_e1r_q4_0_np8 0.01.482.813 I llama_kv_cache:      CUDA0 KV buffer size =   324.00 MiB
+  BUF tput_e1r_q4_0_np8 0.01.496.513 I llama_kv_cache: size =  324.00 MiB (  1024 cells,  36 layers,  8/8 seqs), K (q4_0):  162.00 MiB, V (q4_0):  162.00 MiB
+  BUF tput_e1r_q4_0_np8 0.01.515.767 I sched_reserve:      CUDA0 compute buffer size =    76.09 MiB
+  BUF tput_e1r_q4_0_np8 0.01.515.779 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_e1r_q4_0_np8 0.01.659.470 I srv    load_model: initializing, n_slots = 8, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_q4_0_np8", "conc": 8, "rep": 0, "ntok": 4096, "wall_s": 7.734, "agg_tps": 529.6, "mean_stream_tps": 66.3}
+REP {"tag": "tput_e1r_q4_0_np8", "conc": 8, "rep": 1, "ntok": 4096, "wall_s": 8.296, "agg_tps": 493.8, "mean_stream_tps": 61.9}
+REP {"tag": "tput_e1r_q4_0_np8", "conc": 8, "rep": 2, "ntok": 4096, "wall_s": 8.077, "agg_tps": 507.1, "mean_stream_tps": 63.5}
+TPUT {"tag": "tput_e1r_q4_0_np8", "conc": 8, "tokens_each": 512, "reps": 3, "agg_tps_median": 507.1, "agg_tps_all": [529.6, 493.8, 507.1]}
+PEAK tput_e1r_q4_0_np8 vram_peak=5004 MiB base=341 delta_peak=4663 MiB
+SERVER tput_e1r_q4_0_np16 arm=e1r kv=q4_0 np=16 ctx=16384 vram_before=341 vram_loaded=5336 delta_load=4995 MiB
+  BUF tput_e1r_q4_0_np16 0.03.652.830 I load_tensors:   CPU_Mapped model buffer size =   394.12 MiB
+  BUF tput_e1r_q4_0_np16 0.03.652.830 I load_tensors:        CUDA0 model buffer size =  4076.43 MiB
+  BUF tput_e1r_q4_0_np16 0.04.400.426 I llama_context:  CUDA_Host  output buffer size =     9.27 MiB
+  BUF tput_e1r_q4_0_np16 0.04.406.258 I llama_kv_cache:      CUDA0 KV buffer size =   648.00 MiB
+  BUF tput_e1r_q4_0_np16 0.04.414.425 I llama_kv_cache: size =  648.00 MiB (  1024 cells,  36 layers, 16/16 seqs), K (q4_0):  324.00 MiB, V (q4_0):  324.00 MiB
+  BUF tput_e1r_q4_0_np16 0.04.426.873 I sched_reserve:      CUDA0 compute buffer size =    91.09 MiB
+  BUF tput_e1r_q4_0_np16 0.04.426.882 I sched_reserve:  CUDA_Host compute buffer size =    11.09 MiB
+  BUF tput_e1r_q4_0_np16 0.04.537.215 I srv    load_model: initializing, n_slots = 16, n_ctx_slot = 1024, kv_unified = 'false'
+REP {"tag": "tput_e1r_q4_0_np16", "conc": 16, "rep": 0, "ntok": 8192, "wall_s": 10.108, "agg_tps": 810.5, "mean_stream_tps": 51.0}
+REP {"tag": "tput_e1r_q4_0_np16", "conc": 16, "rep": 1, "ntok": 8192, "wall_s": 10.311, "agg_tps": 794.5, "mean_stream_tps": 49.8}
+REP {"tag": "tput_e1r_q4_0_np16", "conc": 16, "rep": 2, "ntok": 8192, "wall_s": 13.607, "agg_tps": 602.1, "mean_stream_tps": 48.2}
+TPUT {"tag": "tput_e1r_q4_0_np16", "conc": 16, "tokens_each": 512, "reps": 3, "agg_tps_median": 794.5, "agg_tps_all": [810.5, 794.5, 602.1]}
+PEAK tput_e1r_q4_0_np16 vram_peak=5342 MiB base=341 delta_peak=5001 MiB
+END 20:12:20 gpu 76, 330 MHz, 9001 MHz, 12.81 W vram 341 MiB

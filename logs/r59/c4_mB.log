@@ -1,0 +1,16 @@
+0.00.223.809 I Will perform strided perplexity calculation -> adjusting context size from 2049 to 4096
+0.00.629.712 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.901.137 I cmn          init: llama threadpool init, n_threads = 20
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 252 bpw_used 2.12050 tiles 443520 class_share c0:0.0216 c1:0.0261 c2:0.1525 c3:0.6404 c4:0.0931 c5:0.0000 c6:0.0567 c7:0.0096
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+0.06.475.508 I 
+0.06.475.630 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.06.475.638 I perplexity_v2: tokenizing the input ..
+0.06.885.703 I perplexity_v2: have 299875 tokens. Calculation chunk = 4096
+0.06.885.733 I perplexity_v2: computing over 73 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.10.939.334 I perplexity_v2: 4.05 seconds per pass - ETA 4.92 minutes
+[1]31.0605,[2]32.1891,[3]27.9783,[4]24.1011,[5]26.1481,[6]27.0834,[7]28.4218,[8]27.8450,[9]27.4320,[10]27.3561,[11]27.4096,[12]28.1135,[13]28.3972,[14]28.4920,[15]28.1490,[16]28.9565,[17]29.7316,[18]29.7092,[19]30.2399,[20]29.8566,[21]28.2079,[22]26.9978,[23]26.3349,[24]25.8461,[25]26.4359,[26]26.1586,[27]26.1960,[28]26.5520,[29]26.7586,[30]26.7142,[31]26.6152,[32]26.7426,[33]27.0066,[34]26.8283,[35]26.7078,[36]26.8057,[37]26.8812,[38]27.1663,[39]27.2394,[40]27.2602,[41]27.6083,[42]28.1645,[43]28.2530,[44]28.4020,[45]28.3580,[46]28.2238,[47]28.1805,[48]28.3143,[49]28.2523,[50]28.3702,[51]28.3979,[52]28.3861,[53]28.4179,[54]28.5462,[55]28.2860,[56]28.0619,[57]28.0916,[58]27.9873,[59]27.9509,[60]27.9283,[61]27.9603,[62]28.2559,[63]27.4256,[64]26.9580,[65]26.9835,[66]27.0236,[67]27.0855,[68]27.0851,[69]27.1796,[70]27.2570,[71]27.2757,[72]27.2677,[73]27.2547,
+

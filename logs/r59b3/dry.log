@@ -1,0 +1,6 @@
+  wrote 0/16 blk.0.attn_v.weight t 0s
+DRYRUN wrote 3 shards for ['blk.0.attn_v.weight', 'blk.6.ffn_down.weight', 'blk.16.attn_q.weight']: 4B-dry-00001-of-00003.gguf 7276320 B; 4B-dry-00002-of-00003.gguf 6434880 B; 4B-dry-00003-of-00003.gguf 2761504 B total 16472704 t 9s
+DRYRUN readback blk.0.attn_v.weight: types I8/I16/F16/I16/F32 kernel bytes == transcode True, prm True, c True, delta True
+DRYRUN readback blk.6.ffn_down.weight: types I8/I16/F16/I16/F32 kernel bytes == transcode True, prm True, c True, delta True
+DRYRUN readback blk.16.attn_q.weight: types I8/I16/F16/I16/F32 kernel bytes == transcode True, prm True, c True, delta True
+DRYRUN readback PASS

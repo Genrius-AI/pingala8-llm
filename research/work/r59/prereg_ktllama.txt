@@ -1,0 +1,13 @@
+# prereg_ktllama.txt: Llama-3.1-8B flat Model B native file vs ik IQ2_KT at <= its bytes. Written 2026-10-18 04:56:36 by research/detail/ktllama_prep.sh,
+# BEFORE the LK1/LK2 files were quantized or evaluated. Plain ASCII.
+RECIPES_SHA256=01fc93004225c94a0304fcd4cf32cb8698653a46cf07adff053544823a152890
+BUDGET=2389851808
+# source work/llama8b/l31-8b-Q8_0.gguf (--allow-requantize), imatrix ['work/ktllama/llama31-8b.imatrix.dat', 'models/calib_c4.txt', 224, 200]; design {'k1': 'trim (71 demotions before re-promotion)', 'k2_base_trims': 39, 'default_bytes': 2535254048}; LK2 (B3 shape) identical to LK1: True (research/detail/ktllama_design.py)
+LK1 bytes=2389350432 margin=501376 (0.0210%) gap_under_0.1pct=True cq_sha256=8db22e7598e986c080945c4fe94dff10d0933194cd6c8ed465a60905bb708781 linear_bpw=2.1540 token_embd=iq2_kt output=q5_k
+#   layout {attn_q:iq2_kt: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], attn_k:iq2_kt: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], attn_v:iq2_kt: [14, 15, 16], attn_v:iq3_k: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], attn_output:iq2_kt: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], ffn_down:iq2_kt: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]}
+# Model B / IQ2_XXS WT2 logs not complete at prereg time: prediction fixed as a formula (ktllama_prep.sh header):
+PRED_WT2 LK* = exp(ln XXS_L - s*ln(28.6083/18.6481) + 0.0033), s = ln(XXS_L/MB_L)/ln(28.6083/18.0660); 80%: ln +/- 0.06
+# Decision rule (as research/work/r59/prereg_ktgemma.txt): dNLL = NLL(Model B) - NLL(best of LK1/LK2) per window, N = Model B log windows;
+#  a) naive and lag-1 corrected 95% CI both < 0 -> Model B beats; b) either covers 0 -> tie; c) both > 0 -> IQ2_KT beats.
+#  Gates: equal token count and windows in every ik log and the Model B log; IQ2_XXS cross-binary (if the file still exists) flagged if
+#  |mean| > 0.005; requant: Qwen QC penalty-corrected reading binds if its CI excludes 0 (research/detail/ktgemma_decide.py).

@@ -1,0 +1,173 @@
+== P1 byte accounting, Qwen3-4B, 252 linears (inputs: logs/r48k3.tensors class histograms; r48k.py side_bytes; r51_native.py layout)
+N_lin 3633315840  payload 932376064 B  = 2.05295 bpw
+  prescale          1916928 B = 0.004221 bpw
+  perm_packed       1815552 B = 0.003998 bpw
+  perm16            2211840 B = 0.004870 bpw
+  scale            28385280 B = 0.062500 bpw
+  tilewords         1774080 B = 0.003906 bpw
+  tables             516096 B = 0.001136 bpw
+  hdr                  4032 B = 0.000009 bpw
+  clamp delta        219496 B = 0.000483 bpw (27,437 outliers x 8 B: 4 B index pair + 4 B f32)
+container blobs (payload+prescale+packed perm+scale+tilewords+hdr) 966271936 B; logged SUMMARY blobs 966271936 B; diff 0
+native linear bytes (payload+prescale+int16 perm+scale+tilewords+2048 B tables+16 B hdr per tensor + 8 B per outlier) 967403816 B; GGUF tensor tables 967403816 B; diff 0
+b_lin native = 2.13007 bpw (paper 2.1301); b_pay = 2.05295; fixed 17/256 = 0.06640625; rest = 0.010719 bpw
+class mix (row-block share): [0.02162, 0.02605, 0.1525, 0.6404, 0.09308, 1e-05, 0.05671, 0.00963]  mean class rate bpw 2.052948006854257
+mean table reads per 4-weight symbol 1.1474 (paper: 1.06-1.20)
+
+== P2 encode cost, Qwen3-4B build (logs/r48k3.tensors)
+sum t_q over 252 tensors 2768.3 s = 0.7619 us/weight  (59.9% of the 4623 s script wall time)
+whole script wall 4623 s / N = 1.2724 us/weight (0.7859 Mweights/s)
+per-layer wall s: min 77 max 278  layers 0-3: [170, 278, 186, 209]  layers 23-35 mean 87.46153846153847
+steady-state layers 23-35: wall 87.5 s/layer = 0.8666 us/weight ; t_q 58.9 s/layer = 0.5838 us/weight
+  attn_q       n_in  2560 t_q   261.1 s  0.692 us/weight
+  attn_k       n_in  2560 t_q   124.7 s  1.321 us/weight
+  attn_v       n_in  2560 t_q   290.3 s  3.076 us/weight
+  attn_output  n_in  4096 t_q   280.8 s  0.744 us/weight
+  ffn_gate     n_in  2560 t_q   475.3 s  0.530 us/weight
+  ffn_up       n_in  2560 t_q   399.9 s  0.446 us/weight
+  ffn_down     n_in  9728 t_q   936.2 s  1.044 us/weight
+weight-averaged input width nbar (Qwen3-4B) 4488.3
+4-dim distance evaluations per weight by class (S=8): [0.0, 32.0, 128.0, 512.0, 576.0, 768.0, 4608.0, 20992.0]
+coordinator figure: 8 states x 2 branches x 128 candidates / 4 weights = 512 per weight (stage-1 only, class 3)
+class-mix weighted evaluations per weight = 865.4
+intra-block feedback MACs per weight (8 states) 496.0; inter-block feedback MACs per weight n/2 = 2244 at nbar 4488
+Qwen3-4B        N_lin   3,633,315,840 head   388,956,160 in-emb             0 total   4,022,272,000 nbar   4488.3 max matrix   24,903,680 kvB/tok 147456
+Llama-3.1-8B    N_lin   6,979,321,856 head   525,336,576 in-emb   525,336,576 total   8,029,995,008 nbar   6852.9 max matrix   58,720,256 kvB/tok 131072
+Qwen3-14B       N_lin  13,212,057,600 head   777,912,320 in-emb   777,912,320 total  14,767,882,240 nbar   8435.8 max matrix   89,128,960 kvB/tok 163840
+Qwen3-32B       N_lin  31,205,621,760 head   777,912,320 in-emb   777,912,320 total  32,761,446,400 nbar  10889.6 max matrix  131,072,000 kvB/tok 262144
+Llama-3.1-70B   N_lin  68,451,041,280 head 1,050,673,152 in-emb 1,050,673,152 total  70,552,387,584 nbar  13814.0 max matrix  234,881,024 kvB/tok 327680
+Llama-3.1-405B  N_lin 401,646,551,040 head 2,101,346,304 in-emb 2,101,346,304 total 405,849,243,648 nbar  26473.1 max matrix  872,415,232 kvB/tok 516096
+
+GPU memory formula check (X buffer + 3 n_max^2 fp32 + largest fp32 matrix): Qwen3-4B -> [5.7, 1.14, 0.1, 6.94] GB; measured peak 9.36 GB (formula / measured = 0.74)
+FIT A [Gevals, m*n^2/1e12] (layers>=0, n=252): coef [ 0.48095196 72.43336636] R2 0.868 shares [0.561 0.439] sum_pred 2693.4 s vs sum_t_q 2768.3 s
+FIT B [Gevals, n^3/1e12] (layers>=0, n=252): coef [ 0.5763019  17.26020212] R2 0.814 shares [0.731 0.269] sum_pred 2478.8 s vs sum_t_q 2768.3 s
+FIT A [Gevals, m*n^2/1e12] (layers>=8, n=196): coef [ 0.37665622 76.9996544 ] R2 0.809 shares [0.448 0.552] sum_pred 1769.8 s vs sum_t_q 1886.3 s
+FIT B [Gevals, n^3/1e12] (layers>=8, n=196): coef [ 0.54929891 17.77238062] R2 0.690 shares [0.684 0.316] sum_pred 1690.8 s vs sum_t_q 1886.3 s
+FIT E [Gevals only] (layers>=8, n=196): coef [0.76681016] R2 -0.117 shares [1.] sum_pred 1614.8 s vs sum_t_q 1886.3 s
+FIT C [Gevals, n^3, m*n^2] (layers>=0, n=252): coef [ 0.48095196  0.         72.43336636] R2 0.868 shares [0.561 0.    0.439] sum_pred 2693.4 s vs sum_t_q 2768.3 s
+same-mix control (similar class mixes, same N=24.9M weights): median t_q ffn_gate 11.3 ffn_up 10.149999999999999 ffn_down 23.15 ; mean evals per weight: gate 785 up 562 down 729
+P2 Qwen3-4B        N_lin     3.63e9  GPU-h: linear(quantizer-only 0.762 us/w)     0.77  linear(whole script 1.272 us/w)     1.28  fitA(evals+m n^2)     0.75  fitB(evals+n^3)     0.69   [X 5.7 GB, 3H 1.1 GB, W 0.1 GB, formula sum 6.9 GB, scaled by 1/0.74 -> 9.4 GB]
+P2 Llama-3.1-8B    N_lin     6.98e9  GPU-h: linear(quantizer-only 0.762 us/w)     1.48  linear(whole script 1.272 us/w)     2.47  fitA(evals+m n^2)     1.77  fitB(evals+n^3)     1.48   [X 9.1 GB, 3H 2.5 GB, W 0.2 GB, formula sum 11.8 GB, scaled by 1/0.74 -> 16.0 GB]
+P2 Qwen3-14B       N_lin    13.21e9  GPU-h: linear(quantizer-only 0.762 us/w)     2.80  linear(whole script 1.272 us/w)     4.67  fitA(evals+m n^2)     3.77  fitB(evals+n^3)     3.00   [X 11.4 GB, 3H 3.6 GB, W 0.4 GB, formula sum 15.4 GB, scaled by 1/0.74 -> 20.8 GB]
+P2 Qwen3-32B       N_lin    31.21e9  GPU-h: linear(quantizer-only 0.762 us/w)     6.60  linear(whole script 1.272 us/w)    11.03  fitA(evals+m n^2)    10.44  fitB(evals+n^3)     9.85   [X 11.4 GB, 3H 7.9 GB, W 0.5 GB, formula sum 19.8 GB, scaled by 1/0.74 -> 26.8 GB]
+P2 Llama-3.1-70B   N_lin    68.45e9  GPU-h: linear(quantizer-only 0.762 us/w)    14.49  linear(whole script 1.272 us/w)    24.19  fitA(evals+m n^2)    26.94  fitB(evals+n^3)    19.79   [X 18.3 GB, 3H 9.9 GB, W 0.9 GB, formula sum 29.1 GB, scaled by 1/0.74 -> 39.3 GB]
+P2 Llama-3.1-405B  N_lin   401.65e9  GPU-h: linear(quantizer-only 0.762 us/w)    85.01  linear(whole script 1.272 us/w)   141.96  fitA(evals+m n^2)   260.37  fitB(evals+n^3)   162.79   [X 36.5 GB, 3H 34.0 GB, W 3.5 GB, formula sum 74.0 GB, scaled by 1/0.74 -> 100.0 GB]
+host RAM for the per-layer Hessians kept on CPU (fit+eval, fp32, groups in/o/mlp/down): {'Qwen3-4B': 0.91, 'Llama-3.1-8B': 2.05, 'Qwen3-14B': 3.05, 'Qwen3-32B': 5.87, 'Llama-3.1-70B': 8.19, 'Llama-3.1-405B': 29.13} GB
+  Qwen3-4B: calibration forward 8.1e+15 FLOP; Cholesky (fit set) 1.17e+13 FLOP; ratio 0.0014
+  Llama-3.1-405B: calibration forward 8.95e+17 FLOP; Cholesky (fit set) 6.9e+15 FLOP; ratio 0.0077
+
+== P3 bytes per token and bandwidth upper bound
+anchor Qwen3-4B Model B: linear 967,403,816 B + head 267407360 B = 1234811176 B per token; tg 201.7 -> 249.06 GB/s effective
+  bound at 672 GB/s: 544.2 tok/s; measured 201.7 = 0.371 of bound
+  bound at 1008 GB/s: 816.3 tok/s; measured 201.7 = 0.247 of bound
+  bound at 3350 GB/s: 2713.0 tok/s; measured 201.7 = 0.074 of bound
+  IQ2_XXS 4B file 1,246,621,312 B: 203.1 t/s -> 253.2 GB/s (0.377 of 672)
+  Q8_0 carrier 4,280,405,408 B, tg128 median of 3 (logs/r51_d1_q8ceiling.log) 119.8 -> 512.8 GB/s = 0.763 of 672
+  model B effective / Q8_0 effective = 0.486
+cross-check file sizes: Llama-3.1-8B IQ2_XXS CALC 2,407,385,972 vs MEASURED local file 2,399,212,576 B (logs/l8_build.log); Q4_K_M CALC 4,874,184,474 vs llama.cpp README 4.58 GiB = 4,917,737,554 ; Q8_0 CALC 8,537,869,696 vs MEASURED local Q8_0 8,540,771,136 B
+cross-check Qwen3-4B Model B file CALC 1,240,823,119 vs 1,241,608,288 (tied embedding is the head)
+P3 Llama-3.1-8B    fp16     weights read/token     15.01 GB  file     16.07 GB  bound t/s: n/f      67.2     223.2
+P3 Llama-3.1-8B    Q4_K_M   weights read/token      4.55 GB  file      4.87 GB  bound t/s:    147.7     221.6     736.3
+P3 Llama-3.1-8B    IQ2_XXS  weights read/token      2.23 GB  file      2.41 GB  bound t/s:    301.5     452.2    1502.9
+P3 Llama-3.1-8B    Model B  weights read/token      2.22 GB  file      2.40 GB  bound t/s:    302.8     454.2    1509.3
+P3 Llama-3.1-70B   fp16     weights read/token    139.00 GB  file    141.11 GB  bound t/s: n/f  n/f  n/f
+P3 Llama-3.1-70B   Q4_K_M   weights read/token     42.14 GB  file     42.78 GB  bound t/s: n/f  n/f      79.5
+P3 Llama-3.1-70B   IQ2_XXS  weights read/token     19.04 GB  file     19.39 GB  bound t/s: n/f      52.9     175.9
+P3 Llama-3.1-70B   Model B  weights read/token     18.95 GB  file     19.30 GB  bound t/s: n/f      53.2     176.8
+P3 Llama-3.1-405B  fp16     weights read/token    807.50 GB  file    811.70 GB  bound t/s: n/f  n/f  n/f
+P3 Llama-3.1-405B  Q4_K_M   weights read/token    244.77 GB  file    246.05 GB  bound t/s: n/f  n/f  n/f
+P3 Llama-3.1-405B  IQ2_XXS  weights read/token    108.94 GB  file    109.63 GB  bound t/s: n/f  n/f  n/f
+P3 Llama-3.1-405B  Model B  weights read/token    108.39 GB  file    109.08 GB  bound t/s: n/f  n/f  n/f
+
+== P4 slab overhead
+P4 Qwen3-4B        Q8_0 slab (largest matrix 24,903,680 weights x 34/32)      26.5 MB ; Model B weights     1.23 GB ; ratio 2.14%
+P4 Llama-3.1-8B    Q8_0 slab (largest matrix 58,720,256 weights x 34/32)      62.4 MB ; Model B weights     2.22 GB ; ratio 2.81%
+P4 Llama-3.1-70B   Q8_0 slab (largest matrix 234,881,024 weights x 34/32)     249.6 MB ; Model B weights    18.95 GB ; ratio 1.32%
+P4 Llama-3.1-405B  Q8_0 slab (largest matrix 872,415,232 weights x 34/32)     926.9 MB ; Model B weights   108.39 GB ; ratio 0.86%
+Qwen3-4B: measured +56 MiB = 58.7 MB; slab 26.46 MB = 25.2 MiB; undecomposed rest 30.8 MiB; share of peak 56/3218 = 1.74% ; 56 MiB / weights 4.76%
+approx 1/L law: slab/weights ~ {'Qwen3-4B': 0.771, 'Llama-3.1-8B': 0.9, 'Qwen3-14B': 0.935, 'Qwen3-32B': 1.008, 'Llama-3.1-70B': 1.054, 'Llama-3.1-405B': 1.078}
+
+== P5 table size
+tables_blob(): 4 (magic) + 1 + 1024 (A) + 1024 (B) + 4 (c) + 8 + 8 (shifts) = 2073 B; native layout reserves 2048 B per tensor -> 516096 B = 0.0416% of the file
+per-thread-block activation table: 256 entries x 32 chunks x 4 B = 32768 B (paper: 32 KB)
+
+== Impact: file sizes (GB = 1e9 B), CALC
+Llama-3.1-8B    fp16    16.07  Q8_0     8.54  Q4_K_M     4.87  IQ2_XXS     2.41  Model B     2.40   fp16/ours 6.70x  Q4KM/ours 2.03x  IQ2/ours 1.0040x
+Llama-3.1-70B   fp16   141.11  Q8_0    74.97  Q4_K_M    42.78  IQ2_XXS    19.39  Model B    19.30   fp16/ours 7.31x  Q4KM/ours 2.22x  IQ2/ours 1.0048x
+Llama-3.1-405B  fp16   811.70  Q8_0   431.22  Q4_K_M   246.05  IQ2_XXS   109.63  Model B   109.08   fp16/ours 7.44x  Q4KM/ours 2.26x  IQ2/ours 1.0050x
+sens Llama-3.1-8B ours at b_lin=2.05: 2.33 GB; fp16/ours 6.90x
+sens Llama-3.1-8B ours at b_lin=2.13: 2.40 GB; fp16/ours 6.70x
+sens Llama-3.1-8B ours at b_lin=2.3: 2.55 GB; fp16/ours 6.31x
+sens Llama-3.1-70B ours at b_lin=2.05: 18.61 GB; fp16/ours 7.58x
+sens Llama-3.1-70B ours at b_lin=2.13: 19.30 GB; fp16/ours 7.31x
+sens Llama-3.1-70B ours at b_lin=2.3: 20.75 GB; fp16/ours 6.80x
+sens Llama-3.1-405B ours at b_lin=2.05: 105.06 GB; fp16/ours 7.73x
+sens Llama-3.1-405B ours at b_lin=2.13: 109.08 GB; fp16/ours 7.44x
+sens Llama-3.1-405B ours at b_lin=2.3: 117.61 GB; fp16/ours 6.90x
+KV bytes per token (fp16): {'Llama-3.1-8B': 131072, 'Llama-3.1-70B': 327680, 'Llama-3.1-405B': 516096}  KV for 8192 tokens x1: {'Llama-3.1-8B': 1.07, 'Llama-3.1-70B': 2.68, 'Llama-3.1-405B': 4.23} GB; x32: {'Llama-3.1-8B': 34.4, 'Llama-3.1-70B': 85.9, 'Llama-3.1-405B': 135.3} GB
+GPUs Llama-3.1-8B    fp16     24GiB: ctx8k x1   1  x32   3 | 80GiB: x1   1  x32   1
+GPUs Llama-3.1-8B    Q4_K_M   24GiB: ctx8k x1   1  x32   2 | 80GiB: x1   1  x32   1
+GPUs Llama-3.1-8B    IQ2_XXS  24GiB: ctx8k x1   1  x32   2 | 80GiB: x1   1  x32   1
+GPUs Llama-3.1-8B    Model B  24GiB: ctx8k x1   1  x32   2 | 80GiB: x1   1  x32   1
+GPUs Llama-3.1-70B   fp16     24GiB: ctx8k x1   7  x32  10 | 80GiB: x1   2  x32   3
+GPUs Llama-3.1-70B   Q4_K_M   24GiB: ctx8k x1   3  x32   6 | 80GiB: x1   1  x32   2
+GPUs Llama-3.1-70B   IQ2_XXS  24GiB: ctx8k x1   1  x32   5 | 80GiB: x1   1  x32   2
+GPUs Llama-3.1-70B   Model B  24GiB: ctx8k x1   1  x32   5 | 80GiB: x1   1  x32   2
+GPUs Llama-3.1-405B  fp16     24GiB: ctx8k x1  36  x32  41 | 80GiB: x1  11  x32  13
+GPUs Llama-3.1-405B  Q4_K_M   24GiB: ctx8k x1  11  x32  17 | 80GiB: x1   4  x32   5
+GPUs Llama-3.1-405B  IQ2_XXS  24GiB: ctx8k x1   5  x32  11 | 80GiB: x1   2  x32   4
+GPUs Llama-3.1-405B  Model B  24GiB: ctx8k x1   5  x32  11 | 80GiB: x1   2  x32   4
+COST Llama-3.1-8B    fp16     replica $/h any class:   0.89-  1.29 ; 80GiB only:   2.89-  4.29
+COST Llama-3.1-8B    Q4_K_M   replica $/h any class:   0.89-  1.29 ; 80GiB only:   2.89-  4.29
+COST Llama-3.1-8B    Model B  replica $/h any class:   0.89-  1.29 ; 80GiB only:   2.89-  4.29
+COST Llama-3.1-70B   fp16     replica $/h any class:   5.78-  8.58 ; 80GiB only:   5.78-  8.58
+COST Llama-3.1-70B   Q4_K_M   replica $/h any class:   2.67-  3.87 ; 80GiB only:   2.89-  4.29
+COST Llama-3.1-70B   Model B  replica $/h any class:   0.89-  1.29 ; 80GiB only:   2.89-  4.29
+COST Llama-3.1-405B  fp16     replica $/h any class:  31.79- 46.44 ; 80GiB only:  31.79- 47.19
+COST Llama-3.1-405B  Q4_K_M   replica $/h any class:   9.79- 14.19 ; 80GiB only:  11.56- 17.16
+COST Llama-3.1-405B  Model B  replica $/h any class:   4.45-  6.45 ; 80GiB only:   5.78-  8.58
+DL Llama-3.1-8B    saved vs fp16       13.67 GB/download ; x1e3 =    13.67 TB ; x1e6 =   13.668 PB ; at $0.09/GB list: $1,230,130 per 1M downloads
+DL Llama-3.1-8B    saved vs Q4_K_M      2.48 GB/download ; x1e3 =     2.48 TB ; x1e6 =    2.476 PB ; at $0.09/GB list: $222,868 per 1M downloads
+DL Llama-3.1-70B   saved vs fp16      121.81 GB/download ; x1e3 =   121.81 TB ; x1e6 =  121.812 PB ; at $0.09/GB list: $10,963,057 per 1M downloads
+DL Llama-3.1-70B   saved vs Q4_K_M     23.48 GB/download ; x1e3 =    23.48 TB ; x1e6 =   23.479 PB ; at $0.09/GB list: $2,113,141 per 1M downloads
+DL Llama-3.1-405B  saved vs fp16      702.62 GB/download ; x1e3 =   702.62 TB ; x1e6 =  702.621 PB ; at $0.09/GB list: $63,235,880 per 1M downloads
+DL Llama-3.1-405B  saved vs Q4_K_M    136.97 GB/download ; x1e3 =   136.97 TB ; x1e6 =  136.969 PB ; at $0.09/GB list: $12,327,166 per 1M downloads
+energy proxy (weights bytes read per token) ratios ours/fp16 and ours/Q4_K_M: {'Llama-3.1-8B': (0.1479, 0.4878), 'Llama-3.1-70B': (0.1363, 0.4497), 'Llama-3.1-405B': (0.1342, 0.4428)}
+
+== Published 2-bit perplexity across scale (hand-copied from arXiv v4 tables; ratio CALC)
+QTIP T5 (Wikitext2, ctx 4096)            Llama-2   QTIP 2.00                sizes ['7B', '13B', '70B'] ppl [5.86, 5.11, 3.7] fp16 [5.12, 4.57, 3.12] ratio [1.145, 1.118, 1.186] dNLL [0.135, 0.112, 0.17] abs gap [0.74, 0.54, 0.58]
+QTIP T5 (Wikitext2, ctx 4096)            Llama-2   QuIP# 2.00               sizes ['7B', '13B', '70B'] ppl [6.19, 5.35, 3.91] fp16 [5.12, 4.57, 3.12] ratio [1.209, 1.171, 1.253] dNLL [0.19, 0.158, 0.226] abs gap [1.07, 0.78, 0.79]
+QTIP T5 (Wikitext2, ctx 4096)            Llama-2   AQLM 2+                  sizes ['7B', '13B', '70B'] ppl [6.14, 5.33, 3.83] fp16 [5.12, 4.57, 3.12] ratio [1.199, 1.166, 1.228] dNLL [0.182, 0.154, 0.205] abs gap [1.02, 0.76, 0.71]
+AQLM T1 (Wikitext2, no e2e FT)           Llama-2   AQLM 2.02/1.97/2.07      sizes ['7B', '13B', '70B'] ppl [6.59, 5.6, 3.94] fp16 [5.12, 4.57, 3.12] ratio [1.287, 1.225, 1.263] dNLL [0.252, 0.203, 0.233] abs gap [1.47, 1.03, 0.82]
+AQLM T1 (Wikitext2, no e2e FT)           Llama-2   QuIP# 2.02/2.01/2.01     sizes ['7B', '13B', '70B'] ppl [8.22, 6.06, 4.16] fp16 [5.12, 4.57, 3.12] ratio [1.605, 1.326, 1.333] dNLL [0.473, 0.282, 0.288] abs gap [3.1, 1.49, 1.04]
+QTIP T5 (Wikitext2, ctx 2048)            Llama-1   QTIP 2.00                sizes ['7B', '13B', '30B', '65B'] ppl [6.52, 5.8, 4.83, 4.21] fp16 [5.68, 5.09, 4.1, 3.53] ratio [1.148, 1.139, 1.178, 1.193] dNLL [0.138, 0.131, 0.164, 0.176] abs gap [0.84, 0.71, 0.73, 0.68]
+QTIP T5 (Wikitext2, ctx 2048)            Llama-1   QuIP# 2.00               sizes ['7B', '13B', '30B', '65B'] ppl [6.86, 5.97, 5.02, 4.36] fp16 [5.68, 5.09, 4.1, 3.53] ratio [1.208, 1.173, 1.224, 1.235] dNLL [0.189, 0.159, 0.202, 0.211] abs gap [1.18, 0.88, 0.92, 0.83]
+QTIP T7 (Wikitext2, ctx 8192)            Llama-3   QTIP 2.00                sizes ['8B', '70B'] ppl [7.33, 4.97] fp16 [5.54, 2.59] ratio [1.323, 1.919] dNLL [0.28, 0.652] abs gap [1.79, 2.38]
+QTIP T7 (Wikitext2, ctx 8192)            Llama-3   QuIP# 2.00               sizes ['8B', '70B'] ppl [7.84, 5.77] fp16 [5.54, 2.59] ratio [1.415, 2.228] dNLL [0.347, 0.801] abs gap [2.3, 3.18]
+QTIP T8 (Wikitext2, ctx 8192, instruct)  Llama-3.1 QTIP 2-bit               sizes ['8B', '70B', '405B'] ppl [7.82, 5.08, 3.29] fp16 [6.5, 3.52, 1.7] ratio [1.203, 1.443, 1.935] dNLL [0.185, 0.367, 0.66] abs gap [1.32, 1.56, 1.59]
+QTIP 2-bit ArcC (T6)     fp16 [40.0, 45.6, 51.1] quant [35.7, 41.4, 48.0] drop [4.3, 4.2, 3.1]  (Llama-2 7B/13B/70B)
+QTIP 2-bit ArcE (T6)     fp16 [69.3, 73.3, 77.7] quant [65.6, 70.8, 76.3] drop [3.7, 2.5, 1.4]  (Llama-2 7B/13B/70B)
+QTIP 2-bit Wino (T6)     fp16 [67.3, 69.6, 77.0] quant [64.7, 67.6, 75.1] drop [2.6, 2.0, 1.9]  (Llama-2 7B/13B/70B)
+AQLM 2-bit avg5 (T1)     fp16 [62.35, 65.38, 70.17] quant [57.28, 61.32, 68.75] drop [5.07, 4.06, 1.42]  (Llama-2 7B/13B/70B)
+
+Our points: Qwen3-4B 19.0932/12.4567 = 1.5328 IQ2_XXS 2.2966 ; excess-loss cut 0.5891
+Gemma-3-4B carrier 17.1804/8.4447 = 2.0345  native 17.1806/8.4447 = 2.0345  IQ2_XXS 2.3 ; excess-loss cut 0.2043
+dNLL (ln ratio) Qwen3-4B ours 0.4271 IQ2_XXS 0.8314 ; Gemma ours 0.7102 IQ2_XXS 0.8329
+
+== KV depth sensitivity of the byte-ratio (bytes read per token = weights + KV_per_token x depth), CALC
+DEPTH Llama-3.1-8B    depth      0 KV read   0.000 GB  fp16/ours 6.76x  Q4KM/ours 2.05x
+DEPTH Llama-3.1-8B    depth   4096 KV read   0.537 GB  fp16/ours 5.64x  Q4KM/ours 1.85x
+DEPTH Llama-3.1-8B    depth  32768 KV read   4.295 GB  fp16/ours 2.96x  Q4KM/ours 1.36x
+DEPTH Llama-3.1-70B   depth      0 KV read   0.000 GB  fp16/ours 7.34x  Q4KM/ours 2.22x
+DEPTH Llama-3.1-70B   depth   4096 KV read   1.342 GB  fp16/ours 6.92x  Q4KM/ours 2.14x
+DEPTH Llama-3.1-70B   depth  32768 KV read  10.737 GB  fp16/ours 5.04x  Q4KM/ours 1.78x
+Qwen3-4B depth check: bytes ratio d0/d4096 = 0.6715 (weights 1.235 GB, KV 0.604 GB) vs measured tg ratio 159.7/201.7 = 0.7918 (logs/r51_ppc2.log REALSUM)
+
+fit margins for the single-GPU cells: (0.9*cap - need)/(0.9*cap)
+  Llama-3.1-8B    Q4_K_M   24GiB: need   6.54 GiB of  21.60 usable, margin  69.7%
+  Llama-3.1-8B    Q4_K_M   80GiB: need   6.54 GiB of  72.00 usable, margin  90.9%
+  Llama-3.1-8B    Model B  24GiB: need   4.23 GiB of  21.60 usable, margin  80.4%
+  Llama-3.1-8B    Model B  80GiB: need   4.23 GiB of  72.00 usable, margin  94.1%
+  Llama-3.1-70B   Q4_K_M   80GiB: need  43.34 GiB of  72.00 usable, margin  39.8%
+  Llama-3.1-70B   Model B  24GiB: need  21.47 GiB of  21.60 usable, margin   0.6%
+  Llama-3.1-70B   Model B  80GiB: need  21.47 GiB of  72.00 usable, margin  70.2%

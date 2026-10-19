@@ -1,0 +1,10 @@
+  wrote 160/829 blk.6.attn_output.weight t 20s
+  wrote 320/829 blk.12.ffn_up.weight t 43s
+  wrote 440/829 blk.17.ffn_up.weight t 59s
+  wrote 600/829 blk.25.attn_q.weight t 88s
+  wrote 640/829 blk.27.attn_q.weight t 94s
+  wrote 680/829 blk.29.attn_q.weight t 100s
+  wrote 720/829 blk.31.attn_output.weight t 106s
+SHARD work/csq/native/4B-csq-vr3-00001-of-00002.gguf 995833472 B sha256 4611812769418b2d0ffb8659f05892d1e3f9c4d20d80b121e93607494ab44243 OK
+SHARD work/csq/native/4B-csq-vr3-00002-of-00002.gguf 247320320 B sha256 ded47243d30315e49836bf51d652c56fe3b21a288c04f8842d93ff3a70300ff8 OK
+NATIVE3 TOTAL 1243153792 B vs B3 -2762080 vs IQ2_XXS -3467520 (OK); tensors 829 t 121s

@@ -1,0 +1,63 @@
+HFJ pe52_IQ2_M rc=0 last [73]2450009.2697 computing over 73 chunks, n_ctx=4096 
+HFJ pe52_IQ3_XXS rc=0 last [73]2977812.0696 computing over 73 chunks, n_ctx=4096 
+HFJ pe52_Q2_K rc=0 last [73]15.0133 computing over 73 chunks, n_ctx=4096 
+gjob2: vram 4164+5000/11000 ram 8503+3000/11000 MiB, waiting
+gjob2: vram 4164+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4164+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4164+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4164+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4178+5000/11000 ram 8535+3000/11000 MiB, waiting
+gjob2: vram 4178+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4178+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4178+5000/11000 ram 8535+3000/11000 MiB, waiting
+gjob2: vram 4178+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4178+5000/11000 ram 8535+3000/11000 MiB, waiting
+gjob2: vram 4178+5000/11000 ram 8534+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8640+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8702+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8736+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8763+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8766+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8775+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8774+3000/11000 MiB, waiting
+gjob2: vram 4182+5000/11000 ram 8775+3000/11000 MiB, waiting
+HFJ pe52_IQ2_XS rc=0 last [73]19.0193 computing over 73 chunks, n_ctx=4096 
+HFJ pe52_IQ1_M rc=0 last [73]57.4988 computing over 73 chunks, n_ctx=4096 
+HFJ pe52_IQ2_S rc=0 last [73]3388718.3586 computing over 73 chunks, n_ctx=4096 
+START iq2xxs 20:22:50 bin llama.cpp/build-cuda/bin env 'env' -m work/r45b/4B-IQ2_XXS-r45b.gguf
+RES iq2xxs mmluF 20:35:11 Final result: 31.0711 +/- 0.3906
+DONE iq2xxs 20:35:11
+START q8_0 20:35:11 bin llama.cpp/build-cuda/bin env 'env' -m work/pe52/qwen3-4B-Q8_0.gguf
+RES q8_0 HS 20:36:52 1000 65.80000000% [62.8044%, 68.6747%]
+RES q8_0 WG 20:37:29 Final Winogrande score(1267 tasks): 65.5091 +/- 1.3359
+RES q8_0 arc-easy 20:38:04 Final result: 66.1404 +/- 1.9839
+RES q8_0 arc-challenge 20:38:30 Final result: 45.1505 +/- 2.8828
+RES q8_0 mmlu 20:40:00 Final result: 36.1111 +/- 1.2212
+RES q8_0 mmluF 20:53:19 Final result: 38.7409 +/- 0.4111
+DONE q8_0 20:53:19
+START IQ2_XS 20:53:19 bin llama.cpp/build-cuda/bin env 'env' -m work/pe52/qwen3-4B-IQ2_XS.gguf
+RES IQ2_XS HS 20:55:09 1000 54.10000000% [51.0016%, 57.1670%]
+RES IQ2_XS WG 20:55:47 Final Winogrande score(1267 tasks): 59.3528 +/- 1.3804
+RES IQ2_XS arc-easy 20:56:15 Final result: 57.7193 +/- 2.0710
+RES IQ2_XS arc-challenge 20:56:39 Final result: 34.1137 +/- 2.7463
+RES IQ2_XS mmlu 20:58:19 Final result: 33.2687 +/- 1.1979
+RES IQ2_XS mmluF 21:12:20 Final result: 33.4425 +/- 0.3982
+DONE IQ2_XS 21:12:20
+START IQ1_M 21:12:20 bin llama.cpp/build-cuda/bin env 'env' -m work/pe52/qwen3-4B-IQ1_M.gguf
+RES IQ1_M HS 21:14:23 1000 36.50000000% [33.5730%, 39.5303%]
+RES IQ1_M WG 21:15:15 Final Winogrande score(1267 tasks): 54.2226 +/- 1.4002
+RES IQ1_M arc-easy 21:16:03 Final result: 40.7018 +/- 2.0595
+RES IQ1_M arc-challenge 21:16:34 Final result: 27.0903 +/- 2.5745
+START Q2_K 13:17:04 bin llama.cpp/build-cuda/bin env 'env' -m models/qwen3-4B-Q2_K.gguf
+RES Q2_K HS 13:18:42 1000 60.30000000% [57.2336%, 63.2875%]
+RES Q2_K WG 13:19:11 Final Winogrande score(1267 tasks): 62.9045 +/- 1.3576
+RES Q2_K arc-easy 13:19:38 Final result: 59.8246 +/- 2.0552
+RES Q2_K arc-challenge 13:19:58 Final result: 39.4649 +/- 2.8314
+RES Q2_K mmlu 13:21:24 Final result: 33.2041 +/- 1.1974
+RES Q2_K mmluF 13:36:09 
+DONE Q2_K 13:36:09
+START IQ1_M 13:36:09 bin llama.cpp/build-cuda/bin env 'env' -m work/pe52/qwen3-4B-IQ1_M.gguf
+RES IQ1_M mmlu 13:38:15 Final result: 28.1654 +/- 1.1436
+RES IQ1_M mmluF 13:56:24 Final result: 28.4432 +/- 0.3807
+DONE IQ1_M 13:56:24
+GPUB_END 13:58:06

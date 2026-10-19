@@ -1,0 +1,3 @@
+tensors 252 mismatched prm/c sizes 0
+weight-tensor residual (got - [payload + scales + tilewords]) distribution: {2064: 252}
+sum weight tensors 963055552 prm 2211840 c 1916928 didx 109748 dval 109748 total 967403816

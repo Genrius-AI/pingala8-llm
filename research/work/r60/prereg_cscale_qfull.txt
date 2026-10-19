@@ -1,0 +1,14 @@
+PREREG Qwen full rebuild with column scale CMODE=opt (written 2026-10-18 11:45 IST, before the run)
+Build: research/detail/cs_build_q.py, arm roff:8:research/work/r48k3:rateoff, ENC all 36 layers, NSEQ 256 (f1 used 512; fewer calibration
+sequences can only hurt the new arm), NEV 32, DAMP 0.1 ALPHA 1.05 NSAL 4 AVB 2.0625; native file via research/detail/cs_qnative.py
+(= b3p_native.py with the blob dir as CSQ_BD), same B3+ VR3 layout. Eval: r36_hfj 73 windows WikiText-2, paired vs B3+ native and IQ2_KT.
+Baseline: B3+ native 17.78 (f1 carrier 17.7897), same recipe with CMODE=cur.
+Prediction (my guess): ppl 17.45 [17.00, 17.85]; bytes <= IQ2_XXS (same rate allocator). Proxy: blob-level geomean Dev/IQ2_XXS 0.25 [0.15, 0.40]
+(f1 roff value read from work/r52a/f1/stats.json for comparison).
+Decision: WIN if paired dNLL vs B3+ < 0 with the corrected 95% interval excluding 0 -> it replaces B3+ as the Qwen headline.
+NULL if the interval covers 0 -> keep B3+, report the proxy gain as not transferring. LOSS if > 0 -> negative_results.
+
+RESULT 2026-10-18 12:43 (logs/cs_qfull.log, logs/r36_hfj_csq_native.log): native 1,243,153,792 B (B3+ 1,244,919,264).
+ppl [73] 16.6413, below the predicted interval [17.00, 17.85] (my prediction was too conservative).
+PAIRED vs B3+: dNLL -0.0659 +/- 0.0093 (95%), better on 70/73. vs IQ2_KT-eq: -0.1122 +/- 0.0093, better on 73/73.
+DECISION: WIN by the rule above. CMODE=opt replaces B3+ as the Qwen headline.

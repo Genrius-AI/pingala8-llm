@@ -1,0 +1,85 @@
+BENCH tg128 b4/xxs n 10 mean 1.096 95%CI [1.034, 1.158] median 1.084 min 0.994 max 1.268 | r1 1.011 r2 1.268 r3 1.206 r4 1.037 r5 1.112 r6 1.106 r7 1.061 r8 0.994 r9 1.119 r10 1.045
+BENCH tg128 b4mc/xxs n 10 mean 1.094 95%CI [1.053, 1.134] median 1.092 min 1.024 max 1.224 | r1 1.034 r2 1.129 r3 1.224 r4 1.068 r5 1.101 r6 1.101 r7 1.065 r8 1.082 r9 1.111 r10 1.024
+BENCH tg128 ktc/xxs n 10 mean 0.995 95%CI [0.952, 1.038] median 1.011 min 0.893 max 1.073 | r1 1.001 r2 1.073 r3 1.022 r4 0.899 r5 1.041 r6 0.982 r7 0.893 r8 0.969 r9 1.034 r10 1.038
+BENCH tg128 b3p/xxs n 10 mean 1.069 95%CI [1.016, 1.123] median 1.103 min 0.941 max 1.146 | r1 0.941 r2 1.146 r3 1.112 r4 1.003 r5 1.136 r6 1.134 r7 0.995 r8 1.006 r9 1.094 r10 1.127
+BENCH tg128 b3/xxs n 10 mean 0.977 95%CI [0.917, 1.037] median 0.988 min 0.843 max 1.076 | r1 0.856 r2 0.943 r3 1.054 r4 0.975 r5 1.076 r6 1.045 r7 0.843 r8 0.925 r9 1.056 r10 1.000
+BENCH tg128 mB/xxs n 10 mean 0.976 95%CI [0.918, 1.033] median 0.996 min 0.823 max 1.089 | r1 0.922 r2 1.089 r3 1.051 r4 0.929 r5 0.981 r6 1.033 r7 1.010 r8 0.907 r9 1.011 r10 0.823
+BENCH tg128 ktm/xxs n 10 mean 0.983 95%CI [0.946, 1.020] median 0.983 min 0.877 max 1.070 | r1 0.981 r2 1.070 r3 1.002 r4 0.934 r5 0.981 r6 1.028 r7 0.985 r8 0.877 r9 0.997 r10 0.972
+BENCH tg128 q4km/xxs n 10 mean 0.788 95%CI [0.738, 0.838] median 0.794 min 0.631 max 0.895 | r1 0.763 r2 0.895 r3 0.831 r4 0.750 r5 0.817 r6 0.837 r7 0.795 r8 0.631 r9 0.768 r10 0.792
+BENCH tg128 b4/ktc n 10 mean 1.102 95%CI [1.050, 1.154] median 1.104 min 1.007 max 1.188 | r1 1.010 r2 1.182 r3 1.180 r4 1.154 r5 1.068 r6 1.126 r7 1.188 r8 1.026 r9 1.083 r10 1.007
+BENCH tg128 b4mc/b4 n 10 mean 1.001 95%CI [0.965, 1.036] median 1.000 min 0.890 max 1.089 | r1 1.022 r2 0.890 r3 1.015 r4 1.030 r5 0.990 r6 0.996 r7 1.003 r8 1.089 r9 0.993 r10 0.980
+BENCH tg128 b4/b3p n 10 mean 1.026 95%CI [0.984, 1.067] median 1.029 min 0.928 max 1.106 | r1 1.074 r2 1.106 r3 1.085 r4 1.034 r5 0.978 r6 0.975 r7 1.067 r8 0.987 r9 1.023 r10 0.928
+BENCH pp512 b4/xxs n 10 mean 0.741 95%CI [0.710, 0.772] median 0.743 min 0.670 max 0.790 | r1 0.777 r2 0.790 r3 0.779 r4 0.672 r5 0.722 r6 0.736 r7 0.734 r8 0.670 r9 0.750 r10 0.780
+BENCH pp512 b4mc/xxs n 10 mean 0.750 95%CI [0.732, 0.769] median 0.748 min 0.713 max 0.813 | r1 0.752 r2 0.747 r3 0.813 r4 0.749 r5 0.754 r6 0.728 r7 0.738 r8 0.713 r9 0.747 r10 0.762
+BENCH pp512 ktc/xxs n 10 mean 0.949 95%CI [0.906, 0.992] median 0.931 min 0.866 max 1.081 | r1 0.911 r2 0.988 r3 0.926 r4 0.866 r5 0.920 r6 0.952 r7 0.916 r8 0.935 r9 0.998 r10 1.081
+BENCH pp512 b3p/xxs n 10 mean 0.707 95%CI [0.666, 0.748] median 0.718 min 0.615 max 0.804 | r1 0.717 r2 0.720 r3 0.733 r4 0.618 r5 0.739 r6 0.741 r7 0.615 r8 0.681 r9 0.704 r10 0.804
+BENCH pp512 b3/xxs n 10 mean 0.695 95%CI [0.666, 0.723] median 0.692 min 0.639 max 0.764 | r1 0.639 r2 0.764 r3 0.718 r4 0.673 r5 0.715 r6 0.670 r7 0.672 r8 0.649 r9 0.711 r10 0.735
+BENCH pp512 mB/xxs n 10 mean 0.703 95%CI [0.665, 0.740] median 0.707 min 0.604 max 0.791 | r1 0.642 r2 0.753 r3 0.721 r4 0.688 r5 0.722 r6 0.710 r7 0.703 r8 0.604 r9 0.694 r10 0.791
+BENCH pp512 ktm/xxs n 10 mean 0.923 95%CI [0.877, 0.969] median 0.902 min 0.821 max 1.009 | r1 0.887 r2 1.009 r3 0.999 r4 0.882 r5 0.871 r6 0.960 r7 0.901 r8 0.821 r9 0.903 r10 0.998
+BENCH pp512 q4km/xxs n 10 mean 0.890 95%CI [0.833, 0.946] median 0.887 min 0.758 max 1.003 | r1 0.851 r2 0.988 r3 0.924 r4 0.820 r5 0.839 r6 0.945 r7 0.922 r8 0.758 r9 0.845 r10 1.003
+BENCH pp512 b4/ktc n 10 mean 0.782 95%CI [0.750, 0.814] median 0.780 min 0.717 max 0.852 | r1 0.852 r2 0.799 r3 0.842 r4 0.776 r5 0.785 r6 0.773 r7 0.801 r8 0.717 r9 0.752 r10 0.721
+BENCH pp512 b4mc/b4 n 10 mean 1.015 95%CI [0.978, 1.051] median 1.001 min 0.946 max 1.115 | r1 0.968 r2 0.946 r3 1.043 r4 1.115 r5 1.045 r6 0.989 r7 1.005 r8 1.064 r9 0.996 r10 0.977
+BENCH pp512 b4/b3p n 10 mean 1.051 95%CI [1.001, 1.102] median 1.064 min 0.971 max 1.193 | r1 1.083 r2 1.098 r3 1.063 r4 1.088 r5 0.977 r6 0.992 r7 1.193 r8 0.984 r9 1.065 r10 0.971
+BENCH npl1 b4mc/xxs n 10 mean 1.062 95%CI [1.008, 1.117] median 1.047 min 0.915 max 1.173 | r1 1.002 r2 1.053 r3 0.915 r4 1.041 r5 1.135 r6 1.133 r7 1.105 r8 1.042 r9 1.024 r10 1.173
+BENCH npl1 b4mc/ktc n 10 mean 1.042 95%CI [0.997, 1.086] median 1.046 min 0.957 max 1.162 | r1 0.992 r2 1.064 r3 0.957 r4 0.998 r5 1.101 r6 1.053 r7 0.982 r8 1.065 r9 1.040 r10 1.162
+BENCH npl1 b4mc/b4 n 10 mean 1.043 95%CI [0.987, 1.098] median 1.027 min 0.947 max 1.148 | r1 0.953 r2 1.124 r3 0.947 r4 0.978 r5 1.028 r6 1.148 r7 1.026 r8 1.081 r9 0.997 r10 1.144
+BENCH npl1 b4/xxs n 10 mean 1.020 95%CI [0.981, 1.060] median 1.026 min 0.937 max 1.105 | r1 1.052 r2 0.937 r3 0.966 r4 1.065 r5 1.105 r6 0.987 r7 1.077 r8 0.964 r9 1.027 r10 1.025
+BENCH npl1 ktc/xxs n 10 mean 1.020 95%CI [0.984, 1.057] median 1.010 min 0.955 max 1.125 | r1 1.010 r2 0.990 r3 0.955 r4 1.043 r5 1.031 r6 1.077 r7 1.125 r8 0.978 r9 0.985 r10 1.009
+BENCH npl2 b4mc/xxs n 10 mean 0.921 95%CI [0.885, 0.958] median 0.915 min 0.819 max 1.006 | r1 0.899 r2 0.897 r3 0.819 r4 0.913 r5 0.930 r6 0.983 r7 0.908 r8 0.944 r9 0.916 r10 1.006
+BENCH npl2 b4mc/ktc n 10 mean 1.392 95%CI [1.329, 1.454] median 1.404 min 1.277 max 1.550 | r1 1.364 r2 1.405 r3 1.298 r4 1.296 r5 1.427 r6 1.402 r7 1.277 r8 1.408 r9 1.550 r10 1.489
+BENCH npl2 b4mc/b4 n 10 mean 5.065 95%CI [4.776, 5.354] median 5.016 min 4.430 max 5.752 | r1 4.430 r2 5.574 r3 4.724 r4 5.036 r5 4.960 r6 5.339 r7 4.714 r8 4.996 r9 5.126 r10 5.752
+BENCH npl2 b4/xxs n 10 mean 0.183 95%CI [0.174, 0.191] median 0.183 min 0.161 max 0.203 | r1 0.203 r2 0.161 r3 0.173 r4 0.181 r5 0.188 r6 0.184 r7 0.193 r8 0.189 r9 0.179 r10 0.175
+BENCH npl2 ktc/xxs n 10 mean 0.663 95%CI [0.637, 0.690] median 0.665 min 0.591 max 0.711 | r1 0.659 r2 0.638 r3 0.631 r4 0.704 r5 0.652 r6 0.701 r7 0.711 r8 0.671 r9 0.591 r10 0.676
+BENCH npl4 b4mc/xxs n 10 mean 1.064 95%CI [1.031, 1.097] median 1.065 min 0.993 max 1.142 | r1 1.031 r2 1.058 r3 0.993 r4 1.023 r5 1.073 r6 1.142 r7 1.071 r8 1.078 r9 1.038 r10 1.130
+BENCH npl4 b4mc/ktc n 10 mean 1.460 95%CI [1.391, 1.529] median 1.487 min 1.329 max 1.608 | r1 1.407 r2 1.523 r3 1.357 r4 1.329 r5 1.498 r6 1.493 r7 1.341 r8 1.563 r9 1.481 r10 1.608
+BENCH npl4 b4mc/b4 n 10 mean 4.159 95%CI [3.959, 4.359] median 4.123 min 3.716 max 4.651 | r1 3.716 r2 4.651 r3 3.884 r4 4.154 r5 4.093 r6 4.331 r7 3.988 r8 4.020 r9 4.292 r10 4.458
+BENCH npl4 b4/xxs n 10 mean 0.256 95%CI [0.246, 0.267] median 0.259 min 0.227 max 0.277 | r1 0.277 r2 0.227 r3 0.256 r4 0.246 r5 0.262 r6 0.264 r7 0.269 r8 0.268 r9 0.242 r10 0.253
+BENCH npl4 ktc/xxs n 10 mean 0.730 95%CI [0.704, 0.757] median 0.724 min 0.690 max 0.799 | r1 0.733 r2 0.695 r3 0.732 r4 0.770 r5 0.716 r6 0.765 r7 0.799 r8 0.690 r9 0.701 r10 0.703
+BENCH npl8 b4mc/xxs n 10 mean 1.089 95%CI [1.052, 1.126] median 1.082 min 1.017 max 1.202 | r1 1.097 r2 1.080 r3 1.032 r4 1.017 r5 1.084 r6 1.132 r7 1.068 r8 1.097 r9 1.079 r10 1.202
+BENCH npl8 b4mc/ktc n 10 mean 1.496 95%CI [1.424, 1.569] median 1.514 min 1.300 max 1.681 | r1 1.492 r2 1.543 r3 1.442 r4 1.397 r5 1.534 r6 1.548 r7 1.300 r8 1.506 r9 1.521 r10 1.681
+BENCH npl8 b4mc/b4 n 10 mean 3.207 95%CI [3.064, 3.350] median 3.152 min 3.014 max 3.600 | r1 3.022 r2 3.600 r3 3.043 r4 3.146 r5 3.037 r6 3.338 r7 3.014 r8 3.157 r9 3.284 r10 3.430
+BENCH npl8 b4/xxs n 10 mean 0.340 95%CI [0.327, 0.354] median 0.343 min 0.300 max 0.363 | r1 0.363 r2 0.300 r3 0.339 r4 0.323 r5 0.357 r6 0.339 r7 0.354 r8 0.348 r9 0.329 r10 0.350
+BENCH npl8 ktc/xxs n 10 mean 0.729 95%CI [0.705, 0.754] median 0.722 min 0.700 max 0.821 | r1 0.735 r2 0.700 r3 0.716 r4 0.728 r5 0.707 r6 0.731 r7 0.821 r8 0.729 r9 0.710 r10 0.715
+BENCHABS npl1 b4 n 10 median 197.8 tok/s mean 198.3 cv 4.7% min 183.1 max 210.8
+BENCHABS npl1 b4mc n 10 median 206.6 tok/s mean 206.3 cv 5.0% min 187.0 max 221.8
+BENCHABS npl1 ktc n 10 median 198.7 tok/s mean 198.3 cv 4.1% min 180.2 max 208.4
+BENCHABS npl1 xxs n 10 median 193.8 tok/s mean 194.6 cv 5.0% min 178.6 max 210.5
+BENCHABS npl2 b4 n 10 median 61.7 tok/s mean 61.8 cv 6.5% min 53.7 max 68.4
+BENCHABS npl2 b4mc n 10 median 309.9 tok/s mean 311.7 cv 4.7% min 283.6 max 329.5
+BENCHABS npl2 ktc n 10 median 223.2 tok/s mean 224.4 cv 4.6% min 207.4 max 238.7
+BENCHABS npl2 xxs n 10 median 336.3 tok/s mean 338.8 cv 4.9% min 307.1 max 367.3
+BENCHABS npl4 b4 n 10 median 122.2 tok/s mean 121.5 cv 5.1% min 111.6 max 132.6
+BENCHABS npl4 b4mc n 10 median 498.8 tok/s mean 504.0 cv 4.7% min 467.8 max 540.9
+BENCHABS npl4 ktc n 10 median 351.3 tok/s mean 346.0 cv 5.2% min 309.2 max 370.2
+BENCHABS npl4 xxs n 10 median 468.2 tok/s mean 474.1 cv 4.4% min 440.1 max 511.4
+BENCHABS npl8 b4 n 10 median 236.3 tok/s mean 237.5 cv 4.5% min 222.4 max 257.1
+BENCHABS npl8 b4mc n 10 median 764.4 tok/s mean 760.4 cv 4.6% min 710.6 max 813.5
+BENCHABS npl8 ktc n 10 median 515.5 tok/s mean 509.3 cv 5.1% min 453.7 max 550.1
+BENCHABS npl8 xxs n 10 median 707.5 tok/s mean 699.1 cv 4.7% min 634.6 max 753.4
+BENCHABS pp512 b3 n 10 median 5196.4 tok/s mean 5182.1 cv 3.8% min 4882.2 max 5424.5
+BENCHABS pp512 b3p n 10 median 5382.9 tok/s mean 5276.5 cv 6.9% min 4647.0 max 5863.8
+BENCHABS pp512 b4 n 10 median 5413.6 tok/s mean 5532.0 cv 5.6% min 5333.9 max 6351.6
+BENCHABS pp512 b4mc n 10 median 5636.8 tok/s mean 5609.2 cv 5.9% min 5119.8 max 6147.8
+BENCHABS pp512 ktc n 10 median 6968.3 tok/s mean 7086.9 cv 5.4% min 6380.9 max 7604.4
+BENCHABS pp512 ktm n 10 median 6880.2 tok/s mean 6881.3 cv 3.1% min 6534.8 max 7258.0
+BENCHABS pp512 mB n 10 median 5268.3 tok/s mean 5238.7 cv 4.3% min 4806.6 max 5541.1
+BENCHABS pp512 q4km n 10 median 6689.2 tok/s mean 6626.4 cv 4.8% min 6038.1 max 6968.0
+BENCHABS pp512 xxs n 10 median 7561.0 tok/s mean 7483.0 cv 6.7% min 6851.7 max 8178.8
+BENCHABS tg128 b3 n 10 median 195.0 tok/s mean 191.3 cv 8.3% min 166.0 max 208.5
+BENCHABS tg128 b3p n 10 median 209.9 tok/s mean 209.0 cv 4.7% min 195.8 max 224.4
+BENCHABS tg128 b4 n 10 median 213.4 tok/s mean 214.0 cv 2.9% min 205.2 max 224.6
+BENCHABS tg128 b4mc n 10 median 214.7 tok/s mean 214.0 cv 3.9% min 200.0 max 225.8
+BENCHABS tg128 ktc n 10 median 195.0 tok/s mean 194.7 cv 5.8% min 175.7 max 210.8
+BENCHABS tg128 ktm n 10 median 193.8 tok/s mean 192.3 cv 4.2% min 179.1 max 206.7
+BENCHABS tg128 mB n 10 median 193.6 tok/s mean 190.6 cv 5.4% min 163.9 max 199.6
+BENCHABS tg128 q4km n 10 median 157.5 tok/s mean 153.9 cv 5.9% min 130.4 max 160.8
+BENCHABS tg128 xxs n 10 median 197.1 tok/s mean 196.0 cv 6.1% min 177.1 max 211.4
+SWEEP b4 ub1:239.1 ub2:59.6 ub4:123.0 ub8:234.9 ub16:445.4 ub32:801.6
+SWEEP b4mc ub1:225.5 ub2:348.9 ub4:602.7 ub8:844.7 ub16:482.6 ub32:855.4
+SWEEP xxs ub1:214.2 ub2:371.6 ub4:531.4 ub8:680.8 ub16:1808.4 ub32:2797.0
+SWEEP ktc ub1:195.2 ub2:339.1 ub4:475.2 ub8:628.3 ub16:1427.9 ub32:2621.6
+SWEEP b3p ub1:240.5 ub2:59.5 ub4:122.9 ub8:243.4 ub16:452.0 ub32:795.2
+SWEEP b3 ub1:206.4 ub2:57.0 ub4:105.4 ub8:210.3 ub16:410.3 ub32:777.3
+SWEEP mB ub1:206.1 ub2:54.4 ub4:108.1 ub8:224.8 ub16:427.3 ub32:775.1
+SWEEP ktm ub1:181.8 ub2:290.2 ub4:412.6 ub8:555.8 ub16:1141.4 ub32:2297.2
+SWEEP q4km ub1:166.3 ub2:308.7 ub4:479.3 ub8:1038.7 ub16:1770.3 ub32:2660.0

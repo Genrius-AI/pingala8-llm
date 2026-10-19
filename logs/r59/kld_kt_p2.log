@@ -1,0 +1,268 @@
+main: build = 1 (77bef17)
+main: built with x86_64-conda-linux-gnu-cc (GCC) 15.2.0 for x86_64-conda-linux-gnu
+main: seed  = 1792236988
+ggml_cuda_init: found 1 CUDA devices:
+  Device 0: NVIDIA GeForce RTX 5070 Ti Laptop GPU, compute capability 12.0, VMM: yes, VRAM: 12226 MiB
+CUDA0: using device CUDA0 - 11026 MiB free
+llama_model_loader: loaded meta data with 42 key-value pairs and 398 tensors from work/r59/qwen3-4B-IQ2_KT-eq-ik.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = qwen3
+llama_model_loader: - kv   1:                               general.type str              = model
+llama_model_loader: - kv   2:                     general.sampling.top_k i32              = 20
+llama_model_loader: - kv   3:                     general.sampling.top_p f32              = 0.950000
+llama_model_loader: - kv   4:                      general.sampling.temp f32              = 0.600000
+llama_model_loader: - kv   5:                               general.name str              = 1cfa9a7208912126459214e8b04321603b3df60c
+llama_model_loader: - kv   6:                           general.finetune str              = 1cfa9a7208912126459214e8b04321603b3df60c
+llama_model_loader: - kv   7:                         general.size_label str              = 4.0B
+llama_model_loader: - kv   8:                            general.license str              = apache-2.0
+llama_model_loader: - kv   9:                       general.license.link str              = https://huggingface.co/Qwen/Qwen3-4B/...
+llama_model_loader: - kv  10:                   general.base_model.count u32              = 1
+llama_model_loader: - kv  11:                  general.base_model.0.name str              = Qwen3 4B Base
+llama_model_loader: - kv  12:          general.base_model.0.organization str              = Qwen
+llama_model_loader: - kv  13:              general.base_model.0.repo_url str              = https://huggingface.co/Qwen/Qwen3-4B-...
+llama_model_loader: - kv  14:                               general.tags arr[str,1]       = ["text-generation"]
+llama_model_loader: - kv  15:                          qwen3.block_count u32              = 36
+llama_model_loader: - kv  16:                       qwen3.context_length u32              = 40960
+llama_model_loader: - kv  17:                     qwen3.embedding_length u32              = 2560
+llama_model_loader: - kv  18:                  qwen3.feed_forward_length u32              = 9728
+llama_model_loader: - kv  19:                 qwen3.attention.head_count u32              = 32
+llama_model_loader: - kv  20:              qwen3.attention.head_count_kv u32              = 8
+llama_model_loader: - kv  21:                       qwen3.rope.freq_base f32              = 1000000.000000
+llama_model_loader: - kv  22:     qwen3.attention.layer_norm_rms_epsilon f32              = 0.000001
+llama_model_loader: - kv  23:                 qwen3.attention.key_length u32              = 128
+llama_model_loader: - kv  24:               qwen3.attention.value_length u32              = 128
+llama_model_loader: - kv  25:                          general.file_type u32              = 151
+llama_model_loader: - kv  26:               general.quantization_version u32              = 2
+llama_model_loader: - kv  27:                       tokenizer.ggml.model str              = gpt2
+llama_model_loader: - kv  28:                         tokenizer.ggml.pre str              = qwen2
+llama_model_loader: - kv  29:                      tokenizer.ggml.tokens arr[str,151936]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+llama_model_loader: - kv  30:                  tokenizer.ggml.token_type arr[i32,151936]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+llama_model_loader: - kv  31:                      tokenizer.ggml.merges arr[str,151387]  = [" ", " ", "i n", " t",...
+llama_model_loader: - kv  32:                tokenizer.ggml.eos_token_id u32              = 151645
+llama_model_loader: - kv  33:            tokenizer.ggml.padding_token_id u32              = 151643
+llama_model_loader: - kv  34:                tokenizer.ggml.bos_token_id u32              = 151643
+llama_model_loader: - kv  35:               tokenizer.ggml.add_bos_token bool             = false
+llama_model_loader: - kv  36:               tokenizer.ggml.add_eos_token bool             = false
+llama_model_loader: - kv  37:                    tokenizer.chat_template str              = {%- if tools %}\n    {{- '<|im_start|>...
+llama_model_loader: - kv  38:                      quantize.imatrix.file str              = work/r59/qwen3-4B.imatrix.dat
+llama_model_loader: - kv  39:                   quantize.imatrix.dataset str              = models/calib_c4.txt
+llama_model_loader: - kv  40:             quantize.imatrix.entries_count i32              = 252
+llama_model_loader: - kv  41:              quantize.imatrix.chunks_count i32              = 200
+llama_model_loader: - type  f32:  145 tensors
+llama_model_loader: - type iq3_k:   25 tensors
+llama_model_loader: - type iq4_k:   23 tensors
+llama_model_loader: - type iq2_kt:  205 tensors
+load: 0 unused tokens
+load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+load: printing all EOG tokens:
+load:   - 128247 ('</s>')
+load:   - 151643 ('<|endoftext|>')
+load:   - 151645 ('<|im_end|>')
+load:   - 151662 ('<|fim_pad|>')
+load:   - 151663 ('<|repo_name|>')
+load:   - 151664 ('<|file_sep|>')
+load: special tokens cache size = 27
+load: token to piece cache size = 0.9311 MB
+llm_load_print_meta: format           = GGUF V3 (latest)
+llm_load_print_meta: arch             = qwen3
+llm_load_print_meta: n_ctx_train      = 40960
+llm_load_print_meta: n_embd           = 2560
+llm_load_print_meta: n_layer          = 36
+llm_load_print_meta: n_head           = 32
+llm_load_print_meta: n_head_kv        = 8
+llm_load_print_meta: n_rot            = 128
+llm_load_print_meta: n_swa            = 0
+llm_load_print_meta: n_swa_pattern    = 1
+llm_load_print_meta: n_embd_head_k    = 128
+llm_load_print_meta: n_embd_head_v    = 128
+llm_load_print_meta: n_gqa            = 4
+llm_load_print_meta: n_embd_k_gqa     = 1024
+llm_load_print_meta: n_embd_v_gqa     = 1024
+llm_load_print_meta: f_norm_eps       = 0.0e+00
+llm_load_print_meta: f_norm_rms_eps   = 1.0e-06
+llm_load_print_meta: f_clamp_kqv      = 0.0e+00
+llm_load_print_meta: f_max_alibi_bias = 0.0e+00
+llm_load_print_meta: f_logit_scale    = 0.0e+00
+llm_load_print_meta: n_ff             = 9728
+llm_load_print_meta: n_expert         = 0
+llm_load_print_meta: n_expert_used    = 0
+llm_load_print_meta: causal attn      = 1
+llm_load_print_meta: pooling type     = -1
+llm_load_print_meta: rope type        = 2
+llm_load_print_meta: rope scaling     = linear
+llm_load_print_meta: freq_base_train  = 1000000.0
+llm_load_print_meta: freq_scale_train = 1
+llm_load_print_meta: n_ctx_orig_yarn  = 40960
+llm_load_print_meta: rope_finetuned   = unknown
+llm_load_print_meta: ssm_d_conv       = 0
+llm_load_print_meta: ssm_d_inner      = 0
+llm_load_print_meta: ssm_d_state      = 0
+llm_load_print_meta: ssm_dt_rank      = 0
+llm_load_print_meta: ssm_n_group      = 0
+llm_load_print_meta: model type       = 4B
+llm_load_print_meta: model ftype      = IQ2_KT - 2.125 bpw
+llm_load_print_meta: model params     = 4.022 B
+llm_load_print_meta: model size       = 1.151 GiB (2.457 BPW) 
+llm_load_print_meta: general.name     = 1cfa9a7208912126459214e8b04321603b3df60c
+print_info: vocab type            = BPE
+print_info: n_vocab               = 151936
+print_info: n_merges              = 151387
+print_info: BOS token             = 151643 '<|endoftext|>'
+print_info: EOS token             = 151645 '<|im_end|>'
+print_info: EOT token             = 151645 '<|im_end|>'
+print_info: PAD token             = 151643 '<|endoftext|>'
+print_info: LF token              = 198 ''
+print_info: FIM PRE token         = 151659 '<|fim_prefix|>'
+print_info: FIM SUF token         = 151661 '<|fim_suffix|>'
+print_info: FIM MID token         = 151660 '<|fim_middle|>'
+print_info: FIM PAD token         = 151662 '<|fim_pad|>'
+print_info: FIM REP token         = 151663 '<|repo_name|>'
+print_info: FIM SEP token         = 151664 '<|file_sep|>'
+print_info: EOG token             = 128247 '</s>'
+print_info: EOG token             = 151643 '<|endoftext|>'
+print_info: EOG token             = 151645 '<|im_end|>'
+print_info: EOG token             = 151662 '<|fim_pad|>'
+print_info: EOG token             = 151663 '<|repo_name|>'
+print_info: EOG token             = 151664 '<|file_sep|>'
+print_info: max token length      = 256
+======================================= HAVE_FANCY_SIMD is NOT defined
+------------------- Layer sizes:
+Layer  0:     31.96,      2.00,     33.96       53.00  MiB
+Layer  1:     31.96,      2.00,     33.96       53.00  MiB
+Layer  2:     28.07,      2.00,     30.07       53.00  MiB
+Layer  3:     28.07,      2.00,     30.07       53.00  MiB
+Layer  4:     28.07,      2.00,     30.07       53.00  MiB
+Layer  5:     28.07,      2.00,     30.07       53.00  MiB
+Layer  6:     28.07,      2.00,     30.07       53.00  MiB
+Layer  7:     26.11,      2.00,     28.11       53.00  MiB
+Layer  8:     26.11,      2.00,     28.11       53.00  MiB
+Layer  9:     26.11,      2.00,     28.11       53.00  MiB
+Layer 10:     26.44,      2.00,     28.44       53.00  MiB
+Layer 11:     26.11,      2.00,     28.11       53.00  MiB
+Layer 12:     26.11,      2.00,     28.11       53.00  MiB
+Layer 13:     26.11,      2.00,     28.11       53.00  MiB
+Layer 14:     26.11,      2.00,     28.11       53.00  MiB
+Layer 15:     26.11,      2.00,     28.11       53.00  MiB
+Layer 16:     26.11,      2.00,     28.11       53.00  MiB
+Layer 17:     26.11,      2.00,     28.11       53.00  MiB
+Layer 18:     26.11,      2.00,     28.11       53.00  MiB
+Layer 19:     26.11,      2.00,     28.11       53.00  MiB
+Layer 20:     26.11,      2.00,     28.11       53.00  MiB
+Layer 21:     26.11,      2.00,     28.11       53.00  MiB
+Layer 22:     26.44,      2.00,     28.44       53.00  MiB
+Layer 23:     26.44,      2.00,     28.44       53.00  MiB
+Layer 24:     26.44,      2.00,     28.44       53.00  MiB
+Layer 25:     26.44,      2.00,     28.44       53.00  MiB
+Layer 26:     26.44,      2.00,     28.44       53.00  MiB
+Layer 27:     26.44,      2.00,     28.44       53.00  MiB
+Layer 28:     26.44,      2.00,     28.44       53.00  MiB
+Layer 29:     26.44,      2.00,     28.44       53.00  MiB
+Layer 30:     26.44,      2.00,     28.44       53.00  MiB
+Layer 31:     26.44,      2.00,     28.44       53.00  MiB
+Layer 32:     26.44,      2.00,     28.44       53.00  MiB
+Layer 33:     26.44,      2.00,     28.44       53.00  MiB
+Layer 34:     28.07,      2.00,     30.07       53.00  MiB
+Layer 35:     28.07,      2.00,     30.07       53.00  MiB
+Layer 36:    208.65,    243.75,    452.40 MiB (output layer)
+--------------------------------------------------------------------------
+Total   :    969.73,    315.75,   1285.48 MiB
+Memory required for model tensors + cache: 1494 MiB
+Memory available on all devices - compute: 9949 MiB
+llm_load_tensors: ggml ctx size =    0.40 MiB
+llm_load_tensors: offloading 36 repeating layers to GPU
+llm_load_tensors: offloading non-repeating layers to GPU
+llm_load_tensors: offloaded 37/37 layers to GPU
+llm_load_tensors:        CPU buffer size =   208.65 MiB (total of 1 resident buffers)
+llm_load_tensors:      CUDA0 buffer size =  1178.39 MiB
+........................................................................
+llama_init_from_model: n_ctx         = 512
+llama_init_from_model: n_batch       = 512
+llama_init_from_model: n_ubatch      = 512
+llama_init_from_model: flash_attn    = 1
+llama_init_from_model: attn_max_b    = 256
+llama_init_from_model: fused_moe     = 1
+llama_init_from_model: grouped er    = 0
+llama_init_from_model: fused_up_gate = 1
+llama_init_from_model: fused_mmad    = 1
+llama_init_from_model: rope_cache    = 0
+llama_init_from_model: graph_reuse   = 1
+llama_init_from_model: k_cache_hadam = 0
+llama_init_from_model: v_cache_hadam = 0
+llama_init_from_model: split_mode_graph_scheduling = 0
+llama_init_from_model: reduce_type   = f16
+llama_init_from_model: sched_async   = 0
+llama_init_from_model: ser           = -1, 0
+llama_init_from_model: freq_base     = 1000000.0
+llama_init_from_model: freq_scale    = 1
+llama_kv_cache_init:      CUDA0 KV buffer size =    72.00 MiB
+llama_init_from_model: KV self size  =   72.00 MiB, K (f16):   36.00 MiB, V (f16):   36.00 MiB
+llama_init_from_model:  CUDA_Host  output buffer size =     0.58 MiB
+llama_init_from_model:      CUDA0 compute buffer size =   306.75 MiB
+llama_init_from_model:  CUDA_Host compute buffer size =     5.51 MiB
+llama_init_from_model: graph nodes  = 905
+llama_init_from_model: graph splits = 2
+llama_init_from_model: enabling only_active_experts scheduling
+
+system_info: n_threads = 20 / 20 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | AVX512 = 0 | AVX512_VBMI = 0 | AVX512_VNNI = 0 | AVX512_BF16 = 0 | FMA = 1 | NEON = 0 | SVE = 0 | ARM_FMA = 0 | F16C = 1 | FP16_VA = 0 | WASM_SIMD = 0 | SSE3 = 1 | SSSE3 = 1 | VSX = 0 | MATMUL_INT8 = 0 | 
+kl_divergence: 0.40 seconds per pass - ETA 0.07 minutes
+
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Dp RMS            Same top p
+   1      12.8940 +/-    2.4246       0.50055 +/-    0.09455       0.67721 +/-    0.06297    27.794 +/-  2.012 %    65.098 +/-  2.991 %
+   2      16.8208 +/-    2.3655       0.52839 +/-    0.07754       0.80071 +/-    0.05504    27.662 +/-  1.453 %    62.157 +/-  2.150 %
+   3      17.9553 +/-    2.0604       0.42006 +/-    0.06771       0.78708 +/-    0.04270    26.598 +/-  1.191 %    62.222 +/-  1.754 %
+   4      16.9081 +/-    1.7022       0.42251 +/-    0.05814       0.77822 +/-    0.03694    26.844 +/-  1.034 %    63.922 +/-  1.504 %
+   5      18.5623 +/-    1.7243       0.41165 +/-    0.05274       0.80269 +/-    0.03307    26.397 +/-  0.915 %    63.529 +/-  1.349 %
+   6      17.8428 +/-    1.4943       0.44949 +/-    0.04790       0.83646 +/-    0.03253    27.157 +/-  0.849 %    64.510 +/-  1.224 %
+   7      18.1134 +/-    1.4035       0.47235 +/-    0.04605       0.88493 +/-    0.03240    27.785 +/-  0.808 %    64.538 +/-  1.133 %
+   8      17.6620 +/-    1.2761       0.48726 +/-    0.04228       0.86850 +/-    0.02961    28.131 +/-  0.758 %    64.461 +/-  1.060 %
+   9      17.5851 +/-    1.2034       0.52240 +/-    0.04041       0.87205 +/-    0.02840    28.543 +/-  0.720 %    64.793 +/-  0.997 %
+  10      17.6347 +/-    1.1421       0.51979 +/-    0.03813       0.87666 +/-    0.02666    28.633 +/-  0.679 %    64.314 +/-  0.949 %
+  11      17.6736 +/-    1.0946       0.51980 +/-    0.03685       0.88061 +/-    0.02576    28.431 +/-  0.648 %    64.421 +/-  0.904 %
+  12      18.1755 +/-    1.0809       0.55560 +/-    0.03697       0.93662 +/-    0.02619    29.062 +/-  0.624 %    63.333 +/-  0.871 %
+
+llama_print_timings:        load time =    5864.78 ms
+llama_print_timings:      sample time =       0.00 ms /     1 runs   (    0.00 ms per token,      inf tokens per second)
+llama_print_timings: prompt eval time =    2266.02 ms /  6144 tokens (    0.37 ms per token,  2711.37 tokens per second)
+llama_print_timings:        eval time =       0.00 ms /     1 runs   (    0.00 ms per token,      inf tokens per second)
+llama_print_timings:       total time =    2796.13 ms /  6145 tokens
+~ggml_backend_cuda_context: have 2 graphs
+
+====== Perplexity statistics ======
+Mean PPL(Q)                   :  18.175509 +/-   1.080908
+Mean PPL(base)                :  10.427800 +/-   0.622486
+Cor(ln(PPL(Q)), ln(PPL(base))):  80.75%
+Mean ln(PPL(Q)/PPL(base))     :   0.555600 +/-   0.036967
+Mean PPL(Q)/PPL(base)         :   1.742986 +/-   0.064432
+Mean PPL(Q)-PPL(base)         :   7.747709 +/-   0.684937
+
+====== KL divergence statistics ======
+Mean    KLD:   0.936617 +/-   0.026188
+Maximum KLD:  15.105191
+99.9%   KLD:  12.032877
+99.0%   KLD:   6.776885
+95.0%   KLD:   3.917016
+90.0%   KLD:   2.514676
+Median  KLD:   0.415431
+10.0%   KLD:   0.002026
+ 5.0%   KLD:   0.000272
+ 1.0%   KLD:   0.000010
+ 0.1%   KLD:   0.000000
+Minimum KLD:  -0.000001
+
+====== Token probability statistics ======
+Mean    Dp: -11.400 +/- 0.483 %
+Maximum Dp: 98.266%
+99.9%   Dp: 74.873%
+99.0%   Dp: 44.351%
+95.0%   Dp: 13.904%
+90.0%   Dp:  4.481%
+75.0%   Dp:  0.007%
+Median  Dp: -0.829%
+25.0%   Dp: -15.209%
+10.0%   Dp: -51.152%
+ 5.0%   Dp: -76.116%
+ 1.0%   Dp: -97.724%
+ 0.1%   Dp: -99.881%
+Minimum Dp: -99.999%
+RMS Dp    : 29.062 +/- 0.624 %
+Same top p: 63.333 +/- 0.871 %

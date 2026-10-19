@@ -1,0 +1,7 @@
+2026-10-18 20:00:24 resume pid 662221 NSEQ 256 NEV 32 stats 168
+2026-10-18 20:48:28 BUILD rc=0 SUMMARY vrc n 224 blobs 1844792832 B geomean Dev/IQ2_XXS-Dev IQ 0.4463 all 0.4883 geomean Dw 0.052680 maxratio>=0.9 224/224 min 0.9053
+2026-10-18 20:48:28 NOTE blk.19.ffn_up.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 20:48:29 NOTE blk.26.ffn_gate.weight larger than shipped (15208976 vs 15200784)
+2026-10-18 20:48:29 NOTE blk.30.attn_q.weight larger than shipped (4356112 vs 4354064)
+2026-10-18 20:48:29 NOTE blk.31.ffn_gate.weight larger than shipped (15208976 vs 15200784)
+merged 224

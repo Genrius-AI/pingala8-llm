@@ -1,0 +1,117 @@
+2026-10-17 12:15:48 r59_kldc4 start pid 42099 sid 42099 poll 60s giveup 18000s deadn 5 C: free 27 GB post-log logs/r57_post.log
+2026-10-17 12:15:48 waiting for the Model B2 chain: markers in logs/r57_post.log after its last 'r57_post start' line (REPORT rc=0 | R57 POST skipped | r57_post end | BLOCKER with pid gone)
+2026-10-17 12:20:56 LEAD relaunch without waiting for r57_post (B2 arms in a rerun later); gates now 9000/7000 MiB
+2026-10-17 12:20:56 r59_kldc4 start pid 43601 sid 43601 poll 60s giveup 18000s deadn 5 C: free 27 GB post-log logs/r59/fake_post.log
+2026-10-17 12:20:56 waiting for the Model B2 chain: markers in logs/r59/fake_post.log after its last 'r57_post start' line (REPORT rc=0 | R57 POST skipped | r57_post end | BLOCKER with pid gone)
+2026-10-17 12:20:56 Model B2 chain finished: END
+2026-10-17 12:20:56 Model B2 skipped (research/agents/model_b2_flat.md missing or no native shards)
+2026-10-17 12:20:59 SPLIT rc=0 PARTS n= 6 cpp= 12 chunks= 72 bytes_per_chunk= 77489400 est_file_bytes= 929897392
+2026-10-17 12:21:11 C4 prep attempt 1 rc=0 C4 docs 637 bytes 1379155 tokens 299875 strided chunks (ctx 4096, stride 4095) 73 sha256_16 2fa20d9878157ff0
+2026-10-17 12:21:11 prep needs: Q8_0 1, KT requant 1
+2026-10-17 12:22:18 CPU[q8] QUANT Q8_0 rc=0 secs=67 bytes=4280405408
+2026-10-17 12:26:52 LEAD hardlinked work/r59/qwen3-4B-Q8_0.gguf (same command llama-quantize f16 Q8_0 12) to work/r57 and work/r59a to save 8.6 GB on C:
+2026-10-17 12:28:51 CPU[kt] QUANT KTeq rc=0 secs=392 bytes=1241589376 expected=1241589376
+2026-10-17 12:29:05 NOTE KT requant sha256 c39278e7a365ef4946e1b1eb246279056fa9d2ac37c848af7e8b4effd2ef6492 differs from r56 d5fca9c5c2379106968a8859e47422de4919db4799252f74387208ea4bed55a1
+2026-10-17 12:29:05 KT recipe/command line identical to logs/r56_kteq_quant.cmd
+2026-10-17 12:29:05 arms: mB Model B 1241608288|xxs IQ2_XXS 1246621312|kt IQ2_KT-eq 1241589376|
+2026-10-17 12:48:52 LEAD-LAUNCH waiting: chain BURST done + B2 native ppl (or r57_post BLOCKER/skip, or 14:45)
+2026-10-17 13:31:54 LEAD-LAUNCH waiting: chain BURST done + B2 native ppl (or r57_post BLOCKER/skip, or 14:45)
+2026-10-17 13:38:23 LEAD-LAUNCH waiting: chain BURST done + B2 native ppl (or r57_post BLOCKER/skip, or 14:45)
+2026-10-17 14:32:57 LEAD-LAUNCH go: B3 native [73]18.0660 (arm b2 = Model B3 here)
+2026-10-17 14:32:57 r59_kldc4 start pid 34965 sid 34965 poll 60s giveup 18000s deadn 5 C: free 17 GB post-log logs/r59/fake_post.log
+2026-10-17 14:32:57 waiting for the Model B2 chain: markers in logs/r59/fake_post.log after its last 'r57_post start' line (REPORT rc=0 | R57 POST skipped | r57_post end | BLOCKER with pid gone)
+2026-10-17 14:32:57 Model B2 chain finished: END
+2026-10-17 14:32:57 Model B2 present: work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+2026-10-17 14:32:57 prep needs: Q8_0 1, KT requant 1
+2026-10-17 14:33:01 NOTE KT requant sha256 c39278e7a365ef4946e1b1eb246279056fa9d2ac37c848af7e8b4effd2ef6492 differs from r56 d5fca9c5c2379106968a8859e47422de4919db4799252f74387208ea4bed55a1
+2026-10-17 14:33:01 KT recipe/command line identical to logs/r56_kteq_quant.cmd
+2026-10-17 14:33:01 arms: mB Model B 1241608288|b2 Model B2 1245915872|xxs IQ2_XXS 1246621312|kt IQ2_KT-eq 1241589376|
+2026-10-17 16:58:54 r59_kldc4 start pid 63461 sid 63461 poll 60s giveup 18000s deadn 5 C: free 17 GB post-log logs/r59/fake_post.log
+2026-10-17 16:58:55 waiting for the Model B2 chain: markers in logs/r59/fake_post.log after its last 'r57_post start' line (REPORT rc=0 | R57 POST skipped | r57_post end | BLOCKER with pid gone)
+2026-10-17 16:58:55 Model B2 chain finished: END
+2026-10-17 16:58:55 Model B2 present: work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+2026-10-17 16:58:55 prep needs: Q8_0 1, KT requant 1
+2026-10-17 16:59:17 CPU[q8] QUANT Q8_0 rc=0 secs=22 bytes=4280405408
+2026-10-17 17:04:12 CPU[kt] QUANT KTeq rc=0 secs=295 bytes=1241589376 expected=1241589376
+2026-10-17 17:04:22 NOTE KT requant sha256 c39278e7a365ef4946e1b1eb246279056fa9d2ac37c848af7e8b4effd2ef6492 differs from r56 d5fca9c5c2379106968a8859e47422de4919db4799252f74387208ea4bed55a1
+2026-10-17 17:04:22 KT recipe/command line identical to logs/r56_kteq_quant.cmd
+2026-10-17 17:04:22 arms: mB Model B 1241608288|b2 Model B2 1245915872|xxs IQ2_XXS 1246621312|kt IQ2_KT-eq 1241589376|
+2026-10-17 17:04:59 GPU[base_p1] RUN base_p1 rc=0 total_vram_peak=8705 MiB (sampled 2 s, gate 7000)
+2026-10-17 17:04:59 BASE p1 rc=0 bytes=929897396 Final estimate: PPL = 16.8826
+2026-10-17 17:05:07 GPU[kld_mB_p1] RUN kld_mB_p1 rc=0 total_vram_peak=5871 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:05:07 KLD mB p1 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.639950 +/- 0.022138|Same top p: 68.693 +/- 0.838 %|
+2026-10-17 17:05:16 GPU[kld_b2_p1] RUN kld_b2_p1 rc=0 total_vram_peak=6071 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:05:16 KLD b2 p1 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.737047 +/- 0.023430|Same top p: 66.732 +/- 0.852 %|
+2026-10-17 17:05:23 GPU[kld_xxs_p1] RUN kld_xxs_p1 rc=0 total_vram_peak=5813 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:05:23 KLD xxs p1 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 1.220418 +/- 0.024539|Same top p: 53.725 +/- 0.902 %|
+2026-10-17 17:05:30 GPU[kld_kt_p1] RUN kld_kt_p1 rc=0 total_vram_peak=5611 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:05:30 KLD kt p1 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.784534 +/- 0.021704|Same top p: 64.052 +/- 0.868 %|
+2026-10-17 17:05:43 GPU[base_p2] RUN base_p2 rc=0 total_vram_peak=8645 MiB (sampled 2 s, gate 7000)
+2026-10-17 17:05:43 BASE p2 rc=0 bytes=929897396 Final estimate: PPL = 10.5712
+2026-10-17 17:05:56 GPU[kld_mB_p2] RUN kld_mB_p2 rc=0 total_vram_peak=5811 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:05:56 KLD mB p2 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.750120 +/- 0.024550|Same top p: 68.758 +/- 0.838 %|
+2026-10-17 17:06:16 GPU[kld_b2_p2] RUN kld_b2_p2 rc=0 total_vram_peak=6152 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:06:16 KLD b2 p2 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.848331 +/- 0.024925|Same top p: 66.471 +/- 0.854 %|
+2026-10-17 17:06:27 GPU[kld_xxs_p2] RUN kld_xxs_p2 rc=0 total_vram_peak=5818 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:06:27 KLD xxs p2 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 1.591233 +/- 0.032639|Same top p: 49.804 +/- 0.904 %|
+2026-10-17 17:06:40 GPU[kld_kt_p2] RUN kld_kt_p2 rc=0 total_vram_peak=5539 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:06:40 KLD kt p2 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.936617 +/- 0.026188|Same top p: 63.333 +/- 0.871 %|
+2026-10-17 17:06:59 GPU[base_p3] RUN base_p3 rc=0 total_vram_peak=8633 MiB (sampled 2 s, gate 7000)
+2026-10-17 17:06:59 BASE p3 rc=0 bytes=929897396 Final estimate: PPL = 11.2336
+2026-10-17 17:07:06 GPU[kld_mB_p3] RUN kld_mB_p3 rc=0 total_vram_peak=5799 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:07:06 KLD mB p3 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.680414 +/- 0.021935|Same top p: 70.752 +/- 0.822 %|
+2026-10-17 17:07:14 GPU[kld_b2_p3] RUN kld_b2_p3 rc=0 total_vram_peak=5999 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:07:14 KLD b2 p3 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.769088 +/- 0.023024|Same top p: 69.281 +/- 0.834 %|
+2026-10-17 17:15:31 GPU[kld_xxs_p3] RUN kld_xxs_p3 rc=0 total_vram_peak=4899 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:15:31 KLD xxs p3 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 1.380361 +/- 0.027736|Same top p: 53.922 +/- 0.901 %|
+2026-10-17 17:24:06 GPU[kld_kt_p3] RUN kld_kt_p3 rc=0 total_vram_peak=7987 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:24:06 KLD kt p3 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.843627 +/- 0.023570|Same top p: 67.386 +/- 0.848 %|
+2026-10-17 17:57:31 GPU[base_p4] RUN base_p4 rc=0 total_vram_peak=9041 MiB (sampled 2 s, gate 7000)
+2026-10-17 17:57:31 BASE p4 rc=0 bytes=929897396 Final estimate: PPL = 14.6078
+2026-10-17 17:57:40 GPU[kld_mB_p4] RUN kld_mB_p4 rc=0 total_vram_peak=6211 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:57:40 KLD mB p4 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.704367 +/- 0.023169|Same top p: 68.137 +/- 0.842 %|
+2026-10-17 17:57:49 GPU[kld_b2_p4] RUN kld_b2_p4 rc=0 total_vram_peak=6411 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:57:49 KLD b2 p4 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.754063 +/- 0.022620|Same top p: 65.817 +/- 0.858 %|
+2026-10-17 17:57:55 GPU[kld_xxs_p4] RUN kld_xxs_p4 rc=0 total_vram_peak=6157 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:57:55 KLD xxs p4 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 1.424494 +/- 0.027878|Same top p: 51.078 +/- 0.904 %|
+2026-10-17 17:58:02 GPU[kld_kt_p4] RUN kld_kt_p4 rc=0 total_vram_peak=5957 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:58:02 KLD kt p4 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.866688 +/- 0.022789|Same top p: 62.614 +/- 0.875 %|
+2026-10-17 17:58:11 GPU[base_p5] RUN base_p5 rc=0 total_vram_peak=9051 MiB (sampled 2 s, gate 7000)
+2026-10-17 17:58:11 BASE p5 rc=0 bytes=929897396 Final estimate: PPL = 17.1042
+2026-10-17 17:58:19 GPU[kld_mB_p5] RUN kld_mB_p5 rc=0 total_vram_peak=6217 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:58:19 KLD mB p5 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.673492 +/- 0.021748|Same top p: 68.824 +/- 0.838 %|
+2026-10-17 17:58:26 GPU[kld_b2_p5] RUN kld_b2_p5 rc=0 total_vram_peak=3338 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:58:26 KLD b2 p5 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.800440 +/- 0.024763|Same top p: 67.451 +/- 0.847 %|
+2026-10-17 17:58:30 GPU[kld_xxs_p5] RUN kld_xxs_p5 rc=0 total_vram_peak=3229 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:58:30 KLD xxs p5 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 1.416139 +/- 0.029587|Same top p: 53.333 +/- 0.902 %|
+2026-10-17 17:58:35 GPU[kld_kt_p5] RUN kld_kt_p5 rc=0 total_vram_peak=3031 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:58:35 KLD kt p5 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.882824 +/- 0.024698|Same top p: 64.150 +/- 0.867 %|
+2026-10-17 17:58:41 GPU[base_p6] RUN base_p6 rc=0 total_vram_peak=6125 MiB (sampled 2 s, gate 7000)
+2026-10-17 17:58:41 BASE p6 rc=0 bytes=929897396 Final estimate: PPL = 16.9603
+2026-10-17 17:58:48 GPU[kld_mB_p6] RUN kld_mB_p6 rc=0 total_vram_peak=3291 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:58:48 KLD mB p6 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.719511 +/- 0.023042|Same top p: 68.072 +/- 0.843 %|
+2026-10-17 17:58:54 GPU[kld_b2_p6] RUN kld_b2_p6 rc=0 total_vram_peak=5043 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:58:54 KLD b2 p6 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.850007 +/- 0.025577|Same top p: 66.307 +/- 0.855 %|
+2026-10-17 17:59:05 GPU[kld_xxs_p6] RUN kld_xxs_p6 rc=0 total_vram_peak=4785 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:59:05 KLD xxs p6 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 1.348110 +/- 0.026956|Same top p: 53.072 +/- 0.902 %|
+2026-10-17 17:59:10 GPU[kld_kt_p6] RUN kld_kt_p6 rc=0 total_vram_peak=4583 MiB (sampled 2 s, gate 9000)
+2026-10-17 17:59:10 KLD kt p6 rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.862827 +/- 0.023474|Same top p: 64.216 +/- 0.867 %|
+2026-10-17 18:06:12 GPU[c4_q8] RUN c4_q8 rc=0 total_vram_peak=8829 MiB (sampled 2 s, gate 7000)
+2026-10-17 18:06:12 C4 q8 rc=0 last [73]19.4863 computing over 73 chunks, n_ctx=4096 
+2026-10-17 18:14:50 GPU[c4_mB] RUN c4_mB rc=0 total_vram_peak=8357 MiB (sampled 2 s, gate 9000)
+2026-10-17 18:14:50 C4 mB rc=0 last [73]27.2547 computing over 73 chunks, n_ctx=4096 
+2026-10-17 18:24:45 GPU[c4_b2] RUN c4_b2 rc=0 total_vram_peak=8623 MiB (sampled 2 s, gate 9000)
+2026-10-17 18:24:45 C4 b2 rc=0 last [73]26.7548 computing over 73 chunks, n_ctx=4096 
+2026-10-17 18:48:03 GPU[c4_xxs] RUN c4_xxs rc=0 total_vram_peak=6565 MiB (sampled 2 s, gate 9000)
+2026-10-17 18:48:03 C4 xxs rc=0 last [73]37.2810 computing over 73 chunks, n_ctx=4096 
+2026-10-17 18:57:50 GPU[c4_kt] RUN c4_kt rc=0 total_vram_peak=6587 MiB (sampled 2 s, gate 9000)
+2026-10-17 18:57:50 C4 kt rc=0 last [73]27.7375  
+2026-10-17 18:57:50 GPU phase attempt 1 rc=0
+2026-10-17 18:57:50 INCOMPLETE after attempt 1: INCOMPLETE ['c4_q8.log', 'c4_mB.log', 'c4_b2.log', 'c4_xxs.log', 'c4_kt.log'] 
+2026-10-17 19:08:13 GPU[c4_q8] RUN c4_q8 rc=0 total_vram_peak=9457 MiB (sampled 2 s, gate 7000)
+2026-10-17 19:08:13 C4 q8 rc=0 last [73]19.4863 computing over 73 chunks, n_ctx=4096 
+2026-10-17 19:22:23 GPU[c4_mB] RUN c4_mB rc=0 total_vram_peak=6111 MiB (sampled 2 s, gate 9000)
+2026-10-17 19:22:23 C4 mB rc=0 last [73]27.2547 computing over 73 chunks, n_ctx=4096 
+2026-10-17 19:30:49 GPU[c4_b2] RUN c4_b2 rc=0 total_vram_peak=8759 MiB (sampled 2 s, gate 9000)
+2026-10-17 19:30:49 C4 b2 rc=0 last [73]26.7548 computing over 73 chunks, n_ctx=4096 
+2026-10-17 19:37:01 LEAD: stopped r59_kldc4 (sid 63461): it was re-running finished C4 arms (c4_ok needs 'Final estimate', absent in the ik log c4_kt.log); all results already recorded

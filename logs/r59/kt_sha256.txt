@@ -1,0 +1,1 @@
+c39278e7a365ef4946e1b1eb246279056fa9d2ac37c848af7e8b4effd2ef6492  work/r59/qwen3-4B-IQ2_KT-eq-ik.gguf  1241589376

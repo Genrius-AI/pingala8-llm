@@ -1,0 +1,15 @@
+0.00.174.164 I Will perform strided perplexity calculation -> adjusting context size from 2049 to 4096
+0.01.763.253 I cmn          init: llama threadpool init, n_threads = 20
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 224 bpw_used 2.10964 tiles 851968 class_share c0:0.0000 c1:0.0000 c2:0.0252 c3:0.9219 c4:0.0337 c5:0.0000 c6:0.0192 c7:0.0000
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+0.02.158.419 I 
+0.02.158.513 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.02.158.518 I perplexity_v2: tokenizing the input ..
+0.02.381.627 I perplexity_v2: have 289077 tokens. Calculation chunk = 4096
+0.02.381.640 I perplexity_v2: computing over 4 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.06.837.386 I perplexity_v2: 4.46 seconds per pass - ETA 0.28 minutes
+[1]9.4856,[2]10.5680,[3]9.2419,[4]8.5583,
+

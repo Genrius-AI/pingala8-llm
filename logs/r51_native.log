@@ -1,0 +1,43 @@
+C_FREE_BEFORE 33525952512 B
+START 12:53:01
+  wrote 160/1241 blk.4.attn_q.weight t 11s
+  wrote 360/1241 blk.9.ffn_down.weight t 25s
+  wrote 560/1241 blk.15.ffn_down.weight t 40s
+  wrote 600/1241 blk.16.ffn_gate.weight t 43s
+  wrote 720/1241 blk.20.attn_q.weight t 52s
+  wrote 960/1241 blk.27.ffn_down.weight t 68s
+  wrote 1080/1241 blk.31.attn_output.weight t 75s
+  wrote 1160/1241 blk.33.ffn_down.weight t 80s
+  wrote 1200/1241 blk.34.ffn_gate.weight t 82s
+SHARD work/r51t/native/4B-pingala8-vrnative-00001-of-00002.gguf 994993024 B sha256 588a0ef64dc0988db7370ab9e3756a4eccdbc119d932d2b58aca97b748c940ca OK
+SHARD work/r51t/native/4B-pingala8-vrnative-00002-of-00002.gguf 246615264 B sha256 08a7809a920f843cd0a3677f637cca0f60fb472d1317007aa294140570e8a3b0 OK
+NATIVE TOTAL 1241608288 B budget 1246621312 margin +5013024 vs container 1240445591 +1162697; tensors 1241 t 92s
+	Command being timed: "python research/detail/r51_native.py build work/r51t/native/4B-pingala8-vrnative"
+	User time (seconds): 65.98
+	System time (seconds): 28.89
+	Percent of CPU this job got: 101%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:33.49
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2050636
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 1762488
+	Voluntary context switches: 137
+	Involuntary context switches: 414
+	Swaps: 0
+	File system inputs: 25
+	File system outputs: 2425072
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+C_FREE_AFTER 33523929088 B
+Traceback (most recent call last):
+  File "~/repo/research/detail/r51_native.py", line 130, in <module>
+    {"plan": cmd_plan, "dryrun": cmd_dryrun, "build": cmd_build}[sys.argv[1]](sys.argv[2])
+KeyError: 'verify'
+VERIFY shards 2 tensors in file 1241 expected 1241; mismatches 0 []; split.count 2 vr.ns 108 vr.trl 2 PASS

@@ -1,0 +1,19 @@
+PRE-REGISTRATION R57 flat-trim  (written 2026-10-14 ~23:34 IST, BEFORE the build; no result seen)
+Arm: "flat" = r52a_build.py mode flattrim (work/r57/flat_trim_plan.txt), full-model Q8_0-carrier ppl via r36_hfj (73 x 4096 windows, WikiText2 hfjoin).
+Anchors (MEASURED, reviewer_r56_rateoff.md): roff 17.7897 (ratio 1.4281 vs fp16 12.4567, +0.597% bytes), mirror 18.2302 (1.4635, equal bytes to roff), shipped Pingala-8 19.1036 (1.5336).
+Predicted bytes (CALC): linear blobs <= 965,858,752 (shipped 966,271,936); file <= 1,241,195,104 (<= shipped 1,241,608,288).
+Prediction: ppl(flat) = 17.86, 80% interval 17.72 - 18.20  (ratio 1.434, 1.423 - 1.461).
+Derivation: roff + trim cost + sal benefit.
+ (i) trim cost: CALC dDev = +0.0259 of 6.234 (+0.42%) under D~4^-R; with ppl-excess elasticity 0.5-1.0 on excess 5.333 over fp16 (slope beta 1.85-2.04 in reviewer_r55_equalrate.md F3,
+     read as excess ~ D^(1/beta)..D^1) -> +0.01 to +0.02 ppl; bytes view: -0.0127 bpw averaged over all linear weights, at ~1 ln-ppl per bpw -> +0.05 ppl worst case.
+ (ii) Dev is a weak arbiter (mirror: lower sum Dev 5.50 vs 6.23 but ppl +0.44) -> widen upward: allow the 4 class-2 tensors to cost 3-5x the proxy: +0.1 to +0.3.
+ (iii) sal floors on 5 gate-failing tensors: expected 0 to -0.03 (LESSONS 9 says should not hurt).
+ Central 17.79 + 0.02 + 0.05 (model error mean) = 17.86; 10% tail below 17.72 (sal helps, trim free), 10% tail above 18.20.
+Decision rules (D = ppl(flat) - 17.7897; E = ppl(flat) - 18.2302):
+ - flat <= 17.99 (D <= +0.20) and bytes <= shipped: SIZE-MATCHED FLAT WINS; ship as Model B': headline ratio ~1.43 at <= shipped bytes. Paper: replace per-tile rate classes with flat class 3.
+ - 17.99 < flat < 18.23: flat still beats mirror (E < 0) at 0.64% FEWER bytes than mirror -> per-tile classes remain refuted; quote the measured value, no "ties roff".
+ - flat >= 18.23: trim hurts more than the proxy; fall back to Plan B (ffn_down L0-3 4->3, uniform class) and/or IQ2_XXS-only trim (758,752 B = ~1,482 tiles-equivalents)
+   before concluding anything about classes.
+ - flat >= 19.10 or gate < 252/252 with ratio collapse: treat as a bookkeeping bug (check classes in stats.json hist, blobs_flat count 252).
+Checks that must hold (else result is void): stats.json sum(bytes) <= 966,271,936; hist of the 4 moved tensors = class 2 only; SAL tensors maxratio >= 0.9; 252/252 blobs; same harness/binary (llama.cpp/build-cuda).
+Follow-ups scored against shipped: KLD vs Q8_0 base (shipped 0.640), zero-shot, bench pp/tg (shipped tg 1.00x, pp 0.70x IQ2_XXS) - kernel identical (same VRK2 format, class 2 supported by NW table).

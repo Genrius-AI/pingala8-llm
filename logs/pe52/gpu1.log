@@ -1,0 +1,3 @@
+START modelB_native 15:19:04 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r51t/native/4B-pingala8-vrnative-00001-of-00002.gguf
+RES modelB_native HS 15:21:04 1000 54.80000000% [51.7028%, 57.8604%]
+RES modelB_native WG 15:33:51 Final Winogrande score(1267 tasks): 61.5627 +/- 1.3672

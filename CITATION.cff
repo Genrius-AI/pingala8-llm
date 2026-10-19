@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper given under preferred-citation."
+title: "Pingala-8: code, llama.cpp patches and logs for Small-State Coset Trellis Coding at IQ2_XXS Size"
+version: "2.4"
+date-released: 2026-10-19
+license: Apache-2.0
+repository-code: "https://github.com/Genrius-AI/pingala8-llm"
+type: software
+authors:
+  - family-names: Goyal
+    given-names: Harshit
+    affiliation: Genrius AI
+    email: harshit@genrius.in
+keywords:
+  - quantization
+  - trellis-coded quantization
+  - large language models
+  - llama.cpp
+  - GGUF
+preferred-citation:
+  type: article
+  title: "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp"
+  authors:
+    - family-names: Goyal
+      given-names: Harshit
+      affiliation: Genrius AI
+      email: harshit@genrius.in
+  journal: "arXiv preprint (identifier to be added)"
+  year: 2026
+  month: 10

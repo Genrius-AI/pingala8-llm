@@ -1,0 +1,39 @@
+2026-10-14 21:15:21 r56_kteq start pid 448887 C: free 65 GB
+CPU_STAGE start 21:15:22 C: free 65 GB
+QUANT Q8_0 (mainline) rc=0 secs=28 bytes=4280405408
+QUANT KTeq rc=0 secs=277 bytes=1241589376 predicted=1241589376 delta=0
+KTeq bytes 1241589376 vs Model B 1241608288 delta -0.0015%
+CPU_STAGE end 21:20:31 sha d5fca9c5c2379106
+2026-10-14 21:20:31 CPU stage rc=0
+2026-10-14 21:27:21 PPL rc=0 last [73]18.6165
+2026-10-14 21:27:28 KLDBASE rc=0 bytes=929897396 Final estimate: PPL = 16.8826
+2026-10-14 21:27:32 KLD rc=0 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.784534 +/- 0.021704|99.0% KLD: 5.835550|Same top p: 64.052 +/- 0.868 %|
+2026-10-14 21:28:10 ROUND 1 idle
+2026-10-14 21:28:12 BENCH arm=ikKTeq test=pp512 round=1 rc=0
+2026-10-14 21:28:30 BENCH arm=ikKTeq test=tg128 round=1 rc=0
+2026-10-14 21:28:35 BENCH arm=mnXX test=pp512 round=1 rc=0
+2026-10-14 21:28:54 BENCH arm=mnXX test=tg128 round=1 rc=0
+2026-10-14 21:29:00 BENCH arm=mB test=pp512 round=1 rc=0
+2026-10-14 21:29:17 BENCH arm=mB test=tg128 round=1 rc=0
+2026-10-14 21:29:25 ROUND 2 idle
+2026-10-14 21:29:29 BENCH arm=mnXX test=pp512 round=2 rc=0
+2026-10-14 21:29:45 BENCH arm=mnXX test=tg128 round=2 rc=0
+2026-10-14 21:29:50 BENCH arm=mB test=pp512 round=2 rc=0
+2026-10-14 21:30:08 BENCH arm=mB test=tg128 round=2 rc=0
+2026-10-14 21:30:12 BENCH arm=ikKTeq test=pp512 round=2 rc=0
+2026-10-14 21:30:28 BENCH arm=ikKTeq test=tg128 round=2 rc=0
+2026-10-14 21:30:37 ROUND 3 idle
+2026-10-14 21:30:41 BENCH arm=mB test=pp512 round=3 rc=0
+2026-10-14 21:30:56 BENCH arm=mB test=tg128 round=3 rc=0
+2026-10-14 21:30:59 BENCH arm=ikKTeq test=pp512 round=3 rc=0
+2026-10-14 21:31:16 BENCH arm=ikKTeq test=tg128 round=3 rc=0
+2026-10-14 21:31:19 BENCH arm=mnXX test=pp512 round=3 rc=0
+2026-10-14 21:31:39 BENCH arm=mnXX test=tg128 round=3 rc=0
+2026-10-14 21:31:39 GPU stage attempt 1 rc=0
+COMPLETE
+COMPLETE
+REPORT written research/agents/baseline_r54_iq2kt.md section words 479
+progress row appended
+2026-10-14 21:31:39 REPORT rc=0
+2026-10-14 21:31:39 CLEANUP sha256 logged: d5fca9c5c2379106
+2026-10-14 21:31:40 r56_kteq end; C: free 65 GB; leftover in work/r54kt: 

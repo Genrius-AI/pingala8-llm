@@ -1,0 +1,15 @@
+0.00.274.387 I Will perform strided perplexity calculation -> adjusting context size from 2049 to 4096
+0.02.822.255 I cmn          init: llama threadpool init, n_threads = 20
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 224 bpw_used 2.10967 tiles 851968 class_share c0:0.0000 c1:0.0000 c2:0.0252 c3:0.9218 c4:0.0337 c5:0.0000 c6:0.0193 c7:0.0000
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+0.02.962.010 I 
+0.02.962.101 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.02.962.104 I perplexity_v2: tokenizing the input ..
+0.03.088.073 I perplexity_v2: have 289077 tokens. Calculation chunk = 4096
+0.03.088.086 I perplexity_v2: computing over 70 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.06.950.817 I perplexity_v2: 3.86 seconds per pass - ETA 4.50 minutes
+[1]9.8415,[2]10.9996,[3]9.6187,[4]8.9338,[5]9.2251,[6]9.3502,[7]9.4763,[8]9.6830,[9]9.7392,[10]9.6737,[11]9.7885,[12]9.8406,[13]10.0317,[14]10.1238,[15]9.9976,[16]9.7802,[17]9.7706,[18]9.6173,[19]9.3528,[20]9.1596,[21]9.3410,[22]9.5774,[23]9.6842,[24]9.6930,[25]9.6504,[26]9.5641,[27]9.4524,[28]9.2884,[29]9.2545,[30]9.3356,[31]9.4349,[32]9.3770,[33]9.3378,[34]9.2972,[35]9.3012,[36]9.3637,[37]9.3483,[38]9.3274,[39]9.3453,[40]9.3072,[41]9.2491,[42]9.2055,[43]9.1928,[44]9.2277,[45]9.3673,[46]9.4407,[47]9.4900,[48]9.5351,[49]9.5440,[50]9.5805,[51]9.6040,[52]9.6614,[53]9.6588,[54]9.6384,[55]9.6030,[56]9.6238,[57]9.6452,[58]9.6141,[59]9.6213,[60]9.5818,[61]9.5794,[62]9.5598,[63]9.5397,[64]9.5253,[65]9.5343,[66]9.5438,[67]9.4487,[68]9.5019,[69]9.5161,[70]9.5447,
+

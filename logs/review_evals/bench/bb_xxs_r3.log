@@ -1,0 +1,11 @@
+0.00.398.055 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+
+llama_batched_bench: n_kv_max = 4096, n_batch = 2048, n_ubatch = 512, flash_attn = 1, is_pp_shared = 0, is_tg_separate = 0, n_gpu_layers = 99, n_threads = 20, n_threads_batch = 20
+
+|    PP |     TG |    B |   N_KV |   T_PP s | S_PP t/s |   T_TG s | S_TG t/s |      T s |    S t/s |
+|-------|--------|------|--------|----------|----------|----------|----------|----------|----------|
+|   128 |    128 |    1 |    256 |    0.046 |  2783.33 |    0.626 |   204.41 |    0.672 |   380.85 |
+|   128 |    128 |    2 |    512 |    0.039 |  6593.01 |    0.739 |   346.25 |    0.778 |   657.95 |
+|   128 |    128 |    4 |   1024 |    0.077 |  6637.37 |    1.087 |   471.15 |    1.164 |   879.84 |
+|   128 |    128 |    8 |   2048 |    0.153 |  6693.73 |    1.488 |   688.34 |    1.641 |  1248.31 |
+

@@ -1,0 +1,1 @@
+VERIFY shards 2 tensors in file 1291 expected 1291; mismatches 0 []; split.count 2 vr.ns 108 vr.trl 2 PASS

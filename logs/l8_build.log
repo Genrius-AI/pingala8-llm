@@ -1,0 +1,131 @@
+2026-10-17 11:12:17 l8_build start sid 14341 C: free 56 GB
+2026-10-17 11:23:43 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 11:25:55 CONVERT rc=0 bytes 8540771136
+2026-10-17 11:26:40 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 11:27:53 GATE 
+2026-10-17 11:27:53 BLOCKER propagation gate failed (logs/l8_gate.log): closed-stack loss not sane, builder front end (rope/mask/BOS) is wrong
+2026-10-17 11:28:15 l8_build start sid 19202 C: free 37 GB
+2026-10-17 11:28:15 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 11:28:54 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 11:30:08 GATE 
+2026-10-17 11:30:08 BLOCKER propagation gate failed (logs/l8_gate.log): closed-stack loss not sane, builder front end (rope/mask/BOS) is wrong
+2026-10-17 11:30:49 l8_build start sid 20161 C: free 37 GB
+2026-10-17 11:30:49 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 11:31:23 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 11:35:08 GATE GATE llama ppl 10.212 over 8188 tokens (4 seqs x 2048) PASS
+2026-10-17 11:41:10 IMATRIX rc=0 5015200 B; Final estimate: PPL = 10.4699
+2026-10-17 11:45:56 MIX rc=0 bytes 2399212576
+2026-10-17 11:46:10 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 11:46:43 SMOKE rc=1 tensors 0
+2026-10-17 11:46:43 BLOCKER smoke failed (logs/l8_smoke.tensors): ABORT flat plan exceeds the IQ2_XXS linear bytes even before the native-file extras; set ALLOW_OVER=1 to override
+2026-10-17 11:48:40 l8_build start sid 30658 C: free 44 GB
+2026-10-17 11:48:40 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 11:49:15 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 11:49:25 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 11:59:21 SMOKE rc=0 tensors 12
+2026-10-17 11:59:21 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 11:59:50 BUILD start; carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 12:24:03 l8_build start sid 52802 C: free 23 GB
+2026-10-17 12:24:04 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 12:24:04 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 12:24:04 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 12:24:04 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 12:24:04 waiting for running builder pid 34750
+2026-10-17 13:40:42 l8_build start sid 39793 C: free 19 GB
+2026-10-17 13:40:42 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 13:40:42 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 13:40:42 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 13:40:42 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 13:40:42 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 14:06:13 BUILD attempt 1 rc=137 RESUME from layer 3: 21 tensor stats kept, 183616336 blob bytes|
+2026-10-17 14:06:36 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 16:59:15 l8_build start sid 68821 C: free 17 GB
+2026-10-17 16:59:15 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 16:59:15 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 16:59:15 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 16:59:15 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 16:59:15 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 17:57:22 BUILD attempt 1 rc=137 RESUME from layer 3: 21 tensor stats kept, 183616336 blob bytes|RESUME from layer 3: 21 tensor stats kept, 183616336 blob bytes|RESUME from layer 6: 42 tensor stats kept, 356218528 blob bytes|
+2026-10-17 17:57:43 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 18:39:52 LEAD: stopped l8_build (sid 68821) at blk.10 - cgroup MemoryHigh throttle with B3 zs (6.4 GB) + build (4.4 GB) = 11.5 GB; relaunch with resume after zs/C4
+2026-10-17 19:04:27 l8_build start sid 262894 C: free 16 GB
+2026-10-17 19:04:27 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 19:04:27 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 19:04:28 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 19:04:28 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 19:04:28 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 19:57:52 BUILD attempt 1 rc=137 RESUME from layer 6: 42 tensor stats kept, 356218528 blob bytes|RESUME from layer 8: 56 tensor stats kept, 467633024 blob bytes|RESUME from layer 10: 70 tensor stats kept, 579031136 blob bytes|
+2026-10-17 19:58:12 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 19:59:01 BUILD attempt 2 rc=137 RESUME from layer 8: 56 tensor stats kept, 467633024 blob bytes|RESUME from layer 10: 70 tensor stats kept, 579031136 blob bytes|torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 512.00 MiB. GPU 0 has a total capacity of 11.94 GiB of which 9.77 GiB is free. Process 285310 has 17179869184.00 GiB memory in use. Process 288994 has 1717986|
+2026-10-17 19:59:21 BUILD attempt 3 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 20:15:22 BUILD attempt 3 rc=137 RESUME from layer 10: 70 tensor stats kept, 579031136 blob bytes|torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 512.00 MiB. GPU 0 has a total capacity of 11.94 GiB of which 9.77 GiB is free. Process 285310 has 17179869184.00 GiB memory in use. Process 288994 has 1717986|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-17 20:15:42 BLOCKER build did not finish (logs/l8_build.tensors)
+2026-10-17 20:40:20 LEAD: relaunch after 20:15 GPU OOM/tripwire (attempts exhausted); stats.json has 112 tensors = 16 layers
+2026-10-17 20:40:20 l8_build start sid 303827 C: free 16 GB
+2026-10-17 20:40:20 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 20:40:20 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 20:40:21 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 20:40:21 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 20:40:21 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 20:46:02 BUILD attempt 1 rc=137 torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 512.00 MiB. GPU 0 has a total capacity of 11.94 GiB of which 9.77 GiB is free. Process 285310 has 17179869184.00 GiB memory in use. Process 288994 has 1717986|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-17 20:46:23 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 20:49:19 LEAD: build + watch stopped at user request (GPU for games); resume later from per-layer checkpoint
+2026-10-17 21:04:58 RESUME: l8_drive relaunched pid 3875
+2026-10-17 21:04:58 l8_build start sid 3873 C: free 16 GB
+2026-10-17 21:04:58 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 21:04:58 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 21:04:58 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 21:04:58 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 21:04:58 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 23:52:23 RESUME: l8_drive relaunched pid 3592
+2026-10-17 23:52:23 l8_build start sid 3590 C: free 16 GB
+2026-10-17 23:52:23 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-17 23:52:23 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-17 23:52:23 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-17 23:52:23 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-17 23:52:23 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-17 23:52:31 BUILD attempt 1 rc=137 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-17 23:52:51 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 00:18:04 BUILD attempt 2 rc=143 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-18 00:18:24 BUILD attempt 3 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 00:23:22 BUILD attempt 3 rc=137 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-18 00:23:42 BLOCKER build did not finish (logs/l8_build.tensors)
+2026-10-18 00:23:42 RESUME: l8_build.sh run 1 exited rc=0
+2026-10-18 00:23:43 l8_build start sid 3590 C: free 16 GB
+2026-10-18 00:23:43 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-18 00:23:43 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-18 00:23:43 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-18 00:23:43 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-18 00:23:43 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 00:23:45 BUILD attempt 1 rc=143 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-18 00:24:07 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 00:26:44 WAITGPU: waiting for 5 min without an ollama runner
+2026-10-18 00:31:52 WAITGPU: GPU clear, relaunching l8_resume.sh
+2026-10-18 00:31:52 RESUME: l8_drive relaunched pid 24539
+2026-10-18 00:31:52 l8_build start sid 20891 C: free 16 GB
+2026-10-18 00:31:52 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-18 00:31:52 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-18 00:31:54 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-18 00:31:54 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-18 00:31:54 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 00:52:54 BUILD attempt 1 rc=143 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-18 00:53:14 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 00:55:53 BUILD attempt 2 rc=143 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-18 00:56:14 BUILD attempt 3 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 00:57:04 BUILD attempt 3 rc=137 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-18 00:57:25 BLOCKER build did not finish (logs/l8_build.tensors)
+2026-10-18 00:57:25 RESUME: l8_build.sh run 1 exited rc=0
+2026-10-18 00:57:26 l8_build start sid 20891 C: free 15 GB
+2026-10-18 00:57:26 download done: 15G in hf_cache/hub/models--unsloth--Meta-Llama-3.1-8B/snapshots/e9a141a2091ea561b96483212645a2a05e6f99fc
+2026-10-18 00:57:26 Q8_0 sha256 12e0831f623e76de9cd74156edb423c0f92c76be177eb5b22c85c5f8ef17108b bytes 8540771136
+2026-10-18 00:57:26 IQ2_XXS sha256 6049d3eb7d1262680cce53d18c10f13b51932b0356ff5da4a89f03ccb996c7b0 bytes 2399212576
+2026-10-18 00:57:26 SMOKE ok: SUMMARY vrc n 12 blobs 86766784 B geomean Dev/IQ2_XXS-Dev IQ 0.8629 all 0.8871 geomean Dw 0.049442 maxratio>=0.9 12/12 min 0.9065
+2026-10-18 00:57:26 BUILD attempt 1 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 01:33:16 BUILD attempt 1 rc=143 RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|RESUME from layer 16: 112 tensor stats kept, 924239616 blob bytes|
+2026-10-18 01:33:36 BUILD attempt 2 resume=1 carrier work/llama8b/l31-8b-vrc.gguf
+2026-10-18 03:26:55 BUILD attempt 2 rc=0 RESUME from layer 17: 119 tensor stats kept, 981773680 blob bytes|SUMMARY vrc n 224 blobs 1844841984 B geomean Dev/IQ2_XXS-Dev IQ 0.6230 all 0.6775 geomean Dw 0.073337 maxratio>=0.9 224/224 min 0.9012|GATES done [6690s]|
+2026-10-18 03:27:16 carrier bytes 8540771136
+2026-10-18 03:27:43 TRANSCODE PASS lines 7
+2026-10-18 03:33:10 DELTA DELTA tensors_with_delta 77/224 entries 198853 bytes_fp16 1193118 bytes_f32 1590824; fp16-delta max |W+d16 - clamp(W)| = 1.9875e-02 (blk.1.ffn_down.weight)
+2026-10-18 03:33:45 PLAN TOTAL 2389851808 B; budget 2399212576 -> margin +9360768 B (OK); vs container 0: +2389851808 B; max shard 995906400 (OK 1e9)
+2026-10-18 03:34:24 DRYRUN readback PASS

@@ -1,0 +1,4 @@
+PLAN shards 2: plan_tmp-00001-of-00002.gguf 997459456 B (964 tensors, header 5986532 B); plan_tmp-00002-of-00002.gguf 248456416 B (327 tensors, header 17934 B)
+PLAN tensors 1291 (linears 252); data bytes by kind (32-aligned): {'raw': 268191744, 'vr': 965718400, 'prm': 2211840, 'c': 1916928, 'didx': 936096, 'dval': 936096, 'signs': 256}
+PLAN TOTAL 1245915872 B; budget 1246621312 -> margin +705440 B (OK); vs container 1240445591: +5470281 B; max shard 997459456 (OK 1e9)
+PLAN alt 'padded slot' layout (linears keep mix type/shape, VR bytes + zero pad): linear data 972472320 vs tight 965718400 -> total >= 1252669792 B (OVER budget)

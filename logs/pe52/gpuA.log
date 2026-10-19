@@ -1,0 +1,16 @@
+KLD modelB_native rc=0 19:15:53 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.639950 +/- 0.022138|99.0% KLD: 5.690266|Same top p: 68.693 +/- 0.838 %|
+KLD iq2xxs rc=0 19:18:29 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 1.220418 +/- 0.024539|99.0% KLD: 6.757035|Same top p: 53.725 +/- 0.902 %|
+KLD IQ2_M rc=0 19:19:38 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 14.186578 +/- 0.049353|99.0% KLD: 21.520563|Same top p: 0.000 +/- 0.000 %|
+KLD IQ3_XXS rc=0 19:20:23 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 13.170961 +/- 0.047571|99.0% KLD: 20.353043|Same top p: 0.000 +/- 0.000 %|
+KLD Q2_K rc=0 19:20:59 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.394872 +/- 0.014580|99.0% KLD: 4.011429|Same top p: 74.641 +/- 0.787 %|
+KLD IQ2_XS rc=0 19:23:43 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 0.772605 +/- 0.019072|99.0% KLD: 5.245123|Same top p: 63.235 +/- 0.872 %|
+KLD IQ1_M rc=0 19:24:02 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 2.037685 +/- 0.034714|99.0% KLD: 8.899744|Same top p: 40.752 +/- 0.888 %|
+KLD IQ2_S rc=0 19:30:36 chunk PPL ln(PPL(Q)/PPL(base)) KL Divergence Dp RMS Same top p|Mean KLD: 13.379612 +/- 0.052605|99.0% KLD: 21.156733|Same top p: 0.000 +/- 0.000 %|
+KLDBASE deleted 19:30:36
+START modelB_native 19:30:36 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r51t/native/4B-pingala8-vrnative-00001-of-00002.gguf
+RES modelB_native arc-challenge 19:32:50 Final result: 36.7893 +/- 2.7935
+RES modelB_native mmlu 19:35:54 Final result: 33.5917 +/- 1.2008
+RES modelB_native mmluF 19:55:21 Final result: 33.5422 +/- 0.3984
+DONE modelB_native 19:55:21
+BENCH rc=0 14:03:21
+GPUA_END 14:03:21

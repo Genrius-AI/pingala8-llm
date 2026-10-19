@@ -1,0 +1,17 @@
+0.00.510.288 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 252 bpw_used 2.13321 tiles 443520 class_share c0:0.0000 c1:0.0000 c2:0.0000 c3:0.9466 c4:0.0274 c5:0.0000 c6:0.0260 c7:0.0000
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+
+llama_batched_bench: n_kv_max = 4096, n_batch = 2048, n_ubatch = 512, flash_attn = 1, is_pp_shared = 0, is_tg_separate = 0, n_gpu_layers = 99, n_threads = 20, n_threads_batch = 20
+
+|    PP |     TG |    B |   N_KV |   T_PP s | S_PP t/s |   T_TG s | S_TG t/s |      T s |    S t/s |
+|-------|--------|------|--------|----------|----------|----------|----------|----------|----------|
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+|   128 |    128 |    1 |    256 |    0.068 |  1870.09 |    0.685 |   186.97 |    0.753 |   339.95 |
+VR: multi-column GEMV active (R60, ne11 2..8, NC 2/4/8, nspc auto)
+|   128 |    128 |    2 |    512 |    0.068 |  3760.12 |    0.903 |   283.55 |    0.971 |   527.33 |
+|   128 |    128 |    4 |   1024 |    0.103 |  4948.63 |    1.094 |   467.82 |    1.198 |   854.83 |
+|   128 |    128 |    8 |   2048 |    0.202 |  5059.14 |    1.441 |   710.61 |    1.643 |  1246.18 |
+

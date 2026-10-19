@@ -1,0 +1,8 @@
+PREREG 2026-10-18 13:00 (written before the run): full 32-layer Llama-3.1-8B rebuild, CMODE=opt + MIXBOS (research/detail/cs_lfull.sh), all 224 linears re-encoded,
+same byte budgets as the shipped build. Evidence: Qwen3-4B full CMODE=opt won (16.64 vs B3+ 17.78, dNLL -0.066 +/- 0.009); Llama a6 (layers 0-1 only) 10.384.
+Prediction (my guess): ppl [70] 9.85 [9.50, 10.25]; proxy geomean Dev(new)/Dev(shipped) over layers 2-31 0.75 [0.55, 0.95].
+WIN if paired dNLL vs IQ2_KT (logs/r36_hfj_ktllama_LK1.log, 10.0375) < 0 with the 95% CI excluding 0: Llama joins the headline (cross-family).
+NULL (CI spans 0): report as parity with IQ2_KT at equal bytes. LOSS: report the loss with numbers, keep the a6 vs IQ2_XXS result, negative_results.
+Caveat fixed in advance: NSEQ is below the shipped 512 (disk), which can only hurt the new build.
+
+RESULT 2026-10-18 22:34 (logs/r36_hfj_cs_lfull.log, logs/cs_lfull.log): full B4 [70] 9.1419. vs IQ2_KT LK1 (10.0375): dNLL -0.0935 +/- 0.0056 (lag-corrected +/-0.0049, blockboot [-0.0988,-0.0883]), better on 70/70 -> WIN by the pre-registered rule (CI excludes 0). Prediction 9.85 [9.50, 10.25] MISSED (better than predicted). vs IQ2_XXS -0.3008, vs a6 -0.1274, vs h17 hybrid -0.0431 (all 70/70). Bytes 2,388,210,816 (1,139,616 B under IQ2_KT; G1 PASS).

@@ -1,0 +1,1 @@
+2026-10-18 16:38 addendum (lead): research/detail/q14_build.py replaced by the byte-identical faster copy q14_build_fast.py (sha 725c8dd9...) after logs/q14_fast_test.log RESULT PASS (15/15 blobs identical, stats equal; 4B 2 layers, GMAX 8192 CPU-LAPACK path). Original kept as q14_build.orig_1018.py. The pre-registered recipe and prediction in prereg_b4_q14.txt are unchanged.

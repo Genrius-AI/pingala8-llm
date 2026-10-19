@@ -1,0 +1,15 @@
+R59 B3 pre-registration (lead, 2026-10-17 13:31 IST, written BEFORE any B3 file or run exists)
+Context (MEASURED): flat/rate-off control f1 carrier ppl 17.7897 (linear blobs 972,043,712 B; file CALC 1,247,380,064 B = 758,752 B over IQ2_XXS 1,246,621,312).
+  B2 (f4, pre-registered 17.86 [17.72, 18.20]) MEASURED 18.5738: trimming 4 early tensors to class 2 (blk.4/5/9 ffn_gate, blk.6 ffn_down; -6.2 MB) cost +0.78 ppl. Prediction missed.
+  Layers 23-35 of f4 are identical to f1 (Dev ratio 0.9999, same bytes); DevA ratio 1.0000 on all 252 tensors (propagation identical; resume not at fault).
+B3 definition (fixed now): f1 roff blobs for 251 tensors + blk.4.ffn_gate.weight from f4 (class 2), chosen as the trimmed tensor with the smallest
+  proxy Dev increase (+0.00446; others +0.00659, +0.00733, +0.0136). Linear blobs CALC 972,043,712 - 1,556,480 = 970,487,232 B; file CALC 1,245,823,584 B
+  (797,728 B under IQ2_XXS). Same codebook tables (cmp identical). Native file via r51_delta.py + r51_native.py (same steps as r57_post cpu_stage).
+Prediction (native ppl, WikiText-2 ctx 4096, 73 windows): 17.92, 80% interval [17.80, 18.20].
+Decision rules: B3 beats IQ2_KT equal-bytes (18.6165) if paired dNLL (r59_paired.py) 95% CI < 0. B3 is reported as POST-HOC (chosen after B2), next to B2.
+If native file > IQ2_XXS bytes: not size-matched, reported as such.
+
+AMENDMENT (lead, 2026-10-17 13:38 IST, BEFORE any B3 ppl run): the native plan for B3 is 1,247,451,136 B, 829,824 B OVER IQ2_XXS (logs/r59b3/plan.log):
+the flat build clamps more outliers (delta 230,576 entries, 194/252 tensors; Model B 27,437), so the file is larger than my CALC (which used Model B's delta size).
+Per the rule above (next-smallest proxy Dev increase), B3 also takes blk.5.ffn_gate.weight from f4 (class 2, +0.00659). Linear blobs 968,930,752 B;
+expected plan total about 1,245,894,656 B (about 0.73 MB under IQ2_XXS). Prediction revised BEFORE measuring: 17.98, 80% interval [17.85, 18.30].

@@ -1,0 +1,66 @@
+0.01.822.613 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.03.507.045 I cmn          init: llama threadpool init, n_threads = 20
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 252 bpw_used 2.12050 tiles 443520 class_share c0:0.0216 c1:0.0261 c2:0.1525 c3:0.6404 c4:0.0931 c5:0.0000 c6:0.0567 c7:0.0096
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+0.04.240.589 I 
+0.04.240.771 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.04.298.717 I kl_divergence: computing over 12 chunks, n_ctx=512, batch_size=2048, n_seq=4
+0.05.462.885 I kl_divergence: 1.16 seconds per pass - ETA 0.05 minutes
+
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Dp RMS            Same top p
+   1      14.6542 +/-    3.6179       0.45260 +/-    0.12756       0.60265 +/-    0.09109    24.548 +/-  2.374 %    76.863 +/-  2.646 %
+   2      19.3586 +/-    3.3873       0.37315 +/-    0.08402       0.53367 +/-    0.05236    22.752 +/-  1.515 %    74.902 +/-  1.922 %
+   3      19.8743 +/-    2.8036       0.39431 +/-    0.06979       0.62842 +/-    0.04821    26.028 +/-  1.238 %    72.288 +/-  1.619 %
+   4      19.2777 +/-    2.2467       0.39653 +/-    0.06007       0.63877 +/-    0.04021    25.789 +/-  1.038 %    71.863 +/-  1.409 %
+   5      19.1755 +/-    1.9833       0.37994 +/-    0.05164       0.61182 +/-    0.03335    24.840 +/-  0.911 %    71.059 +/-  1.271 %
+   6      20.3302 +/-    1.8907       0.39171 +/-    0.04603       0.62381 +/-    0.02978    24.877 +/-  0.833 %    70.719 +/-  1.164 %
+   7      20.9121 +/-    1.7947       0.38479 +/-    0.04195       0.62893 +/-    0.02733    24.298 +/-  0.770 %    70.140 +/-  1.084 %
+   8      22.2037 +/-    1.8021       0.40193 +/-    0.04107       0.65593 +/-    0.02790    24.028 +/-  0.720 %    69.216 +/-  1.022 %
+   9      23.5467 +/-    1.8119       0.41521 +/-    0.03906       0.66539 +/-    0.02702    23.746 +/-  0.685 %    68.758 +/-  0.968 %
+  10      24.5384 +/-    1.7895       0.40078 +/-    0.03615       0.64370 +/-    0.02475    23.131 +/-  0.649 %    68.784 +/-  0.918 %
+  11      24.7925 +/-    1.7181       0.40996 +/-    0.03434       0.64252 +/-    0.02351    23.000 +/-  0.615 %    68.948 +/-  0.874 %
+  12      25.3690 +/-    1.6839       0.42017 +/-    0.03261       0.63995 +/-    0.02214    22.976 +/-  0.589 %    68.693 +/-  0.838 %
+
+====== Perplexity statistics ======
+Mean PPL(Q)                   :  25.369049 +/-   1.683914
+Mean PPL(base)                :  16.665831 +/-   1.054080
+Cor(ln(PPL(Q)), ln(PPL(base))):  87.45%
+Mean ln(PPL(Q)/PPL(base))     :   0.420169 +/-   0.032614
+Mean PPL(Q)/PPL(base)         :   1.522219 +/-   0.049645
+Mean PPL(Q)-PPL(base)         :   8.703218 +/-   0.917747
+
+====== KL divergence statistics ======
+Mean    KLD:   0.639950 +/-   0.022138
+Maximum KLD:  17.221796
+99.9%   KLD:  14.419833
+99.0%   KLD:   5.690266
+95.0%   KLD:   2.412066
+90.0%   KLD:   1.515370
+Median  KLD:   0.276270
+10.0%   KLD:   0.003855
+ 5.0%   KLD:   0.000346
+ 1.0%   KLD:   0.000007
+ 0.1%   KLD:   0.000000
+Minimum KLD:  -0.000001
+
+====== Token probability statistics ======
+Mean    Dp: -5.385 +/- 0.404 %
+Maximum Dp: 89.280%
+99.9%   Dp: 80.874%
+99.0%   Dp: 50.753%
+95.0%   Dp: 22.847%
+90.0%   Dp:  9.315%
+75.0%   Dp:  0.358%
+Median  Dp: -0.093%
+25.0%   Dp: -6.650%
+10.0%   Dp: -30.302%
+ 5.0%   Dp: -51.597%
+ 1.0%   Dp: -94.106%
+ 0.1%   Dp: -99.918%
+Minimum Dp: -99.996%
+RMS Dp    : 22.976 +/- 0.589 %
+Same top p: 68.693 +/- 0.838 %
+

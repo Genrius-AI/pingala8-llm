@@ -1,0 +1,12 @@
+REALSUM iq2    pp512 d=0    tps 7528.8 ratio_vs_iq2 1.0000 [1.000 1.000 1.000] J/tok 0.00587 J_ratio 1.0000 W 43.0 mem_MHz 14301 sm_MHz 1612 peak_MiB 3162
+REALSUM iq2    pp512 d=4096 tps 6373.6 ratio_vs_iq2 1.0000 [1.000 1.000 1.000] J/tok 0.01096 J_ratio 1.0000 W 68.1 mem_MHz 14301 sm_MHz 1612 peak_MiB 3734
+REALSUM iq2    tg128 d=0    tps 203.1 ratio_vs_iq2 1.0000 [1.000 1.000 1.000] J/tok 0.49735 J_ratio 1.0000 W 102.8 mem_MHz 14301 sm_MHz 1612 peak_MiB 2884
+REALSUM iq2    tg128 d=4096 tps 158.3 ratio_vs_iq2 1.0000 [1.000 1.000 1.000] J/tok 0.63836 J_ratio 1.0000 W 104.7 mem_MHz 14301 sm_MHz 1612 peak_MiB 3696
+REALSUM NPPC2  pp512 d=0    tps 5777.8 ratio_vs_iq2 0.7019 [0.702 0.793 0.620] J/tok 0.01210 J_ratio 2.0508 W 58.1 mem_MHz 14301 sm_MHz 1612 peak_MiB 3218
+REALSUM NPPC2  pp512 d=4096 tps 4796.4 ratio_vs_iq2 0.7516 [0.752 0.757 0.647] J/tok 0.01561 J_ratio 1.5757 W 74.8 mem_MHz 14301 sm_MHz 1612 peak_MiB 3794
+REALSUM NPPC2  tg128 d=0    tps 201.7 ratio_vs_iq2 1.0034 [0.966 1.003 1.004] J/tok 0.50235 J_ratio 1.0101 W 101.3 mem_MHz 14301 sm_MHz 1612 peak_MiB 2922
+REALSUM NPPC2  tg128 d=4096 tps 159.7 ratio_vs_iq2 1.0119 [0.951 1.012 1.030] J/tok 0.68409 J_ratio 1.0024 W 109.2 mem_MHz 14301 sm_MHz 1612 peak_MiB 3758
+REALSUM NHL    pp512 d=0    tps 3570.2 ratio_vs_iq2 0.4576 [0.434 0.492 0.458] J/tok 0.01724 J_ratio 2.9220 W 59.4 mem_MHz 14301 sm_MHz 1612 peak_MiB 3228
+REALSUM NHL    pp512 d=4096 tps 3212.2 ratio_vs_iq2 0.5083 [0.501 0.508 0.517] J/tok 0.02718 J_ratio 2.4777 W 88.1 mem_MHz 14301 sm_MHz 1612 peak_MiB 3804
+REALSUM NHL    tg128 d=0    tps 200.8 ratio_vs_iq2 0.9971 [0.958 0.997 1.022] J/tok 0.51698 J_ratio 1.0679 W 103.8 mem_MHz 14301 sm_MHz 1612 peak_MiB 2922
+REALSUM NHL    tg128 d=4096 tps 165.1 ratio_vs_iq2 1.0424 [0.986 1.042 1.059] J/tok 0.64922 J_ratio 0.9990 W 107.2 mem_MHz 14301 sm_MHz 1612 peak_MiB 3766

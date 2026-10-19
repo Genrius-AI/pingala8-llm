@@ -1,0 +1,16 @@
+0.00.439.017 I Will perform strided perplexity calculation -> adjusting context size from 2049 to 4096
+0.00.886.284 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.01.385.017 I cmn          init: llama threadpool init, n_threads = 20
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 252 bpw_used 2.13321 tiles 443520 class_share c0:0.0000 c1:0.0000 c2:0.0000 c3:0.9466 c4:0.0274 c5:0.0000 c6:0.0260 c7:0.0000
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+0.01.532.583 I 
+0.01.532.667 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.01.532.690 I perplexity_v2: tokenizing the input ..
+0.01.857.800 I perplexity_v2: have 299078 tokens. Calculation chunk = 4096
+0.01.857.886 I perplexity_v2: computing over 73 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.06.864.139 I perplexity_v2: 5.01 seconds per pass - ETA 6.08 minutes
+[1]16.0556,[2]19.6539,[3]16.9107,[4]14.7582,[5]15.4977,[6]15.6570,[7]15.9478,[8]16.0620,[9]16.3959,[10]16.0143,[11]16.1893,[12]16.1739,[13]16.3277,[14]16.7747,[15]16.8436,[16]16.6256,[17]16.3635,[18]16.1335,[19]15.6868,[20]15.2471,[21]15.1497,[22]15.5768,[23]15.9823,[24]16.1813,[25]16.2212,[26]16.1652,[27]16.0019,[28]15.7864,[29]15.4432,[30]15.3799,[31]15.5176,[32]15.7375,[33]15.7200,[34]15.7773,[35]15.7490,[36]15.7555,[37]15.9144,[38]15.9384,[39]15.9181,[40]15.9896,[41]15.9920,[42]15.7869,[43]15.7636,[44]15.7454,[45]15.8072,[46]16.0122,[47]16.2327,[48]16.4194,[49]16.5202,[50]16.5563,[51]16.5667,[52]16.6224,[53]16.6887,[54]16.7651,[55]16.7535,[56]16.7386,[57]16.7067,[58]16.7638,[59]16.8174,[60]16.7757,[61]16.7616,[62]16.6570,[63]16.6834,[64]16.6648,[65]16.5871,[66]16.6072,[67]16.5699,[68]16.6154,[69]16.4843,[70]16.4779,[71]16.5413,[72]16.5772,[73]16.6413,
+

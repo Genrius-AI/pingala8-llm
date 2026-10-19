@@ -1,0 +1,5 @@
+Error importing huggingface_hub.file_download: No module named 'httpx'
+hf_hub_download failed: ModuleNotFoundError("No module named 'httpx'") - trying plain https
+C4 shard ~/repo/hf_cache/r59_c4/c4-validation.00000-of-00008.json.gz bytes 40471190 sha256_16 1f25b6af12da8411
+C4 docs 637 bytes 1379155 tokens 299875 strided chunks (ctx 4096, stride 4095) 73 sha256_16 2fa20d9878157ff0
+C4 overlap check: 0 of 637 documents have their first 100 chars inside models/calib_c4.txt,datasets/c4_heldout.raw (1807464 bytes)

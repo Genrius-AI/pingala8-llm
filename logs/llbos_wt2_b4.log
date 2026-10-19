@@ -1,0 +1,15 @@
+0.03.227.843 I cmn          init: llama threadpool init, n_threads = 20
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 224 bpw_used 2.10964 tiles 851968 class_share c0:0.0000 c1:0.0000 c2:0.0252 c3:0.9219 c4:0.0337 c5:0.0000 c6:0.0192 c7:0.0000
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+0.03.425.099 I 
+0.03.425.183 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.03.425.189 I perplexity: tokenizing the input ..
+0.03.606.878 I perplexity: tokenization took 181.678 ms
+0.03.607.045 I perplexity: calculating perplexity over 70 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.06.110.107 I perplexity: 2.50 seconds per pass - ETA 2.92 minutes
+[1]11.7585,[2]10.2095,[3]8.2393,[4]7.9764,[5]7.9948,[6]8.4148,[7]8.4896,[8]8.7674,[9]8.8200,[10]8.8494,[11]8.9175,[12]8.9613,[13]9.1902,[14]9.1676,[15]8.9887,[16]8.7528,[17]8.7465,[18]8.4671,[19]8.2419,[20]8.1194,[21]8.3402,[22]8.5161,[23]8.6095,[24]8.5808,[25]8.5220,[26]8.4324,[27]8.3648,[28]8.2020,[29]8.1678,[30]8.2497,[31]8.3604,[32]8.3485,[33]8.2845,[34]8.2792,[35]8.3024,[36]8.3455,[37]8.3601,[38]8.3301,[39]8.3586,[40]8.2450,[41]8.1900,[42]8.1522,[43]8.1716,[44]8.2108,[45]8.3215,[46]8.3946,[47]8.3965,[48]8.4195,[49]8.4061,[50]8.4624,[51]8.4926,[52]8.5742,[53]8.5746,[54]8.5551,[55]8.5198,[56]8.5191,[57]8.5363,[58]8.5162,[59]8.4843,[60]8.4453,[61]8.4424,[62]8.4280,[63]8.4278,[64]8.4098,[65]8.4252,[66]8.4419,[67]8.3449,[68]8.4054,[69]8.4050,[70]8.4361,
+2.10.652.126 I Final estimate: PPL = 8.4361 +/- 0.05338
+

@@ -1,0 +1,21 @@
+2026-10-17 13:31:33 start pid 29560 sid 29560
+2026-10-17 13:35:03 DELTA rc=0 DELTA tensors_with_delta 194/252 entries 230576 bytes_fp16 1383456 bytes_f32 1844608; fp16-delta max |W+d16 - clamp(W)| = 2.0020e-02 (blk.16.ffn_down.weight)
+2026-10-17 13:35:35 PLAN PLAN TOTAL 1247451136 B; budget 1246621312 -> margin -829824 B (OVER); vs container 1240445591: +7005545 B; max shard 992510016 (OK 1e9)
+2026-10-17 13:35:35 BLOCKER plan over budget (see logs/r59b3/plan.log)
+2026-10-17 13:38:07 AMEND: + blk.5.ffn_gate from f4 (plan was 829,824 B over IQ2_XXS); rerun
+2026-10-17 13:38:07 start pid 33418 sid 33418
+2026-10-17 13:42:21 DELTA rc=0 DELTA tensors_with_delta 194/252 entries 233221 bytes_fp16 1399326 bytes_f32 1865768; fp16-delta max |W+d16 - clamp(W)| = 2.0020e-02 (blk.16.ffn_down.weight)
+2026-10-17 13:51:55 PLAN PLAN TOTAL 1245915872 B; budget 1246621312 -> margin +705440 B (OK); vs container 1240445591: +5470281 B; max shard 997459456 (OK 1e9)
+2026-10-17 14:06:16 DRYRUN DRYRUN readback blk.0.attn_v.weight: types I8/I16/F16/I16/F32 kernel bytes == transcode True, prm True, c True, delta Tr
+DRYRUN readback blk.6.ffn_down.weight: types I8/I16/F16/I16/F32 kernel bytes == transcode True, prm True, c True, delta 
+DRYRUN readback blk.16.attn_q.weight: types I8/I16/F16/I16/F32 kernel bytes == transcode True, prm True, c True, delta T
+DRYRUN readback PASS
+2026-10-17 14:08:51 BUILD NATIVE TOTAL 1245915872 B budget 1246621312 margin +705440 vs container 1240445591 +5470281; tensors 1291 t 150s
+2026-10-17 14:15:54 VERIFY VERIFY shards 2 tensors in file 1291 expected 1291; mismatches 0 []; split.count 2 vr.ns 108 vr.trl 2 PASS
+2026-10-17 14:15:54 native 1245915872 B (IQ2_XXS 1246621312) work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+2026-10-17 14:32:53 PPL [73]18.0660
+2026-10-17 14:32:53 PAIRED B3 vs IQ2_XXS: dNLL -0.4597 +/- 0.0197 (95%), first better on 73/73
+2026-10-17 14:32:53 PAIRED B3 vs IQ2_KT-eq: dNLL -0.0300 +/- 0.0108 (95%), first better on 55/73
+2026-10-17 14:32:53 PAIRED B3 vs ModelB: dNLL -0.0553 +/- 0.0099 (95%), first better on 64/73
+2026-10-17 14:32:54 PAIRED B3 vs flat-control: dNLL +0.0154 +/- 0.0028 (95%), first better on 4/73
+2026-10-17 14:32:54 r59_b3 end

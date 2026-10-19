@@ -1,0 +1,49 @@
+# prereg_b4_q14.txt: B4 (the Qwen3-4B best format) on Qwen/Qwen3-14B vs IQ2_KT at <= B4's bytes and IQ2_XXS. Written 2026-10-18 13:47 IST,
+# BEFORE the imatrix, the IQ2_XXS mix, any B4 blob, any IQ2_KT file or any 14B evaluation existed (only Q8_0 parts were being converted).
+# Driver research/detail/q14_full.sh; builder q14_build.py; native q14_qnative.py; IQ2_KT recipe q14_kt.py. Plain ASCII.
+#
+# Decision fed: does B4 beat IQ2_KT at equal bytes at 14B scale.
+#
+# Setup (fixed now)
+#   model        Qwen/Qwen3-14B revision 40c069824f4251a91eefaf281ebe4c544efd3e18 (arch qwen3, 40 layers, 5120 / 17408, GQA 40/8, untied output)
+#   source       Q8_0 gguf-split parts (stock converter, per shard) for ALL three formats: B4 W and propagation weights, IQ2_XXS (--allow-requantize),
+#                IQ2_KT (--allow-requantize). No bf16/f16 copy exists (disk). On 4B the sources were f16 (B4, KT) and the requant cost was
+#                measured small for KT (prereg_ktgemma PRED_QC +0.0033 nats); the same source for all three keeps the comparison fair.
+#   imatrix      models/qwen3-14B.imatrix: stock llama-imatrix on the Q8_0, models/calib_c4.txt -c 512 --chunks 200 (C4 text), used by all three
+#                (B4 column scale s, the IQ2_XXS mix, and IQ2_KT via ik's .dat converter).
+#   B4           q14_build.py = cs_build_q.py maths: rate-off arm roff:8:research/work/r48k3, CMODE=opt (c ~ s^(1/6) E^(-1/3)), DAMP 0.1,
+#                ALPHA 1.05, R48K shifts 0,0,0,0,2,3,2,4/0,0,0,0,0,0,0,2, NSEQ 256 x 2048 fit + NEV 32 eval (models/r35_hcal.txt), fp16
+#                propagation; NSEQ 128 ONLY if the disk guard forces it (logged), PROP_DT bf16 ONLY if fp16 propagation aborts on non-finite
+#                hidden states (logged). Native VR3 file (q14_qnative.py), must be <= the 14B IQ2_XXS file (else BLOCKER, no eval).
+#   IQ2_XXS      stock llama-quantize IQ2_XXS from the Q8_0 + imatrix (also the slot map / budget of B4).
+#   IQ2_KT       ik_llama.cpp 77bef17, recipe QK1 = ktllama_design.py K1 "ik-rule" (as Qwen R1 / Llama LK1), bytes <= B4 native bytes and within
+#                0.5% (designed); token_embd / output at ik's IQ2_KT defaults. QK2 (B3 shape) is computed and logged, not quantized (disk).
+#   eval         WikiText-2 r36_hfj.sh (frozen; -c 2049 --ppl-stride 4095, 73 windows, -ngl 99); C4 c4_val_part.raw same flags; paired per-window
+#                dNLL r59_paired.py (naive 95% CI) and r59_acorr.py (lag-1 corrected, block bootstrap) reported together.
+#   smoke gate   B4 4-window WT2 run before the full run: pass iff window [4] < 1.5 x the IQ2_XXS run's [4] (garbage / kernel detector only).
+#
+# Anchors (Qwen3-4B, same protocol): Q8_0 12.4978, B4 16.6413, IQ2_KT ik-rule R1 at B3 bytes 18.2721, IQ2_KT ktm + C4 imatrix 18.1480,
+#   IQ2_XXS 28.6083. ln(ppl/Q8): B4 0.286, KT 0.373-0.380, IQ2_XXS 0.828. B4 vs KT(C4 imatrix) dNLL = -0.087.
+# Prediction method (my guess, not a fit): 2-bit damage ln(ppl/Q8) shrinks with scale; I take a factor ~0.65 at 14B for every format
+#   (Llama-8B, a more fragile family, had IQ2_XXS 0.72, KT ~0.51); B4's margin over KT shrinks in proportion.
+#
+# Predictions (all "my guess"; 80% intervals)
+PRED_WT2 Q8_0     8.8  [7.8, 10.2]   my guess
+PRED_WT2 B4      10.6  [9.2, 12.6]   my guess
+PRED_WT2 IQ2_KT  11.3  [9.7, 13.6]   my guess (QK1 at <= B4 bytes)
+PRED_WT2 IQ2_XXS 15.0  [11.5, 21.0]  my guess
+PRED_C4  B4      19.0  [15.5, 24.0]  my guess
+PRED_C4  IQ2_KT  20.3  [16.5, 26.0]  my guess
+PRED_C4  IQ2_XXS 27.0  [20.0, 38.0]  my guess
+PRED_PAIRED_WT2 dNLL(B4 - IQ2_KT)  -0.06 [-0.11, -0.01]  my guess;  P(WIN) = 0.75 my guess
+PRED_PAIRED_WT2 dNLL(B4 - IQ2_XXS) -0.35 [-0.55, -0.18]  my guess
+PRED_NATIVE B4 bytes: 0.1-0.4% under the IQ2_XXS file (4B: 0.28% under; computed from the rate-off classes before the build by the pre-flight plan)
+#
+# DECISION RULE (fixed now; primary = WikiText-2, r59_paired.py naive 95% CI, B4 log vs IQ2_KT QK1 log, 73 windows):
+#   WIN  iff paired dNLL(B4 - IQ2_KT) < 0 with the 95% CI excluding 0  -> "B4 beats IQ2_KT at equal bytes at 14B".
+#   TIE  iff the CI covers 0                                             -> "ties IQ2_KT at 14B" (the 4B claim is reported as not shown to scale).
+#   LOSS iff dNLL > 0 with the CI excluding 0                            -> IQ2_KT wins at 14B; stated as such.
+#   Reported next to it, not decisive: the lag-1 corrected CI (if it covers 0 while the naive one does not, the WIN is written "naive CI only"),
+#   C4 paired (held-out domain; the imatrix is C4 for all three), and dNLL vs IQ2_XXS.
+#   Fairness gates (else no verdict, BLOCKER): IQ2_KT bytes <= B4 bytes and >= 0.995 x B4 bytes; all three logs 73 windows on the same text;
+#   B4 native <= IQ2_XXS file; smoke gate passed.

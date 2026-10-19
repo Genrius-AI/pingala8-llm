@@ -1,0 +1,9 @@
+2026-10-19 05:38:40 start pid 400903 (prereg sha f841c3cfaa683565)
+2026-10-19 05:38:40 quantize: ext/ik_llama.cpp/build-cuda/bin/llama-quantize --allow-requantize --token-embedding-type q2_K --imatrix work/q14/qwen3-14B.imatrix.dat --custom-q 'blk\.(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39)\.attn_output\.weight=iq2_kt,blk\.(12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27)\.attn_v\.weight=iq2_kt,blk\.(0|1|2|3|4|5|6|7|8|9|10|11|28|29|30|31|32|33|34|35|36|37|38|39)\.attn_v\.weight=iq3_k,blk\.(0|1|2|3|4)\.ffn_down\.weight=iq2_kt' work/q14/q14-Q8_0-00001-of-00008.gguf work/q14/q14-IQ2_KT-QK1-teq2k-ik.gguf IQ2_KT 12
+2026-10-19 05:55:03 quantize done in 983 s: 4336080576 B (IQ2_KT 4288068800 B, +48011776 B)
+2026-10-19 05:55:06 commit gate (ppl KT teQ2K): free 10 GB, need 14 on 3 readings
+2026-10-19 06:12:59 ppl done in 539 s: [73]9.3958
+2026-10-19 06:13:00 PAIRED WT2 KT_teQ2K - KT: dNLL -0.0003 +/- 0.0005 (95%), first better on 42/73 | mean -0.0003 naive +/-0.0005 lag1 -0.08 neff 85.8 corrected +/-0.0005 blockboot(B=5) [-0.0008,+0.0002]
+2026-10-19 06:13:00 TE14: GO to option B (d -0.0003 >= -0.005: the ~38 MB is close to free); prediction -0.004 [-0.012, 0.000]
+2026-10-19 06:13:00 test file deleted
+2026-10-19 06:13:00 w1_te14 end

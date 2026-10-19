@@ -1,0 +1,218 @@
+== R59 check vs r48k.vit_k 2026-10-17 13:07:17
+   S= 4: MSE shipped vit_k 0.08892755  this file 0.08892755  rel diff 0.00e+00  identical index fraction 1.000000  max|dQ| 0.000e+00
+   S= 8: MSE shipped vit_k 0.08819368  this file 0.08819368  rel diff 0.00e+00  identical index fraction 1.000000  max|dQ| 0.000e+00
+   S=16: MSE shipped vit_k 0.08787780  this file 0.08787780  rel diff 0.00e+00  identical index fraction 1.000000  max|dQ| 0.000e+00
+   S=32: MSE shipped vit_k 0.08858263  this file 0.08858263  rel diff 0.00e+00  identical index fraction 1.000000  max|dQ| 0.000e+00
+== check done
+== R59 gauss 2026-10-17 13:07:27  G3=23.557000 nsym=2^20 per seed, eval seeds [0, 1, 2, 3], tune seed 1000
+bound: D(R)=2^(-2R). SNR_bound(2.0625)=12.417 dB, SNR_bound(2.0)=12.041 dB
+-- alpha tuning on the tuning seed (SNR dB), shipped alpha = 1.05
+   S4         alpha*=0.99 SNR=10.5055  SNR@1.05=10.4712
+   S8         alpha*=0.99 SNR=10.5334  SNR@1.05=10.4998
+   S16        alpha*=1.00 SNR=10.5462  SNR@1.05=10.5132
+   S32        alpha*=1.00 SNR=10.5193  SNR@1.05=10.4875
+   VRi_vrcA   alpha*=1.01 SNR=9.8203  SNR@1.05=9.8074
+   VRi_vriA   alpha*=1.01 SNR=10.0995  SNR@1.05=10.0786
+-- eval seed 0  mean(w^2)=0.999602
+   S4       alpha=0.99 SNR=10.5060  [decoder-from-indices check passed]
+   S8       alpha=0.99 SNR=10.5347  [decoder-from-indices check passed]
+   S16       alpha=1.00 SNR=10.5478  [decoder-from-indices check passed]
+   S32       alpha=1.00 SNR=10.5200  [decoder-from-indices check passed]
+   VRi_vrcA       alpha=1.01 SNR=9.8184
+   VRi_vriA       alpha=1.01 SNR=10.0984
+   S4@1.05  alpha=1.05 SNR=10.4735
+   S8@1.05  alpha=1.05 SNR=10.5032
+   S16@1.05  alpha=1.05 SNR=10.5159
+   S32@1.05  alpha=1.05 SNR=10.4896
+   VRi_vrcA@1.05  alpha=1.05 SNR=9.8065
+   VRi_vriA@1.05  alpha=1.05 SNR=10.0765
+-- eval seed 1  mean(w^2)=0.999668
+   S4       alpha=0.99 SNR=10.5036
+   S8       alpha=0.99 SNR=10.5337
+   S16       alpha=1.00 SNR=10.5457
+   S32       alpha=1.00 SNR=10.5184
+   VRi_vrcA       alpha=1.01 SNR=9.8198
+   VRi_vriA       alpha=1.01 SNR=10.0954
+   S4@1.05  alpha=1.05 SNR=10.4704
+   S8@1.05  alpha=1.05 SNR=10.5009
+   S16@1.05  alpha=1.05 SNR=10.5137
+   S32@1.05  alpha=1.05 SNR=10.4877
+   VRi_vrcA@1.05  alpha=1.05 SNR=9.8072
+   VRi_vriA@1.05  alpha=1.05 SNR=10.0740
+-- eval seed 2  mean(w^2)=0.999955
+   S4       alpha=0.99 SNR=10.5074
+   S8       alpha=0.99 SNR=10.5358
+   S16       alpha=1.00 SNR=10.5495
+   S32       alpha=1.00 SNR=10.5212
+   VRi_vrcA       alpha=1.01 SNR=9.8243
+   VRi_vriA       alpha=1.01 SNR=10.1040
+   S4@1.05  alpha=1.05 SNR=10.4730
+   S8@1.05  alpha=1.05 SNR=10.5017
+   S16@1.05  alpha=1.05 SNR=10.5161
+   S32@1.05  alpha=1.05 SNR=10.4895
+   VRi_vrcA@1.05  alpha=1.05 SNR=9.8108
+   VRi_vriA@1.05  alpha=1.05 SNR=10.0819
+-- eval seed 3  mean(w^2)=0.998970
+   S4       alpha=0.99 SNR=10.5081
+   S8       alpha=0.99 SNR=10.5382
+   S16       alpha=1.00 SNR=10.5494
+   S32       alpha=1.00 SNR=10.5231
+   VRi_vrcA       alpha=1.01 SNR=9.8213
+   VRi_vriA       alpha=1.01 SNR=10.1029
+   S4@1.05  alpha=1.05 SNR=10.4750
+   S8@1.05  alpha=1.05 SNR=10.5054
+   S16@1.05  alpha=1.05 SNR=10.5178
+   S32@1.05  alpha=1.05 SNR=10.4923
+   VRi_vrcA@1.05  alpha=1.05 SNR=9.8095
+   VRi_vriA@1.05  alpha=1.05 SNR=10.0809
+-- reference Lloyd-Max scalar 2b: SNR per seed [9.321, 9.3236, 9.3244, 9.3355]
+-- reference LBG 4-dim 256 cw: SNR per seed [10.1452, 10.1445, 10.1443, 10.1469]
+-- retrained (A,c) for S=4: alpha*=0.99 SNR per seed [10.5756, 10.5726, 10.5776, 10.5777]  c=[-2.0, -4.0, -7.0, -21.0]
+-- retrained (A,c) for S=8: alpha*=0.99 SNR per seed [10.6001, 10.5987, 10.6021, 10.6024]  c=[-2.0, -4.0, -7.0, -21.0]
+-- retrained (A,c) for S=16: alpha*=1.00 SNR per seed [10.6138, 10.6117, 10.6155, 10.6153]  c=[-2.0, -4.0, -7.0, -21.0]
+-- retrained (A,c) for S=32: alpha*=1.00 SNR per seed [10.5841, 10.5814, 10.5856, 10.5861]  c=[-2.0, -4.0, -7.0, -20.0]
+-- SUMMARY (SNR dB mean +- std over seeds; gap to D(2.0625) and to D(2.0))
+   S4                                 rate 2.0625 SNR 10.506 +- 0.002  gap_total 1.911  gap_idx 1.535
+   S8                                 rate 2.0625 SNR 10.536 +- 0.002  gap_total 1.882  gap_idx 1.506
+   S16                                rate 2.0625 SNR 10.548 +- 0.002  gap_total 1.869  gap_idx 1.493
+   S32                                rate 2.0625 SNR 10.521 +- 0.002  gap_total 1.897  gap_idx 1.521
+   S4@1.05                            rate 2.0625 SNR 10.473 +- 0.002  gap_total 1.945  gap_idx 1.568
+   S8@1.05                            rate 2.0625 SNR 10.503 +- 0.002  gap_total 1.915  gap_idx 1.538
+   S16@1.05                           rate 2.0625 SNR 10.516 +- 0.002  gap_total 1.902  gap_idx 1.525
+   S32@1.05                           rate 2.0625 SNR 10.490 +- 0.002  gap_total 1.928  gap_idx 1.551
+   VRi_vrcA                           rate 2.0625 SNR 9.821 +- 0.003  gap_total 2.597  gap_idx 2.220
+   VRi_vriA                           rate 2.0625 SNR 10.100 +- 0.004  gap_total 2.317  gap_idx 1.941
+   VRi_vrcA@1.05                      rate 2.0625 SNR 9.808 +- 0.002  gap_total 2.609  gap_idx 2.233
+   VRi_vriA@1.05                      rate 2.0625 SNR 10.078 +- 0.004  gap_total 2.339  gap_idx 1.963
+   Lloyd-Max scalar 2b                rate 2.0625 SNR 9.326 +- 0.006  gap_total 3.091  gap_idx 2.715
+   LBG 4-dim 256 cw                   rate 2.0625 SNR 10.145 +- 0.001  gap_total 2.272  gap_idx 1.896
+   retrained S4                       rate 2.0625 SNR 10.576 +- 0.002  gap_total 1.842  gap_idx 1.465
+   retrained S8                       rate 2.0625 SNR 10.601 +- 0.002  gap_total 1.817  gap_idx 1.440
+   retrained S16                      rate 2.0625 SNR 10.614 +- 0.002  gap_total 1.803  gap_idx 1.427
+   retrained S32                      rate 2.0625 SNR 10.584 +- 0.002  gap_total 1.833  gap_idx 1.457
+-- paired differences of per-seed SNR (dB), mean +- std:
+   S8-S4: +0.0293 +- 0.0009   (shipped table)
+   S8-S4: +0.0250 +- 0.0008   (retrained tables)
+   S16-S8: +0.0125 +- 0.0011   (shipped table)
+   S16-S8: +0.0132 +- 0.0004   (retrained tables)
+   S32-S16: -0.0275 +- 0.0008   (shipped table)
+   S32-S16: -0.0298 +- 0.0004   (retrained tables)
+   S32-S8: -0.0149 +- 0.0003   (shipped table)
+   S32-S8: -0.0165 +- 0.0005   (retrained tables)
+== gauss done in 940 s
+== R59 iq 2026-10-17 13:23:09  llama.cpp: ~/repo/llama.cpp/build-cuda/bin/llama-quantize --pure --imatrix <uniform ones>
+-- --pure --imatrix ~/repo/work/r59sc/uniform.imatrix ~/repo/work/r59sc/gauss_f32.gguf ~/repo/work/r59sc/gauss_iq2_xxs.gguf IQ2_XXS 8 -> rc=0
+   IQ2_XXS: bpw (from file bytes) 2.0625  SNR per tensor [9.2759, 9.2814, 9.2778, 9.2862]  mean 9.280 +- 0.005  D(R) bound 12.417  gap 3.137
+-- --pure --imatrix ~/repo/work/r59sc/uniform.imatrix ~/repo/work/r59sc/gauss_f32.gguf ~/repo/work/r59sc/gauss_iq2_xs.gguf IQ2_XS 8 -> rc=0
+   IQ2_XS: bpw (from file bytes) 2.3125  SNR per tensor [10.4718, 10.4725, 10.4706, 10.4763]  mean 10.473 +- 0.002  D(R) bound 13.923  gap 3.450
+-- --pure --imatrix ~/repo/work/r59sc/uniform.imatrix ~/repo/work/r59sc/gauss_f32.gguf ~/repo/work/r59sc/gauss_iq2_s.gguf IQ2_S 8 -> rc=0
+== R59 real 2026-10-17 13:23:15  tensors ['blk.10.attn_q.weight', 'blk.10.ffn_up.weight', 'blk.10.ffn_down.weight']  (imatrix-weighted, random-sign Hadamard per 256, as r23_bound.py)
+-- llama-quantize IQ2_XXS on the 3 real tensors rc=1
+ue pairs and 3 tensors from ~/repo/work/r59sc/real_f32.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = llama
+llama_model_loader: - kv   1:                               general.name str              = r59-real
+llama_model_loader: - kv   2:                       llama.context_length u32              = 2048
+llama_model_loader: - kv   3:                     llama.embedding_length u32              = 2560
+llama_model_loader: - kv   4:                          llama.block_count u32              = 12
+llama_model_loader: - kv   5:                  llama.feed_forward_length u32              = 9728
+llama_model_loader: - kv   6:                 llama.attention.head_count u32              = 32
+llama_model_loader: - kv   7:              llama.attention.head_count_kv u32              = 8
+llama_model_loader: - kv   8:     llama.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv   9:                 llama.rope.dimension_count u32              = 128
+llama_model_loader: - kv  10:                          general.file_type u32              = 0
+llama_model_loader: - type  f32:    3 tensors
+llama_model_quantize: failed to quantize: invalid n_rot: 128, expected 80
+llama_quantize: failed to quantize model from '~/repo/work/r59sc/real_f32.gguf'
+
+-- llama-quantize Q2_K on the 3 real tensors rc=1
+ue pairs and 3 tensors from ~/repo/work/r59sc/real_f32.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = llama
+llama_model_loader: - kv   1:                               general.name str              = r59-real
+llama_model_loader: - kv   2:                       llama.context_length u32              = 2048
+llama_model_loader: - kv   3:                     llama.embedding_length u32              = 2560
+llama_model_loader: - kv   4:                          llama.block_count u32              = 12
+llama_model_loader: - kv   5:                  llama.feed_forward_length u32              = 9728
+llama_model_loader: - kv   6:                 llama.attention.head_count u32              = 32
+llama_model_loader: - kv   7:              llama.attention.head_count_kv u32              = 8
+llama_model_loader: - kv   8:     llama.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv   9:                 llama.rope.dimension_count u32              = 128
+llama_model_loader: - kv  10:                          general.file_type u32              = 0
+llama_model_loader: - type  f32:    3 tensors
+llama_model_quantize: failed to quantize: invalid n_rot: 128, expected 80
+llama_quantize: failed to quantize model from '~/repo/work/r59sc/real_f32.gguf'
+
+== blk.10.attn_q.weight shape (4096, 2560)  water-filling bound (index rate 2.0, scale side-info 0.0625): rel MSE 0.03264 = 14.863 dB;  flat Gaussian D(2.0625) = 12.417 dB
+   S4        alpha=0.97 weighted relMSE 0.08604  SNR 10.653 dB   gap to bound 4.210 dB
+   S8        alpha=0.97 weighted relMSE 0.08538  SNR 10.687 dB   gap to bound 4.177 dB
+   S16       alpha=0.97 weighted relMSE 0.08517  SNR 10.697 dB   gap to bound 4.166 dB
+   S32       alpha=0.97 weighted relMSE 0.08564  SNR 10.673 dB   gap to bound 4.190 dB
+   VRi_vriA  alpha=0.98 weighted relMSE 0.09538  SNR 10.205 dB   gap to bound 4.658 dB
+== blk.10.ffn_up.weight shape (9728, 2560)  water-filling bound (index rate 2.0, scale side-info 0.0625): rel MSE 0.06035 = 12.193 dB;  flat Gaussian D(2.0625) = 12.417 dB
+   S4        alpha=0.99 weighted relMSE 0.08889  SNR 10.511 dB   gap to bound 1.682 dB
+   S8        alpha=0.99 weighted relMSE 0.08831  SNR 10.540 dB   gap to bound 1.653 dB
+   S16       alpha=0.99 weighted relMSE 0.08805  SNR 10.552 dB   gap to bound 1.641 dB
+   S32       alpha=0.99 weighted relMSE 0.08861  SNR 10.525 dB   gap to bound 1.668 dB
+   VRi_vriA  alpha=1.00 weighted relMSE 0.09754  SNR 10.108 dB   gap to bound 2.085 dB
+== blk.10.ffn_down.weight shape (2560, 9728)  water-filling bound (index rate 2.0, scale side-info 0.0625): rel MSE 0.05952 = 12.254 dB;  flat Gaussian D(2.0625) = 12.417 dB
+   S4        alpha=1.00 weighted relMSE 0.08880  SNR 10.516 dB   gap to bound 1.738 dB
+   S8        alpha=0.99 weighted relMSE 0.08819  SNR 10.546 dB   gap to bound 1.708 dB
+   S16       alpha=0.99 weighted relMSE 0.08793  SNR 10.559 dB   gap to bound 1.695 dB
+   S32       alpha=0.99 weighted relMSE 0.08849  SNR 10.531 dB   gap to bound 1.723 dB
+   VRi_vriA  alpha=0.99 weighted relMSE 0.09755  SNR 10.108 dB   gap to bound 2.146 dB
+== real done in 522 s
+== R59 iq 2026-10-17 13:32:01  llama.cpp: ~/repo/llama.cpp/build-cuda/bin/llama-quantize --pure --imatrix <uniform ones>
+-- --pure --imatrix ~/repo/work/r59sc/uniform.imatrix ~/repo/work/r59sc/gauss_f32.gguf ~/repo/work/r59sc/gauss_iq2_xxs.gguf IQ2_XXS 8 -> rc=0
+   ftype IQ2_XXS -> tensor type IQ2_XXS: bpw (from file bytes) 2.0625  SNR per tensor [9.2759, 9.2814, 9.2778, 9.2862]  mean 9.280 +- 0.005  D(R) bound 12.417  gap 3.137
+-- --pure --imatrix ~/repo/work/r59sc/uniform.imatrix ~/repo/work/r59sc/gauss_f32.gguf ~/repo/work/r59sc/gauss_iq2_xs.gguf IQ2_XS 8 -> rc=0
+   ftype IQ2_XS -> tensor type IQ2_XS: bpw (from file bytes) 2.3125  SNR per tensor [10.4718, 10.4725, 10.4706, 10.4763]  mean 10.473 +- 0.002  D(R) bound 13.923  gap 3.450
+-- --pure --imatrix ~/repo/work/r59sc/uniform.imatrix ~/repo/work/r59sc/gauss_f32.gguf ~/repo/work/r59sc/gauss_iq2_m.gguf IQ2_M 8 -> rc=0
+   ftype IQ2_M -> tensor type IQ2_S: bpw (from file bytes) 2.5625  SNR per tensor [12.0869, 12.0881, 12.0835, 12.0892]  mean 12.087 +- 0.002  D(R) bound 15.428  gap 3.341
+-- --pure --imatrix ~/repo/work/r59sc/uniform.imatrix ~/repo/work/r59sc/gauss_f32.gguf ~/repo/work/r59sc/gauss_q2_k.gguf Q2_K 8 -> rc=0
+   ftype Q2_K -> tensor type Q2_K: bpw (from file bytes) 2.6250  SNR per tensor [11.4388, 11.4364, 11.4361, 11.4477]  mean 11.440 +- 0.005  D(R) bound 15.804  gap 4.364
+== iq done in 5 s (temporary GGUFs deleted)
+== R59 realiq 2026-10-17 13:35:05: llama.cpp quantizers, real imatrix, weighted rel MSE in the native domain: sum s_j (W-Wq)^2 / sum s_j W^2
+-- llama-quantize IQ2_XXS on the 3 real tensors rc=0
+-- llama-quantize IQ2_XS on the 3 real tensors rc=0
+-- llama-quantize Q2_K on the 3 real tensors rc=0
+   llama.cpp IQ2_XXS  blk.10.attn_q.weight     weighted relMSE 0.08688  SNR 10.611 dB
+   llama.cpp IQ2_XXS  blk.10.ffn_down.weight   weighted relMSE 0.11091  SNR 9.550 dB
+   llama.cpp IQ2_XXS  blk.10.ffn_up.weight     weighted relMSE 0.11885  SNR 9.250 dB
+   llama.cpp IQ2_XS   blk.10.attn_q.weight     weighted relMSE 0.06394  SNR 11.943 dB
+   llama.cpp IQ2_XS   blk.10.ffn_down.weight   weighted relMSE 0.08418  SNR 10.748 dB
+   llama.cpp IQ2_XS   blk.10.ffn_up.weight     weighted relMSE 0.09046  SNR 10.436 dB
+   llama.cpp Q2_K     blk.10.attn_q.weight     weighted relMSE 0.05003  SNR 13.008 dB
+   llama.cpp Q2_K     blk.10.ffn_down.weight   weighted relMSE 0.06813  SNR 11.667 dB
+   llama.cpp Q2_K     blk.10.ffn_up.weight     weighted relMSE 0.07188  SNR 11.434 dB
+== realiq done
+== R59 gensearch 2026-10-17 13:35:35: all (M1, M0) in [0,S)^2 for S=4/8/16/32 with the SHIPPED table, alpha fixed 0.995; selection on tuning seed (2^19 symbols), confirmation on eval seeds
+-- S=4: 16 generator pairs; r52a_k pair (2, 1) SNR(select seed) 10.5037 rank 2; best (3, 1) 10.5065; median 10.3294; M0=0 (no coset) 9.8152
+   S=4 (M1,M0)=(2, 1)  eval SNR 10.5065 +- 0.0019   <- r52a_k generator
+   S=4 (M1,M0)=(3, 1)  eval SNR 10.5084 +- 0.0023
+   S=4 (M1,M0)=(3, 3)  eval SNR 10.4663 +- 0.0016
+-- S=8: 64 generator pairs; r52a_k pair (5, 2) SNR(select seed) 10.5323 rank 11; best (2, 7) 10.5552; median 10.4609; M0=0 (no coset) 9.8152
+   S=8 (M1,M0)=(5, 2)  eval SNR 10.5359 +- 0.0019   <- r52a_k generator
+   S=8 (M1,M0)=(2, 7)  eval SNR 10.5587 +- 0.0026
+   S=8 (M1,M0)=(5, 7)  eval SNR 10.5583 +- 0.0014
+   S=8 (M1,M0)=(7, 1)  eval SNR 10.5555 +- 0.0024
+-- S=16: 256 generator pairs; r52a_k pair (9, 2) SNR(select seed) 10.5439 rank 86; best (4, 11) 10.5890; median 10.5065; M0=0 (no coset) 9.8152
+   S=16 (M1,M0)=(9, 2)  eval SNR 10.5484 +- 0.0018   <- r52a_k generator
+   S=16 (M1,M0)=(4, 11)  eval SNR 10.5911 +- 0.0023
+   S=16 (M1,M0)=(6, 9)  eval SNR 10.5911 +- 0.0022
+   S=16 (M1,M0)=(15, 9)  eval SNR 10.5915 +- 0.0028
+-- S=32: 1024 generator pairs; r52a_k pair (18, 4) SNR(select seed) 10.5172 rank 632; best (23, 25) 10.6040; median 10.5396; M0=0 (no coset) 9.8152
+   S=32 (M1,M0)=(18, 4)  eval SNR 10.5208 +- 0.0020   <- r52a_k generator
+   S=32 (M1,M0)=(23, 25)  eval SNR 10.6065 +- 0.0022
+   S=32 (M1,M0)=(30, 23)  eval SNR 10.6065 +- 0.0024
+   S=32 (M1,M0)=(23, 27)  eval SNR 10.6060 +- 0.0016
+== gensearch done
+== R59 bestret 2026-10-17 13:42:25: best generator per S from gensearch (top-1 by selection seed) + (A,c) retrained on the tuning seed for that generator (12 Lloyd-Viterbi iterations from the shipped table, int8-rounded)
+   S= 4 generator (M1,M0)=(3, 1) alpha*=0.99 retrained SNR 10.5779 +- 0.0017  gap_total 1.840  gap_idx 1.463  c=[-2.0, -4.0, -7.0, -21.0]  [decoder check passed]
+   S= 8 generator (M1,M0)=(2, 7) alpha*=1.00 retrained SNR 10.6282 +- 0.0020  gap_total 1.789  gap_idx 1.413  c=[-2.0, -4.0, -7.0, -21.0]  [decoder check passed]
+   S=16 generator (M1,M0)=(4, 11) alpha*=1.00 retrained SNR 10.6615 +- 0.0019  gap_total 1.756  gap_idx 1.380  c=[-2.0, -4.0, -7.0, -21.0]  [decoder check passed]
+   S=32 generator (M1,M0)=(23, 25) alpha*=1.00 retrained SNR 10.6763 +- 0.0021  gap_total 1.741  gap_idx 1.365  c=[-2.0, -4.0, -7.0, -21.0]  [decoder check passed]
+   S8-S4: +0.0502 +- 0.0008 dB (best generators, retrained tables)
+   S16-S8: +0.0334 +- 0.0005 dB (best generators, retrained tables)
+   S32-S16: +0.0148 +- 0.0008 dB (best generators, retrained tables)
+== bestret done in 427 s

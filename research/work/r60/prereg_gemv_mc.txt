@@ -1,0 +1,50 @@
+PREREG multi-column VR GEMV for B4 (reviewer W6, batched decoding) - written 2026-10-18 18:08 IST, before any build or run of
+research/detail/gemv_mc_test.sh. Author: architect (arch_gemv_mc_r60). Log of the run: logs/gemv_mc_test.log. Nothing below is a result.
+
+FILE AND PATHS UNDER TEST
+B4 = work/csq/native/4B-csq-vr3-0000{1,2}-of-00002.gguf (class share c3 0.9466 c4 0.0274 c6 0.0260, 2.13321 bpw, 561 clamp-delta entries in
+89/252 tensors; logs/samepath/b4_bat_8.log:5, logs/csq/delta.log last line). Env NAT as samepath_b4.sh:19.
+Shipped dispatch: ne11 = 1 -> GEMV hook k_vr<1,5,8,108> (f44.cu:192-195 -> vr49.cuh:658); ne11 >= 2 -> PPC2: K1 decodes the whole tensor
+to a Q8_0 slab, then stock Q8_0 MMQ (f44.cu:949-968; dispatch ggml-cuda.cu:1840-1851). New (work/gemv_mc): ne11 = 2..8 -> k_vr_mc<NC 2|4|8> (decode once, NC columns).
+
+MEASURED INPUTS (logs/samepath_b4.log C3, median of 3, aggregate tg tok/s; step = npl / rate)
+| npl | B4 shipped | step ms | IQ2_XXS | step ms |
+| 1 | 180.8 | 5.53 | 172.9 | 5.78 |
+| 2 | 57.4 | 34.8 | 304.4 | 6.57 |
+| 4 | 112.9 | 35.4 | 425.3 | 9.41 |
+| 8 | 222.0 | 36.0 | 633.9 | 12.62 |
+B4 step at npl 2-8 is flat at 35 ms: K1 about 25 ms per pass (research/paper/submit/icml/main_icml.tex:583) + the Q8_0 slab multiply + rest.
+
+ESTIMATES (labelled; not measured)
+E1 non-VR time per step (head Q5_K GEMV, attention, norms, launches) at npl 1: 2.2 ms [1.9, 2.5] = IQ2_XXS 5.78 ms minus its 252 linears,
+   3.4-3.7 ms per token (research/agents/systems_r34_fast.md:80, older build). So B4 VR GEMV at npl 1: VR1 = 3.3 ms [3.0, 3.6].
+E2 non-VR at npl 2/4/8: 2.5 [2.3, 3.0] / 3.0 [2.6, 4.5] / 3.9 [3.2, 6.0] ms (head GEMV and attention grow with npl; upper ends =
+   IQ2_XXS step minus 3.4 ms, a loose bound).
+E3 MC kernel time VR(N)/VR1, N = 2/4/8: 1.0 [0.85, 1.3] / 1.2 [0.95, 1.6] / 1.6 [1.1, 2.3]. Basis: SASS issue model per class-3
+   128-weight lane-slice: shipped 497 (logs/arch_decode_pareto_r59.log:7); MC ~134 fixed + 32 x (5 shared + ~1.4 per column) steps + 8
+   nibble-G lookups and the epilogue per column -> 484 / 610 / 806 for N = 2/4/8 (0.97 / 1.23 / 1.62). The shipped kernel runs ~3.4x
+   slower than its issue bound (440M warp instructions per token vs 3.3 ms), so it is latency-bound and part of the added work may hide
+   (lower ends). Upper ends add smem bandwidth (one LDS clock per column per warp-step, ~2.2 ms at N = 8) and N x 14.9M atomics per step (nspc 2 except attn_k, attn_v).
+
+PREDICTIONS (gemv_mc_test.sh T3, llama-batched-bench npp 128 ntg 128, median of 3, same session)
+P1 B4 MC aggregate tg tok/s:  npl 2: 345 [260, 410]   npl 4: 575 [390, 735]   npl 8: 870 [560, 1230]
+   (= 6.0x / 5.1x / 3.9x the shipped 57.4 / 112.9 / 222.0; vs IQ2_XXS 304.4 / 425.3 / 633.9: 1.13 / 1.35 / 1.37, ranges 0.85-1.35 /
+   0.92-1.73 / 0.88-1.94). npl 1 unchanged (same kernel): 180.8 [175, 186].
+P2 column loop (GGML_VR_MC=2, the shipped ncols=1 GEMV once per column): npl 2: 215 [190, 235], npl 4: 240 [205, 270], npl 8: 255 [220, 290].
+P3 shipped binary in the same session: 57.4 / 112.9 / 222.0 within +-6%.
+P4 T1 (GGML_VR_MCCHECK=1, 252 tensors): masked 256-col-block outputs not_equal 0 and maxabsdiff 0 for N 2..8 and nspc 1, 2; qx bytes 0;
+   full-activation rel <= 1e-4, of the order of the ncols=1 rerun floor (atomic order). P(T1 PASS) = 0.85 (the integer accumulators are
+   equal by construction; the risks are a coding error and the copied qx kernel compiling to different float code).
+P5 T2: ub1 and batched 8-window ppl of the new binary within 0.0005 nats per window of logs/samepath/b4_ub1_8.log and b4_bat_8.log
+   (batched is deterministic: expect 0.0000; ub1 has atomic noise, the fork V5 reran within 0.0005, arch_gemv_b3gap_r59 G2); ub8 and ub2 MC
+   vs the column loop at the same ub within 0.0005 per window. P(T2 PASS) = 0.8.
+P6 wall: T1 1-3 min, T2 9-14 min, T3 3-6 min; whole script 15-25 min of GPU time.
+P(all of P1 inside its ranges) = 0.55. P(MC >= IQ2_XXS at npl 2) = 0.65; at npl 8 = 0.7.
+
+KILL / DECISION RULES (fixed now)
+K1 T1 FAIL -> the new kernel is not the shipped arithmetic: no speed claim, no PAPER line; debug before any other run.
+K2 T2 FAIL on ub1 or batched -> the dispatch changed a shipped path: blocker. FAIL only on MC vs loop with T1 PASS -> find why first.
+K3 MC must beat the column loop at every npl 2-8; if not, ship the loop (simpler, same numbers per column). MC must reach >= 3x the
+   shipped rate at npl 2 (>= 172); below that, W6 is not fixed by this kernel.
+K4 if MC at npl 8 < 0.8x IQ2_XXS (< 507), the paper keeps "B4 is slower than IQ2_XXS with 8 parallel streams" with the numbers.
+K5 any npl outside its P1 range -> explain (one nsys step profile) before quoting the number as understood.

@@ -1,0 +1,89 @@
+PRE-REGISTRATION: end-to-end trellis ablation of B4 on Qwen3-4B at equal bytes (ICML review W4)
+Written 2026-10-18 ~16:00 IST by the R60 solver BEFORE any build or eval of an ablated arm. Nothing below is a result.
+Script: research/detail/abl_trellis.sh (helpers abl_tables.py, abl_build_q.py, abl_qnative.py). Report: research/agents/solver_trellis_ablation_r60.md.
+
+0. QUESTION
+W4 (research/agents/review_icml_final_r59.md:18): "the trellis gives 15% of the gain over IQ2_XXS (0.063 of 0.421 nats)". That number is
+VRi vs the 16-state coset trellis at an OLD recipe (per-tile rate classes, c = sqrt(s), NSEQ 512): tab:ablations 20.0161 vs 18.7848
+(main_icml.tex:409-410, :979-980). No end-to-end test exists at the B4 recipe. This is the indian-math-base section-1 ablation of the Pingala
+trellis object (the 8-state shift-register trellis on the stage-1 MSB that selects the coset of every 4-dim step).
+
+1. ARMS (one GPU build each; every setting not named here = research/detail/cs_qfull.sh, the B4 build)
+ control: B4 itself, native file work/csq/native/4B-csq-vr3 (sha256 in logs/csq/build.log), re-measured in the same script with the same
+   binary and flags (logs/r36_hfj_abl_ctl_b4.log). Original run: logs/r36_hfj_csq_native.log [73]16.6413.
+ vri0 (PRIMARY) = B4 with the trellis memory removed:
+   encoder: r48k 1-state path (vit_k tr=False: one survivor, greedy LDLQ, full search of 256 entries per 4-dim step) instead of the
+     8-state Viterbi (abl_build_q.py, ABL_ENC_TR=0; the path exists in r48k.py:60,83-86, no new encoder code);
+   codebook: the memoryless rate-R code. B4 is rate-off: 212/252 linears class 3 (one stage, 8 bits per 4 weights), 36 class 6, 4 class 4
+     (logs/csq/build.tensors hist). At 8 bits per step the trellis picks 1 of 256 points from the 512-point alphabet A u (A + c),
+     split into 4 subsets by the stage-1 MSB and the coset bit h = state label; the memoryless code at the same rate is one 256-point
+     4-D codebook. We use the paper's own VRi codebook A_vri (research/work/r48k3/tables_vri.pt; trained as a 1-state joint code,
+     r48k_train.py:31-32, c = 0) with its gains G (tables_vri.json);
+   container: unchanged Pingala-8 layout (blob flag tr 1, table code 2, native NS 108 / TRL 2) with c = 0 and B = A (abl_tables.py).
+     The decoded value is A[f1]<<S1 + A[f2]<<S2 + A[f3] + h_t*Mc*c; with c = 0 the last term is 0, so the code is memoryless and the
+     unchanged native path decodes it (kernel vr49.cuh:113-116 and :124-134; CPU ref :252-253; PPC2 prompt path f44.cu:949).
+   identical to B4: column scale CMODE=opt c_j = s_j^(1/6) E_j^(-1/3) (cs_build_q.py:27-33); rate-off class map (one class per tensor,
+     nearest to the byte budget, r52a_k.py:59-63); no salient floor (rate-off sets nsal = 0, cs_build_q.py:172; B4 log "floor 0");
+     DAMP 0.1, ALPHA 1.05, MARGIN 96, R48K shift fix; NSEQ 256 + NEV 32 sequences of models/r35_hcal.txt (deterministic slice, no RNG);
+     fp16 propagation through the UNQUANTIZED layers (Hessians do not depend on the arm); clamp deltas by the same rule (cs_qnative delta);
+     token_embd, output, norms raw from work/r45b/4B-IQ2_XXS-r45b.gguf; VR3 layout; runtime flags and binary.
+   known deviation from the paper's VRi: in the 40 class-4/6 tensors stage 2 reads A_vri, not the Lloyd residual table B_vri (the coset
+     container has one table for all stages, vr49.cuh:252-253; the shipped trellis code also reads A for stage 2, r51_transcode.py:4).
+     Its effect is visible in the per-class proxy split (P2b) and can only make vri0 look worse (bias in favour of the trellis).
+ vrc0 (optional, ARM=vrc0): vri0 with the shipped Pingala-8 table A (c = 0): removes only the coset memory, keeps the trellis-trained table.
+ ctl8 (optional, ARM=ctl8): B4 rebuilt unchanged through the same wrapper (build-noise control).
+
+2. EQUAL BYTES (lemma + gates in the script)
+ Blob length = side_bytes(rows, n) + sum over (row, 256-col block) of 8 NW[c], NW = W1 + W2 + W3 of the block's class
+ (r48k.py:143-147, :149-162 asserts it); no term depends on tr, NS or the tables. The rate-off class depends only on the byte budget
+ 8 (base - MARGIN - side_bytes) (cs_build_q.py:169-171, r52a_k.py:59-63). Native VR3 tensor = 2064 + 64 nt + 256 nt NW[c] B
+ (cs_qnative.py:46): A|B|c|NS|TRL|tag header of fixed size. Only data-dependent bytes: clamp-delta side tensors, 8 B per entry
+ (B4: 561 entries, 4,488 B; logs/cs_qfull.log DELTA).
+ G1: each of the 252 blobs has the size of B4's blob of the same name (work/csq/f1o/blobs_roff); total 972,043,712 B. Hard gate.
+ G2: native total within +/- 64 KB of B4's 1,243,153,792 B (prediction; the script warns above 256 KB).
+
+3. PREDICTIONS
+ P1 Hessian identity: ModelA_Dev (Model A error under the held-out H) of every linear equals B4's within 1e-3 relative or 2e-6 absolute
+    (the print resolution): 0 tensors off. (GPU nondeterminism in the propagation is the only way it can differ.)
+ P2 proxy: rho = sum Dev(vri0) / sum Dev(B4) over 252 linears = 1.107, 90% interval [1.08, 1.14].
+    Basis: source-level SNR VRi 10.10 dB vs coset S=8 10.54 dB (tab:gap, main_icml.tex:386-388): 10^0.044 = 1.107; class-3 D in the
+    table files 0.098360 / 0.088592 = 1.110 (research/work/r48k3/tables_vri.json, tables_vrc.json); old-recipe end-to-end analogue:
+    k2 VRi vs VRC16 sum Dev 6.25 vs 5.61 = 1.114 (research/agents/proxy_vs_dnll.md data table: S -7.22 vs -7.86, sum Dev_IQ2 13.47).
+ P2b per class: class-3 rho in [1.08, 1.14]; class-4/6 rho may be higher (A for stage 2); if it exceeds class 3 by > 0.05 the bias is
+    reported with the result.
+ P3 smoke: running ppl [2] in 19.6-21.5 (B4 19.6539); the script stops above 30.
+ P4 PRIMARY: paired per-window dNLL d = NLL(vri0) - NLL(control), 73 windows: d = +0.045 nats, 90% interval [+0.025, +0.075];
+    ppl 17.41 [17.06, 17.94] if the control repeats 16.64.
+    Derivation: sum Dev(B4) = 13.47 - 8.37 = 5.10 (proxy_vs_dnll.md, B4 row S -8.37); dS = 5.10 x 0.107 = 0.546 [0.41, 0.71].
+    Slope beta (nats per unit sum Dev; all Qwen3-4B, 73 windows): 0.0559 global chord (fit c, proxy_vs_dnll.md Fits); 0.059 the
+    B3+ -> B4 step in the one-class family (0.067 / 1.13); 0.076 k2 VRi vs k3 Pingala-8 (ln(20.0161/19.1036) = 0.0467 over dS 0.61);
+    0.099 k2 VRi vs VRC16 (0.0635 / 0.64); 0.108 free-intercept local slope. The two trellis-factor pairs give 0.042-0.054; the full
+    range 0.056-0.108 times 0.45-0.70 gives 0.025-0.076.
+    Share of B4's gain over IQ2_XXS (paired 0.5418 nats, logs/cs_qfull.log): 8.3% [4.6%, 13.8%].
+    Competing hypotheses (confidence): H1 d in [0.025, 0.075] 55%; H2 d > 0.075 (ppl more sensitive to the trellis than the Dev proxy,
+    as for the state count in tab:ablations: 4 vs 8 states +0.053 nats at +1.3% proxy) 20%; H3 0.01 < d < 0.025 (the B4 front end
+    leaves less for the trellis) 17%; H4 d <= 0.01 or CI covering 0 (decoration) 8%.
+ P5 vrc0 (if run): d(vrc0) >= d(vri0) - 0.01 (70%); untested, no numeric interval; the script checks only d > 0.
+ P6 ctl8 (if run): |d| <= 0.005.
+
+4. DECISION RULE (primary statistic: research/detail/r59_acorr70.py with NW=73, lag-1 corrected 95% CI [lo, hi] on d;
+   r59_paired70.py naive CI and the first-70-window value are reported too)
+ LOAD-BEARING, MAJOR: lo > 0 and d >= 0.081 (>= 15% of 0.5418, the reviewer's own share)
+   -> section 1 passed; the title may keep crediting the trellis; W4 is answered with the measured share.
+ LOAD-BEARING, MINOR: lo > 0 and d < 0.081
+   -> section 1 passed (measurable, at equal bytes). "Trellis-coded" may stay as a description of the format, but the title/abstract must
+      not attribute B4's gain to the trellis: state d and d / 0.5418, and that most of the gain is the front end (column scale, LDLQ,
+      rate-off layout). The predicted outcome (P4) is this case.
+ DECORATION: lo <= 0 and hi < 0.02 -> the trellis is decoration at B4: per section 4 redesign so the object carries the work, or drop it;
+      retitle without "Trellis-Coded"; log in research/negative_results.md.
+ NEGATIVE: hi < 0 -> the memoryless code is better at B4: ship memoryless, retitle, log as a negative result.
+ INCONCLUSIVE: otherwise (lo <= 0 <= hi and hi >= 0.02) -> run a C4 paired test before any title change.
+ Prediction check: d outside [0.025, 0.075] = P4 missed -> find why before the next run (section 4), whatever the decision.
+ Validity (no decision if any fails): G1; native CHECK 252/252 and VERIFY3 PASS; smoke [2] <= 30; P1 with at most 2 tensors off
+ (else: the arm is not on B4's Hessians, report it); control repeat within 0.002 of 16.6413 (else pair against the repeat anyway and
+ say so: same path is the requirement).
+
+5. NOT TESTED HERE
+ State-count dose response at the B4 recipe: NS 4/16/32 run in the Python encoder (r52a_k.py:9) but the transcoder writes NS 108 only and
+ asserts table code 2 (r51_transcode.py:17,33,63) and the loader accepts vr.ns 108 only (llama-model-loader.cpp:1842-1843); NS 1 and 2 are
+ not in r52a_k.MASKS. The old-recipe dose response is tab:ablations (4: 20.14, 8: 19.10, 16: 18.78, VRi 20.02). KLD and C4: not run here.

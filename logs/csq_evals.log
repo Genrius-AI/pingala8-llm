@@ -1,0 +1,23 @@
+2026-10-18 12:47:34 start pid 497510
+2026-10-18 12:54:23 C4 csq [73]24.3639 (B3+ 26.0825, IQ2_KT-b3bytes 28.0002)
+2026-10-18 12:54:24 PAIRED C4 csq vs B3+: dNLL -0.0682 +/- 0.0078 (95%), first better on 73/73 | mean -0.0682 naive +/-0.0078 lag1 -0.08 neff 85.4 corrected +/-0.0072 blockboot(B=5) [-0.0750,-0.0619]
+2026-10-18 12:54:25 PAIRED C4 csq vs IQ2_KT-b3bytes: dNLL -0.1391 +/- 0.0084 (95%), first better on 73/73 | mean -0.1391 naive +/-0.0084 lag1 -0.04 neff 78.6 corrected +/-0.0080 blockboot(B=5) [-0.1477,-0.1335]
+2026-10-18 12:54:26 PAIRED C4 csq vs IQ2_XXS: dNLL -0.4254 +/- 0.0139 (95%), first better on 73/73 | mean -0.4254 naive +/-0.0139 lag1 -0.09 neff 88.2 corrected +/-0.0127 blockboot(B=5) [-0.4401,-0.4132]
+2026-10-18 12:54:33 BASE p1 'Final estimate: PPL = 16.8826' vs r59 'Final estimate: PPL = 16.8826' SAME
+2026-10-18 12:54:38 KLD csq p1 Mean KLD: 0.517089 ± 0.018470
+2026-10-18 12:54:48 BASE p2 'Final estimate: PPL = 10.5712' vs r59 'Final estimate: PPL = 10.5712' SAME
+2026-10-18 12:54:56 KLD csq p2 Mean KLD: 0.630307 ± 0.021728
+2026-10-18 12:55:04 BASE p3 'Final estimate: PPL = 11.2336' vs r59 'Final estimate: PPL = 11.2336' SAME
+2026-10-18 12:55:11 KLD csq p3 Mean KLD: 0.594336 ± 0.021354
+2026-10-18 12:55:18 BASE p4 'Final estimate: PPL = 14.6078' vs r59 'Final estimate: PPL = 14.6078' SAME
+2026-10-18 12:55:26 KLD csq p4 Mean KLD: 0.570636 ± 0.019915
+2026-10-18 12:55:32 BASE p5 'Final estimate: PPL = 17.1042' vs r59 'Final estimate: PPL = 17.1042' SAME
+2026-10-18 12:55:39 KLD csq p5 Mean KLD: 0.593825 ± 0.020519
+2026-10-18 12:55:46 BASE p6 'Final estimate: PPL = 16.9603' vs r59 'Final estimate: PPL = 16.9603' SAME
+2026-10-18 12:55:51 KLD csq p6 Mean KLD: 0.605137 ± 0.020741
+KLD72 csq 0.5852 +- 0.0084
+KLD72 b3p 0.7689 +- 0.0097
+KLD72 ktm 0.8759 +- 0.0097
+KLD72 mB 0.6946 +- 0.0093
+KLD72 xxs 1.3968 +- 0.0116
+2026-10-18 12:55:53 end

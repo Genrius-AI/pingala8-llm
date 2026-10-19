@@ -1,0 +1,18 @@
+2026-10-17 12:48:35 start pid 7804; waiting for flat B2 ppl (HFJ r52a_flat count > 0) or flat session 3772 gone
+2026-10-17 12:49:38 start pid 12774; waiting for flat B2 ppl (HFJ r52a_flat count > 0) or flat session 3772 gone
+2026-10-17 13:30:02 flat session ended: HFJ r52a_flat rc=0 last [73]18.5738 computing over 73 chunks, n_ctx=4096 
+2026-10-17 13:30:10 BURST r59_base_p1 rc=0 Final estimate: PPL = 16.8826
+2026-10-17 13:30:18 BURST r59_base_p2 rc=0 Final estimate: PPL = 10.5712
+2026-10-17 13:30:27 BURST r59_base_p3 rc=0 Final estimate: PPL = 11.2336
+2026-10-17 13:30:40 BURST r59_base_p4 rc=0 Final estimate: PPL = 14.6078
+2026-10-17 13:30:49 BURST r59_base_p5 rc=0 Final estimate: PPL = 17.1042
+2026-10-17 13:31:00 BURST r59_base_p6 rc=0 Final estimate: PPL = 16.9603
+2026-10-17 13:39:06 BURST r59_c4_q8 rc=0 
+2026-10-17 13:39:14 BURST r57_base rc=0 Final estimate: PPL = 16.8826
+2026-10-17 13:39:33 BURST r59a_base rc=0 Final estimate: PPL = 16.8826
+2026-10-17 13:40:41 EXCL BENCH rc=0 EXCL pp512 mB/IQ2_XXS median 0.748 rounds [0.748, 0.677, 0.811] tok/s mB [5046.6, 4796.2, 4851.7] xxs [6748.6, 7083.2, 5985.7]|EXCL pp512 ikKTeq/IQ2_XXS median 0.948 rounds [0.915, 0.948, 0.997] tok/s ikKTeq [6175.4, 6712.6, 5967.9] xxs [6748.6, 7083.2, 5985.7]|EXCL tg128 mB/IQ2_XXS median 0.967 rou
+2026-10-17 13:40:42 BURST done; C: free 19 GB
+2026-10-17 13:40:47 Llama build started, session 39793 (first in kill_order)
+2026-10-17 13:48:44 l8_iq2: HFJ l8_iq2 rc=0 last [70]12.3500 computing over 70 chunks, n_ctx=4096 
+2026-10-17 14:26:53 MemoryHigh 8G -> 10.5G (user-approved): slice at 9.2 GB was throttling B3 ppl and the Llama build (__mem_cgroup_handle_over_high)
+2026-10-17 14:38:48 STOPPED all job sessions at user request (B3 done; resume: alloc V1+V3 ppl, KLD-72+C4, Llama build from checkpoint, KT size-match)

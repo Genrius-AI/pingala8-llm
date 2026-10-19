@@ -1,0 +1,35 @@
+PREREG 2026-10-19 01:55 IST (written before any run; script research/detail/w1_unpatched.sh). Advisor kill point K2 (research/agents/review_r62_advice.md, W1).
+Question: are the garbage WikiText-2 perplexities of the stock IQ2_S / IQ2_M / IQ3_XXS files of Qwen3-4B (3388718.3586 / 2450009.2697 / 2977812.0696,
+research/agents/evals_r52_paper.md:16,17,19) caused by our patch, or does an unpatched mainline llama.cpp at the same commit (7ac59a6) give them too?
+Arms: fresh `git archive` of 7ac59a6 into ext/llama_unpatched/src, built with the stock build's toolchain (conda GCC 15.2, nvcc 13.2, sm_120; read from
+llama.cpp/build-cuda/CMakeCache.txt). Files: models/qwen3-4B-IQ2_M.gguf, models/qwen3-4B-IQ3_XXS.gguf (Sep 27 stock files), IQ2_S re-made by the
+unpatched llama-quantize with models/qwen3-4B.imatrix from models/qwen3-4B-f16.gguf (expected 1,417,301,632 B, logs/pe52/quant_drive.log:4), control
+work/r45b/4B-IQ2_XXS-r45b.gguf. Protocol: research/detail/r36_hfj.sh (73 windows, -c 2049 --ppl-stride 4095), HFJ_BIN = the unpatched binary.
+
+Evidence before the run (read-only checks, 01:30-01:50):
+- llama.cpp/ (the "stock" tree behind llama.cpp/build-cuda) is clean at 7ac59a6: `git status --porcelain` is empty and no source file is newer than
+  build-cuda/bin/libggml-cuda.so.0.25.3 (2026-09-27 13:23). The patched tree is a separate copy (research/kernels/llama_f44, created 2026-10-04).
+- The garbage rows were measured with r36_hfj.sh's default binary llama.cpp/build-cuda (research/detail/pe52_gpu1.sh:6, pe52_gpu2.sh:19), i.e. with
+  the stock build, not the patch. research/detail/r16_size_ladder.sh:2 (2026-09-28) already says "the CUDA build mis-computes IQ3_XXS".
+- The three garbage files share IQ3_S tensors (IQ2_M: 176 IQ2_S + 40 IQ3_S; IQ3_XXS: 72 IQ2_S + 36 IQ3_S + 108 IQ3_XXS; IQ2_S ftype: IQ2_XS + IQ3_S per
+  evals_r52_paper.md:34); the sane IQ2_XXS file has none (gguf-py tensor census, 01:40). Hypothesis only.
+
+PREDICTION:
+- Control IQ2_XXS reproduces 28.6083 within 0.1% (90%).
+- All three types garbage on the unpatched build (85%); in that case each value is within 1% of the stock-build value above (70%).
+  All three sane (10%): then IQ2_S in [16.3, 19.0], IQ2_M in [15.3, 18.0], IQ3_XXS in [13.5, 15.5] (interpolated from the stock curve, tab:stock:
+  IQ2_XS 19.0193 at 1.354 GB, Q2_K 15.0133 at 1.670 GB; guess, not a derivation). Mixed (5%).
+- If garbage: D2 (-ub 8, MMVQ path) sane and D3 (test-backend-ops MUL_MAT) FAIL for iq3_s or iq2_s (50%); D1 CPU backend sane (95%).
+
+RULE (decided now):
+- Control: |IQ2_XXS / 28.6083 - 1| <= 0.001, else "K2: INVALID" and nothing below is used.
+- Per type, 73-window ppl: SANE < 100, GARBAGE > 1000, otherwise AMBIGUOUS; an AMBIGUOUS type is SANE if its GPU window-2 running ppl is within 2% of
+  the CPU-backend value of the same binary (D1), else GARBAGE.
+- All three SANE -> "K2: mainline sane -> our patch breaks these types": our builds (stock dir and fork) are not trustworthy for these types; fix
+  the build/patch first; the paper reports these three rows from the unpatched binary.
+- All three GARBAGE -> "K2: mainline also garbage -> upstream issue": the paper sentence "we did not test them on an unpatched mainline build"
+  becomes "an unpatched build of the same commit and toolchain gives the same failure"; a toolchain cause (nvcc 13.2 with cuBLAS 12) cannot be
+  separated here and is named as such; D1-D3 go into an upstream issue.
+- Mixed -> per-type statement with the same two sentences per type.
+No other build flag, file or text is tried after seeing results; a second toolchain, if ever installed, is a new prereg.
+ADDENDUM (2026-10-19 02:20 IST, lead, before any run): test-backend-ops (D3) is no longer built or run by default (cut list r63: it locates the bug only, not part of the K2 rule); TBO=1 restores it. Rules unchanged.

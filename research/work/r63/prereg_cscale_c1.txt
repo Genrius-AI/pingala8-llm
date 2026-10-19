@@ -1,0 +1,24 @@
+# prereg_cscale_c1.txt: B4 with NO column prescale (c = 1) vs B4 (c ~ s^(1/6) E^(-1/3)) on Qwen3-4B at equal bytes. Written 2026-10-19 01:47 IST,
+# BEFORE any c = 1 build or evaluation exists. Driver research/detail/cscale_sweep_v2.sh (arm c1 = cs_build_p.py CMODE=pow CSA=0 CSB=0; every
+# other setting is B4's, as in research/work/r60/prereg_cscale_sweep.txt). Replaces the 5-arm alpha sweep (advisor research/agents/review_r63_advice.md
+# item 5: predicted alpha-to-alpha differences ~0.003 nats are below the paired resolution ~0.007). Plain ASCII.
+#
+# Decision fed: attribution of B4's paired gain over B3+ (WT2 -0.066 class). Is it the derived scale, or removing B3+'s sqrt(s) prescale?
+#
+# Evidence seen before writing (one tensor, Qwen3-4B blk.16.attn_q, logs/r62_scale_law_one_awq.log, held-out C4 Hessian Deval):
+#   GPTQ-3: c=1 3.675e-3, alpha 1/3 3.722e-3 (c=1 is 1.3% lower), B3+ prescale 5.504e-3 (1.48x alpha 1/3). GPTQ-2: c=1 1.2455e-2, alpha 1/3 1.2696e-2.
+#   The 17-tensor proxy (logs/r62_scale_law_full.log) was running and NOT seen when this was written.
+# Bridge (my estimate): B3+ -> B4 output error 0.73x over 252 linears <-> -0.067 nats WT2, i.e. ~0.21 nats per unit ln(sum Dev).
+#
+# Prediction (c1 - B4, paired per window, lag-1 corrected 95% CI; "my guess", 80% intervals):
+#   WT2 (73 windows, r36_hfj.sh frozen protocol): -0.003 [-0.015, +0.010]
+#   C4  (73 windows, c4_val_part.raw, held-out): -0.003 [-0.015, +0.010]
+#   layers 0-1 geomean Dev/ModelA ratio to B4: 0.99 [0.85, 1.20]; summed-Dev ratio to B4: 0.99 [0.95, 1.05]
+#
+# Rules (fixed now; applied by the script's ATTRIBUTION line, both test sets required):
+#   A1 TIE: |d| < 0.01 on WT2 AND C4 -> B4's gain over B3+ is attributed to removing B3+'s prescale; the scale derivation moves to an appendix,
+#      "cube-root"/"law" leaves title, abstract and contributions.
+#   A2 B4 AHEAD: d > +0.02 on WT2 AND C4 -> keep the scale as a credited engineering choice (still not a "law").
+#   A3 c=1 BETTER: both CIs below 0 -> report c=1 as a post hoc row; drop the scale from the contributions; shipped files unchanged.
+#   A4 otherwise: report the numbers; the scale is not separated from c=1.
+#   A single run; no reruns or re-selection. Build noise reference: logs/cs_sweep/ctl if it exists, else the script's B4 determinism smoke.

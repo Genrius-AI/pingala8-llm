@@ -1,0 +1,9 @@
+BENCH csq r1 rc=0
+BENCH b3p r1 rc=0
+BENCH csq r2 rc=0
+BENCH b3p r2 rc=0
+BENCH csq r3 rc=0
+BENCH b3p r3 rc=0
+SPEED pp512 csq 5317.3 b3p 5272.3 ratio 1.009 (median of 3 rounds)
+SPEED tg128 csq 195.6 b3p 194.3 ratio 1.007 (median of 3 rounds)
+end

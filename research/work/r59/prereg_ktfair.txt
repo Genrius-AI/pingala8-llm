@@ -1,0 +1,42 @@
+# prereg_ktfair.txt: pre-registered predictions for three fairer ik IQ2_KT recipes at <= B3's 1,245,915,872 B (Qwen3-4B).
+# Written 2026-10-18 00:58 IST, BEFORE any of the three files was quantized or evaluated. Plain ASCII. Runner: research/detail/ktfair_run.sh
+RECIPES_SHA256=0c33acac44000c90af0164ee3a03567409fdbf7c43f8c254fcf333ec6a8d36e4
+# The runner refuses to start unless sha256(research/work/r59/ktfair_recipes.tsv) equals the line above; per recipe it also checks sha256(CQ).
+# TSV columns: label, exact file bytes, sha256(CQ), CQ. Command per recipe (QT=6 threads):
+#   ext/ik_llama.cpp/build-cuda/bin/llama-quantize --imatrix work/ktfair/qwen3-4B.imatrix.dat --custom-q '<CQ>' models/qwen3-4B-f16.gguf work/ktfair/qwen3-4B-IQ2_KT-<R>-ik.gguf IQ2_KT 6
+#   imatrix = models/qwen3-4B.imatrix converted with ext/ik_llama.cpp/convert_imatrix_gguf_to_dat.py, as r59_ktm.sh did (calib text models/calib_c4.txt).
+# Bytes: research/detail/ktfair_bytes.py = pad32(f16 header + 4 imatrix KVs) + sum pad32(ggml_row_size x rows), ik's own ggml_row_size via ctypes.
+#   CHECK (logs: this report): calc - measured = 0 B for ik default 1,300,786,816; r56 KT-eq 1,241,589,376; r59 KT-b3match 1,245,914,752.
+R1 bytes=1245675136 margin=+240736 cq_sha256=0973feb9e927437c83c0fe9f7d5e25a937fdb3cd98eaba53ed7c51890e879662
+#   ik-heuristic: ik's use_more_bits(i,36) (llama-quantize.cpp:353) picks what to drop: on its 18 rejected layers attn_output->iq2_kt, attn_v->iq3_k,
+#   ffn_down 10,11->iq2_kt; then attn_output on 18,15,21,12,24,9 (mid-depth first); greedy re-promote (attn_v 4 back to iq4_k).
+R2 bytes=1245705856 margin=+210016 cq_sha256=a37b4d75af25ca866df413a8c96666fd99d3e314dec6e0969fa7e8dd7730ab2c
+#   measured knapsack: r59_ktm_dp.py's DP (same items, options, 'rel' normalisation, attn_v gain 4*S_o/Z) with MEASURED per-type error
+#   (research/work/r59/ktfair_err.json: ik's own quantizer via libggml, 76/76 tensors bit-identical to llama-quantize's bytes in work/r59kt/ktm_keep.gguf).
+R3 bytes=1245861504 margin=+54368 cq_sha256=6c3fb9752f7cf1612d1d693d6b3609f7c379eff57de1da857688e37311e34ebb
+#   B3 shape: all linears iq2_kt, attn_v iq4_k x36 (B3 class 6), ffn_down of the true first four layers iq3_k (B3 class 4 on 0-3), token_embd ik iq4_k;
+#   greedy fill: ffn_down 4 iq3_k, attn_output 0 iq3_k, attn_k 0,1 iq3_k.
+# Provenance sha256 (first 16 hex): ktfair_err.json a6a1c563da522393, ktfair_err_extra.json f0ef5cb32c028b14, ktfair_design.json 2f45bd55ef1c01e9,
+#   ktfair_bytes.py 2493be5453b96490, ktfair_err.py 92a7fcd8a3688166, ktfair_design.py 9f81a42f3413568e.
+# References (WikiText-2 r36_hfj, 73 windows ctx 4096): B3 18.0660 (logs/r36_hfj_r59_b3_native.log), r59 KT-b3match 18.6481 (logs/r36_hfj_r59_ktm.log),
+#   r56 KT-eq 18.6165 (logs/r56_kteq_ppl.log), ik default 17.2750 at 1,300,786,816 B (logs/r54kt_ppl_IQ2_KT.log). C4: B3 26.7548 (logs/r59/c4_b2.log),
+#   r59 KT-b3match 28.0002 (logs/r59/c4_ktm.log).
+# Method (CALC, research/work/r59/ktfair_design.json): ln ppl = ln 17.2750 + b*P, P = measured 'rel' penalty vs ik default, b = 8.375 fit on r56 alone.
+#   Held-out r59: predicted 18.698 vs actual 18.6481, right order (the old 2^-2bpw proxy ranked r59 ahead of r56: wrong). The proxy's predicted
+#   r59-r56 gap is 0.00439 nats vs 0.00170 actual, so proxy log-differences around r56 are shrunk by 0.387. Raw -> shrunk: R1 21.865 -> 19.81,
+#   R2 18.312 -> 18.50, R3 19.595 -> 18.99 (old proxy: R3 14.33).
+#   R3 is a judgment: both proxies normalise by residual energy, which jumps 177x between layer 6 (321) and layer 7 (56,810), and R3 moves bytes across
+#   that cliff (attn_output 1-6 down, ffn_down 2-4 up), so its median sits between the measured proxy (18.99) and B3's ablation evidence (flat beat proxy allocations).
+PRED_WT2 R1 19.82 [18.55, 21.90]
+PRED_WT2 R2 18.50 [18.30, 18.66]
+PRED_WT2 R3 18.60 [18.00, 19.60]
+PRED_C4  R1 29.76 [27.85, 32.88]
+PRED_C4  R2 27.78 [27.48, 28.02]
+PRED_C4  R3 27.93 [27.03, 29.43]
+# (C4 = r59's C4 x WT2 ratio vs r59, i.e. log-ratios transfer 1:1, untested.) Intervals are 80%.
+PRED_PAIRED_WT2 dNLL(B3 - R): R1 -0.093, R2 -0.024, R3 -0.029 (negative = B3 better). P(some R beats B3 with 95% CI excluding 0) = 0.10.
+PRED_SECONDARY R2 better than r59 KT-b3match on WT2 paired, CI < 0: P = 0.55.
+DECISION RULE (fixed now): select the best R by WT2 paired dNLL vs B3; confirm on C4 (selection made on WT2 only, so C4 is held out for the selected R).
+  a) best R's WT2 and C4 paired CIs vs B3 both exclude 0 in B3's favour -> "B3 beats a perplexity-tuned IQ2_KT at equal bytes" stands; quote the best R's margin.
+  b) either CI covers 0 -> the clause becomes "ties the best of three tuned IQ2_KT recipes at equal bytes".
+  c) best R beats B3 with both CIs excluding 0 -> IQ2_KT wins at equal bytes; the B3-over-IQ2_KT claim is withdrawn.

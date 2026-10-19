@@ -1,0 +1,12 @@
+START b3 17:20:47 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+START b3 17:57:27 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+RES b3 WG 17:58:18 Final Winogrande score(1267 tasks): 60.1421 +/- 1.3760
+START b3 18:00:25 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+RES b3 WG 18:07:07 Final Winogrande score(1267 tasks): 60.1421 +/- 1.3760
+RES b3 arc-easy 18:15:57 Final result: 53.3333 +/- 2.0914
+RES b3 arc-challenge 18:39:51 Final result: 37.7926 +/- 2.8088
+START b3 18:41:07 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+START b3 18:43:00 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+START b3 18:43:34 bin research/kernels/llama_f44/build/bin env 'env GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2' -m work/r59b3/native/4B-b3-vrnative-00001-of-00002.gguf
+RES b3 mmluF 19:04:27 Final result: 32.7304 +/- 0.3960
+DONE b3 19:04:27

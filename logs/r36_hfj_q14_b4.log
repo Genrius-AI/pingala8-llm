@@ -1,0 +1,16 @@
+0.00.403.796 I Will perform strided perplexity calculation -> adjusting context size from 2049 to 4096
+0.01.137.245 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.707.284 I cmn          init: llama threadpool init, n_threads = 20
+VR native: real tables A/B/c (c = ebf9fcfe) and Hadamard signs loaded from blk.0.attn_q.weight; NS 108 (Pingala-8), TRL 2; no random fill
+VRPREP VRii-C tensors 280 bpw_used 2.11537 tiles 1612800 class_share c0:0.0000 c1:0.0000 c2:0.0000 c3:0.9504 c4:0.0337 c5:0.0000 c6:0.0159 c7:0.0000
+VRii-C batch path: native MMQ loader, loader mode 2 (re-layout pre-pass per matmul) | R51 decq8 0 ws 2 (NJ 2)
+R51 PPC: batch path = decode once per matmul to Q8_0 (original domain) + stock Q8_0 MMQ + f32 delta
+VR: VRii-C (coset) GEMV hook active (NATIVE file codes) V 5 NWP 8 NS 108
+0.05.958.997 I 
+0.05.959.066 I system_info: n_threads = 20 (n_threads_batch = 20) / 20 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX_VNNI = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.05.959.069 I perplexity_v2: tokenizing the input ..
+0.06.287.962 I perplexity_v2: have 299078 tokens. Calculation chunk = 4096
+0.06.287.975 I perplexity_v2: computing over 73 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.14.330.757 I perplexity_v2: 8.04 seconds per pass - ETA 9.78 minutes
+[1]9.4898,[2]11.2233,[3]9.7321,[4]8.5963,[5]8.9341,[6]9.0581,[7]9.2638,[8]9.4399,[9]9.6867,[10]9.4491,[11]9.5779,[12]9.6268,[13]9.7743,[14]10.0423,[15]10.0387,[16]9.8812,[17]9.7055,[18]9.5985,[19]9.3204,[20]9.0630,[21]8.9782,[22]9.2061,[23]9.3844,[24]9.4661,[25]9.4883,[26]9.4847,[27]9.3975,[28]9.2881,[29]9.1180,[30]9.0833,[31]9.1425,[32]9.2583,[33]9.2082,[34]9.2182,[35]9.1937,[36]9.1632,[37]9.2410,[38]9.2328,[39]9.2372,[40]9.2598,[41]9.2771,[42]9.1967,[43]9.1756,[44]9.1466,[45]9.1736,[46]9.2816,[47]9.4012,[48]9.4961,[49]9.5586,[50]9.5765,[51]9.5776,[52]9.5911,[53]9.6206,[54]9.6479,[55]9.6364,[56]9.6174,[57]9.5886,[58]9.6215,[59]9.6487,[60]9.6310,[61]9.6293,[62]9.5846,[63]9.5930,[64]9.5848,[65]9.5556,[66]9.5522,[67]9.5282,[68]9.5532,[69]9.4894,[70]9.4816,[71]9.5254,[72]9.5443,[73]9.5684,
+
