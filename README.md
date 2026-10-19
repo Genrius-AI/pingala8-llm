@@ -3,7 +3,7 @@
 Code, llama.cpp patches, build scripts and logs for the paper
 
 **Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp**
-Harshit Goyal, Genrius AI (harshit@genrius.in). Preprint, October 2026, version 2.4.
+Harshit Goyal, Genrius AI (harshit@genrius.in). Preprint, October 2026, version 2.4, DOI [10.5281/zenodo.23481757](https://doi.org/10.5281/zenodo.23481757).
 
 ## Summary
 
@@ -104,8 +104,10 @@ No model weights, GGUF files or datasets are included. Scripts are run from the 
   author       = {Goyal, Harshit},
   year         = {2026},
   month        = oct,
-  howpublished = {arXiv preprint (identifier to be added)},
-  note         = {Version 2.4. Code: https://github.com/Genrius-AI/pingala8-llm}
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.23481757},
+  url          = {https://doi.org/10.5281/zenodo.23481757},
+  note         = {Preprint, version 2.4. Code: https://github.com/Genrius-AI/pingala8-llm}
 }
 ```
 
