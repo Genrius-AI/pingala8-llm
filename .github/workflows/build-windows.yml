@@ -1,0 +1,37 @@
+name: build-windows-cuda
+on: workflow_dispatch
+jobs:
+  windows-cuda:
+    runs-on: windows-2022
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Jimver/cuda-toolkit@v0.2.24
+        with:
+          cuda: '12.8.1'
+          method: 'network'
+          sub-packages: '["nvcc", "cudart", "cublas", "cublas_dev", "thrust", "visual_studio_integration"]'
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Patch and build llama.cpp 7ac59a6
+        shell: bash
+        run: |
+          git clone -q https://github.com/ggml-org/llama.cpp src
+          cd src && git checkout -q 7ac59a6e3ad851cd41af00f678effab0598ba9a8
+          git apply ../patches/llama_cuda_vs_7ac59a6.patch
+          cmake -S . -B build -G Ninja -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80;86;89;120" \
+            -DGGML_NATIVE=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DLLAMA_BUILD_TESTS=OFF \
+            -DLLAMA_OPENSSL=OFF -DLLAMA_CURL=OFF
+          cmake --build build -j4 --target llama-cli llama-server llama-perplexity llama-bench
+      - name: Package
+        shell: bash
+        run: |
+          mkdir -p pkg
+          cp src/build/bin/*.exe pkg/
+          cp "$CUDA_PATH"/bin/cudart64_*.dll "$CUDA_PATH"/bin/cublas64_*.dll "$CUDA_PATH"/bin/cublasLt64_*.dll pkg/
+          cp oneclick/windows/*.bat oneclick/README.txt LICENSE NOTICE pkg/
+          cp third_party/llama.cpp-LICENSE pkg/
+          ls -la pkg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pingala8-windows-cuda12
+          path: pkg
