@@ -5,6 +5,8 @@ Code, llama.cpp patches, build scripts and logs for the paper
 **Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp**
 Harshit Goyal, Genrius AI (harshit@genrius.in). Preprint, October 2026, version 2.4, DOI [10.5281/zenodo.23481757](https://doi.org/10.5281/zenodo.23481757).
 
+**Try it in one click (Windows, NVIDIA RTX 30/40/50):** download `pingala8-windows-cuda12.zip` from the [v2.4-oneclick release](https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick), unzip it and double-click `run_qwen3_4b.bat`. The model downloads once, then a chat page opens in your browser.
+
 ## Summary
 
 Pingala-8 stores Ungerboeck's 8-state set-partitioned trellis code over 4-weight symbols in a GGUF file, decoded by
