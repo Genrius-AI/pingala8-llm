@@ -18,7 +18,7 @@ jobs:
           git clone -q https://github.com/ggml-org/llama.cpp src
           cd src && git checkout -q 7ac59a6e3ad851cd41af00f678effab0598ba9a8
           git apply ../patches/llama_cuda_vs_7ac59a6.patch
-          cmake -S . -B build -G Ninja -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80;86;89;120" \
+          cmake -S . -B build -G Ninja -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="86;89;120" \
             -DGGML_NATIVE=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DLLAMA_BUILD_TESTS=OFF \
             -DLLAMA_OPENSSL=OFF -DLLAMA_CURL=OFF
           cmake --build build -j4 --target llama-cli llama-server llama-perplexity llama-bench
