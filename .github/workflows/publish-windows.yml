@@ -1,0 +1,25 @@
+name: publish-windows-release
+on:
+  workflow_dispatch:
+    inputs:
+      run_id: {description: 'build-windows-cuda run id', required: true}
+      tag: {description: 'release tag', required: true}
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pingala8-windows-cuda12
+          path: pingala8-windows-cuda12
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Zip and attach
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          zip -qr pingala8-windows-cuda12.zip pingala8-windows-cuda12
+          gh release upload "${{ inputs.tag }}" pingala8-windows-cuda12.zip --clobber -R "${{ github.repository }}"
