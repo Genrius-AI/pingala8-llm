@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How we fit Qwen3-4B into 1.24 GB without retraining | Pingala-8</title>
+<meta name="description" content="Genrius AI's Pingala-8 is a 2-bit format for llama.cpp. What we built, why 2-bit matters, the measured numbers and their scope, what we lose, and how to try it.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/article.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How we fit Qwen3-4B into 1.24 GB without retraining">
+<meta property="og:description" content="Pingala-8: 85% smaller, +21% quiz score vs llama.cpp's IQ2_XXS at the same size, and the places where it loses. With the numbers, their scope and the paper.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/article.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Research">
+<meta property="article:tag" content="LLM quantization">
+<meta property="article:tag" content="llama.cpp">
+<meta property="article:tag" content="2-bit">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How we fit Qwen3-4B into 1.24 GB without retraining">
+<meta name="twitter:description" content="Pingala-8: 85% smaller, +21% quiz score vs llama.cpp's IQ2_XXS at the same size, and where it loses.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": ["https://github.com/Genrius-AI", "https://huggingface.co/Genrius-AI"]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/article.html#article",
+      "headline": "How we fit Qwen3-4B into 1.24 GB without retraining",
+      "description": "Genrius AI's Pingala-8 is a 2-bit format for llama.cpp. What we built, why 2-bit matters, the measured numbers and their scope, what we lose, and how to try it.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/article.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/article.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg",
+        "https://genrius-ai.github.io/pingala8-llm/media/ppl-vs-size.png"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {"@id": "https://genrius-ai.github.io/pingala8-llm/#org"},
+      "publisher": {"@id": "https://genrius-ai.github.io/pingala8-llm/#org"},
+      "about": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "author": {"@type": "Person", "name": "Harshit Goyal"},
+        "publisher": {"@type": "Organization", "name": "Zenodo"},
+        "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "10.5281/zenodo.23481757"},
+        "url": "https://doi.org/10.5281/zenodo.23481757",
+        "datePublished": "2026-10-19"
+      },
+      "keywords": "LLM quantization, 2-bit, trellis-coded quantization, llama.cpp, GGUF, Qwen3-4B, Llama-3.1-8B"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results">Results</a>
+      <a href="./#compare" class="hide-sm">Compare</a>
+      <a href="./#try">Try it</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./">Pingala-8 home</a>
+  <h1>How we fit Qwen3-4B into 1.24 GB without retraining</h1>
+  <p class="byline">Genrius AI. <time datetime="2026-10-24">October 24, 2026</time>. About 8 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Pingala-8 shrinks Qwen3-4B from 8.05 GB to 1.24 GB (85% smaller) and Llama-3.1-8B from 16.08 GB to 2.39 GB.</li>
+      <li>At the same file size as llama.cpp's IQ2_XXS, it averages 50.8 against 41.9 on five quizzes (+21%) and has WikiText-2 perplexity 16.64 against 28.61 (lower is better).</li>
+      <li>It loses to IQ2_KT on Qwen3-14B, reads prompts slower, and needs our patched llama.cpp on an NVIDIA GPU.</li>
+      <li>Code, logs and a one-click Windows build are open. Paper: <a href="https://doi.org/10.5281/zenodo.23481757">doi:10.5281/zenodo.23481757</a>.</li>
+    </ul>
+  </div>
+
+  <h2>What we built</h2>
+  <p>Language models are big files. Qwen3-4B, a capable small model from the Qwen team, is 8.05 GB at the 16-bit precision it ships in. On a laptop, that file has to share the graphics card's memory with everything else the machine is doing.</p>
+  <p>Pingala-8 is a way to store the same model in 1.24 GB. We do not retrain the model or change what it learned. We take the original weights, the billions of numbers that make up the model, and write each one with about 2 bits instead of 16. A patch to llama.cpp, the open-source program many people use to run models on their own computers, reads the new file and runs it on an NVIDIA GPU.</p>
+  <p>The hard part of 2-bit storage is keeping the model useful. With 2 bits, each weight can take only a handful of values, and the rounding errors add up across the whole network. llama.cpp already has 2-bit formats. The smallest common one, IQ2_XXS, makes a file of almost exactly the same size as ours. So our goal was easy to state and hard to reach: at that same size, lose less of the model.</p>
+
+  <h2>Why 2-bit matters</h2>
+  <p>For local AI, memory is the limit. A model runs at full speed only when its weights fit in GPU memory, with room left for the conversation. Smaller files help in three ways.</p>
+  <ul>
+    <li><strong>More models fit.</strong> A 1.24 GB file fits where an 8 GB file never could, and leaves more room for long chats.</li>
+    <li><strong>Replies come faster.</strong> Writing text one token at a time is mostly a matter of reading weights from memory, so fewer bytes means more tokens per second. On our test laptop, Pingala-8 Qwen3-4B writes about 216 tokens per second, 39% faster than the common 4-bit Q4_K_M file, which is twice its size.</li>
+    <li><strong>Downloads and disks shrink.</strong> The Qwen3-4B model is a 1.24 GB download.</li>
+  </ul>
+  <p>The catch has always been quality. Push a model to 2 bits with a simple method and it starts to make mistakes the original would not. That gap is what we worked on.</p>
+
+  <h2>The numbers, and what they cover</h2>
+  <p>All numbers are for Qwen3-4B unless we say otherwise, measured on one GPU, an RTX 5070 Ti Laptop. The full tables, the logs behind every number and the commands to rerun them are in the <a href="https://github.com/Genrius-AI/pingala8-llm">repository</a> and the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>.</p>
+
+  <h3>Size</h3>
+  <p>Qwen3-4B goes from 8.05 GB to 1.24 GB, 85% smaller (6.5x). Llama-3.1-8B goes from 16.08 GB to 2.39 GB, also 85% smaller.</p>
+
+  <h3>Quiz scores</h3>
+  <p>We ran five standard multiple-choice tests of common sense, reading and school knowledge, with no examples given to the model. All three 2-bit files below are about 1.24 GB.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Task</th><th class="num">8-bit original</th><th class="num">IQ2_XXS</th><th class="num">IQ2_KT</th><th class="num">Pingala-8</th></tr></thead>
+      <tbody>
+        <tr><td>ARC-Easy</td><td class="num">66.1</td><td class="num">43.9</td><td class="num">53.3</td><td class="num"><strong>60.9</strong></td></tr>
+        <tr><td>ARC-Challenge</td><td class="num">45.2</td><td class="num">29.1</td><td class="num">35.1</td><td class="num"><strong>37.8</strong></td></tr>
+        <tr><td>HellaSwag</td><td class="num">65.8</td><td class="num">47.8</td><td class="num">53.3</td><td class="num"><strong>57.7</strong></td></tr>
+        <tr><td>WinoGrande</td><td class="num">65.5</td><td class="num">57.5</td><td class="num">57.9</td><td class="num"><strong>63.8</strong></td></tr>
+        <tr><td>MMLU</td><td class="num">38.7</td><td class="num">31.1</td><td class="num">32.9</td><td class="num"><strong>34.0</strong></td></tr>
+        <tr class="ours"><td><strong>Average</strong></td><td class="num">56.3</td><td class="num">41.9</td><td class="num">46.5</td><td class="num"><strong>50.8</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The average is 21% above IQ2_XXS and keeps 90% of the 8-bit score. Per task, the gain over IQ2_XXS is +39% on ARC-Easy, +30% on ARC-Challenge, +21% on HellaSwag, +11% on WinoGrande and +9% on MMLU.</p>
+
+  <h3>Perplexity</h3>
+  <p>Perplexity measures how well a model predicts real text; lower is better. On WikiText-2 at context 4096, the original 16-bit Qwen3-4B scores 12.46. Pingala-8 scores 16.64, against 18.15 for the strongest IQ2_KT file of the same size we built and 28.61 for IQ2_XXS.</p>
+  <figure>
+    <div class="chart">
+      <img src="media/ppl-vs-size.png" width="1485" height="467" loading="lazy" decoding="async"
+           alt="Two scatter plots of WikiText-2 perplexity against file size. Qwen3-4B: Pingala-8 B4 16.64, best IQ2_KT 18.15, IQ2_XXS 28.61, fp16 12.46. Llama-3.1-8B: Pingala-8 B4 9.14, IQ2_KT 10.04, IQ2_XXS 12.35.">
+    </div>
+    <span class="chart-hint">Swipe the chart sideways to see both panels.</span>
+    <figcaption>WikiText-2 perplexity against file size. B4 is the released Pingala-8 file. Left: Qwen3-4B (tuned). Right: Llama-3.1-8B, prediction written down before the run.</figcaption>
+  </figure>
+  <p>On Llama-3.1-8B we wrote our prediction down before running the test. Pingala-8 scores 9.14 against 10.04 for IQ2_KT and 12.35 for IQ2_XXS. With a start token at the beginning of every test window, it is 8.44 against 9.36 for IQ2_KT.</p>
+
+  <h3>Speed</h3>
+  <p>When writing a reply for one user, Pingala-8 runs at 1.10x the speed of IQ2_XXS, about 216 tokens per second, and 39% faster than Q4_K_M at half its size. Reading a prompt is slower: 0.74x IQ2_XXS. We come back to that below.</p>
+
+  <h3>Other formats</h3>
+  <p>Two outside formats score better on perplexity, and we want to be clear about both. GSQ Q2_K from ISTA-DASLab scores 14.37, but its file is 1.67 GB, 34% bigger than ours. Ternary Bonsai 4B from prism-ml scores 11.59 at 1.07 GB, which is better and smaller. Bonsai is a retrained model rather than a compression of Qwen3-4B; it even beats the original Qwen3-4B, and making it took a training run, and running it needs their fork.</p>
+  <p>So if you only want a strong small model in this class, a retrained model like Bonsai is the better choice. Pingala-8 is for compressing the models nobody has retrained for you. Among the formats we tested, it gives the lowest perplexity for the original Qwen3-4B at about 1.24 GB without retraining, and building a file takes a few hours on one GPU.</p>
+
+  <h2>What we lose</h2>
+  <ul>
+    <li><strong>Qwen3-14B.</strong> Before the run, we predicted in writing that we would beat IQ2_KT on Qwen3-14B. We did not: 9.57 against 9.40 on WikiText-2, and a tie on C4. Pingala-8 does not win on every model.</li>
+    <li><strong>Reading prompts.</strong> Processing a prompt runs at 0.74x IQ2_XXS, and IQ2_KT reads prompts about 1.3x faster than we do. Long documents take longer before the first word appears.</li>
+    <li><strong>Many users at once.</strong> Decoding 2 to 8 chats in parallel runs at 0.18x to 0.34x IQ2_XXS. Pingala-8 suits one person on one GPU, not a server.</li>
+    <li><strong>Where it runs.</strong> You need our patched llama.cpp and an NVIDIA GPU with CUDA. Stock llama.cpp, Ollama and LM Studio cannot load the files yet. There is no Metal or Vulkan path, and CPU generation runs at 0.56x to 0.62x IQ2_XXS.</li>
+    <li><strong>How much to trust each number.</strong> The Qwen3-4B file is the last of many builds we tested on WikiText-2, so treat that result as tuned. The C4 test was held out, and the Llama-3.1-8B and Qwen3-14B runs were pre-registered. Speed comes from one GPU. We have not evaluated the safety behaviour of the compressed models.</li>
+  </ul>
+
+  <h2>How it works</h2>
+  <p>Now the technical part. Most 2-bit formats round each small group of weights to the nearest entry of a fixed table, one group at a time. Pingala-8 uses trellis-coded quantization instead. We split each row of weights into groups of 4 and code the groups in sequence with an 8-state trellis code of the kind Gottfried Ungerboeck designed for modems. The encoder carries a small state from one group to the next, and the state decides which subset (coset) of values the next group may use. Choosing the whole path through the trellis at once lets the same number of bits land closer to the true weights than rounding each group alone.</p>
+  <p>Two steps come before the coding, both from the QuIP line of work. A random Hadamard rotation mixes the weights, so that a few very large values do not dominate any group. LDLQ rounding then quantizes the columns in order and passes the error of each column on to the columns not yet coded, using statistics from sample text. We also set a scale for each input column by minimizing an incoherence bound.</p>
+  <p>How much does the trellis memory itself matter? In an ablation at equal bytes, removing it costs 0.076 nats per token. That is about 80% of our margin over a perplexity-tuned IQ2_KT file (a post hoc figure), but only 14% of our gain over IQ2_XXS; most of that larger gain comes from the rest of the pipeline. The work builds directly on QuIP, QuIP# and QTIP, and IQ2_KT by ikawrakow is the closest same-size format we compare against.</p>
+  <p>The runtime is a CUDA patch to llama.cpp at commit <code>7ac59a6</code>. The models are GGUF files that only the patched build can read. The shipped file is called B4 in the paper and the logs.</p>
+
+  <h2>Why the name</h2>
+  <p>Pingala's Chandahsutra, an ancient Sanskrit work on poetic metre, lists the 8 patterns of three long or short syllables, the ganas. Our code has 8 states over short patterns, so we named the format after him. The name is a credit to that tradition; the trellis labels in the code are Ungerboeck's.</p>
+
+  <h2>How to try it</h2>
+  <ol>
+    <li>Download <code>pingala8-windows-cuda12.zip</code> (1.6 GB) from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">v2.4-oneclick release</a>. On Linux, take <code>pingala8-linux-cuda13.tar.gz</code>.</li>
+    <li>Unzip it and double-click <code>run_qwen3_4b.bat</code>, or <code>run_llama31_8b.bat</code> for Llama-3.1-8B. The model downloads once from Hugging Face. On Linux, run <code>./run.sh qwen</code>.</li>
+    <li>Chat at <code>http://127.0.0.1:8080</code>. On Windows the page opens by itself. Everything runs on your own machine.</li>
+  </ol>
+  <p>You need an NVIDIA RTX GPU (30, 40 or 50 series) with a recent driver. To build from source or rerun the paper's tests, follow the <a href="https://github.com/Genrius-AI/pingala8-llm#quick-start">README</a>. The models are on Hugging Face: <a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a> and <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a>.</p>
+
+  <h2>Read and cite the paper</h2>
+  <p>The paper has every table, the pre-registration record and the file and line of each number in the logs.</p>
+  <div class="cite">
+    <p class="doi">Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp</p>
+    <p class="muted">Harshit Goyal, Genrius AI. Preprint, version 2.4, October 2026. DOI: <a href="https://doi.org/10.5281/zenodo.23481757">10.5281/zenodo.23481757</a></p>
+<pre><code>@misc{goyal2026pingala8,
+  title     = {Small-State Coset Trellis Coding at {IQ2\_XXS} Size:
+               An Equal-Bytes Study in {llama.cpp}},
+  author    = {Goyal, Harshit},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23481757},
+  url       = {https://doi.org/10.5281/zenodo.23481757}
+}</code></pre>
+  </div>
+  <p style="margin-top:28px">Which model should we compress next? Tell us in the <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Pingala-8 is open source under the Apache License 2.0.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://genrius-ai.github.io/pingala8-llm/media/ppl-vs-size.png</image:loc>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg</video:thumbnail_loc>
+      <video:title>Pingala-8 demo: Qwen3-4B in 1.24 GB writing an email in real time</video:title>
+      <video:description>Text and timing from a real run of Pingala-8 Qwen3-4B (1.24 GB) on an RTX 5070 Ti Laptop GPU, shown at the speed it was written. Chat window recreated.</video:description>
+      <video:content_loc>https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-1080p.mp4</video:content_loc>
+      <video:duration>32</video:duration>
+      <video:publication_date>2026-10-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/article.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://genrius-ai.github.io/pingala8-llm/media/ppl-vs-size.png</image:loc>
+    </image:image>
+  </url>
+</urlset>

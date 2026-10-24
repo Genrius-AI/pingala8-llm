@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://genrius-ai.github.io/pingala8-llm/sitemap.xml
