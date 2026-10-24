@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp | Genrius AI</title>
+<meta name="description" content="Paper: an 8-state trellis code stored in a llama.cpp GGUF file at IQ2_XXS size. Qwen3-4B in 1.24 GB reaches WikiText-2 perplexity 16.64 against 28.61 for IQ2_XXS. Abstract, PDF and BibTeX.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/paper.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Harshit Goyal">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta name="citation_title" content="Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp">
+<meta name="citation_author" content="Goyal, Harshit">
+<meta name="citation_author_institution" content="Genrius AI">
+<meta name="citation_publication_date" content="2026/10/19">
+<meta name="citation_online_date" content="2026/10/19">
+<meta name="citation_technical_report_institution" content="Genrius AI">
+<meta name="citation_publisher" content="Zenodo">
+<meta name="citation_doi" content="10.5281/zenodo.23481757">
+<meta name="citation_language" content="en">
+<meta name="citation_keywords" content="LLM quantization; 2-bit quantization; trellis-coded quantization; llama.cpp; GGUF; post-training quantization; Qwen3-4B; Llama-3.1-8B">
+<meta name="citation_abstract_html_url" content="https://genrius-ai.github.io/pingala8-llm/paper.html">
+<meta name="citation_pdf_url" content="https://genrius-ai.github.io/pingala8-llm/goyal2026-coset-trellis-iq2xxs-v2.4.pdf">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:title" content="Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp">
+<meta property="og:description" content="Paper: an 8-state trellis code stored in a llama.cpp GGUF file at IQ2_XXS size. Qwen3-4B in 1.24 GB reaches WikiText-2 perplexity 16.64 against 28.61 for IQ2_XXS. Abstract, PDF and BibTeX.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/paper.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp">
+<meta name="twitter:description" content="Paper: an 8-state trellis code stored in a llama.cpp GGUF file at IQ2_XXS size. Qwen3-4B in 1.24 GB reaches WikiText-2 perplexity 16.64 against 28.61 for IQ2_XXS. Abstract, PDF and BibTeX.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "@id": "https://doi.org/10.5281/zenodo.23481757",
+  "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+  "name": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+  "abstract": "Trellis-coded quantization of LLM weights is established (QTIP, EXL3), and ik_llama.cpp's IQ2_KT already provides a trellis type in a llama.cpp fork. We ask how much a small-state code adds at a fixed file size, that of llama.cpp's IQ2_XXS, and which part of the pipeline supplies the gain. We store Ungerboeck's 8-state set-partitioned code over 4-weight symbols in a GGUF file, decoded by an unmerged CUDA patch to llama.cpp, behind a random Hadamard rotation and QuIP's LDLQ rounding, with input-column scales that minimise, under a diagonal Hessian model, QuIP's incoherence bound on LDLQ's error. On Qwen3-4B (post hoc) the file reaches WikiText-2 perplexity 16.64, against 28.61 for IQ2_XXS and 18.15 for the strongest IQ2_KT file of this size we built; it decodes at batch 1 at least as fast as IQ2_XXS but processes prompts at 0.74x. Pre-registered, it beats IQ2_KT on Llama-3.1-8B (8.44 against 9.36 with a BOS at every window; IQ2_KT made from Q8_0) and loses on Qwen3-14B (9.57 against 9.40; tie on C4). At equal bytes, removing the trellis memory costs 0.076 nats per token: about 80% (post hoc) of the margin over a perplexity-tuned IQ2_KT, but 14% of the gain over IQ2_XXS.",
+  "url": "https://genrius-ai.github.io/pingala8-llm/paper.html",
+  "sameAs": "https://doi.org/10.5281/zenodo.23481757",
+  "identifier": {"@type": "PropertyValue", "propertyID": "DOI", "value": "10.5281/zenodo.23481757"},
+  "datePublished": "2026-10-19",
+  "version": "2.4",
+  "inLanguage": "en",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "keywords": "LLM quantization, 2-bit quantization, trellis-coded quantization, llama.cpp, GGUF, post-training quantization, Qwen3-4B, Llama-3.1-8B",
+  "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf", "contentUrl": "https://genrius-ai.github.io/pingala8-llm/goyal2026-coset-trellis-iq2xxs-v2.4.pdf"},
+  "author": {
+    "@type": "Person",
+    "name": "Harshit Goyal",
+    "jobTitle": "Founder",
+    "affiliation": {"@type": "Organization", "name": "Genrius AI", "url": "https://github.com/Genrius-AI"}
+  },
+  "publisher": {"@type": "Organization", "name": "Zenodo", "url": "https://zenodo.org"},
+  "isBasedOn": {"@type": "SoftwareSourceCode", "name": "Pingala-8", "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"}
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./">Pingala-8 overview</a>
+  <h1>Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp</h1>
+  <p class="byline">Harshit Goyal, Founder, Genrius AI (former Google software engineer, IIIT Delhi alumnus). Preprint, version 2.4, <time datetime="2026-10-19">October 19, 2026</time>. DOI <a href="https://doi.org/10.5281/zenodo.23481757">10.5281/zenodo.23481757</a>.</p>
+
+  <p><a class="btn" href="goyal2026-coset-trellis-iq2xxs-v2.4.pdf">Download the PDF <small>(21 pages, 434 KB)</small></a> <a class="btn" href="https://doi.org/10.5281/zenodo.23481757">Zenodo record <small>(PDF and supplement)</small></a></p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>An 8-state trellis code, stored in a standard llama.cpp GGUF file at exactly the size of llama.cpp's IQ2_XXS, with no retraining.</li>
+      <li>Qwen3-4B goes from 8.05 GB (16-bit) to 1.24 GB. WikiText-2 perplexity: 16.64, against 28.61 for IQ2_XXS and 18.15 for the best IQ2_KT file we built at that size.</li>
+      <li>Llama-3.1-8B in 2.39 GB: 8.44 against 9.36 for IQ2_KT. On Qwen3-14B it loses narrowly (9.57 against 9.40).</li>
+      <li>Generation at batch 1 is at least as fast as IQ2_XXS; prompt processing runs at 0.74x.</li>
+    </ul>
+  </div>
+
+  <h2>Abstract</h2>
+  <p>Trellis-coded quantization of LLM weights is established (QTIP, EXL3), and ik_llama.cpp's IQ2_KT already provides a trellis type in a llama.cpp fork. We ask how much a small-state code adds at a fixed file size, that of llama.cpp's IQ2_XXS, and which part of the pipeline supplies the gain. We store Ungerboeck's 8-state set-partitioned code over 4-weight symbols in a GGUF file, decoded by an unmerged CUDA patch to llama.cpp, behind a random Hadamard rotation and QuIP's LDLQ rounding, with input-column scales that minimise, under a diagonal Hessian model, QuIP's incoherence bound on LDLQ's error. On Qwen3-4B (post hoc) the file reaches WikiText-2 perplexity 16.64, against 28.61 for IQ2_XXS and 18.15 for the strongest IQ2_KT file of this size we built; it decodes at batch 1 at least as fast as IQ2_XXS but processes prompts at 0.74x. Pre-registered, it beats IQ2_KT on Llama-3.1-8B (8.44 against 9.36 with a BOS at every window; IQ2_KT made from Q8_0) and loses on Qwen3-14B (9.57 against 9.40; tie on C4). At equal bytes, removing the trellis memory costs 0.076 nats per token: about 80% (post hoc) of the margin over a perplexity-tuned IQ2_KT, but 14% of the gain over IQ2_XXS.</p>
+
+  <h2>Code, models and logs</h2>
+  <ul>
+    <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, llama.cpp patches and run logs</a> (Apache-2.0), with <a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">steps to reproduce</a></li>
+    <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B, 1.24 GB</a> and <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B, 2.39 GB</a> on Hugging Face</li>
+    <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a></li>
+    <li><a href="article.html">Plain-language article: how we fit Qwen3-4B into 1.24 GB</a></li>
+  </ul>
+
+  <h2>Cite</h2>
+<pre><code>@misc{goyal2026coset,
+  title     = {Small-State Coset Trellis Coding at {IQ2\_XXS} Size:
+               An Equal-Bytes Study in llama.cpp},
+  author    = {Goyal, Harshit},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23481757},
+  url       = {https://doi.org/10.5281/zenodo.23481757}
+}</code></pre>
+  <p>Licence: CC BY 4.0. The DOI above always resolves to the latest version.</p>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>
