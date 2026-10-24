@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title type="text">Pingala-8 by Genrius AI</title>
+  <subtitle type="text">New and updated pages on the Pingala-8 site: 2-bit compression for local LLMs in llama.cpp, the paper, and guides to running LLMs on small GPUs.</subtitle>
+  <link rel="self" type="application/atom+xml" href="https://genrius-ai.github.io/pingala8-llm/feed.xml"/>
+  <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>
+  <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/feed</id>
+  <updated>2026-10-24T17:51:46Z</updated>
+  <author>
+    <name>Genrius AI</name>
+    <uri>https://github.com/Genrius-AI</uri>
+  </author>
+  <rights type="text">Pingala-8 is open source under the Apache License 2.0.</rights>
+  <entry>
+    <title type="text">Pingala-8: 85% smaller 2-bit LLMs for llama.cpp</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/index</id>
+    <published>2026-10-24T13:12:23Z</published>
+    <updated>2026-10-24T17:51:46Z</updated>
+    <summary type="text">Pingala-8 compresses Qwen3-4B from 8.05 GB to 1.24 GB. At the size of llama.cpp's 2-bit IQ2_XXS it scores 21% higher on five quizzes. Open code, one-click Windows build.</summary>
+  </entry>
+  <entry>
+    <title type="text">How we fit Qwen3-4B into 1.24 GB without retraining</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/article.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/article.html</id>
+    <published>2026-10-24T13:12:23Z</published>
+    <updated>2026-10-24T17:28:54Z</updated>
+    <summary type="text">Genrius AI's Pingala-8 is a 2-bit format for llama.cpp. What we built, why 2-bit matters, the measured numbers and their scope, what we lose, and how to try it.</summary>
+  </entry>
+  <entry>
+    <title type="text">Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/paper.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/paper.html</id>
+    <published>2026-10-24T17:28:54Z</published>
+    <updated>2026-10-24T17:28:54Z</updated>
+    <summary type="text">Paper: an 8-state trellis code stored in a llama.cpp GGUF file at IQ2_XXS size. Qwen3-4B in 1.24 GB reaches WikiText-2 perplexity 16.64 against 28.61 for IQ2_XXS. Abstract, PDF and BibTeX.</summary>
+  </entry>
+  <entry>
+    <title type="text">How much VRAM do you need to run an LLM locally?</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/how-much-vram-for-local-llm.html</id>
+    <published>2026-10-24T15:59:05Z</published>
+    <updated>2026-10-24T17:28:54Z</updated>
+    <summary type="text">A plain-English way to work out GPU memory for a local LLM: file size, KV cache and headroom, with measured Qwen3-4B file sizes from 8.05 GB down to 1.24 GB.</summary>
+  </entry>
+  <entry>
+    <title type="text">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html</id>
+    <published>2026-10-24T15:59:05Z</published>
+    <updated>2026-10-24T17:28:54Z</updated>
+    <summary type="text">GGUF quant names decoded, with measured Qwen3-4B size, perplexity, quiz scores and speed for Q4_K_M, Q2_K, IQ2_XS, IQ2_XXS, IQ2_KT and IQ1_M.</summary>
+  </entry>
+  <entry>
+    <title type="text">What is a 2-bit LLM? Is 2-bit quantization usable?</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/is-2-bit-quantization-usable.html</id>
+    <published>2026-10-24T15:59:05Z</published>
+    <updated>2026-10-24T17:28:54Z</updated>
+    <summary type="text">What 2-bit quantization does to an LLM, measured on Qwen3-4B: size, perplexity and quiz scores from IQ1_M to Q2_K, and when 2-bit is a poor fit.</summary>
+  </entry>
+  <entry>
+    <title type="text">How to run Qwen3-4B on a 4 GB or 6 GB GPU</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html</id>
+    <published>2026-10-24T15:59:05Z</published>
+    <updated>2026-10-24T17:28:54Z</updated>
+    <summary type="text">Which Qwen3-4B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp settings that help, with measured sizes and scores.</summary>
+  </entry>
+  <entry>
+    <title type="text">What is perplexity? LLM perplexity in plain English</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/what-is-perplexity-llm.html</id>
+    <published>2026-10-24T15:59:05Z</published>
+    <updated>2026-10-24T17:28:54Z</updated>
+    <summary type="text">What LLM perplexity measures, what a good score is, and how to compare quantized models fairly, with WikiText-2 numbers for Qwen3-4B from 12.46 to 57.50.</summary>
+  </entry>
+</feed>

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://genrius-ai.github.io/pingala8-llm/</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://genrius-ai.github.io/pingala8-llm/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://genrius-ai.github.io/pingala8-llm/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://genrius-ai.github.io/pingala8-llm/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://genrius-ai.github.io/pingala8-llm/"/>
     <image:image>
       <image:loc>https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg</image:loc>
     </image:image>
@@ -22,6 +27,26 @@
       <video:publication_date>2026-10-24T00:00:00+00:00</video:publication_date>
       <video:family_friendly>yes</video:family_friendly>
     </video:video>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/zh/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://genrius-ai.github.io/pingala8-llm/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://genrius-ai.github.io/pingala8-llm/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://genrius-ai.github.io/pingala8-llm/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://genrius-ai.github.io/pingala8-llm/"/>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/ja/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://genrius-ai.github.io/pingala8-llm/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://genrius-ai.github.io/pingala8-llm/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://genrius-ai.github.io/pingala8-llm/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://genrius-ai.github.io/pingala8-llm/"/>
   </url>
   <url>
     <loc>https://genrius-ai.github.io/pingala8-llm/article.html</loc>

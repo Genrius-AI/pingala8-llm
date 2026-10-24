@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pingala-8：llama.cpp 向けに 85% 小さくした 2-bit LLM | Genrius AI</title>
+<meta name="description" content="Pingala-8 は Qwen3-4B を 8.05 GB から 1.24 GB に圧縮します。llama.cpp の 2-bit 形式 IQ2_XXS と同じサイズで、5 つのクイズのスコアが 21% 高くなります。コードは公開、Windows 向けワンクリック版あり。">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/ja/">
+<link rel="alternate" hreflang="en" href="https://genrius-ai.github.io/pingala8-llm/">
+<link rel="alternate" hreflang="zh-Hans" href="https://genrius-ai.github.io/pingala8-llm/zh/">
+<link rel="alternate" hreflang="ja" href="https://genrius-ai.github.io/pingala8-llm/ja/">
+<link rel="alternate" hreflang="x-default" href="https://genrius-ai.github.io/pingala8-llm/">
+<link rel="alternate" type="application/atom+xml" title="Pingala-8 by Genrius AI" href="https://genrius-ai.github.io/pingala8-llm/feed.xml">
+<meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:title" content="LLM を 85% 圧縮しました。llama.cpp の 2-bit と同じサイズで、はるかに賢い。">
+<meta property="og:description" content="Genrius AI の Pingala-8：Qwen3-4B が 8.05 GB ではなく 1.24 GB に。同じサイズの llama.cpp の IQ2_XXS よりクイズのスコアが 21% 高い。コードは公開、Windows 向けワンクリック版あり。">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/ja/">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B（1.24 GB）がローカルのチャット画面でメールを書く様子：RTX 5070 Ti Laptop GPU で 0.55 秒に 105 トークン。">
+<meta property="og:video" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-1080p.mp4">
+<meta property="og:video:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-1080p.mp4">
+<meta property="og:video:type" content="video/mp4">
+<meta property="og:video:width" content="1920">
+<meta property="og:video:height" content="1080">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LLM を 85% 圧縮しました。llama.cpp の 2-bit と同じサイズで、はるかに賢い。">
+<meta name="twitter:description" content="Genrius AI の Pingala-8：Qwen3-4B が 8.05 GB ではなく 1.24 GB に。同じサイズの llama.cpp の IQ2_XXS よりクイズのスコアが 21% 高い。コードは公開、Windows 向けワンクリック版あり。">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B（1.24 GB）がローカルのチャット画面でメールを書く様子：RTX 5070 Ti Laptop GPU で 0.55 秒に 105 トークン。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="preload" as="image" href="../media/pingala8-demo-poster.jpg">
+<link rel="stylesheet" href="../style.css">
+<style>
+  :root { --font: "Inter", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", "Meiryo", "Noto Sans JP", "Noto Sans CJK JP", system-ui, sans-serif; }
+  body { line-height: 1.8; }
+  h1, h2, h3, th, .brand-mark, .stat-num { letter-spacing: 0; }
+  h1, h2, h3 { line-height: 1.3; }
+  .lang-switch a { margin-right: 14px; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://genrius-ai.github.io/pingala8-llm/ja/#webpage",
+  "url": "https://genrius-ai.github.io/pingala8-llm/ja/",
+  "name": "Pingala-8：llama.cpp 向けに 85% 小さくした 2-bit LLM",
+  "description": "Pingala-8 は Qwen3-4B を 8.05 GB から 1.24 GB に圧縮します。llama.cpp の 2-bit 形式 IQ2_XXS と同じサイズで、5 つのクイズのスコアが 21% 高くなります。コードは公開、Windows 向けワンクリック版あり。",
+  "inLanguage": "ja",
+  "translationOfWork": {"@id": "https://genrius-ai.github.io/pingala8-llm/#webpage"},
+  "about": {"@id": "https://genrius-ai.github.io/pingala8-llm/#software"},
+  "publisher": {"@type": "Organization", "@id": "https://genrius-ai.github.io/pingala8-llm/#org", "name": "Genrius AI", "url": "https://github.com/Genrius-AI"},
+  "primaryImageOfPage": "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg",
+  "datePublished": "2026-10-24",
+  "dateModified": "2026-10-24"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">本文へスキップ</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 日本語トップ">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="メインメニュー">
+      <a href="#results" class="hide-sm">結果</a>
+      <a href="#compare" class="hide-sm">比較</a>
+      <a href="#try">試す</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm" class="hide-sm">GitHub</a>
+      <a href="../" hreflang="en" lang="en">English</a>
+      <a href="../zh/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">ローカル LLM のためのオープンソース 2-bit 圧縮</span>
+    <h1>LLM を 85% 圧縮しました。 <span class="line2">llama.cpp の 2-bit と同じサイズで、はるかに賢い。</span></h1>
+    <p class="lede">Pingala-8 は Qwen3-4B を 8.05 GB ではなく 1.24 GB で保存します。これは llama.cpp でよく使われる最小の 2-bit 形式 IQ2_XXS と同じファイルサイズで、しかも 5 つの標準的なクイズでスコアが 21% 高くなります。再学習は不要で、手元にあるモデルをそのまま圧縮します。コード、ログ、Windows 向けワンクリック版はすべて公開しています。</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">Windows 版をダウンロード <small>(1.6 GB)</small></a>
+      <a class="btn" href="https://doi.org/10.5281/zenodo.23481757">論文を読む</a>
+      <a class="btn" href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Hugging Face のモデル</a>
+    </div>
+    <div class="video-frame">
+      <video autoplay muted loop playsinline controls preload="auto" width="1920" height="1080"
+             poster="../media/pingala8-demo-poster.jpg"
+             aria-label="デモ：Pingala-8 Qwen3-4B がローカルのチャットページで短いメールを書く様子。0.55 秒で 105 トークン">
+        <source src="../media/pingala8-demo-1080p.mp4" type="video/mp4">
+        <a href="../media/pingala8-demo-1080p.mp4">31 秒のデモを見る（MP4、4.3 MB）</a>
+      </video>
+    </div>
+    <p class="caption">実時間で再生しており、早送りはしていません。テキストとタイミングは、RTX 5070 Ti Laptop GPU で Pingala-8 Qwen3-4B（1.24 GB）を実際に動かしたときのものです。チャット画面は再現したものです。</p>
+  </div>
+</section>
+
+<section id="results" aria-labelledby="results-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">結果</span>
+      <h2 id="results-h">より小さく、同じサイズならより賢く、文章の生成は速い</h2>
+      <p>特に断りのない限り Qwen3-4B の結果です。1 台の GPU（RTX 5070 Ti Laptop）で測定しました。すべての数値は論文とリポジトリ内のログにあります。</p>
+    </div>
+    <div class="stats">
+      <div class="card">
+        <div class="stat-num">85%</div>
+        <div class="stat-label">元のモデルより小さい</div>
+        <p class="stat-detail">Qwen3-4B は 8.05 GB（fp16）から 1.24 GB へ、6.5 分の 1 になります。Llama-3.1-8B は 16.08 GB から 2.39 GB へ。</p>
+      </div>
+      <div class="card">
+        <div class="stat-num">+21%</div>
+        <div class="stat-label">同じサイズの llama.cpp の 2-bit と比べたクイズのスコア</div>
+        <p class="stat-detail">5 つのタスクの平均：50.8、IQ2_XXS は 41.9。8-bit モデルの 56.3 の 90% を保っています。</p>
+      </div>
+      <div class="card">
+        <div class="stat-num">39%</div>
+        <div class="stat-label">Q4_K_M より速く、サイズは半分</div>
+        <p class="stat-detail">返答を生成するときは毎秒約 216 トークン（batch 1）で、IQ2_XXS の 1.10x。長いプロンプトの読み込みは遅く、0.74x です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="quality-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">同じサイズでの品質</span>
+      <h2 id="quality-h">同じバイト数で、より低いパープレキシティ</h2>
+      <p>パープレキシティは、モデルが実際の文章をどれだけうまく予測できるかを測る指標で、低いほど良い値です。WikiText-2 では、元の Qwen3-4B は 12.46 です。IQ2_XXS と同じファイルサイズで、Pingala-8 は 16.64 です。これに対し IQ2_XXS は 28.61（Pingala-8 の方が 42% 低い）、私たちが作ったこのサイズで最も強い IQ2_KT ファイルは 18.15 でした。</p>
+    </div>
+    <figure>
+      <div class="chart">
+        <img src="../media/ppl-vs-size.png" width="1485" height="467" loading="lazy" decoding="async"
+             alt="WikiText-2 のパープレキシティとファイルサイズの関係を示す 2 つの散布図。Qwen3-4B、約 1.24 GB：Pingala-8 B4 が 16.64、複数の IQ2_KT ファイル（最良 18.15）、IQ2_XXS が 28.61、fp16 が 12.46。Llama-3.1-8B、約 2.39 GB：Pingala-8 B4 が 9.14、IQ2_KT が 10.04、IQ2_XXS が 12.35。">
+      </div>
+      <span class="chart-hint">グラフを横にスワイプすると、両方のパネルを見られます。</span>
+      <figcaption>WikiText-2 のパープレキシティとファイルサイズ、コンテキスト長 4096（B4 は公開している Pingala-8 ファイル）。(a) Qwen3-4B、73 ウィンドウ。この B4 ファイルは一連のビルドの最後のものなので、調整済み（事後的な選択）として扱ってください。(b) Llama-3.1-8B base、70 のストライドウィンドウ。予測は実行前に書き留めてあります：9.14、IQ2_KT は 10.04、IQ2_XXS は 12.35。すべてのウィンドウの先頭に開始トークンを付けた場合、Llama の結果は 8.44、IQ2_KT は 9.36 です。</figcaption>
+    </figure>
+
+    <h3 style="margin-top:44px">クイズのスコア（Qwen3-4B）</h3>
+    <p class="muted small">ゼロショットの正解率（%）。3 つの 2-bit ファイルはどれも約 1.24 GB です。元のモデルは 8-bit の Q8_0 ファイルです。</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>タスク</th><th class="num">元のモデル（8-bit）</th><th class="num">IQ2_XXS</th><th class="num">IQ2_KT</th><th class="num">Pingala-8</th><th class="num">IQ2_XXS 比</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ARC-Easy</td><td class="num">66.1</td><td class="num">43.9</td><td class="num">53.3</td><td class="num"><strong>60.9</strong></td><td class="num gain">+39%</td></tr>
+          <tr><td>ARC-Challenge</td><td class="num">45.2</td><td class="num">29.1</td><td class="num">35.1</td><td class="num"><strong>37.8</strong></td><td class="num gain">+30%</td></tr>
+          <tr><td>HellaSwag</td><td class="num">65.8</td><td class="num">47.8</td><td class="num">53.3</td><td class="num"><strong>57.7</strong></td><td class="num gain">+21%</td></tr>
+          <tr><td>WinoGrande</td><td class="num">65.5</td><td class="num">57.5</td><td class="num">57.9</td><td class="num"><strong>63.8</strong></td><td class="num gain">+11%</td></tr>
+          <tr><td>MMLU</td><td class="num">38.7</td><td class="num">31.1</td><td class="num">32.9</td><td class="num"><strong>34.0</strong></td><td class="num gain">+9%</td></tr>
+          <tr class="ours"><td><strong>平均</strong></td><td class="num">56.3</td><td class="num">41.9</td><td class="num">46.5</td><td class="num"><strong>50.8</strong></td><td class="num gain">+21%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="compare" aria-labelledby="compare-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">比較</span>
+      <h2 id="compare-h">Pingala-8 が勝つところ、ほかが勝つところ</h2>
+      <p>Qwen3-4B、コンテキスト長 4096 での WikiText-2 パープレキシティ。すべてのファイルで同じテストです。低いほど良い値です。</p>
+    </div>
+    <div class="table-wrap stack">
+      <table class="compare">
+        <thead>
+          <tr><th>形式</th><th class="num">サイズ</th><th class="num">パープレキシティ</th><th>正直なコメント</th></tr>
+        </thead>
+        <tbody>
+          <tr class="ours">
+            <td><strong>Pingala-8 (B4)</strong><span class="who">Genrius AI</span></td>
+            <td class="num" data-label="サイズ"><strong>1.24 GB</strong></td>
+            <td class="num" data-label="パープレキシティ"><strong>16.64</strong></td>
+            <td>元のモデルを圧縮するだけで、再学習は不要です。パッチを当てた llama.cpp と NVIDIA GPU（CUDA）が必要です。</td>
+          </tr>
+          <tr>
+            <td>IQ2_XXS<span class="who">llama.cpp</span></td>
+            <td class="num" data-label="サイズ">1.25 GB</td>
+            <td class="num" data-label="パープレキシティ">28.61</td>
+            <td>同じサイズ。公式版の llama.cpp、Ollama、LM Studio で動き、CPU や Mac でも使えます。プロンプトの読み込みはこちらが速い（私たちは 0.74x）。クイズのスコアは私たちが 21% 高く、生成速度は 1.10x です。</td>
+          </tr>
+          <tr>
+            <td>IQ2_KT<span class="who">ik_llama.cpp</span></td>
+            <td class="num" data-label="サイズ">1.25 GB</td>
+            <td class="num" data-label="パープレキシティ">18.15</td>
+            <td>同じサイズで、私たちが作った同サイズの対抗馬の中で最も強いものです。プロンプトの読み込みは私たちより約 1.3x 速い。Qwen3-14B では私たちに勝ちます（9.40、私たちは 9.57）。</td>
+          </tr>
+          <tr>
+            <td>Q4_K_M<span class="who">llama.cpp</span></td>
+            <td class="num" data-label="サイズ">私たちの約 2 倍</td>
+            <td class="num" data-label="パープレキシティ">比較せず</td>
+            <td>より大きな 4-bit ファイルです。メモリが制約でないならこちらを選んでください。比較したのは速度だけで、batch 1 では半分のサイズで 39% 速く生成します。</td>
+          </tr>
+          <tr>
+            <td>GSQ Q2_K<span class="who">ISTA-DASLab</span></td>
+            <td class="num" data-label="サイズ">1.67 GB</td>
+            <td class="num" data-label="パープレキシティ">14.37</td>
+            <td>パープレキシティは私たちより良いですが、ファイルは 34% 大きくなります。</td>
+          </tr>
+          <tr>
+            <td>Ternary Bonsai 4B<span class="who">prism-ml</span></td>
+            <td class="num" data-label="サイズ">1.07 GB</td>
+            <td class="num" data-label="パープレキシティ">11.59</td>
+            <td>より良く、より小さい。Qwen3-4B を圧縮したものではなく再学習したモデルで（元のモデルにさえ勝ちます）、学習の実行と彼らのフォークが必要です。</td>
+          </tr>
+          <tr class="ref">
+            <td>Qwen3-4B fp16<span class="who">元のモデル</span></td>
+            <td class="num" data-label="サイズ">8.05 GB</td>
+            <td class="num" data-label="パープレキシティ">12.46</td>
+            <td>圧縮していないモデル。参考用です。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">私たちの見方：テストした形式の中では、再学習せずに元の Qwen3-4B を約 1.24 GB に圧縮する場合、Pingala-8 のパープレキシティが最も低くなりました。このクラスの強い小型モデルが欲しいだけなら、Ternary Bonsai のような再学習済みのモデルの方が良い選択です。Pingala-8 は、誰も再学習してくれないモデルを圧縮するためのものです。Llama-3.1-8B（2.39 GB）でも、同じサイズの 2 つの形式の両方に勝っています：8.44、IQ2_KT は 9.36。</p>
+  </div>
+</section>
+
+<section id="try" aria-labelledby="try-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">試す</span>
+      <h2 id="try-h">3 ステップで試す</h2>
+      <p>Windows または Linux と、NVIDIA RTX GPU（30、40、50 シリーズ）、新しいドライバーが必要です。Python もビルドも不要です。</p>
+      <p>注意：公式版の llama.cpp、Ollama、LM Studio では、このファイルはまだ読み込めません。ワンクリック版に入っているパッチ済みの llama.cpp を使ってください。</p>
+    </div>
+    <ol class="steps">
+      <li class="card">
+        <h3>ダウンロード</h3>
+        <p><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">v2.4-oneclick リリース</a>から <code>pingala8-windows-cuda12.zip</code>（1.6 GB）を入手します。</p>
+        <p>Linux：同じページにある <code>pingala8-linux-cuda13.tar.gz</code>。</p>
+      </li>
+      <li class="card">
+        <h3>解凍してダブルクリック</h3>
+        <p><code>run_qwen3_4b.bat</code>（または <code>run_llama31_8b.bat</code>）を実行します。モデルは初回に一度だけ Hugging Face からダウンロードされます。</p>
+        <p>Linux：<code>./run.sh qwen</code> または <code>./run.sh llama</code>。</p>
+      </li>
+      <li class="card">
+        <h3>チャット</h3>
+        <p>Windows では、ブラウザで <code>http://127.0.0.1:8080</code> のチャットページが開きます（Linux ではこのアドレスを自分で開いてください）。すべてあなたのマシンの上で動きます。</p>
+        <p>黒いウィンドウを閉じると停止します。</p>
+      </li>
+    </ol>
+    <p class="req">ソースからのビルド、論文のパープレキシティテストの実行、CPU パッチの利用については、<a href="https://github.com/Genrius-AI/pingala8-llm#quick-start" hreflang="en">README のクイックスタート</a>（英語）を見てください。モデル：<a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a> と <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a>。</p>
+  </div>
+</section>
+
+<section aria-labelledby="how-h">
+  <div class="wrap two-col">
+    <div>
+      <span class="eyebrow">仕組み</span>
+      <h2 id="how-h">4 つの重みのグループにかけるトレリス符号</h2>
+      <p>多くの 2-bit 形式は、重みの小さなグループをそれぞれ独立に丸めます。Pingala-8 は Ungerboeck の 8 状態トレリス符号で、グループを順番に符号化します。小さな状態が 4 つの重みのグループから次のグループへ引き継がれ、次のグループが使える値の集合を決めるので、同じビット数でも本来の重みにより近づきます。</p>
+      <p>符号化の前に、ランダムな Hadamard 回転でごく少数の非常に大きな重みを分散させ、LDLQ 丸めで各列の誤差をまだ符号化していない列へ渡します。これらのアイデアは QuIP、QuIP#、QTIP から来ており、この形式は ikawrakow の IQ2_KT に近いものです。llama.cpp への CUDA パッチ（commit <code>7ac59a6</code>）がこのファイルを読み込みます。</p>
+      <p>やさしい解説と技術的な詳しい話は、<a href="../article.html" hreflang="en">記事の全文</a>（英語）をどうぞ。</p>
+    </div>
+    <div class="card">
+      <h3>名前の由来</h3>
+      <p class="muted">Pingala の Chandahsutra は、詩の韻律を扱った古代サンスクリットの書物で、長音節または短音節 3 つからなる 8 つのパターン、gana を挙げています。私たちの符号も短いパターンの上に 8 つの状態を持つので、彼の名前をいただきました。名前は敬意を表したもので、トレリスのラベルは Ungerboeck によるものです。</p>
+    </div>
+  </div>
+</section>
+
+<section id="limits" aria-labelledby="limits-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">制限事項</span>
+      <h2 id="limits-h">失うもの</h2>
+      <p>Pingala-8 を選ぶ前に、ここを読んでください。</p>
+    </div>
+    <ul class="limits">
+      <li><strong>Qwen3-14B では負けます。</strong>実行前に勝つと予測しましたが、勝てませんでした。WikiText-2 で 9.57、IQ2_KT は 9.40。C4 では引き分けです。</li>
+      <li><strong>プロンプトの処理が遅い。</strong>プロンプトの読み込みは IQ2_XXS の 0.74x です。長い文書では、最初の単語が出るまでに時間がかかります。</li>
+      <li><strong>バッチでのデコードが遅い。</strong>2 件から 8 件のチャットを同時に処理すると、IQ2_XXS の 0.18x から 0.34x になります。1 台の GPU を 1 人で使う用途向けで、サーバー向けではありません。</li>
+      <li><strong>専用のランタイムが必要。</strong>CUDA 対応のパッチ済み llama.cpp だけで動きます。公式版の llama.cpp、Ollama、LM Studio はまだ読み込めません。Metal と Vulkan には対応していません。CPU での生成は IQ2_XXS の 0.56x から 0.62x です。</li>
+      <li><strong>Qwen3-4B の数値は調整済みです。</strong>このファイルは、WikiText-2 でテストした多数のビルドの最後のものです。C4 はテスト用に取っておきました。Llama-3.1-8B と Qwen3-14B の実行は事前登録しています。</li>
+      <li><strong>GPU は 1 台だけ、安全性の評価はなし。</strong>速度は RTX 5070 Ti Laptop GPU 1 台で測定しました。圧縮したモデルの安全面の振る舞いは評価していません。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="links" aria-labelledby="links-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">関連資料</span>
+      <h2 id="links-h">さらに読む（英語）</h2>
+      <p>以下のページは、今のところ英語版だけです。</p>
+    </div>
+    <ul class="limits">
+      <li><strong><a href="../article.html" hreflang="en">記事：再学習なしで Qwen3-4B を 1.24 GB に収めた方法</a></strong>何を作ったのか、なぜ 2-bit が重要なのか、測定した数値とその範囲、失うもの、そして試し方。</li>
+      <li><strong><a href="../#guides" hreflang="en">小さな GPU で LLM を動かすためのガイド</a></strong>メモリ、量子化、品質についてのやさしいガイド。測定した数値と、Pingala-8 が向く場面、向かない場面を載せています。</li>
+      <li><strong><a href="../paper.html" hreflang="en">論文：要旨、PDF、BibTeX</a></strong>プレプリント、バージョン 2.4。DOI 10.5281/zenodo.23481757。</li>
+      <li><strong><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md" hreflang="en">再現手順（REPRODUCE.md）</a></strong>論文の数値を再現する方法。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="cite" aria-labelledby="cite-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">論文</span>
+      <h2 id="cite-h">論文を読む、引用する</h2>
+    </div>
+    <div class="cite">
+      <p class="doi" lang="en">Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp</p>
+      <p class="muted">Harshit Goyal、Genrius AI。プレプリント、バージョン 2.4、2026 年 10 月。DOI：<a href="https://doi.org/10.5281/zenodo.23481757">10.5281/zenodo.23481757</a></p>
+<pre lang="en"><code>@misc{goyal2026pingala8,
+  title     = {Small-State Coset Trellis Coding at {IQ2\_XXS} Size:
+               An Equal-Bytes Study in {llama.cpp}},
+  author    = {Goyal, Harshit},
+  year      = {2026},
+  month     = oct,
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23481757},
+  url       = {https://doi.org/10.5281/zenodo.23481757},
+  note      = {Preprint, version 2.4.
+               Code: https://github.com/Genrius-AI/pingala8-llm}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline" lang="en">Generating Real Intelligence</p>
+        <p>創業者は Harshit Goyal。元 Google のソフトウェアエンジニアで、IIIT Delhi の卒業生です。</p>
+        <p>Pingala-8 は Apache License 2.0 のオープンソースです。質問や要望は <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a> へ。</p>
+        <p class="lang-switch">ほかの言語： <a href="../" hreflang="en" lang="en">English</a> <a href="../zh/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a></p>
+      </div>
+      <div>
+        <h3>入手</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">ワンクリック版</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">コード、パッチ、ログ</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B モデル</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B モデル</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>読む</h3>
+        <ul>
+          <li><a href="../article.html" hreflang="en">記事：Qwen3-4B を 1.24 GB に収めた方法（英語）</a></li>
+          <li><a href="../#guides" hreflang="en">小さな GPU 向けガイド（英語）</a></li>
+          <li><a href="../paper.html" hreflang="en">論文：要旨、PDF、BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">論文（DOI 10.5281/zenodo.23481757）</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md" hreflang="en">再現手順（英語）</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">Pingala-8 と Genrius AI は Genrius AI の名称です。llama.cpp、Qwen、Llama などの名称はそれぞれの所有者のもので、その成果物を示すためだけに使っています。Llama-3.1-8B モデルは Llama 3.1 Community License の下で提供されています。<span lang="en">Built with Llama.</span></p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var v = document.querySelector('video');
+        if (v) { v.removeAttribute('autoplay'); v.pause(); }
+      }
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>

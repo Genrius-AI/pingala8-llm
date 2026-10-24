@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pingala-8：面向 llama.cpp、体积缩小 85% 的 2-bit 大模型 | Genrius AI</title>
+<meta name="description" content="Pingala-8 将 Qwen3-4B 从 8.05 GB 压缩到 1.24 GB。在与 llama.cpp 的 2-bit 格式 IQ2_XXS 相同的大小下，它在五项测验上的得分高出 21%。代码开源，提供 Windows 一键包。">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/zh/">
+<link rel="alternate" hreflang="en" href="https://genrius-ai.github.io/pingala8-llm/">
+<link rel="alternate" hreflang="zh-Hans" href="https://genrius-ai.github.io/pingala8-llm/zh/">
+<link rel="alternate" hreflang="ja" href="https://genrius-ai.github.io/pingala8-llm/ja/">
+<link rel="alternate" hreflang="x-default" href="https://genrius-ai.github.io/pingala8-llm/">
+<link rel="alternate" type="application/atom+xml" title="Pingala-8 by Genrius AI" href="https://genrius-ai.github.io/pingala8-llm/feed.xml">
+<meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:title" content="我们把大模型压缩了 85%。与 llama.cpp 的 2-bit 一样大，却聪明得多。">
+<meta property="og:description" content="Genrius AI 的 Pingala-8：Qwen3-4B 只需 1.24 GB，而不是 8.05 GB；在相同大小下，测验得分比 llama.cpp 的 IQ2_XXS 高 21%。代码开源，提供 Windows 一键包。">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/zh/">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B（1.24 GB）在本地聊天窗口中写邮件：在 RTX 5070 Ti Laptop GPU 上 0.55 秒生成 105 个 token。">
+<meta property="og:video" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-1080p.mp4">
+<meta property="og:video:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-1080p.mp4">
+<meta property="og:video:type" content="video/mp4">
+<meta property="og:video:width" content="1920">
+<meta property="og:video:height" content="1080">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="我们把大模型压缩了 85%。与 llama.cpp 的 2-bit 一样大，却聪明得多。">
+<meta name="twitter:description" content="Genrius AI 的 Pingala-8：Qwen3-4B 只需 1.24 GB，而不是 8.05 GB；在相同大小下，测验得分比 llama.cpp 的 IQ2_XXS 高 21%。代码开源，提供 Windows 一键包。">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B（1.24 GB）在本地聊天窗口中写邮件：在 RTX 5070 Ti Laptop GPU 上 0.55 秒生成 105 个 token。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="preload" as="image" href="../media/pingala8-demo-poster.jpg">
+<link rel="stylesheet" href="../style.css">
+<style>
+  :root { --font: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", system-ui, sans-serif; }
+  body { line-height: 1.8; }
+  h1, h2, h3, th, .brand-mark, .stat-num { letter-spacing: 0; }
+  h1, h2, h3 { line-height: 1.3; }
+  .lang-switch a { margin-right: 14px; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://genrius-ai.github.io/pingala8-llm/zh/#webpage",
+  "url": "https://genrius-ai.github.io/pingala8-llm/zh/",
+  "name": "Pingala-8：面向 llama.cpp、体积缩小 85% 的 2-bit 大模型",
+  "description": "Pingala-8 将 Qwen3-4B 从 8.05 GB 压缩到 1.24 GB。在与 llama.cpp 的 2-bit 格式 IQ2_XXS 相同的大小下，它在五项测验上的得分高出 21%。代码开源，提供 Windows 一键包。",
+  "inLanguage": "zh-Hans",
+  "translationOfWork": {"@id": "https://genrius-ai.github.io/pingala8-llm/#webpage"},
+  "about": {"@id": "https://genrius-ai.github.io/pingala8-llm/#software"},
+  "publisher": {"@type": "Organization", "@id": "https://genrius-ai.github.io/pingala8-llm/#org", "name": "Genrius AI", "url": "https://github.com/Genrius-AI"},
+  "primaryImageOfPage": "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg",
+  "datePublished": "2026-10-24",
+  "dateModified": "2026-10-24"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 中文首页">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#results" class="hide-sm">结果</a>
+      <a href="#compare" class="hide-sm">对比</a>
+      <a href="#try">试用</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm" class="hide-sm">GitHub</a>
+      <a href="../" hreflang="en" lang="en">English</a>
+      <a href="../ja/" hreflang="ja" lang="ja">日本語</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">面向本地大模型的开源 2-bit 压缩</span>
+    <h1>我们把大模型压缩了 85%。 <span class="line2">与 llama.cpp 的 2-bit 一样大，却聪明得多。</span></h1>
+    <p class="lede">Pingala-8 把 Qwen3-4B 存成 1.24 GB，而原始模型是 8.05 GB。这与 llama.cpp 最小的常用 2-bit 格式 IQ2_XXS 的文件大小相同，而它在五项标准测验上的得分高出 21%。无需重新训练：它直接压缩你手上已有的模型。代码、日志和 Windows 一键包全部公开。</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">下载 Windows 版 <small>(1.6 GB)</small></a>
+      <a class="btn" href="https://doi.org/10.5281/zenodo.23481757">阅读论文</a>
+      <a class="btn" href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Hugging Face 上的模型</a>
+    </div>
+    <div class="video-frame">
+      <video autoplay muted loop playsinline controls preload="auto" width="1920" height="1080"
+             poster="../media/pingala8-demo-poster.jpg"
+             aria-label="演示：Pingala-8 Qwen3-4B 在本地聊天页面中写一封简短的邮件，0.55 秒生成 105 个 token">
+        <source src="../media/pingala8-demo-1080p.mp4" type="video/mp4">
+        <a href="../media/pingala8-demo-1080p.mp4">观看 31 秒演示（MP4，4.3 MB）</a>
+      </video>
+    </div>
+    <p class="caption">实时播放，未加速。文字和时间来自 Pingala-8 Qwen3-4B（1.24 GB）在 RTX 5070 Ti Laptop GPU 上的一次真实运行；聊天窗口是重新制作的。</p>
+  </div>
+</section>
+
+<section id="results" aria-labelledby="results-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">结果</span>
+      <h2 id="results-h">更小，同等大小下更聪明，生成速度快</h2>
+      <p>除特别注明外，均为 Qwen3-4B。在一块 GPU（RTX 5070 Ti Laptop）上测得。每个数字都能在论文和仓库里的日志中找到。</p>
+    </div>
+    <div class="stats">
+      <div class="card">
+        <div class="stat-num">85%</div>
+        <div class="stat-label">比原始模型小</div>
+        <p class="stat-detail">Qwen3-4B 从 8.05 GB（fp16）降到 1.24 GB，只有原来的 1/6.5。Llama-3.1-8B 从 16.08 GB 降到 2.39 GB。</p>
+      </div>
+      <div class="card">
+        <div class="stat-num">+21%</div>
+        <div class="stat-label">同等大小下，测验得分高于 llama.cpp 的 2-bit</div>
+        <p class="stat-detail">五项任务的平均分：50.8，IQ2_XXS 为 41.9。保留了 8-bit 模型 56.3 分的 90%。</p>
+      </div>
+      <div class="card">
+        <div class="stat-num">39%</div>
+        <div class="stat-label">比 Q4_K_M 快，大小只有它的一半</div>
+        <p class="stat-detail">生成回复时约每秒 216 个 token（batch 1），是 IQ2_XXS 的 1.10x。读取长提示词较慢：0.74x。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="quality-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">同等大小下的质量</span>
+      <h2 id="quality-h">同样的字节数，更低的困惑度</h2>
+      <p>困惑度（perplexity）衡量模型预测真实文本的能力，越低越好。在 WikiText-2 上，原始 Qwen3-4B 为 12.46。在 IQ2_XXS 的文件大小下，Pingala-8 为 16.64；相比之下，IQ2_XXS 为 28.61（Pingala-8 低 42%），我们构建的同等大小中最强的 IQ2_KT 文件为 18.15。</p>
+    </div>
+    <figure>
+      <div class="chart">
+        <img src="../media/ppl-vs-size.png" width="1485" height="467" loading="lazy" decoding="async"
+             alt="两张散点图，显示 WikiText-2 困惑度与文件大小的关系。Qwen3-4B，约 1.24 GB：Pingala-8 B4 为 16.64，多个 IQ2_KT 文件（最好为 18.15），IQ2_XXS 为 28.61，fp16 为 12.46。Llama-3.1-8B，约 2.39 GB：Pingala-8 B4 为 9.14，IQ2_KT 为 10.04，IQ2_XXS 为 12.35。">
+      </div>
+      <span class="chart-hint">左右滑动图表，可查看两个面板。</span>
+      <figcaption>WikiText-2 困惑度与文件大小，上下文长度 4096（B4 是发布的 Pingala-8 文件）。(a) Qwen3-4B，73 个窗口；这个 B4 文件是一连串构建中的最后一个，因此应视为经过调优（事后选择）。(b) Llama-3.1-8B base，70 个跨步窗口，预测在运行前就已写下：9.14，IQ2_KT 为 10.04，IQ2_XXS 为 12.35。如果每个窗口都加上起始 token，Llama 的结果为 8.44，IQ2_KT 为 9.36。</figcaption>
+    </figure>
+
+    <h3 style="margin-top:44px">测验得分，Qwen3-4B</h3>
+    <p class="muted small">零样本准确率（%）。三个 2-bit 文件都约为 1.24 GB。原始模型指 8-bit 的 Q8_0 文件。</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>任务</th><th class="num">原始（8-bit）</th><th class="num">IQ2_XXS</th><th class="num">IQ2_KT</th><th class="num">Pingala-8</th><th class="num">相对 IQ2_XXS</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ARC-Easy</td><td class="num">66.1</td><td class="num">43.9</td><td class="num">53.3</td><td class="num"><strong>60.9</strong></td><td class="num gain">+39%</td></tr>
+          <tr><td>ARC-Challenge</td><td class="num">45.2</td><td class="num">29.1</td><td class="num">35.1</td><td class="num"><strong>37.8</strong></td><td class="num gain">+30%</td></tr>
+          <tr><td>HellaSwag</td><td class="num">65.8</td><td class="num">47.8</td><td class="num">53.3</td><td class="num"><strong>57.7</strong></td><td class="num gain">+21%</td></tr>
+          <tr><td>WinoGrande</td><td class="num">65.5</td><td class="num">57.5</td><td class="num">57.9</td><td class="num"><strong>63.8</strong></td><td class="num gain">+11%</td></tr>
+          <tr><td>MMLU</td><td class="num">38.7</td><td class="num">31.1</td><td class="num">32.9</td><td class="num"><strong>34.0</strong></td><td class="num gain">+9%</td></tr>
+          <tr class="ours"><td><strong>平均</strong></td><td class="num">56.3</td><td class="num">41.9</td><td class="num">46.5</td><td class="num"><strong>50.8</strong></td><td class="num gain">+21%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="compare" aria-labelledby="compare-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">横向对比</span>
+      <h2 id="compare-h">Pingala-8 胜在哪里，其他格式又胜在哪里</h2>
+      <p>Qwen3-4B，上下文长度 4096 下的 WikiText-2 困惑度，每个文件都用同一项测试。越低越好。</p>
+    </div>
+    <div class="table-wrap stack">
+      <table class="compare">
+        <thead>
+          <tr><th>格式</th><th class="num">大小</th><th class="num">困惑度</th><th>我们的坦诚说明</th></tr>
+        </thead>
+        <tbody>
+          <tr class="ours">
+            <td><strong>Pingala-8 (B4)</strong><span class="who">Genrius AI</span></td>
+            <td class="num" data-label="大小"><strong>1.24 GB</strong></td>
+            <td class="num" data-label="困惑度"><strong>16.64</strong></td>
+            <td>直接压缩原始模型，无需重新训练。需要我们修改过的 llama.cpp 和 NVIDIA GPU（CUDA）。</td>
+          </tr>
+          <tr>
+            <td>IQ2_XXS<span class="who">llama.cpp</span></td>
+            <td class="num" data-label="大小">1.25 GB</td>
+            <td class="num" data-label="困惑度">28.61</td>
+            <td>大小相同。可以在原版 llama.cpp、Ollama 和 LM Studio 中运行，也支持 CPU 和 Mac。读取提示词更快（我们只有它的 0.74x）。我们的测验得分高 21%，生成速度是它的 1.10x。</td>
+          </tr>
+          <tr>
+            <td>IQ2_KT<span class="who">ik_llama.cpp</span></td>
+            <td class="num" data-label="大小">1.25 GB</td>
+            <td class="num" data-label="困惑度">18.15</td>
+            <td>大小相同，也是我们构建的同等大小对手中最强的。读取提示词比我们快约 1.3x。在 Qwen3-14B 上它胜过我们（9.40，我们为 9.57）。</td>
+          </tr>
+          <tr>
+            <td>Q4_K_M<span class="who">llama.cpp</span></td>
+            <td class="num" data-label="大小">约为我们的 2 倍</td>
+            <td class="num" data-label="困惑度">未比较</td>
+            <td>更大的 4-bit 文件；如果内存不是你的瓶颈，就选它。我们只比较了速度：在 batch 1 下，我们以一半的大小，生成速度快 39%。</td>
+          </tr>
+          <tr>
+            <td>GSQ Q2_K<span class="who">ISTA-DASLab</span></td>
+            <td class="num" data-label="大小">1.67 GB</td>
+            <td class="num" data-label="困惑度">14.37</td>
+            <td>困惑度比我们好，但文件大 34%。</td>
+          </tr>
+          <tr>
+            <td>Ternary Bonsai 4B<span class="who">prism-ml</span></td>
+            <td class="num" data-label="大小">1.07 GB</td>
+            <td class="num" data-label="困惑度">11.59</td>
+            <td>更好，也更小。它是重新训练的模型，而不是对 Qwen3-4B 的压缩（它甚至胜过原始模型），需要一次训练以及他们的分支（fork）。</td>
+          </tr>
+          <tr class="ref">
+            <td>Qwen3-4B fp16<span class="who">原始模型</span></td>
+            <td class="num" data-label="大小">8.05 GB</td>
+            <td class="num" data-label="困惑度">12.46</td>
+            <td>未压缩的模型，供参考。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">我们的解读：在我们测试过的格式中，如果不重新训练、把原始 Qwen3-4B 压缩到约 1.24 GB，Pingala-8 的困惑度最低。如果你只是想要这一级别里一个强的小模型，像 Ternary Bonsai 这样重新训练过的模型是更好的选择。Pingala-8 适合压缩那些没有人替你重新训练过的模型。在 Llama-3.1-8B（2.39 GB）上，它同样胜过两种同等大小的格式：8.44，IQ2_KT 为 9.36。</p>
+  </div>
+</section>
+
+<section id="try" aria-labelledby="try-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">试用</span>
+      <h2 id="try-h">3 步试用</h2>
+      <p>需要 Windows 或 Linux，一块 NVIDIA RTX GPU（30、40 或 50 系列）和较新的驱动程序。无需 Python，无需编译。</p>
+      <p>注意：原版 llama.cpp、Ollama 和 LM Studio 目前无法加载这些文件，请使用一键包里修改过的 llama.cpp。</p>
+    </div>
+    <ol class="steps">
+      <li class="card">
+        <h3>下载</h3>
+        <p>从 <a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">v2.4-oneclick 发布页</a> 下载 <code>pingala8-windows-cuda12.zip</code>（1.6 GB）。</p>
+        <p>Linux：同一页面上的 <code>pingala8-linux-cuda13.tar.gz</code>。</p>
+      </li>
+      <li class="card">
+        <h3>解压并双击</h3>
+        <p>运行 <code>run_qwen3_4b.bat</code>（或 <code>run_llama31_8b.bat</code>）。模型会从 Hugging Face 下载一次。</p>
+        <p>Linux：<code>./run.sh qwen</code> 或 <code>./run.sh llama</code>。</p>
+      </li>
+      <li class="card">
+        <h3>聊天</h3>
+        <p>在 Windows 上，浏览器会打开聊天页面 <code>http://127.0.0.1:8080</code>（在 Linux 上请自己打开这个地址）。一切都在你的电脑上运行。</p>
+        <p>关闭黑色窗口即可停止。</p>
+      </li>
+    </ol>
+    <p class="req">从源码构建、运行论文中的困惑度测试，或使用 CPU 补丁：请参阅 <a href="https://github.com/Genrius-AI/pingala8-llm#quick-start" hreflang="en">README 中的快速入门</a>（英文）。模型：<a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a> 和 <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a>。</p>
+  </div>
+</section>
+
+<section aria-labelledby="how-h">
+  <div class="wrap two-col">
+    <div>
+      <span class="eyebrow">工作原理</span>
+      <h2 id="how-h">作用于每组 4 个权重的网格码（trellis code）</h2>
+      <p>大多数 2-bit 格式对每一小组权重单独取整。Pingala-8 用 Ungerboeck 的 8 状态网格码按顺序对各组编码：一个很小的状态从一组 4 个权重传到下一组，并决定下一组可以使用哪一组取值，所以同样的比特能更接近真实的权重。</p>
+      <p>编码之前，随机 Hadamard 旋转会把少数特别大的权重分散开，LDLQ 取整则把每一列的误差传给尚未编码的列。这些思路来自 QuIP、QuIP# 和 QTIP，这种格式与 ikawrakow 的 IQ2_KT 相近。llama.cpp 的一个 CUDA 补丁（commit <code>7ac59a6</code>）负责读取这个文件。</p>
+      <p><a href="../article.html" hreflang="en">阅读完整文章</a>（英文），了解通俗的解释和技术细节。</p>
+    </div>
+    <div class="card">
+      <h3>名字的由来</h3>
+      <p class="muted">Pingala 的 Chandahsutra 是一部论述诗歌格律的古代梵语著作，书中列出了由三个长音节或短音节组成的 8 种模式，即 gana。我们的编码在短模式上有 8 个状态，所以用他的名字命名。这个名字是一种致敬；网格的标签来自 Ungerboeck。</p>
+    </div>
+  </div>
+</section>
+
+<section id="limits" aria-labelledby="limits-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">局限</span>
+      <h2 id="limits-h">我们的不足</h2>
+      <p>选择 Pingala-8 之前，请先读完这一部分。</p>
+    </div>
+    <ul class="limits">
+      <li><strong>在 Qwen3-14B 上落败。</strong>我们在运行前预测会胜出，结果没有：在 WikiText-2 上为 9.57，IQ2_KT 为 9.40；在 C4 上打平。</li>
+      <li><strong>提示词处理更慢。</strong>读取提示词的速度是 IQ2_XXS 的 0.74x。长文档在输出第一个字之前要等更久。</li>
+      <li><strong>批量解码更慢。</strong>同时服务 2 到 8 个对话时，速度是 IQ2_XXS 的 0.18x 到 0.34x。它适合一个人用一块 GPU，不适合做服务器。</li>
+      <li><strong>需要我们的运行时。</strong>仅支持带 CUDA 的修改版 llama.cpp。原版 llama.cpp、Ollama 和 LM Studio 目前还无法加载。不支持 Metal 或 Vulkan；CPU 生成速度是 IQ2_XXS 的 0.56x 到 0.62x。</li>
+      <li><strong>Qwen3-4B 的数字经过调优。</strong>这个文件是在 WikiText-2 上测试过的众多构建中的最后一个。C4 是留出的测试集；Llama-3.1-8B 和 Qwen3-14B 的运行都是预先登记的。</li>
+      <li><strong>只测了一块 GPU，没有安全评估。</strong>速度是在一块 RTX 5070 Ti Laptop GPU 上测得的。我们没有评估压缩后模型的安全行为。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="links" aria-labelledby="links-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">延伸阅读</span>
+      <h2 id="links-h">更多资料（英文）</h2>
+      <p>以下页面目前只有英文版。</p>
+    </div>
+    <ul class="limits">
+      <li><strong><a href="../article.html" hreflang="en">文章：我们如何在不重新训练的情况下把 Qwen3-4B 装进 1.24 GB</a></strong>我们做了什么、为什么 2-bit 很重要、实测数字及其适用范围、我们的不足，以及如何试用。</li>
+      <li><strong><a href="../#guides" hreflang="en">在小显存 GPU 上运行大模型的指南</a></strong>关于显存、量化和质量的通俗指南，附实测数字，并说明 Pingala-8 适合和不适合的场景。</li>
+      <li><strong><a href="../paper.html" hreflang="en">论文：摘要、PDF 和 BibTeX</a></strong>预印本第 2.4 版，DOI 10.5281/zenodo.23481757。</li>
+      <li><strong><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md" hreflang="en">复现方法（REPRODUCE.md）</a></strong>如何复现论文中的数字。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="cite" aria-labelledby="cite-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">论文</span>
+      <h2 id="cite-h">阅读并引用论文</h2>
+    </div>
+    <div class="cite">
+      <p class="doi" lang="en">Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp</p>
+      <p class="muted">Harshit Goyal，Genrius AI。预印本，第 2.4 版，2026 年 10 月。DOI：<a href="https://doi.org/10.5281/zenodo.23481757">10.5281/zenodo.23481757</a></p>
+<pre lang="en"><code>@misc{goyal2026pingala8,
+  title     = {Small-State Coset Trellis Coding at {IQ2\_XXS} Size:
+               An Equal-Bytes Study in {llama.cpp}},
+  author    = {Goyal, Harshit},
+  year      = {2026},
+  month     = oct,
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23481757},
+  url       = {https://doi.org/10.5281/zenodo.23481757},
+  note      = {Preprint, version 2.4.
+               Code: https://github.com/Genrius-AI/pingala8-llm}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline" lang="en">Generating Real Intelligence</p>
+        <p>创始人 Harshit Goyal，前 Google 软件工程师，IIIT Delhi 校友。</p>
+        <p>Pingala-8 以 Apache License 2.0 开源。问题与需求：<a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>。</p>
+        <p class="lang-switch">其他语言： <a href="../" hreflang="en" lang="en">English</a> <a href="../ja/" hreflang="ja" lang="ja">日本語</a></p>
+      </div>
+      <div>
+        <h3>获取</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">一键包</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">代码、补丁和日志</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B 模型</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B 模型</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>阅读</h3>
+        <ul>
+          <li><a href="../article.html" hreflang="en">文章：我们如何把 Qwen3-4B 装进 1.24 GB（英文）</a></li>
+          <li><a href="../#guides" hreflang="en">小显存 GPU 指南（英文）</a></li>
+          <li><a href="../paper.html" hreflang="en">论文：摘要、PDF 和 BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">论文（DOI 10.5281/zenodo.23481757）</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md" hreflang="en">复现方法（英文）</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">Pingala-8 和 Genrius AI 是 Genrius AI 的名称。llama.cpp、Qwen、Llama 等名称归各自的所有者所有，这里只用来指明他们的作品。Llama-3.1-8B 模型采用 Llama 3.1 Community License。<span lang="en">Built with Llama.</span></p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var v = document.querySelector('video');
+        if (v) { v.removeAttribute('autoplay'); v.pause(); }
+      }
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
