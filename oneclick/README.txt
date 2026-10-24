@@ -1,6 +1,6 @@
 Pingala-8 one-click runtime
 ===========================
-Patched llama.cpp (commit 7ac59a6) that runs the Pingala-8 B4 2-bit models. Needs an NVIDIA GPU (RTX 20-series or newer)
+Patched llama.cpp (commit 7ac59a6) that runs the Pingala-8 B4 2-bit models. Needs an NVIDIA GPU (RTX 30, 40 or 50 series; the build targets these three architectures)
 with a recent driver.
 
 Windows: double-click run_qwen3_4b.bat (or run_llama31_8b.bat). The first run downloads the model, then a chat page
