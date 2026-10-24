@@ -65,7 +65,14 @@
       "primaryImageOfPage": "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg",
       "about": {"@id": "https://genrius-ai.github.io/pingala8-llm/#software"},
       "datePublished": "2026-10-24",
-      "dateModified": "2026-10-24"
+      "dateModified": "2026-10-24",
+      "hasPart": [
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html#article", "headline": "How much VRAM do you need to run an LLM locally?", "url": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html#article", "headline": "What is a 2-bit LLM, and is 2-bit quantization usable?", "url": "https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html#article", "headline": "IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant should you pick?", "url": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html#article", "headline": "What is perplexity? LLM perplexity explained in plain English", "url": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html#article", "headline": "How to run Qwen3-4B on a 4 GB or 6 GB GPU", "url": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html"}
+      ]
     },
     {
       "@type": "SoftwareSourceCode",
@@ -129,10 +136,11 @@
       <span class="brand-sub">by Genrius AI</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#results">Results</a>
+      <a href="#results" class="hide-sm">Results</a>
       <a href="#compare" class="hide-sm">Compare</a>
       <a href="#try">Try it</a>
       <a href="article.html">Article</a>
+      <a href="#guides">Guides</a>
       <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
     </nav>
   </div>
@@ -349,6 +357,38 @@
   </div>
 </section>
 
+<section id="guides" aria-labelledby="guides-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Guides</span>
+      <h2 id="guides-h">Running LLMs on small GPUs</h2>
+      <p>Plain-language guides to memory, quantization and quality, with measured numbers and where Pingala-8 does and does not fit.</p>
+    </div>
+    <div class="guides">
+      <a class="card guide-card" href="how-much-vram-for-local-llm.html">
+        <h3>How much VRAM do you need to run an LLM locally?</h3>
+        <p>Work out GPU memory from file size, KV cache and headroom, with what fits on 4, 6, 8 and 12 GB.</p>
+      </a>
+      <a class="card guide-card" href="is-2-bit-quantization-usable.html">
+        <h3>What is a 2-bit LLM, and is 2-bit quantization usable?</h3>
+        <p>What 2-bit does to a model, measured on Qwen3-4B from IQ1_M to Q2_K, and when it is a poor fit.</p>
+      </a>
+      <a class="card guide-card" href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">
+        <h3>IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</h3>
+        <p>GGUF names decoded, one table of size, perplexity, quiz scores and speed, and a short decision guide.</p>
+      </a>
+      <a class="card guide-card" href="what-is-perplexity-llm.html">
+        <h3>What is perplexity? LLM perplexity in plain English</h3>
+        <p>What the number means, what counts as a good score, and how to compare quantized models fairly.</p>
+      </a>
+      <a class="card guide-card" href="run-qwen3-4b-on-4gb-6gb-gpu.html">
+        <h3>How to run Qwen3-4B on a 4 GB or 6 GB GPU</h3>
+        <p>Which Qwen3-4B file fits a small card, how much context you keep, and the llama.cpp settings that help.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="cite" aria-labelledby="cite-h">
   <div class="wrap">
     <div class="section-head">
@@ -398,6 +438,7 @@
         <h3>Read</h3>
         <ul>
           <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="#guides">Guides for small GPUs</a></li>
           <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
           <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
         </ul>

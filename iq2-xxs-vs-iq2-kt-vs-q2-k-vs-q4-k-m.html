@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant? | Genrius AI</title>
+<meta name="description" content="GGUF quant names decoded, with measured Qwen3-4B size, perplexity, quiz scores and speed for Q4_K_M, Q2_K, IQ2_XS, IQ2_XXS, IQ2_KT and IQ1_M.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant should you pick?">
+<meta property="og:description" content="GGUF quant names decoded, with measured Qwen3-4B size, perplexity, quiz scores and speed for Q4_K_M, Q2_K, IQ2_XS, IQ2_XXS, IQ2_KT and IQ1_M.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="IQ2_XXS vs Q2_K">
+<meta property="article:tag" content="which GGUF quant">
+<meta property="article:tag" content="GGUF quantization types">
+<meta property="article:tag" content="Q4_K_M">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant should you pick?">
+<meta name="twitter:description" content="GGUF quant names decoded, with measured Qwen3-4B size, perplexity, quiz scores and speed for Q4_K_M, Q2_K, IQ2_XS, IQ2_XXS, IQ2_KT and IQ1_M.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html#article",
+      "headline": "IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant should you pick?",
+      "description": "GGUF quant names decoded, with measured Qwen3-4B size, perplexity, quiz scores and speed for Q4_K_M, Q2_K, IQ2_XS, IQ2_XXS, IQ2_KT and IQ1_M.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "Choosing a GGUF quantization type for llama.cpp: Q4_K_M, Q2_K, IQ2_XS, IQ2_XXS, IQ2_KT and IQ1_M",
+      "keywords": "IQ2_XXS vs Q2_K, which GGUF quant, GGUF quantization types, Q4_K_M, IQ2_KT, IQ2_XS, llama.cpp, Qwen3-4B",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is IQ2_XXS better than Q2_K?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not on quality. On Qwen3-4B, Q2_K has a WikiText-2 perplexity of 15.01 against 28.61 for IQ2_XXS (lower is better), but its file is 34% bigger: 1.67 GB against 1.25 GB. If 1.67 GB fits, Q2_K is the safer stock choice. IQ2_XXS is for when it does not."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between IQ2_XS and IQ2_XXS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IQ2_XS is the larger of the two. On Qwen3-4B it is 1.35 GB against 1.25 GB, with perplexity 19.02 against 28.61 and a five-quiz average of 47.7 against 41.9."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is IQ2_KT?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 2-bit trellis quant in ik_llama.cpp, the llama.cpp fork by ikawrakow. At the IQ2_XXS size on Qwen3-4B, the strongest IQ2_KT file we built scores 18.15 against 28.61 for IQ2_XXS. Stock llama.cpp, Ollama and LM Studio cannot load it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Q4_K_M good enough?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most local use, Q4_K_M is the usual default and runs in every common tool. Choose a 2-bit file only when Q4_K_M plus the context you need does not fit in your memory."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Which GGUF quant to pick",
+          "item": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant should you pick?</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-24">October 24, 2026</time>. About 7 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>If Q4_K_M fits with room for your context, start there. For Qwen3-4B it is about 2.5 GB.</li>
+      <li>Below that, in stock llama.cpp, Ollama or LM Studio, Q2_K (1.67 GB, perplexity 15.01) and IQ2_XS (1.35 GB, 19.02) lose far less than IQ2_XXS (1.25 GB, 28.61) on Qwen3-4B.</li>
+      <li>At the IQ2_XXS size on an NVIDIA GPU, trellis formats do much better: IQ2_KT scores 18.15 and our Pingala-8 16.64.</li>
+      <li>Skip IQ1_M on a model this small: 57.50.</li>
+    </ul>
+  </div>
+
+  <p>Open any GGUF model page on Hugging Face and you get a long list of files: Q8_0, Q6_K, Q4_K_M, Q3_K_S, IQ2_XS, IQ2_XXS, IQ1_M and more. They are the same model stored at different precisions. This guide decodes the names, then compares the 2-bit to 4-bit options on one model with one set of tests, so you can pick by your memory and your software.</p>
+
+  <h2>How to read the names</h2>
+  <ul>
+    <li><strong>The number</strong> is the rough bits per weight for most of the model: Q2 is about 2, Q4 about 4, Q8 about 8. Whole files come out a little higher.</li>
+    <li><strong>K</strong> means a k-quant: weights are stored in small blocks with their own scales, grouped into super-blocks of 256 weights.</li>
+    <li><strong>S, M and L</strong> are small, medium and large mixes. An M file gives a few sensitive tensors more bits than an S file.</li>
+    <li><strong>IQ</strong> means an i-quant: groups of weights are stored as entries from a fixed table of patterns (a lattice codebook). They are usually made with an importance matrix, or imatrix: statistics from sample text that tell the quantizer which weights matter most.</li>
+    <li><strong>XXS, XS, S and M</strong> on i-quants are sizes, smallest first.</li>
+    <li><strong>KT</strong> is a trellis quant from ik_llama.cpp, a fork by ikawrakow, who also wrote llama.cpp's k-quants and i-quants. It codes groups of weights in sequence, in the spirit of QTIP. Stock llama.cpp cannot load it.</li>
+  </ul>
+
+  <h2>The comparison</h2>
+  <p>Every row is Qwen3-4B, made from the same original and measured with the same WikiText-2 test at context 4,096 (lower perplexity is better). The quiz average covers ARC-Easy, ARC-Challenge, HellaSwag, WinoGrande and MMLU. Speeds are ratios to IQ2_XXS on one RTX 5070 Ti Laptop GPU: "writing" is generating a reply for one user (batch 1), "reading" is processing the prompt. A dash means we did not measure it.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Format</th><th class="num">Size</th><th class="num">Perplexity</th><th class="num">Quiz average</th><th class="num">Writing</th><th class="num">Reading</th><th>Runs in</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>fp16 (original)</td><td class="num">8.05 GB</td><td class="num">12.46</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>Any tool</td></tr>
+        <tr class="ref"><td>Q8_0 (reference)</td><td class="num">4.28 GB</td><td class="num">12.50</td><td class="num">56.3</td><td class="num">-</td><td class="num">-</td><td>Stock tools</td></tr>
+        <tr><td>Q4_K_M<span class="who">llama.cpp</span></td><td class="num">about 2.5 GB</td><td class="num">-</td><td class="num">-</td><td class="num">0.79x</td><td class="num">0.89x</td><td>Stock tools</td></tr>
+        <tr><td>Q2_K<span class="who">llama.cpp</span></td><td class="num">1.67 GB</td><td class="num">15.01</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>Stock tools</td></tr>
+        <tr><td>IQ2_XS<span class="who">llama.cpp</span></td><td class="num">1.35 GB</td><td class="num">19.02</td><td class="num">47.7</td><td class="num">-</td><td class="num">-</td><td>Stock tools</td></tr>
+        <tr><td>IQ2_KT<span class="who">ik_llama.cpp</span></td><td class="num">1.25 GB</td><td class="num">18.15</td><td class="num">46.5</td><td class="num">1.00x</td><td class="num">0.95x</td><td>ik_llama.cpp</td></tr>
+        <tr><td>IQ2_XXS<span class="who">llama.cpp</span></td><td class="num">1.25 GB</td><td class="num">28.61</td><td class="num">41.9</td><td class="num">1.00x</td><td class="num">1.00x</td><td>Stock tools</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong><span class="who">Genrius AI</span></td><td class="num"><strong>1.24 GB</strong></td><td class="num"><strong>16.64</strong></td><td class="num"><strong>50.8</strong></td><td class="num">1.10x</td><td class="num">0.74x</td><td>Our patched llama.cpp, NVIDIA CUDA only</td></tr>
+        <tr><td>IQ1_M<span class="who">llama.cpp</span></td><td class="num">1.13 GB</td><td class="num">57.50</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>Stock tools</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">"Stock tools" means stock llama.cpp, Ollama and LM Studio. The IQ2_KT row is the strongest of six IQ2_KT files we built at this size. The Pingala-8 Qwen3-4B file is the last of many builds we tested on WikiText-2, so treat its number as tuned. Its writing speed has a 95% interval of 1.03x to 1.16x, and the paper does not treat that edge over IQ2_XXS as established. The Q4_K_M size is Qwen's official file. Source: the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a> and the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>.</p>
+
+  <h2>Each format in a few lines</h2>
+  <p><strong>Q4_K_M</strong> is the usual default for local use and runs everywhere. On Qwen3-4B it is about twice the size of the 2-bit files, and at batch 1 on our GPU it wrote at 0.79x the speed of IQ2_XXS, largely because a bigger file takes longer to read from memory. We did not measure its perplexity in this study.</p>
+  <p><strong>Q2_K</strong> has the lowest perplexity of the stock llama.cpp files under 2 GB in this table, 15.01, but at 1.67 GB it is 34% bigger than the 1.25 GB files. If 1.67 GB fits, it is a good pick in any tool.</p>
+  <p><strong>IQ2_XS</strong>, at 1.35 GB, is 9% bigger than IQ2_XXS and much better: 19.02 against 28.61, and 47.7 against 41.9 on the quizzes. If you need stock tools and Q2_K does not fit, try it before IQ2_XXS.</p>
+  <p><strong>IQ2_XXS</strong> is the smallest common 2-bit file. On Qwen3-4B it loses the most of the 2-bit files: 28.61, more than twice the original's 12.46. Its strength is that it runs everywhere.</p>
+  <p><strong>IQ2_KT</strong> is the same size as IQ2_XXS and scores 18.15 and 46.5. It reads prompts at 0.95x IQ2_XXS, about 1.3x faster than Pingala-8, and on Qwen3-14B it beats Pingala-8, 9.40 against 9.57. It needs ik_llama.cpp.</p>
+  <p><strong>Pingala-8</strong> is our format, the same size again: 16.64 and 50.8, the lowest perplexity and highest quiz average of the 1.25 GB files we tested on Qwen3-4B. On Llama-3.1-8B at 2.39 GB it also leads both same-size formats (9.14 against 10.04 for IQ2_KT and 12.35 for IQ2_XXS). It reads prompts slower (0.74x) and needs our patched llama.cpp on an NVIDIA GPU.</p>
+  <p><strong>IQ1_M</strong> saves about 0.12 GB more and roughly doubles the perplexity of IQ2_XXS, to 57.50. On a model this small, that is a poor trade.</p>
+
+  <h2>Which one to pick</h2>
+  <ol>
+    <li><strong>Does Q4_K_M fit, with room for your context?</strong> Use it. <a href="how-much-vram-for-local-llm.html">How much VRAM you need</a> shows the arithmetic.</li>
+    <li><strong>Need Ollama, LM Studio, a Mac, an AMD card or a CPU?</strong> Use the largest stock file that fits: Q2_K, then IQ2_XS, then IQ2_XXS.</li>
+    <li><strong>NVIDIA GPU, one user, and you need the IQ2_XXS size?</strong> Try Pingala-8 for the lowest perplexity in our tests on Qwen3-4B and Llama-3.1-8B, or IQ2_KT for faster prompt reading and for Qwen3-14B.</li>
+    <li><strong>Not tied to one model?</strong> A model retrained for low precision can beat any compression: Ternary Bonsai 4B scores 11.59 at 1.07 GB, but needs its authors' llama.cpp fork. A smaller model at 4-bit is also worth testing; we did not measure that trade.</li>
+  </ol>
+
+  <h2>Caveats</h2>
+  <p>These are one model's numbers, and the ranking can change between models: on Qwen3-14B, IQ2_KT beats Pingala-8. Quiz scores for a typical 2-bit file carry standard errors of 0.4 to 3.1 points per task, so small gaps mean little. Perplexity is one test of text prediction (see <a href="what-is-perplexity-llm.html">what perplexity means</a>), so check scores on your own task too. For background on the 2-bit trade itself, read <a href="is-2-bit-quantization-usable.html">is 2-bit quantization usable</a>.</p>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>Is IQ2_XXS better than Q2_K?</h3>
+  <p>Not on quality. On Qwen3-4B, Q2_K has a WikiText-2 perplexity of 15.01 against 28.61 for IQ2_XXS (lower is better), but its file is 34% bigger: 1.67 GB against 1.25 GB. If 1.67 GB fits, Q2_K is the safer stock choice. IQ2_XXS is for when it does not.</p>
+  <h3>What is the difference between IQ2_XS and IQ2_XXS?</h3>
+  <p>IQ2_XS is the larger of the two. On Qwen3-4B it is 1.35 GB against 1.25 GB, with perplexity 19.02 against 28.61 and a five-quiz average of 47.7 against 41.9.</p>
+  <h3>What is IQ2_KT?</h3>
+  <p>A 2-bit trellis quant in ik_llama.cpp, the llama.cpp fork by ikawrakow. At the IQ2_XXS size on Qwen3-4B, the strongest IQ2_KT file we built scores 18.15 against 28.61 for IQ2_XXS. Stock llama.cpp, Ollama and LM Studio cannot load it.</p>
+  <h3>Is Q4_K_M good enough?</h3>
+  <p>For most local use, Q4_K_M is the usual default and runs in every common tool. Choose a 2-bit file only when Q4_K_M plus the context you need does not fit in your memory.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

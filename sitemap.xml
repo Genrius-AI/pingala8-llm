@@ -32,4 +32,34 @@
       <image:loc>https://genrius-ai.github.io/pingala8-llm/media/ppl-vs-size.png</image:loc>
     </image:image>
   </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

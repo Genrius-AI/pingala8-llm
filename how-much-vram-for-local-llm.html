@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How much VRAM do you need to run an LLM locally? | Genrius AI</title>
+<meta name="description" content="A plain-English way to work out GPU memory for a local LLM: file size, KV cache and headroom, with measured Qwen3-4B file sizes from 8.05 GB down to 1.24 GB.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How much VRAM do you need to run an LLM locally?">
+<meta property="og:description" content="A plain-English way to work out GPU memory for a local LLM: file size, KV cache and headroom, with measured Qwen3-4B file sizes from 8.05 GB down to 1.24 GB.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="VRAM for LLM">
+<meta property="article:tag" content="LLM VRAM requirements">
+<meta property="article:tag" content="KV cache size">
+<meta property="article:tag" content="local LLM">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How much VRAM do you need to run an LLM locally?">
+<meta name="twitter:description" content="A plain-English way to work out GPU memory for a local LLM: file size, KV cache and headroom, with measured Qwen3-4B file sizes from 8.05 GB down to 1.24 GB.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html#article",
+      "headline": "How much VRAM do you need to run an LLM locally?",
+      "description": "A plain-English way to work out GPU memory for a local LLM: file size, KV cache and headroom, with measured Qwen3-4B file sizes from 8.05 GB down to 1.24 GB.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "GPU memory (VRAM) requirements for running large language models locally",
+      "keywords": "VRAM for LLM, LLM VRAM requirements, KV cache size, local LLM, llama.cpp, Qwen3-4B, GGUF, quantization",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much VRAM do I need for a 4B model?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Qwen3-4B needs 8.05 GB for its weights at 16-bit, about 2.5 GB at Q4_K_M and 1.24 GB with a 2-bit format such as Pingala-8 or IQ2_XXS. Add about 0.6 GB of KV cache for a 4,096-token context (16-bit cache, calculated from the model config), plus working buffers and whatever your desktop uses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much VRAM do I need for an 8B model?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Llama-3.1-8B is 16.08 GB at 16-bit and 2.39 GB with Pingala-8. Its KV cache takes about 0.54 GB at 4,096 tokens (calculated). A 4-bit file sits in between; check its real file size on the download page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run an LLM on a 4 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On paper, yes for a 4B model in a 2-bit or 3-bit file: Qwen3-4B at 1.24 to 1.67 GB plus a 0.6 GB cache leaves room on a 4 GB card. Q4_K_M (about 2.5 GB) is tight. Keep the context short and close apps that use the GPU."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if the model does not fit in VRAM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "llama.cpp can keep some layers on the GPU and the rest in system RAM (set fewer GPU layers with -ngl). The model still runs, but it writes much more slowly, because system RAM is slower to read than VRAM."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How much VRAM for a local LLM",
+          "item": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>How much VRAM do you need to run an LLM locally?</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-24">October 24, 2026</time>. About 6 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>GPU memory needed = the model file + the KV cache for your context + working buffers + what your desktop already uses.</li>
+      <li>The file is roughly parameters x bits per weight / 8. Qwen3-4B is 8.05 GB at 16-bit, about 2.5 GB at Q4_K_M and 1.24 GB at 2-bit.</li>
+      <li>The KV cache grows with context. For Qwen3-4B it is about 0.6 GB at 4,096 tokens (16-bit cache, calculated).</li>
+      <li>On paper, Qwen3-4B fits a 6 GB card at Q4_K_M and a 4 GB card at 2-bit. The tables below show the arithmetic.</li>
+    </ul>
+  </div>
+
+  <p>If a model does not fit in your graphics card's memory (VRAM), it either fails to load or spills into system RAM, and then it runs far slower. So the first question for any local LLM is simple: will it fit? You can answer it in three steps, before you download anything.</p>
+
+  <h2>What uses GPU memory</h2>
+  <p>Three things share the card when you run a model with llama.cpp, Ollama or LM Studio:</p>
+  <ul>
+    <li><strong>The weights.</strong> This is the model file itself, loaded in full. It is usually the biggest part, and the one you control by choosing a quantization such as Q8_0, Q4_K_M or a 2-bit format.</li>
+    <li><strong>The KV cache.</strong> As the model reads your chat, it keeps a key and a value vector for every token in every layer, so it does not have to recompute them. This is the model's working memory of the conversation, and it grows in a straight line with the context length you set.</li>
+    <li><strong>Working buffers and the desktop.</strong> The runtime needs scratch space for intermediate results (llama.cpp calls it the compute buffer). On a laptop or desktop, the operating system, the browser and the screen already use part of the VRAM.</li>
+  </ul>
+
+  <h2>Step 1: the size of the weights</h2>
+  <p>A model file is close to its number of weights times the bits stored per weight, divided by 8 to get bytes. Qwen3-4B has about 4.0 billion weights. At 16 bits that is 4.0 x 16 / 8 = 8.0 GB, and the real fp16 file is 8.05 GB.</p>
+  <p>For quantized files, use the real file size rather than the name. A "2-bit" file is never exactly 2 bits per weight: formats store scales next to the weights and keep some tensors, such as the embedding table, at higher precision. Averaged over the whole file, our Pingala-8 Qwen3-4B file is 2.47 bits per weight and llama.cpp's IQ2_XXS is 2.48. Here are measured sizes for one model:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Qwen3-4B file</th><th class="num">Size</th><th class="num">Bits per weight</th><th class="num">Perplexity</th><th>Runs in</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>fp16 (original)</td><td class="num">8.05 GB</td><td class="num">16.01</td><td class="num">12.46</td><td>Any tool</td></tr>
+        <tr><td>Q8_0</td><td class="num">4.28 GB</td><td class="num">8.51</td><td class="num">12.50</td><td>Stock llama.cpp, Ollama, LM Studio</td></tr>
+        <tr><td>Q4_K_M</td><td class="num">about 2.5 GB</td><td class="num">-</td><td class="num">not measured</td><td>Stock llama.cpp, Ollama, LM Studio</td></tr>
+        <tr><td>Q2_K</td><td class="num">1.67 GB</td><td class="num">3.32</td><td class="num">15.01</td><td>Stock llama.cpp, Ollama, LM Studio</td></tr>
+        <tr><td>IQ2_XS</td><td class="num">1.35 GB</td><td class="num">2.69</td><td class="num">19.02</td><td>Stock llama.cpp, Ollama, LM Studio</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">1.25 GB</td><td class="num">2.48</td><td class="num">28.61</td><td>Stock llama.cpp, Ollama, LM Studio</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>1.24 GB</strong></td><td class="num">2.47</td><td class="num"><strong>16.64</strong></td><td>Our patched llama.cpp, NVIDIA CUDA only</td></tr>
+        <tr><td>IQ1_M</td><td class="num">1.13 GB</td><td class="num">2.24</td><td class="num">57.50</td><td>Stock llama.cpp, Ollama, LM Studio</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Sizes are file bytes divided by 10^9. Perplexity is WikiText-2 at context 4,096, the same test for every file; lower is better (<a href="what-is-perplexity-llm.html">what perplexity means</a>). The Q4_K_M size is Qwen's official file, 2,497,280,256 bytes; we did not measure its perplexity. Source: the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a> and the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>.</p>
+
+  <h2>Step 2: add the KV cache</h2>
+  <p>The KV cache depends on the shape of the model, not on how the file is quantized. For each token it stores 2 vectors (a key and a value) x the number of layers x the key-value heads x the head size x the bytes per number. Qwen3-4B's published config has 36 layers and 8 key-value heads of size 128, so at 16-bit each token takes 2 x 36 x 8 x 128 x 2 = 147,456 bytes, about 0.15 MB.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Context (tokens)</th><th class="num">2,048</th><th class="num">4,096</th><th class="num">8,192</th><th class="num">16,384</th><th class="num">32,768</th></tr></thead>
+      <tbody>
+        <tr><td>16-bit cache (default)</td><td class="num">0.30 GB</td><td class="num">0.60 GB</td><td class="num">1.21 GB</td><td class="num">2.42 GB</td><td class="num">4.83 GB</td></tr>
+        <tr><td>8-bit cache (q8_0)</td><td class="num">0.16 GB</td><td class="num">0.32 GB</td><td class="num">0.64 GB</td><td class="num">1.28 GB</td><td class="num">2.57 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Qwen3-4B, calculated from the model config, not measured. Llama-3.1-8B (32 layers, 8 key-value heads of size 128) takes 131,072 bytes per token at 16-bit: 0.54 GB at 4,096 tokens.</p>
+  <p>Two settings shrink the cache. A shorter context (<code>-c</code> in llama.cpp) is the simplest. llama.cpp can also store the cache at 8 bits with <code>-ctk q8_0 -ctv q8_0</code>, which roughly halves it; the 8-bit V cache needs flash attention on (<code>-fa on</code>). This changes the output slightly, and we have not tested it with Pingala-8.</p>
+
+  <h2>Step 3: leave headroom, then check</h2>
+  <p>Add the compute buffer and whatever the desktop is using. Both depend on the program, its settings and your system, so the reliable way is to look. Run <code>nvidia-smi</code> to see how much VRAM is free before you start, then load the model: llama.cpp prints the size of the model buffer, the KV cache and the compute buffer as it starts. If the total is close to your free memory, cut the context first.</p>
+
+  <h2>What fits on 4, 6, 8 and 12 GB</h2>
+  <p>Steps 1 and 2 together, for Qwen3-4B with a 4,096-token context and a 16-bit cache (0.60 GB). "Tight" means less than 1.5 GB is left for buffers and the desktop, so expect to shorten the context or close other apps.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Qwen3-4B file</th><th class="num">Weights + cache</th><th class="num">4 GB</th><th class="num">6 GB</th><th class="num">8 GB</th><th class="num">12 GB</th></tr></thead>
+      <tbody>
+        <tr><td>fp16</td><td class="num">8.65 GB</td><td class="num">No</td><td class="num">No</td><td class="num">No</td><td class="num">Yes</td></tr>
+        <tr><td>Q8_0</td><td class="num">4.88 GB</td><td class="num">No</td><td class="num">Tight</td><td class="num">Yes</td><td class="num">Yes</td></tr>
+        <tr><td>Q4_K_M</td><td class="num">about 3.1 GB</td><td class="num">Tight</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td></tr>
+        <tr><td>Q2_K</td><td class="num">2.27 GB</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td></tr>
+        <tr><td>IQ2_XS</td><td class="num">1.95 GB</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">1.85 GB</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>1.84 GB</strong></td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td><td class="num">Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Arithmetic, not a test on these cards. Our speed and quality numbers come from one RTX 5070 Ti Laptop GPU.</p>
+
+  <h2>Where Pingala-8 fits</h2>
+  <p>Pingala-8 is a 2-bit format we built for the case where the card is the limit. Qwen3-4B goes from 8.05 GB to 1.24 GB and Llama-3.1-8B from 16.08 GB to 2.39 GB, so an 8B model plus a 4,096-token cache (0.54 GB) comes to about 2.9 GB on paper. At the same file size as IQ2_XXS, Pingala-8 Qwen3-4B has a WikiText-2 perplexity of 16.64 against 28.61, and a five-quiz average of 50.8 against 41.9 (the 8-bit model scores 56.3). The bytes you save can go to a longer context instead.</p>
+
+  <h2>Where it does not</h2>
+  <ul>
+    <li><strong>If Q4_K_M fits, use it.</strong> It is a bigger 4-bit file and runs in every common tool. Pingala-8 is for when it does not fit, or when you want the room for context.</li>
+    <li><strong>It needs NVIDIA and our runtime.</strong> Pingala-8 runs on our patched llama.cpp with CUDA only. Stock llama.cpp, Ollama and LM Studio cannot load it, and there is no Mac (Metal), AMD or Vulkan path.</li>
+    <li><strong>It suits one user.</strong> It reads long prompts at 0.74x the speed of IQ2_XXS, and serves 2 to 8 chats at once at 0.18x to 0.34x.</li>
+    <li><strong>A little more memory buys a lot.</strong> With 1.67 GB to spare instead of 1.24 GB, stock llama.cpp's Q2_K scores 15.01 on the same test, lower than our 16.64.</li>
+  </ul>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>How much VRAM do I need for a 4B model?</h3>
+  <p>Qwen3-4B needs 8.05 GB for its weights at 16-bit, about 2.5 GB at Q4_K_M and 1.24 GB with a 2-bit format such as Pingala-8 or IQ2_XXS. Add about 0.6 GB of KV cache for a 4,096-token context (16-bit cache, calculated from the model config), plus working buffers and whatever your desktop uses.</p>
+  <h3>How much VRAM do I need for an 8B model?</h3>
+  <p>Llama-3.1-8B is 16.08 GB at 16-bit and 2.39 GB with Pingala-8. Its KV cache takes about 0.54 GB at 4,096 tokens (calculated). A 4-bit file sits in between; check its real file size on the download page.</p>
+  <h3>Can I run an LLM on a 4 GB GPU?</h3>
+  <p>On paper, yes for a 4B model in a 2-bit or 3-bit file: Qwen3-4B at 1.24 to 1.67 GB plus a 0.6 GB cache leaves room on a 4 GB card. Q4_K_M (about 2.5 GB) is tight. Keep the context short and close apps that use the GPU.</p>
+  <h3>What happens if the model does not fit in VRAM?</h3>
+  <p>llama.cpp can keep some layers on the GPU and the rest in system RAM (set fewer GPU layers with -ngl). The model still runs, but it writes much more slowly, because system RAM is slower to read than VRAM.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

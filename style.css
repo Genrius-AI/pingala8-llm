@@ -200,3 +200,16 @@ pre code { background: none; border: 0; padding: 0; font-size: 13.5px; }
   .chart img { min-width: 760px; }
   .chart-hint { display: block; }
 }
+
+/* Guides */
+.guides { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 720px) { .guides { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .guides { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+a.guide-card { display: block; text-decoration: none; color: var(--text); }
+a.guide-card:hover { border-color: var(--gold); color: var(--text); }
+.guide-card h3 { color: var(--beige); margin-bottom: 8px; line-height: 1.3; }
+.guide-card p { color: var(--muted); font-size: 15px; margin: 0; }
+.prose pre { margin: 12px 0 22px; }
+.summary.next { margin-top: 44px; }
+.guide-list li { margin-bottom: 0.6em; }
+.prose code { overflow-wrap: anywhere; }

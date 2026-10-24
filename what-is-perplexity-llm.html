@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is perplexity? LLM perplexity in plain English | Genrius AI</title>
+<meta name="description" content="What LLM perplexity measures, what a good score is, and how to compare quantized models fairly, with WikiText-2 numbers for Qwen3-4B from 12.46 to 57.50.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="What is perplexity? LLM perplexity explained in plain English">
+<meta property="og:description" content="What LLM perplexity measures, what a good score is, and how to compare quantized models fairly, with WikiText-2 numbers for Qwen3-4B from 12.46 to 57.50.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="LLM perplexity">
+<meta property="article:tag" content="what is perplexity">
+<meta property="article:tag" content="good perplexity score">
+<meta property="article:tag" content="perplexity quantization">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is perplexity? LLM perplexity explained in plain English">
+<meta name="twitter:description" content="What LLM perplexity measures, what a good score is, and how to compare quantized models fairly, with WikiText-2 numbers for Qwen3-4B from 12.46 to 57.50.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html#article",
+      "headline": "What is perplexity? LLM perplexity explained in plain English",
+      "description": "What LLM perplexity measures, what a good score is, and how to compare quantized models fairly, with WikiText-2 numbers for Qwen3-4B from 12.46 to 57.50.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "Perplexity as a measure of language model quality, and its use in comparing quantized models",
+      "keywords": "LLM perplexity, what is perplexity, good perplexity score, perplexity quantization, KL divergence, WikiText-2, llama-perplexity, Qwen3-4B",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does perplexity mean for an LLM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It measures how well the model predicts real text, one token at a time. Lower is better. A perplexity of N means that, on average, the model was as unsure about each next token as if it were choosing among N equally likely options."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is lower perplexity always better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For the same model on the same test with the same settings, yes: lower means it predicts the text better. Across different models, tokenizers, texts or settings, the numbers are not comparable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good perplexity for a quantized model?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "One close to the original model's score on the same test. On WikiText-2, Qwen3-4B's 8-bit file is within 0.3% of the 16-bit original; the 1.24 GB 2-bit files we tested are 34% to 130% higher."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does my perplexity differ from published numbers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The text, the context length, how the text is cut into windows, the tokenizer and the original file all move the number. Use the same command and text for every file you compare."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "LLM perplexity explained",
+          "item": "https://genrius-ai.github.io/pingala8-llm/what-is-perplexity-llm.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>What is perplexity? LLM perplexity explained in plain English</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-24">October 24, 2026</time>. About 7 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Perplexity measures how well a language model predicts real text. Lower is better.</li>
+      <li>A perplexity of 12.5 means that, on average, the model is as unsure about each next token as if it were choosing among 12.5 equally likely options.</li>
+      <li>There is no universal good score. Compare a compressed model with its own original on the same text and settings: Qwen3-4B scores 12.46, its 8-bit copy 12.50 and 1.24 GB 2-bit copies 16.64 to 28.61.</li>
+      <li>It is a fast, sensitive check, but confirm with task scores before you pick a model.</li>
+    </ul>
+  </div>
+
+  <p>If you compare quantized models, you will meet perplexity everywhere: on model cards, in llama.cpp pull requests and in papers. It is the most common single number for how much a compressed model has lost. Here is what it means, how to read it, and where it can mislead you.</p>
+
+  <h2>The plain-English version</h2>
+  <p>Give a model a page of real text, one piece at a time, and ask it to guess the next piece before you show it. A model does not make one guess; it spreads its bets, giving each possible next token a probability. If the real next token got a high probability, the model was not surprised. If it got a low one, it was.</p>
+  <p>Perplexity turns that surprise into one number. Take the probability the model gave each real next token, average the surprise over the whole text (in maths, the average negative log probability), and turn it back into a count. The result reads as "how many options the model was torn between, on average". If a model always gave the right token a probability of 1 in 4, its perplexity would be exactly 4.</p>
+  <p>A token is a word or a piece of a word, so perplexity is per token, not per word.</p>
+
+  <h2>Why it matters for quantization</h2>
+  <p>Compressing a model changes its weights, and so its probabilities. Perplexity picks up that change across thousands of predictions at once, which makes it a quick and sensitive way to compare compressed files of the same model. Here is Qwen3-4B on the WikiText-2 test text at context 4,096, with the same settings for every file:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Qwen3-4B file</th><th class="num">Size</th><th class="num">Perplexity</th><th class="num">Change vs original</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>fp16 (original)</td><td class="num">8.05 GB</td><td class="num">12.46</td><td class="num">-</td></tr>
+        <tr><td>Q8_0</td><td class="num">4.28 GB</td><td class="num">12.50</td><td class="num">+0.3%</td></tr>
+        <tr><td>Q2_K</td><td class="num">1.67 GB</td><td class="num">15.01</td><td class="num">+20.5%</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>1.24 GB</strong></td><td class="num"><strong>16.64</strong></td><td class="num">+33.6%</td></tr>
+        <tr><td>IQ2_KT</td><td class="num">1.25 GB</td><td class="num">18.15</td><td class="num">+45.7%</td></tr>
+        <tr><td>IQ2_XS</td><td class="num">1.35 GB</td><td class="num">19.02</td><td class="num">+52.7%</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">1.25 GB</td><td class="num">28.61</td><td class="num">+129.7%</td></tr>
+        <tr><td>IQ1_M</td><td class="num">1.13 GB</td><td class="num">57.50</td><td class="num">+361.6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">WikiText-2 test, 73 windows, the same harness for every file. The Pingala-8 Qwen3-4B file is the last of many builds we tested on this text, so treat its number as tuned. Source: the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a> and the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>.</p>
+
+  <h2>What is a good perplexity score?</h2>
+  <p>No single number is good for every model. A good score is one close to the original model's score on the same test. As a rough reading of the table above (our reading, not a standard):</p>
+  <ul>
+    <li><strong>Within about 1%</strong> (Q8_0): the copy predicts almost exactly like the original.</li>
+    <li><strong>About 20% to 50% higher</strong> (Q2_K, Pingala-8, IQ2_KT, IQ2_XS): a clear but moderate loss.</li>
+    <li><strong>Double or more</strong> (IQ2_XXS, IQ1_M): a large loss. On five quizzes, IQ2_XXS keeps 74% of the 8-bit model's average.</li>
+  </ul>
+
+  <h2>Compare like with like</h2>
+  <p>Perplexity numbers are only comparable when everything except the file is the same:</p>
+  <ul>
+    <li><strong>Same model and tokenizer.</strong> Pingala-8 Llama-3.1-8B scores 9.14 and Pingala-8 Qwen3-4B 16.64, but that does not make the Llama file better. The two models split text into different tokens and were trained differently, so their scores sit on different scales.</li>
+    <li><strong>Same text.</strong> Different texts give different numbers for the same file: Pingala-8 Qwen3-4B scores 16.64 on WikiText-2 (Wikipedia articles) and 24.36 on C4 (web pages).</li>
+    <li><strong>Same settings.</strong> Context length and how the text is cut into windows matter. The same Pingala-8 Llama-3.1-8B file scores 9.14 in llama.cpp's strided mode and 8.44 when every window starts with a start-of-text token.</li>
+  </ul>
+
+  <h2>When perplexity can mislead</h2>
+  <ul>
+    <li><strong>It does not always match task scores.</strong> In our Qwen3-4B tests the two mostly agreed, but not perfectly: IQ2_XS has worse perplexity than IQ2_KT (19.02 against 18.15) and a slightly higher quiz average (47.7 against 46.5), a gap inside the tests' noise.</li>
+    <li><strong>Tuning on the test text flatters.</strong> If you try many builds and keep the one with the lowest WikiText-2 score, that score is optimistic. Our Qwen3-4B Pingala-8 file is such a case, so we also report C4, which we held out: 24.36 against 27.15 for IQ2_KT and 37.28 for IQ2_XXS, the same order.</li>
+    <li><strong>A retrained model is a different model.</strong> Ternary Bonsai 4B scores 11.59, below the original Qwen3-4B's 12.46, because it was retrained rather than compressed. Its perplexity tells you how good it is, not how faithful a copy it is.</li>
+  </ul>
+
+  <h2>A closer check: KL divergence</h2>
+  <p>Perplexity only looks at the probability of the right token. KL divergence compares the compressed model's whole spread of probabilities with the original's, token by token, so it measures how closely a copy follows the original. llama.cpp's perplexity tool can report it against a saved run of the original (<code>--kl-divergence-base</code>, then <code>--kl-divergence</code>). Against the 8-bit Qwen3-4B, Pingala-8 scores 0.585, the IQ2_KT files 0.85 to 0.89 and IQ2_XXS 1.40; lower is closer.</p>
+
+  <h2>How to measure it yourself</h2>
+  <p>llama.cpp ships <code>llama-perplexity</code>. Download the WikiText-2 raw test file, then run every GGUF file you want to compare with the same command, for example:</p>
+  <pre><code>llama-perplexity -m model.gguf -f wiki.test.raw -c 4096 -ngl 99</code></pre>
+  <p>It prints a running value per window and a final estimate with an error bar. Keep the text, the context and every other flag the same across files. The exact command and text file behind our numbers are in the <a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">reproduction guide</a>.</p>
+
+  <h2>Where Pingala-8 fits</h2>
+  <p>Pingala-8 is a 2-bit format we built to lose less at a fixed size. On Qwen3-4B at 1.24 GB its perplexity is 34% above the original, against 46% for the strongest IQ2_KT file and 130% for IQ2_XXS at the same size, and on the quizzes it keeps 90% of the 8-bit average. Where it does not fit: Q2_K loses less (+21%) if you can spare 1.67 GB, Pingala-8 loses to IQ2_KT on Qwen3-14B (9.57 against 9.40), and it needs our patched llama.cpp on an NVIDIA GPU. The <a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">GGUF quant comparison</a> puts these numbers next to speed and quiz scores.</p>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>What does perplexity mean for an LLM?</h3>
+  <p>It measures how well the model predicts real text, one token at a time. Lower is better. A perplexity of N means that, on average, the model was as unsure about each next token as if it were choosing among N equally likely options.</p>
+  <h3>Is lower perplexity always better?</h3>
+  <p>For the same model on the same test with the same settings, yes: lower means it predicts the text better. Across different models, tokenizers, texts or settings, the numbers are not comparable.</p>
+  <h3>What is a good perplexity for a quantized model?</h3>
+  <p>One close to the original model&#x27;s score on the same test. On WikiText-2, Qwen3-4B&#x27;s 8-bit file is within 0.3% of the 16-bit original; the 1.24 GB 2-bit files we tested are 34% to 130% higher.</p>
+  <h3>Why does my perplexity differ from published numbers?</h3>
+  <p>The text, the context length, how the text is cut into windows, the tokenizer and the original file all move the number. Use the same command and text for every file you compare.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

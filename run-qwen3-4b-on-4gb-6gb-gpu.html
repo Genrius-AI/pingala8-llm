@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to run Qwen3-4B on a 4 GB or 6 GB GPU | Genrius AI</title>
+<meta name="description" content="Which Qwen3-4B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp settings that help, with measured sizes and scores.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How to run Qwen3-4B on a 4 GB or 6 GB GPU">
+<meta property="og:description" content="Which Qwen3-4B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp settings that help, with measured sizes and scores.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="Qwen3-4B VRAM">
+<meta property="article:tag" content="Qwen3-4B 4GB GPU">
+<meta property="article:tag" content="Qwen3-4B GGUF">
+<meta property="article:tag" content="low VRAM LLM">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to run Qwen3-4B on a 4 GB or 6 GB GPU">
+<meta name="twitter:description" content="Which Qwen3-4B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp settings that help, with measured sizes and scores.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html#article",
+      "headline": "How to run Qwen3-4B on a 4 GB or 6 GB GPU",
+      "description": "Which Qwen3-4B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp settings that help, with measured sizes and scores.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "Running the Qwen3-4B language model locally on GPUs with 4 GB or 6 GB of VRAM",
+      "keywords": "Qwen3-4B VRAM, Qwen3-4B 4GB GPU, Qwen3-4B GGUF, low VRAM LLM, llama.cpp, Q4_K_M, 2-bit, laptop GPU",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can Qwen3-4B run on 4 GB of VRAM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On paper, yes, with a compressed file. A 1.24 GB 2-bit file plus a 4,096-token cache comes to about 1.84 GB. Q4_K_M (about 2.5 GB) comes to about 3.1 GB, which is tight on a 4 GB card once the desktop and working buffers take their share."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Qwen3-4B quant should I use on a 6 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Q4_K_M, about 2.5 GB. It runs in every common tool and, on paper, leaves over 2 GB to spare with an 8,192-token context."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much VRAM does Qwen3-4B need at full precision?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 16-bit file is 8.05 GB, plus about 0.6 GB of KV cache at 4,096 tokens, so it needs a card with more than 8 GB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Pingala-8 work in Ollama or LM Studio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not yet. Pingala-8 files need our patched llama.cpp with CUDA on an NVIDIA GPU. The one-click build for Windows and Linux includes it."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Run Qwen3-4B on a 4 GB or 6 GB GPU",
+          "item": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>How to run Qwen3-4B on a 4 GB or 6 GB GPU</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-24">October 24, 2026</time>. About 6 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Qwen3-4B is 8.05 GB as shipped (16-bit), too big for a 4 GB or 6 GB card. Compressed copies fit: Q4_K_M is about 2.5 GB, Q2_K 1.67 GB and 2-bit files about 1.24 GB.</li>
+      <li>6 GB card: Q4_K_M with 4,096 to 8,192 tokens of context fits on paper.</li>
+      <li>4 GB card: Q4_K_M is tight; a 2-bit file leaves room for 8,192 tokens or more.</li>
+      <li>NVIDIA RTX 30, 40 or 50 series: the Pingala-8 one-click build runs Qwen3-4B in 1.24 GB. We have not yet tested it on a 4 GB or 6 GB card.</li>
+    </ul>
+  </div>
+
+  <p>Qwen3-4B, from the Qwen team, is a popular size for laptops: big enough to be useful, small enough to compress onto a modest graphics card. Many laptops have 4 GB or 6 GB of VRAM, for example RTX 3050 laptops with 4 GB and RTX 4050 laptops with 6 GB. Here is which file to pick, how much context you can keep, and what to change when it does not fit.</p>
+
+  <h2>The memory budget</h2>
+  <p>You need room for the model file, the KV cache (the model's memory of the conversation) and some working space. For Qwen3-4B the cache takes about 0.15 MB per token at 16-bit, calculated from its published config (36 layers, 8 key-value heads of size 128). Our <a href="how-much-vram-for-local-llm.html">VRAM guide</a> explains the arithmetic.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Qwen3-4B file</th><th class="num">File</th><th class="num">+ 4,096 tokens</th><th class="num">+ 8,192 tokens</th><th class="num">+ 16,384 tokens</th></tr></thead>
+      <tbody>
+        <tr><td>Q4_K_M</td><td class="num">about 2.5 GB</td><td class="num">3.10 GB</td><td class="num">3.71 GB</td><td class="num">4.92 GB</td></tr>
+        <tr><td>Q2_K</td><td class="num">1.67 GB</td><td class="num">2.27 GB</td><td class="num">2.88 GB</td><td class="num">4.09 GB</td></tr>
+        <tr><td>IQ2_XS</td><td class="num">1.35 GB</td><td class="num">1.95 GB</td><td class="num">2.56 GB</td><td class="num">3.77 GB</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">1.25 GB</td><td class="num">1.85 GB</td><td class="num">2.46 GB</td><td class="num">3.67 GB</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>1.24 GB</strong></td><td class="num">1.84 GB</td><td class="num">2.45 GB</td><td class="num">3.66 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">File plus a 16-bit KV cache, calculated, not measured on these cards. Add the runtime's compute buffer and what your desktop uses. An 8-bit cache roughly halves the cache part.</p>
+  <p>On a 6 GB card, Q4_K_M with 8,192 tokens leaves over 2 GB to spare on paper. On a 4 GB card the desktop and buffers take part of the memory, so Q4_K_M at 4,096 tokens leaves under 1 GB, while the 2-bit files leave about 2 GB.</p>
+
+  <h2>Option 1: Q4_K_M in any tool (6 GB cards)</h2>
+  <p>Qwen publishes official GGUF files, including <code>Qwen3-4B-Q4_K_M.gguf</code> (about 2.5 GB). It works on any GPU, on a CPU and on Macs, in Ollama and LM Studio as well as llama.cpp. With llama.cpp:</p>
+  <pre><code>llama-server -hf Qwen/Qwen3-4B-GGUF:Q4_K_M -ngl 99 -c 8192</code></pre>
+  <p><code>-ngl 99</code> puts every layer on the GPU and <code>-c</code> sets the context. Then open http://127.0.0.1:8080 in a browser.</p>
+
+  <h2>Option 2: squeeze it onto 4 GB</h2>
+  <ul>
+    <li><strong>Shorten the context.</strong> Use <code>-c 4096</code> or less. Every 4,096 tokens costs about 0.6 GB at 16-bit.</li>
+    <li><strong>Store the cache at 8 bits.</strong> <code>-fa on -ctk q8_0 -ctv q8_0</code> roughly halves the cache, with a small change in output.</li>
+    <li><strong>Turn off thinking when you do not need it.</strong> Qwen3 writes out its reasoning before the answer by default, and those tokens fill the context. Adding <code>/no_think</code> to a message turns it off for that turn.</li>
+    <li><strong>Free the GPU.</strong> Close browsers and apps that use GPU acceleration, and check free memory with <code>nvidia-smi</code>.</li>
+    <li><strong>Use a smaller file.</strong> Q2_K (1.67 GB) and IQ2_XS (1.35 GB) run in stock tools; community GGUF repositories publish them, or you can make them with <code>llama-quantize</code>. IQ2_XXS (1.25 GB) loses much more on this model; see the table below.</li>
+    <li><strong>Last resort: split the model.</strong> A lower <code>-ngl</code> keeps some layers in system RAM. It runs, but writes much more slowly.</li>
+  </ul>
+
+  <h2>Option 3: Pingala-8 on an NVIDIA RTX card</h2>
+  <p>If your card is an NVIDIA RTX 30, 40 or 50 series, Pingala-8 gives you Qwen3-4B in 1.24 GB, the size of IQ2_XXS, with a much smaller loss than IQ2_XXS in our tests.</p>
+  <ol>
+    <li>Download <code>pingala8-windows-cuda12.zip</code> (1.6 GB) from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">v2.4-oneclick release</a>. On Linux, take <code>pingala8-linux-cuda13.tar.gz</code>.</li>
+    <li>Unzip it and double-click <code>run_qwen3_4b.bat</code> (on Linux, <code>./run.sh qwen</code>). The model downloads once from Hugging Face.</li>
+    <li>Chat at http://127.0.0.1:8080. Everything runs on your machine.</li>
+  </ol>
+  <p>The launcher starts llama-server with a 4,096-token context, so by the table above it needs about 1.84 GB plus working buffers. We measured Pingala-8 on one RTX 5070 Ti Laptop GPU, where it writes about 216 tokens per second for one user. We have not measured other cards, and we have not run it on a 4 GB or 6 GB card yet. If you do, please tell us how it went in the <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+
+  <h2>How the options compare</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Qwen3-4B file</th><th class="num">Size</th><th class="num">Perplexity</th><th class="num">Quiz average</th><th>Runs in</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>Q8_0 (reference)</td><td class="num">4.28 GB</td><td class="num">12.50</td><td class="num">56.3</td><td>Stock tools</td></tr>
+        <tr><td>Q4_K_M</td><td class="num">about 2.5 GB</td><td class="num">-</td><td class="num">-</td><td>Stock tools</td></tr>
+        <tr><td>Q2_K</td><td class="num">1.67 GB</td><td class="num">15.01</td><td class="num">-</td><td>Stock tools</td></tr>
+        <tr><td>IQ2_XS</td><td class="num">1.35 GB</td><td class="num">19.02</td><td class="num">47.7</td><td>Stock tools</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">1.25 GB</td><td class="num">28.61</td><td class="num">41.9</td><td>Stock tools</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>1.24 GB</strong></td><td class="num"><strong>16.64</strong></td><td class="num"><strong>50.8</strong></td><td>Our patched llama.cpp, NVIDIA CUDA only</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">WikiText-2 perplexity at context 4,096 (lower is better; <a href="what-is-perplexity-llm.html">what it means</a>) and the average of five zero-shot quizzes. A dash means not measured. "Stock tools" means stock llama.cpp, Ollama and LM Studio. The Pingala-8 Qwen3-4B file is the last of many builds we tested on WikiText-2, so treat its number as tuned. Source: the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a> and the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>. More formats: the <a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">GGUF quant comparison</a>.</p>
+
+  <h2>Where Pingala-8 does not fit</h2>
+  <ul>
+    <li><strong>Not an NVIDIA RTX 30 series or newer.</strong> The one-click build does not cover GTX 16 or RTX 20 series cards, AMD or Intel GPUs, Macs or CPU-only machines. Use Q4_K_M or a stock 2-bit file there.</li>
+    <li><strong>You use Ollama or LM Studio.</strong> They cannot load Pingala-8 files yet.</li>
+    <li><strong>Long documents.</strong> Pingala-8 reads prompts at 0.74x the speed of IQ2_XXS, so the first word takes longer on long inputs.</li>
+    <li><strong>Q4_K_M fits comfortably.</strong> On a 6 GB card with a modest context, Q4_K_M is the simpler choice and keeps more of each weight.</li>
+  </ul>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>Can Qwen3-4B run on 4 GB of VRAM?</h3>
+  <p>On paper, yes, with a compressed file. A 1.24 GB 2-bit file plus a 4,096-token cache comes to about 1.84 GB. Q4_K_M (about 2.5 GB) comes to about 3.1 GB, which is tight on a 4 GB card once the desktop and working buffers take their share.</p>
+  <h3>Which Qwen3-4B quant should I use on a 6 GB GPU?</h3>
+  <p>Q4_K_M, about 2.5 GB. It runs in every common tool and, on paper, leaves over 2 GB to spare with an 8,192-token context.</p>
+  <h3>How much VRAM does Qwen3-4B need at full precision?</h3>
+  <p>The 16-bit file is 8.05 GB, plus about 0.6 GB of KV cache at 4,096 tokens, so it needs a card with more than 8 GB.</p>
+  <h3>Does Pingala-8 work in Ollama or LM Studio?</h3>
+  <p>Not yet. Pingala-8 files need our patched llama.cpp with CUDA on an NVIDIA GPU. The one-click build for Windows and Linux includes it.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>
