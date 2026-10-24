@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to run Llama 3.1 8B on a 4 GB or 6 GB GPU | Genrius AI</title>
+<meta name="description" content="Which Llama 3.1 8B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp flags that help, with 2-bit files at 2.39 GB.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How to run Llama 3.1 8B on a 4 GB or 6 GB GPU">
+<meta property="og:description" content="Which Llama 3.1 8B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp flags that help, with 2-bit files at 2.39 GB.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="Llama 3.1 8B VRAM">
+<meta property="article:tag" content="Llama 3.1 8B 4GB GPU">
+<meta property="article:tag" content="Llama 3.1 8B 6GB GPU">
+<meta property="article:tag" content="Llama 3.1 8B GGUF">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to run Llama 3.1 8B on a 4 GB or 6 GB GPU">
+<meta name="twitter:description" content="Which Llama 3.1 8B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp flags that help, with 2-bit files at 2.39 GB.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html#article",
+      "headline": "How to run Llama 3.1 8B on a 4 GB or 6 GB GPU",
+      "description": "Which Llama 3.1 8B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp flags that help, with 2-bit files at 2.39 GB.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "Running the Llama 3.1 8B language model locally on GPUs with 4 GB or 6 GB of VRAM",
+      "keywords": "Llama 3.1 8B VRAM, Llama 3.1 8B 4GB GPU, Llama 3.1 8B 6GB GPU, Llama 3.1 8B GGUF, low VRAM LLM, llama.cpp, partial offload, 2-bit",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can Llama 3.1 8B run on a 4 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fully on the GPU, only as a 2-bit file: about 2.4 GB, or about 2.9 GB with a 4,096-token cache on paper. A Q4_K_M file is about twice the size of a 2-bit file, so on 4 GB part of it has to stay in system RAM, which makes it write much more slowly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Llama 3.1 8B quant should I use on a 6 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Try Q4_K_M with a short context first; it runs in every common tool, but it is tight on 6 GB. If it does not fit with the context you need, a 2-bit file of about 2.4 GB leaves room for 16,384 tokens on paper."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Pingala-8 Llama 3.1 8B file a chat model?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It is a compression of the base Llama-3.1-8B, which continues the text you give it rather than following instructions. For chat, use an Instruct GGUF in a stock tool, or our Qwen3-4B file."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Pingala-8 Llama 3.1 8B work in Ollama or LM Studio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Pingala-8 files need the patched llama.cpp build from our one-click release, on an NVIDIA RTX 30, 40 or 50 series GPU. Stock llama.cpp, Ollama and LM Studio cannot load them yet."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Run Llama 3.1 8B on a 4 GB or 6 GB GPU",
+          "item": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-24">October 24, 2026</time>. About 7 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Llama 3.1 8B is 16.08 GB as shipped (16-bit), far too big for a 4 GB or 6 GB card. 2-bit copies are about 2.4 GB; a 4-bit Q4_K_M file is about twice that.</li>
+      <li>4 GB card: only a 2-bit file fits fully on the GPU, about 2.9 GB with a 4,096-token cache on paper. Q4_K_M needs some layers in system RAM, which is much slower.</li>
+      <li>6 GB card: Q4_K_M fits only with a short context. A 2-bit file leaves room for 16,384 tokens on paper.</li>
+      <li>Pingala-8 Llama-3.1-8B is 2.39 GB, with a WikiText-2 perplexity of 9.14 against 10.04 for IQ2_KT and 12.35 for IQ2_XXS at the same size (llama.cpp's strided protocol). It is the base model, it needs our patched llama.cpp on an NVIDIA RTX 30, 40 or 50 series GPU, and we have not tested it on a 4 GB or 6 GB card.</li>
+    </ul>
+  </div>
+
+  <p>Llama 3.1 8B, from Meta, is one of the most used open models in its size class. Many laptops have 4 GB or 6 GB of VRAM, for example RTX 3050 laptops with 4 GB and RTX 4050 laptops with 6 GB. At that size the question is not which file is best but which file fits at all. Here is the memory arithmetic, three ways to run it, and what each costs.</p>
+
+  <h2>The memory budget</h2>
+  <p>Three things share the card: the model file, the KV cache (the model's memory of the conversation) and working buffers for the runtime and your desktop. For Llama 3.1 8B the cache takes 131,072 bytes per token at 16-bit, calculated from its published config: 32 layers and 8 key-value heads of size 128. That is 0.54 GB at 4,096 tokens. Our <a href="how-much-vram-for-local-llm.html">VRAM guide</a> walks through the arithmetic.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Llama 3.1 8B file</th><th class="num">File</th><th class="num">+ 4,096 tokens</th><th class="num">+ 8,192 tokens</th><th class="num">+ 16,384 tokens</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>fp16 (original)</td><td class="num">16.08 GB</td><td class="num">16.62 GB</td><td class="num">17.15 GB</td><td class="num">18.23 GB</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">2.40 GB</td><td class="num">2.94 GB</td><td class="num">3.47 GB</td><td class="num">4.55 GB</td></tr>
+        <tr><td>IQ2_KT</td><td class="num">2.39 GB</td><td class="num">2.93 GB</td><td class="num">3.46 GB</td><td class="num">4.54 GB</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>2.39 GB</strong></td><td class="num">2.93 GB</td><td class="num">3.46 GB</td><td class="num">4.54 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">File plus a 16-bit KV cache, calculated, not measured on these cards. Add the runtime's compute buffer and whatever your desktop uses. An 8-bit cache roughly halves the cache part. File sizes are the exact files in the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>: 2,388,210,816 bytes for Pingala-8, 2,389,350,432 for the IQ2_KT file we built and 2,399,212,576 for IQ2_XXS.</p>
+  <p>On a 4 GB card, any of the 2-bit files fits with 4,096 tokens and leaves over 1 GB for buffers and the desktop; at 8,192 tokens it gets tight. On a 6 GB card they fit with 16,384 tokens on paper. Q4_K_M is the hard case: at about twice the size of a 2-bit file it cannot sit fully on a 4 GB card, and on 6 GB it fits only with a short context and little else using the GPU.</p>
+
+  <h2>Option 1: Q4_K_M with a short context (6 GB cards)</h2>
+  <p>Q4_K_M is the usual default for local models: it keeps more of each weight than any 2-bit file, and it runs everywhere, in llama.cpp, Ollama and LM Studio, on NVIDIA, AMD and Apple hardware and on a CPU. For chat you want the Instruct version. With llama.cpp:</p>
+  <pre><code>llama-server -m Llama-3.1-8B-Instruct-Q4_K_M.gguf -ngl 99 -c 4096 -fa on -ctk q8_0 -ctv q8_0</code></pre>
+  <p><code>-ngl 99</code> puts every layer on the GPU, <code>-c 4096</code> keeps the context short, and <code>-fa on -ctk q8_0 -ctv q8_0</code> stores the cache at 8 bits, which roughly halves it with a small change in output. Then open http://127.0.0.1:8080. If it runs out of memory, close apps that use the GPU, check free memory with <code>nvidia-smi</code>, and shorten the context before anything else.</p>
+
+  <h2>Option 2: Q4_K_M on 4 GB, with part of it in system RAM</h2>
+  <p>You can split the model. <code>-ngl</code> sets how many layers live on the GPU; Llama 3.1 8B has 32. Start low, for example <code>-ngl 20</code>, and raise it until the model no longer loads, then step back. The layers left behind run from system RAM, and every new token has to read them through that slower path, so the model writes much more slowly. It is fine for trying the model; for long chats most people find it frustrating.</p>
+
+  <h2>Option 3: a 2-bit file that fits entirely</h2>
+  <p>A 2-bit file keeps the whole model and a useful context on the GPU. The cost is quality, and how much depends a lot on the format; our <a href="is-2-bit-quantization-usable.html">2-bit guide</a> explains the trade-off. These are the three files of this size we measured on Llama 3.1 8B:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Llama 3.1 8B file</th><th class="num">Size</th><th class="num">Perplexity</th><th>Runs in</th></tr></thead>
+      <tbody>
+        <tr><td>IQ2_XXS</td><td class="num">2.40 GB</td><td class="num">12.35</td><td>Stock llama.cpp, Ollama, LM Studio</td></tr>
+        <tr><td>IQ2_KT</td><td class="num">2.39 GB</td><td class="num">10.04</td><td>ik_llama.cpp (a llama.cpp fork)</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>2.39 GB</strong></td><td class="num"><strong>9.14</strong></td><td>Our patched llama.cpp, NVIDIA CUDA only</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Base Llama-3.1-8B, WikiText-2 test, context 4,096, 70 windows, in llama.cpp's strided mode, where windows after the first start without a start-of-text (BOS) token; lower is better (<a href="what-is-perplexity-llm.html">what perplexity means</a>). With a BOS at every window instead, Pingala-8 scores 8.44 against 9.36 for IQ2_KT. IQ2_KT was made from the 8-bit Q8_0 file. We wrote the Pingala-8 prediction down before this run. Only perplexity was measured on this model: no quiz scores and no speed. Source: the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>, Table 1 and Section 4.3.</p>
+  <p>IQ2_XXS runs in every stock tool and loses the most of the three. IQ2_KT, a trellis-based type from the ik_llama.cpp fork, loses less. Pingala-8, our format, has the lowest perplexity of the three at this size.</p>
+
+  <h2>Running Pingala-8 Llama 3.1 8B</h2>
+  <p>On an NVIDIA RTX 30, 40 or 50 series card, the one-click build runs it with nothing else to install:</p>
+  <ol>
+    <li>Download <code>pingala8-windows-cuda12.zip</code> (1.6 GB) from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">v2.4-oneclick release</a>. On Linux, take <code>pingala8-linux-cuda13.tar.gz</code>.</li>
+    <li>Unzip it and double-click <code>run_llama31_8b.bat</code> (on Linux, <code>./run.sh llama</code>). The model, about 2.4 GB, downloads once from <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Hugging Face</a>.</li>
+    <li>A page opens at http://127.0.0.1:8080. Everything runs on your machine.</li>
+  </ol>
+  <p>The launcher starts llama-server with a 4,096-token context, so by the table above it needs about 2.9 GB plus working buffers. The files need this patched build: stock llama.cpp, Ollama and LM Studio cannot load them. To build the runtime yourself, follow the <a href="https://github.com/Genrius-AI/pingala8-llm#quick-start">quick start in the README</a>.</p>
+  <p>Know before you try: this is the <strong>base</strong> Llama-3.1-8B, not the Instruct model. It continues the text you start ("The three main causes of inflation are") rather than answering like an assistant. That is fine for testing, writing continuations and comparing formats; for chat, use an Instruct file in a stock tool, or our Qwen3-4B file from the <a href="run-qwen3-4b-on-4gb-6gb-gpu.html">Qwen3-4B guide</a>.</p>
+  <p>We have not run Pingala-8 on a 4 GB or 6 GB card yet, and we have not measured its speed on Llama 3.1 8B. If you try it, please tell us how it went in the <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+
+  <h2>Where Pingala-8 does not fit</h2>
+  <ul>
+    <li><strong>You want a chat model.</strong> We publish the base Llama-3.1-8B only.</li>
+    <li><strong>Not an NVIDIA RTX 30 series or newer.</strong> The build does not cover GTX 16 or RTX 20 series cards, AMD or Intel GPUs, Macs or CPU-only machines.</li>
+    <li><strong>You use Ollama or LM Studio.</strong> They cannot load Pingala-8 files.</li>
+    <li><strong>Long prompts.</strong> On Qwen3-4B, where we measured speed, Pingala-8 reads prompts at 0.74x the speed of IQ2_XXS.</li>
+    <li><strong>Every model is different.</strong> Pingala-8 wins on Llama 3.1 8B and Qwen3-4B, but loses narrowly to IQ2_KT on Qwen3-14B (9.57 against 9.40).</li>
+  </ul>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>Can Llama 3.1 8B run on a 4 GB GPU?</h3>
+  <p>Fully on the GPU, only as a 2-bit file: about 2.4 GB, or about 2.9 GB with a 4,096-token cache on paper. A Q4_K_M file is about twice the size of a 2-bit file, so on 4 GB part of it has to stay in system RAM, which makes it write much more slowly.</p>
+  <h3>Which Llama 3.1 8B quant should I use on a 6 GB GPU?</h3>
+  <p>Try Q4_K_M with a short context first; it runs in every common tool, but it is tight on 6 GB. If it does not fit with the context you need, a 2-bit file of about 2.4 GB leaves room for 16,384 tokens on paper.</p>
+  <h3>Is the Pingala-8 Llama 3.1 8B file a chat model?</h3>
+  <p>No. It is a compression of the base Llama-3.1-8B, which continues the text you give it rather than following instructions. For chat, use an Instruct GGUF in a stock tool, or our Qwen3-4B file.</p>
+  <h3>Does Pingala-8 Llama 3.1 8B work in Ollama or LM Studio?</h3>
+  <p>No. Pingala-8 files need the patched llama.cpp build from our one-click release, on an NVIDIA RTX 30, 40 or 50 series GPU. Stock llama.cpp, Ollama and LM Studio cannot load them yet.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-trellis-coded-quantization.html">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT</a></li>
+      <li><a href="what-is-hadamard-rotation-quantization.html">What is Hadamard rotation in LLM quantization?</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

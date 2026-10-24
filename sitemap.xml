@@ -88,6 +88,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://genrius-ai.github.io/pingala8-llm/paper.html</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>

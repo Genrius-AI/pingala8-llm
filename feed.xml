@@ -5,7 +5,7 @@
   <link rel="self" type="application/atom+xml" href="https://genrius-ai.github.io/pingala8-llm/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>
   <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/feed</id>
-  <updated>2026-10-24T17:51:46Z</updated>
+  <updated>2026-10-24T17:53:59Z</updated>
   <author>
     <name>Genrius AI</name>
     <uri>https://github.com/Genrius-AI</uri>
@@ -74,5 +74,29 @@
     <published>2026-10-24T15:59:05Z</published>
     <updated>2026-10-24T17:28:54Z</updated>
     <summary type="text">What LLM perplexity measures, what a good score is, and how to compare quantized models fairly, with WikiText-2 numbers for Qwen3-4B from 12.46 to 57.50.</summary>
+  </entry>
+  <entry>
+    <title type="text">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html</id>
+    <published>2026-10-24T17:53:59Z</published>
+    <updated>2026-10-24T17:53:59Z</updated>
+    <summary type="text">Which Llama 3.1 8B file fits a 4 GB or 6 GB graphics card, how much context you keep, and the llama.cpp flags that help, with 2-bit files at 2.39 GB.</summary>
+  </entry>
+  <entry>
+    <title type="text">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT explained</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/what-is-trellis-coded-quantization.html</id>
+    <published>2026-10-24T17:53:59Z</published>
+    <updated>2026-10-24T17:53:59Z</updated>
+    <summary type="text">Trellis-coded quantization (TCQ) in plain English: where it came from, how QTIP, EXL3 and IQ2_KT use it for LLM weights, and what a small trellis buys.</summary>
+  </entry>
+  <entry>
+    <title type="text">What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html"/>
+    <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/what-is-hadamard-rotation-quantization.html</id>
+    <published>2026-10-24T17:53:59Z</published>
+    <updated>2026-10-24T17:53:59Z</updated>
+    <summary type="text">Why LLM quantizers rotate weights with a Hadamard transform before rounding: outliers, incoherence, QuIP, QuIP#, QuaRot and SpinQuant in plain English.</summary>
   </entry>
 </feed>

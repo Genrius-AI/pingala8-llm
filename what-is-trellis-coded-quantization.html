@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is trellis-coded quantization? TCQ, QTIP, IQ2_KT | Genrius AI</title>
+<meta name="description" content="Trellis-coded quantization (TCQ) in plain English: where it came from, how QTIP, EXL3 and IQ2_KT use it for LLM weights, and what a small trellis buys.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="What is trellis-coded quantization? TCQ, QTIP and IQ2_KT explained">
+<meta property="og:description" content="Trellis-coded quantization (TCQ) in plain English: where it came from, how QTIP, EXL3 and IQ2_KT use it for LLM weights, and what a small trellis buys.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="trellis-coded quantization">
+<meta property="article:tag" content="TCQ">
+<meta property="article:tag" content="QTIP">
+<meta property="article:tag" content="IQ2_KT">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is trellis-coded quantization? TCQ, QTIP and IQ2_KT explained">
+<meta name="twitter:description" content="Trellis-coded quantization (TCQ) in plain English: where it came from, how QTIP, EXL3 and IQ2_KT use it for LLM weights, and what a small trellis buys.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html#article",
+      "headline": "What is trellis-coded quantization? TCQ, QTIP and IQ2_KT explained",
+      "description": "Trellis-coded quantization (TCQ) in plain English: where it came from, how QTIP, EXL3 and IQ2_KT use it for LLM weights, and what a small trellis buys.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "Trellis-coded quantization (TCQ) and its use for compressing the weights of large language models",
+      "keywords": "trellis-coded quantization, TCQ, QTIP, IQ2_KT, EXL3, Viterbi algorithm, Ungerboeck, LLM quantization, ik_llama.cpp",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is trellis-coded quantization in simple terms?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A way of rounding a long row of numbers in which each choice also decides which values are allowed next. The encoder searches for the best whole path with the Viterbi algorithm; the decoder just follows it. At the same number of bits it usually lands closer to the original numbers than rounding each group alone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between QTIP, EXL3 and IQ2_KT?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "QTIP is a research method from Cornell (NeurIPS 2024) that applies trellis-coded quantization to LLM weights with its own kernels. EXL3, in the ExLlamaV3 library, describes itself as a streamlined variant of QTIP. IQ2_KT is a 2-bit trellis type in ik_llama.cpp, a fork of llama.cpp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is trellis-coded quantization slow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Making the file is slow, because the encoder searches many paths, but that is done once, offline. Decoding can be fast: with a small or shift-based trellis each group of weights needs a few integer operations and a table read. Speed then depends on the kernels."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run trellis-quantized models in Ollama or LM Studio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not the formats on this page. IQ2_KT files need ik_llama.cpp, EXL3 files need ExLlamaV3, and Pingala-8 files need the patched llama.cpp build from our one-click release. Stock llama.cpp, Ollama and LM Studio cannot load Pingala-8 files."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Trellis-coded quantization explained",
+          "item": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>What is trellis-coded quantization? TCQ, QTIP and IQ2_KT explained</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-24">October 24, 2026</time>. About 7 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Plain rounding treats each weight, or each small group of weights, on its own. Trellis-coded quantization (TCQ) links the choices: a small state machine, the trellis, decides which values are allowed at each step, and every stored bit moves it along.</li>
+      <li>The encoder finds the best path through the trellis with the Viterbi algorithm. The decoder only follows the path, so it does no search.</li>
+      <li>The idea comes from communications: Ungerboeck's trellis-coded modulation (1982), turned into a quantizer by Marcellin and Fischer (1990). QTIP (2024) brought it to LLM weights; EXL3 and ik_llama.cpp's IQ2_KT ship it in local runtimes.</li>
+      <li>Pingala-8 uses Ungerboeck's 8-state code on groups of 4 weights, in a llama.cpp file the size of IQ2_XXS. On Qwen3-4B at 1.24 GB its perplexity is 16.64, against 18.15 for IQ2_KT and 28.61 for IQ2_XXS.</li>
+    </ul>
+  </div>
+
+  <p>If you follow 2-bit LLM files, you have met QTIP, EXL3 and IQ2_KT, all called trellis quantization. Here is what that means, where it came from, and what it buys you.</p>
+
+  <h2>Start with plain rounding</h2>
+  <p>Quantization stores each weight with fewer bits. With 2 bits, a weight can take one of four values. Scalar quantization rounds every weight to the nearest of four levels, with one shared scale per block. It is fast, but every weight is rounded alone.</p>
+  <p>Vector quantization rounds a group of weights at once, to the nearest entry in a codebook of whole groups, which can follow the shape of real weights better. llama.cpp's IQ2_XXS works this way, with groups of 8 weights and a grid derived from the E8 lattice. The catch is size: a full codebook for groups of 8 at 2 bits per weight would need 2<sup>16</sup> = 65,536 entries, and for groups of 16, 2<sup>32</sup>, more than 4 billion. So vector formats keep their groups small or their grids highly structured.</p>
+
+  <h2>What a trellis adds</h2>
+  <p>A trellis is a small state machine drawn over time. At each step the encoder sits in one of a few states, say 8, and the state decides which subset of values the next group may use. The stored bits do two jobs at once: they pick a value from the allowed subset, and they move the machine to its next state. So each group's value depends on the choices before it. The code has memory.</p>
+  <p>The trick behind it is Gottfried Ungerboeck's <em>set partitioning</em>. Take a codebook with twice as many values as your bits can address, and split it into subsets whose members are far apart. The state picks the subset, so that choice costs no bits. Over a long row, the encoder can reach a far richer set of sequences than independent rounding allows: some of the benefit of a very long group, without a huge codebook.</p>
+  <p>A toy version at 1 bit per weight: plain rounding has two levels, say -1 and +1. A trellis version uses four levels, -1.5, -0.5, +0.5 and +1.5, split into two subsets, (-1.5, +0.5) and (-0.5, +1.5). In each state only one subset is allowed, so 1 bit still picks the value, and that bit also sets the state for the next weight. The encoder plans the whole row, so it can steer most weights into a state with a close level. Real codes use more states and better subsets, and the gain grows with the number of states: Marcellin and Fischer's classic result is that 256-state TCQ comes within 0.21 dB of the theoretical limit for a memoryless uniform source.</p>
+
+  <h2>Encoding and decoding</h2>
+  <p>Choosing the bits means finding the best path through the trellis for a whole row. Trying every path is impossible, but the Viterbi algorithm, invented for decoding error-correcting codes, keeps only the best path ending in each state at each step, so the work grows in a straight line with row length times states. For LLMs the best path is the one that changes the layer's output least, so methods weight the error with calibration statistics and can feed each error forward, as QuIP's LDLQ rounding does. This runs once, offline.</p>
+  <p>The decoder reads the bits, updates the state and looks up (or computes) a value. There is no search. That matters for local chat: writing one token reads every weight once, so decoding must cost only a few operations per weight. A plain trellis decodes in order, so formats reset the state every few dozen symbols, or use a bitshift trellis, where the state is just the last few bits of the stream and any position can be decoded from a short window.</p>
+
+  <h2>Who uses it for LLMs</h2>
+  <ul>
+    <li><strong><a href="https://arxiv.org/abs/2406.11235">QTIP</a></strong> (Tseng and colleagues, Cornell, NeurIPS 2024) applies TCQ to LLM weights with a bitshift trellis, after a random Hadamard transform that makes the weights look roughly like independent Gaussian samples (see our <a href="what-is-hadamard-rotation-quantization.html">Hadamard rotation guide</a>). It computes values from the state instead of storing a huge codebook. Its own ablation found that a trellis small enough to store as a table loses accuracy to larger ones. It runs with its own kernels.</li>
+    <li><strong><a href="https://github.com/turboderp-org/exllamav3">EXL3</a></strong>, the format of turboderp's ExLlamaV3 library, is in its own words a streamlined variant of QTIP, with a fused GPU Viterbi kernel. It is a separate library, not a llama.cpp format.</li>
+    <li><strong>IQ2_KT</strong> and the other IQ*_KT types live in <a href="https://github.com/ikawrakow/ik_llama.cpp">ik_llama.cpp</a>, a llama.cpp fork by Iwan Kawrakow, who also wrote llama.cpp's i-quants such as IQ2_XXS. The first IQ2_KT took QTIP's "3INST" generator, with a 16-bit seed per group of 8 weights and 2.125 bits per weight; later versions use a different integer generator that, per its pull request, allows faster GPU and CPU kernels. It is the closest prior format to ours.</li>
+    <li><strong>Dependent quantization</strong>, an 8-state scalar trellis, is part of the MPEG standard for neural network compression (ISO/IEC 15938-17). Newer research such as Proteus, CCQ and CurveTQ looks for cheaper decoders, mostly in its own engines.</li>
+  </ul>
+
+  <h2>Where Pingala-8 fits</h2>
+  <p>Pingala-8 is our 2-bit format: Ungerboeck's 8-state set-partitioned code, used as a vector TCQ on groups of 4 weights, in a GGUF file the size of IQ2_XXS, decoded by a CUDA patch to llama.cpp. Each group is an 8-bit index into one of two 256-entry tables of 4-weight vectors; the second table is a shifted copy (a coset) of the first, and the trellis state picks which one. Decoding a group takes two XORs, a shift and a table read. Before coding, the weights get a Hadamard rotation, and the Viterbi search uses QuIP's LDLQ rounding.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Qwen3-4B file</th><th class="num">Size</th><th class="num">Perplexity</th><th class="num">Quiz average</th><th>Trellis</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>Q8_0 (reference)</td><td class="num">4.28 GB</td><td class="num">12.50</td><td class="num">56.3</td><td>No</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">1.25 GB</td><td class="num">28.61</td><td class="num">41.9</td><td>No (E8-derived grid)</td></tr>
+        <tr><td>IQ2_KT</td><td class="num">1.25 GB</td><td class="num">18.15</td><td class="num">46.5</td><td>Yes</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>1.24 GB</strong></td><td class="num"><strong>16.64</strong></td><td class="num"><strong>50.8</strong></td><td>Yes, 8 states</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">WikiText-2 perplexity at context 4,096, 73 windows (lower is better), and the average of five zero-shot quizzes. The Pingala-8 Qwen3-4B file is the last of many builds we tested on WikiText-2, so treat its number as tuned. Source: the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a> and the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>.</p>
+  <p>What we can claim, and what we cannot:</p>
+  <ul>
+    <li><strong>The coding is not new.</strong> It all comes from the work above. We add a fixed-size llama.cpp file and an equal-bytes comparison with IQ2_KT.</li>
+    <li><strong>A small trellis gives up accuracy.</strong> On a Gaussian test source our code sits about 1.45 dB below QTIP's long trellis, the price of a decoder that keeps up with llama.cpp's generation speed. In our tests a 16-state code was 1.7% better in perplexity on an earlier build; we ship 8 states because only that code has a native build so far.</li>
+    <li><strong>The trellis is not most of the gain over IQ2_XXS.</strong> At equal bytes, removing the trellis memory costs 0.076 nats per token: about 80% of our margin over a tuned IQ2_KT (a post hoc reading), but only 14% of the gain over IQ2_XXS. The rest comes from the rotation, the LDLQ rounding, the column scales and the table together.</li>
+    <li><strong>It does not always win.</strong> It beats IQ2_KT on Llama-3.1-8B (8.44 against 9.36, with a BOS at every window) but loses narrowly on Qwen3-14B (9.57 against 9.40). It writes at least as fast as IQ2_XXS on Qwen3-4B, but reads prompts at 0.74x.</li>
+  </ul>
+  <p>To run it you need the patched llama.cpp build from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">one-click release</a> and an NVIDIA RTX 30, 40 or 50 series GPU. Stock llama.cpp, Ollama and LM Studio cannot load Pingala-8 files. For all the 2-bit options side by side, see the <a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">GGUF quant comparison</a>.</p>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>What is trellis-coded quantization in simple terms?</h3>
+  <p>A way of rounding a long row of numbers in which each choice also decides which values are allowed next. The encoder searches for the best whole path with the Viterbi algorithm; the decoder just follows it. At the same number of bits it usually lands closer to the original numbers than rounding each group alone.</p>
+  <h3>What is the difference between QTIP, EXL3 and IQ2_KT?</h3>
+  <p>QTIP is a research method from Cornell (NeurIPS 2024) that applies trellis-coded quantization to LLM weights with its own kernels. EXL3, in the ExLlamaV3 library, describes itself as a streamlined variant of QTIP. IQ2_KT is a 2-bit trellis type in ik_llama.cpp, a fork of llama.cpp.</p>
+  <h3>Is trellis-coded quantization slow?</h3>
+  <p>Making the file is slow, because the encoder searches many paths, but that is done once, offline. Decoding can be fast: with a small or shift-based trellis each group of weights needs a few integer operations and a table read. Speed then depends on the kernels.</p>
+  <h3>Can I run trellis-quantized models in Ollama or LM Studio?</h3>
+  <p>Not the formats on this page. IQ2_KT files need ik_llama.cpp, EXL3 files need ExLlamaV3, and Pingala-8 files need the patched llama.cpp build from our one-click release. Stock llama.cpp, Ollama and LM Studio cannot load Pingala-8 files.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-hadamard-rotation-quantization.html">What is Hadamard rotation in LLM quantization?</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

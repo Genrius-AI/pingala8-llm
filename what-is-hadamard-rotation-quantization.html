@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hadamard rotation in LLM quantization explained | Genrius AI</title>
+<meta name="description" content="Why LLM quantizers rotate weights with a Hadamard transform before rounding: outliers, incoherence, QuIP, QuIP#, QuaRot and SpinQuant in plain English.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained">
+<meta property="og:description" content="Why LLM quantizers rotate weights with a Hadamard transform before rounding: outliers, incoherence, QuIP, QuIP#, QuaRot and SpinQuant in plain English.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-24T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="Hadamard rotation">
+<meta property="article:tag" content="Hadamard transform quantization">
+<meta property="article:tag" content="incoherence processing">
+<meta property="article:tag" content="QuIP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained">
+<meta name="twitter:description" content="Why LLM quantizers rotate weights with a Hadamard transform before rounding: outliers, incoherence, QuIP, QuIP#, QuaRot and SpinQuant in plain English.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html#article",
+      "headline": "What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained",
+      "description": "Why LLM quantizers rotate weights with a Hadamard transform before rounding: outliers, incoherence, QuIP, QuIP#, QuaRot and SpinQuant in plain English.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-24T00:00:00+00:00",
+      "dateModified": "2026-10-24T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "Hadamard rotations and incoherence processing in the quantization of large language models",
+      "keywords": "Hadamard rotation, Hadamard transform quantization, incoherence processing, QuIP, QuIP#, QuaRot, SpinQuant, outliers, LLM quantization",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do LLM quantization methods use a Hadamard transform?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To spread out outliers. The rotation mixes each block of numbers, so a few large values no longer set the scale for the whole block. The rotated values look more like a bell curve, which a low-bit grid or codebook fits better, and the rotation can be undone exactly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does rotating the weights change the model's output?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not by itself. A normalized Hadamard matrix is orthogonal, so rotating the weights and applying the matching rotation to the layer's input gives the same result. Only the rounding that follows changes anything, and the rotation makes that rounding error smaller and more even."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between QuIP and QuaRot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "QuIP rotates the weights so that weight-only quantization to 2 bits loses less; QuIP# switched it to a fast randomized Hadamard transform. QuaRot also rotates the hidden states, so weights, activations and the KV cache can all be stored in 4 bits and the matrix multiplies run in low precision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a Hadamard rotation expensive at run time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is cheap. The fast Walsh-Hadamard transform uses only additions and subtractions: for a block of 256 values, 8 rounds of 256, against 65,536 multiply-adds for a general 256 by 256 rotation. Some methods fold rotations into neighbouring weights, so those cost nothing at run time."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Hadamard rotation in LLM quantization",
+          "item": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-24">October 24, 2026</time>. About 7 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Low-bit formats round a block of weights with one shared scale. A few large values, the outliers, stretch that scale and waste most of the grid on everyone else.</li>
+      <li>A Hadamard rotation mixes each block using only plus and minus signs. Outliers get spread across the block, the values look more like a bell curve, and the rotation can be undone exactly.</li>
+      <li>QuIP called this incoherence processing; QuIP# made it a fast randomized Hadamard transform; QTIP and EXL3 build on it; QuaRot and SpinQuant rotate the activations too, for 4-bit compute.</li>
+      <li>Pingala-8 rotates every weight matrix with a random-sign Hadamard transform over blocks of 256 columns before its trellis code. We have not measured the rotation's share of our gain on its own.</li>
+    </ul>
+  </div>
+
+  <p>Recent papers on 2-bit and 4-bit LLMs mention a "random Hadamard transform" or "incoherence processing" early on. The idea is simple, and it explains a good part of why some low-bit formats lose far less than others.</p>
+
+  <h2>The problem: outliers waste the grid</h2>
+  <p>Quantizers store a block of weights with one shared scale and a few bits per weight. The scale has to reach the largest value in the block. LLM weights mostly sit in a narrow bell curve, but a few are much larger, and some input channels are larger than the rest across the whole matrix. One outlier sets the scale, and the other weights crowd onto the levels nearest zero. At 2 bits, with only four levels, that is expensive.</p>
+  <p>Older fixes keep outliers at higher precision (SpQR), scale whole channels (SmoothQuant, AWQ) or weight the error by importance (llama.cpp's importance matrix). A rotation instead changes the coordinates so there are no outliers to begin with.</p>
+
+  <h2>What a Hadamard matrix is</h2>
+  <p>A Hadamard matrix is square, its entries are only +1 and -1, and its rows are at right angles to each other. Divided by the square root of its size, it becomes an orthogonal matrix: it rotates (or reflects) a vector without changing its length, and its transpose undoes it exactly. For power-of-two sizes you build one by doubling, starting from [1]: the matrix next to itself, and below that the matrix next to its negative. The 4 by 4 one is:</p>
+  <pre><code>+1  +1  +1  +1
++1  -1  +1  -1
++1  +1  -1  -1
++1  -1  -1  +1</code></pre>
+  <p>Every output mixes every input with equal weight; only the signs change. That is what spreads an outlier across the block.</p>
+
+  <h2>A toy example</h2>
+  <p>Take four weights with one outlier: 0.5, -0.3, 0.2 and 4.0. Multiply by the matrix above and divide by 2 (the square root of 4): you get 2.2, -1.5, -2.0 and 2.3. The length is unchanged (the squares add up to 16.38 before and after), but the largest value fell from 4.0 to 2.3 and the four values now have similar sizes.</p>
+  <p>Now round both to a 2-bit grid of four evenly spaced levels, scaled to the largest value. The original keeps the outlier exact but turns the three small weights into 1.33, -1.33 and 1.33, a total squared error of about 3.05. The rotated version, rounded and rotated back, gives 0.77, -0.77, 0.77 and 3.83, a total squared error of about 0.64, nearly five times smaller. The outlier lost a little; everyone else gained a lot. Real weights are messier, but the effect is the same.</p>
+
+  <h2>Why the model still gives the same answer</h2>
+  <p>A linear layer computes y = W x, weights times input. For any orthogonal matrix Q, y = (W Q<sup>T</sup>)(Q x). So you can store the rotated weights W Q<sup>T</sup>, quantized, and rotate the input by Q at run time; before rounding, the output is identical. Two ways to pay for the input rotation:</p>
+  <ul>
+    <li><strong>Rotate on the fly.</strong> The fast Walsh-Hadamard transform needs only additions and subtractions, n times log<sub>2</sub> n of them: for a block of 256 values, 8 rounds of 256, against 65,536 multiply-adds for a general 256 by 256 rotation.</li>
+    <li><strong>Fold it into the previous layer.</strong> Where the maths allows, the rotation is merged into the weights that produce the input, so it costs nothing at run time. This "computational invariance" idea comes from SliceGPT, and QuaRot uses it for most of its rotations.</li>
+  </ul>
+  <p>Most methods also flip signs at random before the Hadamard step, which is called a randomized Hadamard transform. That makes a bad alignment with the fixed pattern very unlikely. The seed is stored, so the rotation is reproducible.</p>
+
+  <h2>Incoherence: the idea behind QuIP</h2>
+  <p><a href="https://arxiv.org/abs/2307.13304">QuIP</a> (Chee, Cai, Kuleshov and De Sa, Cornell, 2023) named the goal: incoherence. A weight matrix is incoherent when no entry is large compared with the whole, and the calibration statistics (the Hessian) have no dominant direction lined up with one weight. QuIP made both incoherent with random orthogonal matrices, then rounded with LDLQ, an adaptive rounding that feeds each column's error forward to the columns not yet rounded. By its authors' account, it was the first LLM quantization method to give viable results at two bits per weight.</p>
+  <p><a href="https://arxiv.org/abs/2402.04396">QuIP#</a> (Tseng and colleagues, 2024) replaced QuIP's rotations with the randomized Hadamard transform, which is faster and has better guarantees, and added codebooks built on the E8 lattice. <a href="https://arxiv.org/abs/2406.11235">QTIP</a> kept the Hadamard step and replaced the codebook with a trellis code (see our <a href="what-is-trellis-coded-quantization.html">trellis-coded quantization guide</a>). After the rotation the weights look roughly like independent Gaussian samples, which is what lattice and trellis codes are designed for. EXL3, in the ExLlamaV3 library, is a streamlined variant of QTIP.</p>
+
+  <h2>QuaRot and SpinQuant: rotating activations too</h2>
+  <p><a href="https://arxiv.org/abs/2404.00456">QuaRot</a> (Ashkboos and colleagues, 2024) also rotates the hidden states that flow between layers, removing outliers from the activations, so weights, activations and the KV cache can all be quantized to 4 bits and the matrix multiplies run in low precision. Most rotations are folded into the weights offline; a few run on the fly with fast Hadamard kernels. SpinQuant, from Meta, learns the rotation matrices instead of using random ones. These methods aim mostly at faster matrix multiplies; for one person chatting with a local model, the bottleneck is reading the weights for every token, so the weight format matters most.</p>
+
+  <h2>Limits worth knowing</h2>
+  <ul>
+    <li><strong>A rotation saves no bits by itself.</strong> It makes the bits you have work better, and the gain depends on the grid, codebook or trellis that follows.</li>
+    <li><strong>Block size is a trade-off.</strong> Rotating a whole row spreads outliers furthest but costs more, so many formats rotate in power-of-two blocks.</li>
+    <li><strong>It needs runtime support.</strong> The runtime must apply the matching rotation. llama.cpp's IQ2_XXS does not rotate; it uses an importance matrix and a grid derived from the E8 lattice. The first version of ik_llama.cpp's IQ2_KT used no Hadamard transform either, per its pull request.</li>
+  </ul>
+
+  <h2>Where Pingala-8 fits</h2>
+  <p>Pingala-8 is our 2-bit format. Each weight matrix is scaled per input column (with a scale chosen to minimise QuIP's incoherence bound on LDLQ's error, under a simple model of the Hessian), rotated with a random-sign fast Walsh-Hadamard transform over blocks of 256 columns, given one 16-bit scale per 256 weights per row, and rounded with QuIP's LDLQ along an 8-state trellis code. The rotation and the LDLQ rounding are borrowed from QuIP and QuIP#.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Qwen3-4B file</th><th class="num">Size</th><th class="num">Perplexity</th><th class="num">Quiz average</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>Q8_0 (reference)</td><td class="num">4.28 GB</td><td class="num">12.50</td><td class="num">56.3</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">1.25 GB</td><td class="num">28.61</td><td class="num">41.9</td></tr>
+        <tr><td>IQ2_KT</td><td class="num">1.25 GB</td><td class="num">18.15</td><td class="num">46.5</td></tr>
+        <tr class="ours"><td><strong>Pingala-8</strong></td><td class="num"><strong>1.24 GB</strong></td><td class="num"><strong>16.64</strong></td><td class="num"><strong>50.8</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">WikiText-2 perplexity at context 4,096, 73 windows (lower is better), and the average of five zero-shot quizzes. The Pingala-8 Qwen3-4B file is the last of many builds we tested on WikiText-2, so treat its number as tuned. Source: the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a> and the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a>.</p>
+  <p>On Qwen3-4B it keeps 90% of the 8-bit model's quiz average, and on Llama-3.1-8B it beats IQ2_KT at the same size (8.44 against 9.36, with a BOS at every window). The caveats:</p>
+  <ul>
+    <li><strong>We did not isolate the rotation.</strong> At equal bytes the trellis gives 14% of our gain over IQ2_XXS; the rest comes from the rotation, the LDLQ rounding, the column scale and the table together, and we did not separate them.</li>
+    <li><strong>It does not always win.</strong> On Qwen3-14B it loses narrowly to IQ2_KT (9.57 against 9.40), and it reads prompts at 0.74x the speed of IQ2_XXS.</li>
+    <li><strong>It needs our runtime.</strong> The files need the patched llama.cpp build from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">one-click release</a> and an NVIDIA RTX 30, 40 or 50 series GPU. Stock llama.cpp, Ollama and LM Studio cannot load them.</li>
+  </ul>
+  <p>For how 2-bit files compare in practice, see <a href="is-2-bit-quantization-usable.html">is 2-bit quantization usable?</a> and the <a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">GGUF quant comparison</a>.</p>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>Why do LLM quantization methods use a Hadamard transform?</h3>
+  <p>To spread out outliers. The rotation mixes each block of numbers, so a few large values no longer set the scale for the whole block. The rotated values look more like a bell curve, which a low-bit grid or codebook fits better, and the rotation can be undone exactly.</p>
+  <h3>Does rotating the weights change the model&#x27;s output?</h3>
+  <p>Not by itself. A normalized Hadamard matrix is orthogonal, so rotating the weights and applying the matching rotation to the layer&#x27;s input gives the same result. Only the rounding that follows changes anything, and the rotation makes that rounding error smaller and more even.</p>
+  <h3>What is the difference between QuIP and QuaRot?</h3>
+  <p>QuIP rotates the weights so that weight-only quantization to 2 bits loses less; QuIP# switched it to a fast randomized Hadamard transform. QuaRot also rotates the hidden states, so weights, activations and the KV cache can all be stored in 4 bits and the matrix multiplies run in low precision.</p>
+  <h3>Is a Hadamard rotation expensive at run time?</h3>
+  <p>It is cheap. The fast Walsh-Hadamard transform uses only additions and subtractions: for a block of 256 values, 8 rounds of 256, against 65,536 multiply-adds for a general 256 by 256 rotation. Some methods fold rotations into neighbouring weights, so those cost nothing at run time.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-trellis-coded-quantization.html">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>
