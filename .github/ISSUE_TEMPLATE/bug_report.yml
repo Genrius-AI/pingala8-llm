@@ -1,0 +1,68 @@
+name: Bug report
+description: Something fails in the one-click build, the patched llama.cpp or a script in this repository.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Pingala-8 files load only in the patched llama.cpp (`patches/`) or the one-click build. Stock llama.cpp, Ollama and LM Studio cannot load them.
+        Pingala-8 runs need the `GGML_` variables of `oneclick/windows/env.bat`, and with the CUDA patch all layers on the GPU (`-ngl 99`).
+  - type: dropdown
+    id: component
+    attributes:
+      label: Where does it fail?
+      options:
+        - One-click Windows package
+        - One-click Linux package
+        - Patched llama.cpp built from source (CUDA patch)
+        - Patched llama.cpp built from source (CPU patch)
+        - Scripts in research/, tools/ or derived/
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: model
+    attributes:
+      label: Model file
+      options:
+        - Qwen3-4B B4 (4B-csq-vr3-*.gguf)
+        - Llama-3.1-8B B4 (l31-8b-pingala8-*.gguf)
+        - Not model-specific
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and VRAM (or CPU for the CPU patch)
+      placeholder: RTX 4060 Laptop, 8 GB
+    validations:
+      required: true
+  - type: input
+    id: driver
+    attributes:
+      label: NVIDIA driver and CUDA version (from nvidia-smi)
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: Windows 11 23H2 / Ubuntu 24.04 / WSL2
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Exact commands, including environment variables
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Full output with the error
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?

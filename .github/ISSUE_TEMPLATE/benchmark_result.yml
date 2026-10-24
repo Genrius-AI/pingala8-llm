@@ -1,0 +1,90 @@
+name: Benchmark result
+description: Report llama-bench speed and/or perplexity of a Pingala-8 file on your hardware.
+title: "[benchmark] <GPU> - <model>"
+labels: ["benchmark"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Protocol and commands: [issue #4](https://github.com/Genrius-AI/pingala8-llm/issues/4) and CONTRIBUTING.md. One GPU per report. Measure the Pingala-8 file and a stock file
+        (IQ2_XXS or Q4_K_M of the same model) with the same binary in the same session; run the stock file with `GGML_F44=0`
+        and without the other `GGML_` variables.
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and VRAM
+      placeholder: RTX 3060, 12 GB
+    validations:
+      required: true
+  - type: input
+    id: driver
+    attributes:
+      label: NVIDIA driver and CUDA version (from nvidia-smi)
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+    validations:
+      required: true
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: Runtime
+      options:
+        - One-click Windows zip (v2.4-oneclick)
+        - Source build of llama.cpp 7ac59a6 with the CUDA patch
+        - Source build with the CPU patch
+        - Other (say below)
+    validations:
+      required: true
+  - type: input
+    id: arch
+    attributes:
+      label: CMAKE_CUDA_ARCHITECTURES (source builds)
+      placeholder: "86"
+  - type: dropdown
+    id: model
+    attributes:
+      label: Pingala-8 file
+      options:
+        - Qwen3-4B B4
+        - Llama-3.1-8B B4
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Stock reference file (name, bytes, where it came from)
+      placeholder: Qwen_Qwen3-4B-Q4_K_M.gguf, 2497280960 B, bartowski/Qwen_Qwen3-4B-GGUF
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Results (tok/s, same session)
+      value: |
+        | round | B4 pp512 | ref pp512 | B4 tg128 | ref tg128 |
+        |---|---|---|---|---|
+        | 1 | | | | |
+        | 2 | | | | |
+        | 3 | | | | |
+    validations:
+      required: true
+  - type: textarea
+    id: ppl
+    attributes:
+      label: Perplexity (optional)
+      description: The command, the first four values and the last value. Qwen3-4B reference run, logs/r36_hfj_csq_native.log:15 - [1]16.0556 [2]19.6539 [3]16.9107 [4]14.7582, last [73]16.6413.
+  - type: textarea
+    id: raw
+    attributes:
+      label: Raw llama-bench output (-o json), or attach the files
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (other GPU load, power mode, laptop or desktop)
