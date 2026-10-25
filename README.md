@@ -9,7 +9,7 @@
 At the same file size as llama.cpp's IQ2_XXS, our Qwen3-4B scores 21% higher on a 5-task quiz (50.8 against 41.9; it keeps 90% of the 8-bit model's 56.3)
 and writes replies 39% faster than Q4_K_M at half its size (batch 1, one RTX 5070 Ti Laptop GPU).
 
-**[Download the one-click build](https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick)** (Windows and Linux, NVIDIA RTX 30/40/50) | **[Paper (DOI)](https://doi.org/10.5281/zenodo.23481757)** | [Paper page: abstract, PDF, BibTeX](https://genrius-ai.github.io/pingala8-llm/paper.html) | **Models on Hugging Face:** [Qwen3-4B](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit), [Llama-3.1-8B](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit)
+**[Download the one-click build](https://github.com/Genrius-AI/pingala8-llm/releases/latest)** (Windows and Linux, NVIDIA RTX 30/40/50) | **[Paper (DOI)](https://doi.org/10.5281/zenodo.23481757)** | [Paper page: abstract, PDF, BibTeX](https://genrius-ai.github.io/pingala8-llm/paper.html) | **Models on Hugging Face:** [Qwen3-4B](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit), [Llama-3.1-8B](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit)
 
 **How it compares:** at the same file size and without retraining, it beats llama.cpp's IQ2_XXS and ik_llama.cpp's IQ2_KT on Qwen3-4B and Llama-3.1-8B (WikiText-2 perplexity on Qwen3-4B: 16.64 against 28.61 and 18.15; lower is better), but loses narrowly to IQ2_KT on Qwen3-14B (9.57 against 9.40), reads long prompts slower (0.74x IQ2_XXS), and needs our patched llama.cpp (CUDA). Retrained models such as Ternary Bonsai 4B score higher (11.59 at 1.07 GB).
 
@@ -18,7 +18,7 @@ Code, llama.cpp patches, build scripts and logs for the paper
 **Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp**
 Harshit Goyal, Genrius AI (harshit@genrius.in), former Google software engineer and IIIT Delhi alumnus. Preprint, October 2026, version 2.4, DOI [10.5281/zenodo.23481757](https://doi.org/10.5281/zenodo.23481757).
 
-**Try it in one click (Windows, NVIDIA RTX 30/40/50):** download `pingala8-windows-cuda12.zip` from the [v2.4-oneclick release](https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick), unzip it and double-click `run_qwen3_4b.bat`. The model downloads once, then a chat page opens in your browser.
+**Try it in one click (Windows, NVIDIA RTX 30/40/50):** download `pingala8-windows-cuda12.zip` from the [latest release](https://github.com/Genrius-AI/pingala8-llm/releases/latest), unzip it and double-click `run_qwen3_4b.bat`. The model downloads once, then a chat page opens in your browser.
 
 ## Summary
 
