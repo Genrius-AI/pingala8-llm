@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload | Genrius AI</title>
+<meta name="description" content="How much VRAM Qwen3.6-35B-A3B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how MoE expert offload works.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload">
+<meta property="og:description" content="How much VRAM Qwen3.6-35B-A3B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how MoE expert offload works.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-25T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-25T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="Qwen3.6 35B-A3B VRAM">
+<meta property="article:tag" content="Qwen3.6 35B GPU">
+<meta property="article:tag" content="Qwen3.6 35B-A3B GGUF">
+<meta property="article:tag" content="MoE offload">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload">
+<meta name="twitter:description" content="How much VRAM Qwen3.6-35B-A3B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how MoE expert offload works.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html#article",
+      "headline": "Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload",
+      "description": "How much VRAM Qwen3.6-35B-A3B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how MoE expert offload works.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-25T00:00:00+00:00",
+      "dateModified": "2026-10-25T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "GPU memory needed to run the Qwen3.6-35B-A3B mixture-of-experts model locally",
+      "keywords": "Qwen3.6 35B-A3B VRAM, Qwen3.6-35B-A3B GPU, Qwen3.6 35B Q4_K_M, MoE expert offload, n-cpu-moe, hybrid attention, KV cache, llama.cpp",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much VRAM does Qwen3.6-35B-A3B need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On paper about 22.0 GB of weights at Q4_K_M, 38.2 GB at Q8_0 and 10.7 GB at IQ2_XXS, plus a KV cache of only 0.23 GB at 8,192 tokens and about 1.5 GB of working buffers. These are estimates from the public config, not measurements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a 3B-active MoE model need only 3B worth of VRAM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All 256 experts per layer must be loaded because the router picks different ones for each token, so memory follows the full 35.95 billion parameters. The 3B active parameters make it fast, not small."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Qwen3.6-35B-A3B run on a 12 GB or 16 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On 16 GB, a 2-bit file of about 10.7 GB fits fully on paper. On 12 GB the 2-bit file is tight. Otherwise keep the expert weights in system RAM with llama.cpp's --cpu-moe or --n-cpu-moe, which is slower but works with enough RAM."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a Pingala-8 version of Qwen3.6-35B-A3B?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 10.7 GB, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Qwen3.6 35B-A3B on a consumer GPU",
+          "item": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-25">October 25, 2026</time>. About 7 minutes.</p>
+  <p><b><a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">Will it fit your GPU? Normal vs Pingala-8 calculator</a></b></p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Qwen3.6-35B-A3B is a mixture-of-experts model: about 3 billion parameters work on each token, but all 35.95 billion must be in memory. That is about 22.00 GB at Q4_K_M and 10.71 GB at IQ2_XXS on paper.</li>
+      <li>Its KV cache is tiny: only 10 of 40 layers keep one, with 2 key-value heads each. 0.74 GB at 32,768 tokens, 5.43 GB at the full 262,144.</li>
+      <li>A 24 GB card holds Q4_K_M up to about 32k tokens (tight at 32k). A 16 GB card fits a 2-bit file. On 8 to 12 GB, the usual route is keeping experts in system RAM.</li>
+      <li>All numbers are memory estimates from the public config. We have not run this model.</li>
+    </ul>
+  </div>
+
+  <p>"A3B" sounds small, and people often expect Qwen3.6-35B-A3B to run like a 3B model on a modest card. Each token uses only about 3 billion parameters, which is why models like this write quickly, but it does not fit like a small model. This page works out the memory from the model's config, <a href="https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/config.json">Qwen/Qwen3.6-35B-A3B config.json @ 995ad96</a>, with the formulas of our <a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">GPU fit calculator</a>.</p>
+
+  <h2>Memory per quantization</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Format</th><th class="num">Weights</th><th class="num">+ 4,096 tokens</th><th class="num">+ 8,192 tokens</th><th class="num">+ 32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>FP16</td><td class="num">71.91 GB</td><td class="num">72.06 GB</td><td class="num">72.14 GB</td><td class="num">72.65 GB</td></tr>
+        <tr><td>Q8_0</td><td class="num">38.20 GB</td><td class="num">38.35 GB</td><td class="num">38.43 GB</td><td class="num">38.94 GB</td></tr>
+        <tr><td>Q4_K_M</td><td class="num">22.00 GB</td><td class="num">22.15 GB</td><td class="num">22.23 GB</td><td class="num">22.74 GB</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">10.71 GB</td><td class="num">10.86 GB</td><td class="num">10.94 GB</td><td class="num">11.45 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Memory estimates from public configs, not measurements: we have not run this model. Weights = parameters x bits per weight / 8, with llama.cpp's whole-file bits per weight (FP16 16.0005, Q8_0 8.5008, Q4_K_M 4.8944, IQ2_XXS 2.3824, from the Llama-3.1-8B table in llama.cpp's <code>tools/quantize/README.md</code>). KV cache at 16-bit, context padded to 256 cells as llama.cpp does. GB = 10<sup>9</sup> bytes. Add about 1.5 GB for the runtime's compute buffers and your desktop. These are the <a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">calculator</a>'s formulas.</p>
+
+  <p>For comparison, unsloth's published files (<a href="https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF/tree/a483e9e6cbd595906af30beda3187c2663a1118c">unsloth/Qwen3.6-35B-A3B-GGUF</a>) are 36.90 GB for Q8_0, 22.13 GB for UD-Q4_K_M and 10.76 GB for UD-IQ2_XXS. Our estimates count the vision encoder and the multi-token-prediction layer in the parameter total; a text GGUF ships the vision part separately (mmproj, 0.90 GB at BF16).</p>
+
+  <h2>MoE: all experts sit in memory</h2>
+  <p>The config lists 256 experts per layer, 8 of them routed for each token, plus one shared expert. The router picks different experts for every token, so llama.cpp needs all of them loaded, and the weight column above counts all 35.95 billion parameters. What MoE saves is compute and memory bandwidth per token, not capacity: each token reads only a small slice of the weights, which is why it writes quickly.</p>
+  <p>That same fact makes MoE models good at partial offload. llama.cpp can keep the expert weights in system RAM and the rest (attention, shared expert, cache) on the GPU, with <code>--cpu-moe</code> for all experts or <code>--n-cpu-moe N</code> for the first N layers. Because each token touches only 8 of 256 experts, this costs less speed than offloading layers of a dense model, though it is still slower than running fully on the GPU. You need enough system RAM to hold the expert weights, roughly the file size minus what stays on the card.</p>
+
+  <h2>Which GPU fits at 4k, 8k and 32k context</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Card memory</th><th>Common NVIDIA cards</th><th>4,096 tokens</th><th>8,192 tokens</th><th>32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr><td>8 GB</td><td>RTX 3050 8 GB, 3060 Ti, 4060, 4060 Ti 8 GB, 5060; laptop 4060, 4070, 5060</td><td>None fully on the GPU</td><td>None fully on the GPU</td><td>None fully on the GPU</td></tr>
+        <tr><td>12 GB</td><td>RTX 3060 12 GB, 4070, 5070; laptop 5070 Ti</td><td>IQ2_XXS (tight)</td><td>IQ2_XXS (tight)</td><td>IQ2_XXS (tight)</td></tr>
+        <tr><td>16 GB</td><td>RTX 4060 Ti 16 GB, 4080, 5060 Ti 16 GB, 5070 Ti, 5080; laptop 4090</td><td>IQ2_XXS</td><td>IQ2_XXS</td><td>IQ2_XXS</td></tr>
+        <tr><td>24 GB</td><td>RTX 3090, 4090; laptop 5090</td><td>Q4_K_M</td><td>Q4_K_M</td><td>Q4_K_M (tight)</td></tr>
+        <tr><td>32 GB</td><td>RTX 5090</td><td>Q4_K_M</td><td>Q4_K_M</td><td>Q4_K_M</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">The largest of the four formats in the table above whose weights plus 16-bit KV cache leave at least 1.5 GB free on the card; "tight" means it fits but with less than 1.5 GB left. Card memory from NVIDIA's spec pages, taken at face value. On paper, not tested on these cards.</p>
+
+  <p>Q4_K_M at about 22 GB is a 24 GB-card format: it fits at 4k and 8k and is tight at 32k, with under 1.5 GB to spare. A 32 GB RTX 5090 holds it with room to spare. Q8_0 at 38 GB does not fit any single consumer card. On 16 GB, a 2-bit file of about 10.7 GB fits at every context in the table. On 12 GB the 2-bit file is tight, and on 8 GB you need expert offload.</p>
+
+  <h2>Why the KV cache is so small</h2>
+  <p>Like Qwen3.8-27B, this model is a hybrid: of its 40 layers, 30 are linear-attention layers and 10 are full-attention layers (<code>full_attention_interval</code> = 4). Only the full-attention layers keep a per-token cache, and each has just 2 key-value heads of size 256: 2 x 2 x 256 x 2 bytes = 2,048 bytes per token per layer, 20,480 bytes per token in total. The 30 linear-attention layers keep a fixed 32-bit state of 65,863,680 bytes (0.07 GB), counted the way llama.cpp sizes it (<a href="https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/llama-hparams.cpp">src/llama-hparams.cpp</a>): per layer, 3 x (2 x 16 x 128 + 32 x 128) convolution values plus 128 x 32 x 128 recurrent values.</p>
+  <p>So the context costs very little: 2.75 GB at 131,072 tokens. Qwen3-30B-A3B, the earlier non-hybrid MoE of similar size, needs 98,304 bytes per token (48 layers, 4 key-value heads of 128), almost five times as much. With this model, the weights decide what card you need; the context almost never does.</p>
+
+  <h2>Pingala-8 and this model</h2>
+  <p>Pingala-8 is a 2-bit format at IQ2_XXS size. A Pingala-8 build of Qwen3.6-35B-A3B is not released yet and its quality is not measured; the size would be about the IQ2_XXS row above, about 10.71 GB of weights. Request it here: open the <a href="https://genrius-ai-llm-vram-calculator.static.hf.space/index.html#m=qwen3.6-35b-a3b&f=IQ2_XXS&c=8192&kv=f16&v=16&o=1.5" target="_blank" rel="noopener noreferrer">GPU fit calculator</a> and press Request, or <a href="https://github.com/Genrius-AI/pingala8-llm/issues/new?title=Model%20request%3A%20Pingala-8%20for%20Qwen3.6-35B-A3B" target="_blank" rel="noopener noreferrer">open a GitHub issue</a> with the model, your card and the context you need.</p>
+  <p>What we have measured is on other models. On Qwen3-4B, Pingala-8 is 1.24 GB with a WikiText-2 perplexity of 16.64 against 28.61 for IQ2_XXS at the same size; on Qwen3-14B it loses narrowly to IQ2_KT (9.57 against 9.40). The released files run only in our patched llama.cpp on NVIDIA RTX 30, 40 or 50 series cards; stock llama.cpp, Ollama and LM Studio cannot load them. Details are in the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a> and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a>.</p>
+
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>How much VRAM does Qwen3.6-35B-A3B need?</h3>
+  <p>On paper about 22.0 GB of weights at Q4_K_M, 38.2 GB at Q8_0 and 10.7 GB at IQ2_XXS, plus a KV cache of only 0.23 GB at 8,192 tokens and about 1.5 GB of working buffers. These are estimates from the public config, not measurements.</p>
+  <h3>Does a 3B-active MoE model need only 3B worth of VRAM?</h3>
+  <p>No. All 256 experts per layer must be loaded because the router picks different ones for each token, so memory follows the full 35.95 billion parameters. The 3B active parameters make it fast, not small.</p>
+  <h3>Can Qwen3.6-35B-A3B run on a 12 GB or 16 GB GPU?</h3>
+  <p>On 16 GB, a 2-bit file of about 10.7 GB fits fully on paper. On 12 GB the 2-bit file is tight. Otherwise keep the expert weights in system RAM with llama.cpp's --cpu-moe or --n-cpu-moe, which is slower but works with enough RAM.</p>
+  <h3>Is there a Pingala-8 version of Qwen3.6-35B-A3B?</h3>
+  <p>Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 10.7 GB, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-trellis-coded-quantization.html">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT</a></li>
+      <li><a href="what-is-hadamard-rotation-quantization.html">What is Hadamard rotation in LLM quantization?</a></li>
+      <li><a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements: which GPU do you need?</a></li>
+      <li><a href="gemma-4-vram-requirements.html">Gemma 4 VRAM requirements: 26B-A4B and 31B</a></li>
+      <li><a href="run-gpt-oss-20b-on-12gb-16gb-gpu.html">Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Gemma, gpt-oss, Llama, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

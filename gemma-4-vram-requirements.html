@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gemma 4 VRAM requirements: 26B-A4B and 31B | Genrius AI</title>
+<meta name="description" content="How much VRAM Gemma 4 31B and 26B-A4B need at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how their KV cache works.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Gemma 4 VRAM requirements: 26B-A4B and 31B">
+<meta property="og:description" content="How much VRAM Gemma 4 31B and 26B-A4B need at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how their KV cache works.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-25T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-25T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="Gemma 4 VRAM">
+<meta property="article:tag" content="Gemma 4 31B VRAM">
+<meta property="article:tag" content="Gemma 4 26B-A4B VRAM">
+<meta property="article:tag" content="Gemma 4 GGUF">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gemma 4 VRAM requirements: 26B-A4B and 31B">
+<meta name="twitter:description" content="How much VRAM Gemma 4 31B and 26B-A4B need at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how their KV cache works.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html#article",
+      "headline": "Gemma 4 VRAM requirements: 26B-A4B and 31B",
+      "description": "How much VRAM Gemma 4 31B and 26B-A4B need at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k to 32k context, and how their KV cache works.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-25T00:00:00+00:00",
+      "dateModified": "2026-10-25T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "GPU memory needed to run the Gemma 4 31B and 26B-A4B models locally",
+      "keywords": "Gemma 4 VRAM, Gemma 4 31B GPU, Gemma 4 26B A4B VRAM, Gemma 4 Q4_K_M, sliding window attention, KV cache, llama.cpp",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much VRAM does Gemma 4 31B need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On paper about 19.1 GB of weights at Q4_K_M and 9.3 GB at IQ2_XXS, plus a KV cache of 1.93 GB at 8,192 tokens and about 1.5 GB of working buffers. A 24 GB card fits Q4_K_M up to about 32k tokens, where it gets tight. These are estimates from the public config, not measurements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much VRAM does Gemma 4 26B-A4B need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On paper about 15.8 GB of weights at Q4_K_M and 7.7 GB at IQ2_XXS, plus a KV cache of only 0.48 GB at 8,192 tokens. All 128 experts per layer must be loaded even though 8 run per token."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does Gemma 4 31B have a bigger KV cache than its sliding window suggests?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Its 50 sliding layers use 16 key-value heads of size 256, so even capped at 1,536 cells they take 1.26 GB, and its 10 full layers use heads of size 512 that grow with the context. llama.cpp stores both keys and values even where the model reuses the key projection as the value."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a Pingala-8 version of Gemma 4?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 9.3 GB for the 31B or 7.7 GB for the 26B-A4B, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Gemma 4 VRAM requirements",
+          "item": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>Gemma 4 VRAM requirements: 26B-A4B and 31B</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-25">October 25, 2026</time>. About 8 minutes.</p>
+  <p><b><a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">Will it fit your GPU? Normal vs Pingala-8 calculator</a></b></p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Gemma 4 31B (dense) is about 19.13 GB at Q4_K_M and 9.31 GB at IQ2_XXS on paper. Gemma 4 26B-A4B (mixture of experts) is about 15.79 GB and 7.69 GB.</li>
+      <li>The 31B has a heavy KV cache for a model with sliding windows: 1.59 GB at 4,096 tokens and 3.94 GB at 32,768. The 26B-A4B needs only 0.99 GB at 32,768.</li>
+      <li>24 GB card (RTX 3090, 4090): either model at Q4_K_M; the 31B is tight at 32k. 16 GB: 2-bit files only. 12 GB: the 26B-A4B 2-bit file fits; the 31B is tight or does not fit.</li>
+      <li>All numbers are memory estimates from public configs. We have not run these models.</li>
+    </ul>
+  </div>
+
+  <p>Gemma 4 comes in several sizes; this page covers the two that people try to fit on one consumer GPU, the dense 31B and the 26B-A4B mixture of experts. Both have unusual attention, which our <a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">calculator</a> does not cover yet (it shows Gemma 4 as "weights only"), so the KV cache here is derived by hand from the configs, <a href="https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/config.json">google/gemma-4-31B-it config.json @ 842da37</a> and <a href="https://huggingface.co/google/gemma-4-26B-A4B-it/blob/4d7ae4984b7db7de8f8457170b3f1a419ee76d52/config.json">google/gemma-4-26B-A4B-it config.json @ 4d7ae49</a>, and from llama.cpp's Gemma 4 code at commit 1a0b56c.</p>
+
+  <h2>Memory per quantization: Gemma 4 31B</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Format</th><th class="num">Weights</th><th class="num">+ 4,096 tokens</th><th class="num">+ 8,192 tokens</th><th class="num">+ 32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>FP16</td><td class="num">62.55 GB</td><td class="num">64.14 GB</td><td class="num">64.48 GB</td><td class="num">66.49 GB</td></tr>
+        <tr><td>Q8_0</td><td class="num">33.23 GB</td><td class="num">34.82 GB</td><td class="num">35.16 GB</td><td class="num">37.17 GB</td></tr>
+        <tr><td>Q4_K_M</td><td class="num">19.13 GB</td><td class="num">20.72 GB</td><td class="num">21.06 GB</td><td class="num">23.07 GB</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">9.31 GB</td><td class="num">10.90 GB</td><td class="num">11.24 GB</td><td class="num">13.25 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Memory per quantization: Gemma 4 26B-A4B</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Format</th><th class="num">Weights</th><th class="num">+ 4,096 tokens</th><th class="num">+ 8,192 tokens</th><th class="num">+ 32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>FP16</td><td class="num">51.61 GB</td><td class="num">52.01 GB</td><td class="num">52.09 GB</td><td class="num">52.60 GB</td></tr>
+        <tr><td>Q8_0</td><td class="num">27.42 GB</td><td class="num">27.82 GB</td><td class="num">27.90 GB</td><td class="num">28.41 GB</td></tr>
+        <tr><td>Q4_K_M</td><td class="num">15.79 GB</td><td class="num">16.19 GB</td><td class="num">16.27 GB</td><td class="num">16.78 GB</td></tr>
+        <tr><td>IQ2_XXS</td><td class="num">7.69 GB</td><td class="num">8.09 GB</td><td class="num">8.17 GB</td><td class="num">8.68 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Memory estimates from public configs, not measurements: we have not run this model. Weights = parameters x bits per weight / 8, with llama.cpp's whole-file bits per weight (FP16 16.0005, Q8_0 8.5008, Q4_K_M 4.8944, IQ2_XXS 2.3824, from the Llama-3.1-8B table in llama.cpp's <code>tools/quantize/README.md</code>). KV cache at 16-bit, context padded to 256 cells as llama.cpp does. GB = 10<sup>9</sup> bytes. Add about 1.5 GB for the runtime's compute buffers and your desktop. These are the <a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">calculator</a>'s formulas.</p>
+
+  <p>As a check, unsloth's files are 32.64 GB (Q8_0), 18.32 GB (Q4_K_M) and 8.53 GB (UD-IQ2_XXS) for the 31B (<a href="https://huggingface.co/unsloth/gemma-4-31B-it-GGUF/tree/c1ac76e99d5513b141e8adde7288b85c3f9c32ec">unsloth/gemma-4-31B-it-GGUF</a>), and 26.86 GB, 16.95 GB (UD-Q4_K_M) and 9.92 GB (UD-IQ2_XXS) for the 26B-A4B (<a href="https://huggingface.co/unsloth/gemma-4-26B-A4B-it-GGUF/tree/c099eb48e663fd284577b04978a94ffccb261841">unsloth/gemma-4-26B-A4B-it-GGUF</a>). Our rows run a little high for Q8_0 and Q4_K_M because the parameter totals include the vision encoder, which ships as a separate mmproj file of about 1.2 GB at BF16. The 26B-A4B 2-bit file is larger than our estimate because unsloth's "UD" files keep some tensors at higher precision.</p>
+
+  <h2>Which GPU fits at 4k, 8k and 32k context</h2>
+  <p>Gemma 4 31B:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Card memory</th><th>Common NVIDIA cards</th><th>4,096 tokens</th><th>8,192 tokens</th><th>32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr><td>8 GB</td><td>RTX 3050 8 GB, 3060 Ti, 4060, 4060 Ti 8 GB, 5060; laptop 4060, 4070, 5060</td><td>None fully on the GPU</td><td>None fully on the GPU</td><td>None fully on the GPU</td></tr>
+        <tr><td>12 GB</td><td>RTX 3060 12 GB, 4070, 5070; laptop 5070 Ti</td><td>IQ2_XXS (tight)</td><td>IQ2_XXS (tight)</td><td>None fully on the GPU</td></tr>
+        <tr><td>16 GB</td><td>RTX 4060 Ti 16 GB, 4080, 5060 Ti 16 GB, 5070 Ti, 5080; laptop 4090</td><td>IQ2_XXS</td><td>IQ2_XXS</td><td>IQ2_XXS</td></tr>
+        <tr><td>24 GB</td><td>RTX 3090, 4090; laptop 5090</td><td>Q4_K_M</td><td>Q4_K_M</td><td>Q4_K_M (tight)</td></tr>
+        <tr><td>32 GB</td><td>RTX 5090</td><td>Q4_K_M</td><td>Q4_K_M</td><td>Q4_K_M</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Gemma 4 26B-A4B:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Card memory</th><th>Common NVIDIA cards</th><th>4,096 tokens</th><th>8,192 tokens</th><th>32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr><td>8 GB</td><td>RTX 3050 8 GB, 3060 Ti, 4060, 4060 Ti 8 GB, 5060; laptop 4060, 4070, 5060</td><td>None fully on the GPU</td><td>None fully on the GPU</td><td>None fully on the GPU</td></tr>
+        <tr><td>12 GB</td><td>RTX 3060 12 GB, 4070, 5070; laptop 5070 Ti</td><td>IQ2_XXS</td><td>IQ2_XXS</td><td>IQ2_XXS</td></tr>
+        <tr><td>16 GB</td><td>RTX 4060 Ti 16 GB, 4080, 5060 Ti 16 GB, 5070 Ti, 5080; laptop 4090</td><td>IQ2_XXS</td><td>IQ2_XXS</td><td>IQ2_XXS</td></tr>
+        <tr><td>24 GB</td><td>RTX 3090, 4090; laptop 5090</td><td>Q4_K_M</td><td>Q4_K_M</td><td>Q4_K_M</td></tr>
+        <tr><td>32 GB</td><td>RTX 5090</td><td>Q8_0</td><td>Q8_0</td><td>Q8_0</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">The largest of the four formats in the tables above whose weights plus 16-bit KV cache leave at least 1.5 GB free on the card; "tight" means it fits but with less than 1.5 GB left. Card memory from NVIDIA's spec pages, taken at face value. On paper, not tested on these cards.</p>
+
+  <p>The 26B-A4B is the easier fit: about 16 GB at Q4_K_M with a small cache, comfortable on 24 GB, and its 2-bit file fits a 12 GB card even at 32k. The 31B at Q4_K_M fits a 24 GB card at 4k and 8k and is tight at 32k. On 16 GB, neither Q4_K_M file fits, so it is 2-bit or partial offload.</p>
+
+  <h2>How the architecture affects the KV cache</h2>
+  <p>Both models mix two kinds of layer. In the 31B, 50 of 60 layers use sliding-window attention over the last 1,024 tokens and 10 use full attention (in the 26B-A4B, 25 of 30 and 5). The two kinds have different shapes, and that is where a simple calculator goes wrong:</p>
+  <ul>
+    <li><strong>Sliding layers</strong> (31B): 16 key-value heads of size 256, so 2 x 16 x 256 x 2 = 16,384 bytes per token per layer at 16-bit. llama.cpp caps their cache at GGML_PAD(min(context, 1,024 + 512), 256) = 1,536 cells by default (<a href="https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/llama-kv-cache-iswa.cpp">src/llama-kv-cache-iswa.cpp</a>), so 50 layers cost a fixed 1.26 GB once the context passes 1,536 tokens.</li>
+    <li><strong>Full layers</strong> (31B): <code>num_global_key_value_heads</code> = 4 heads of <code>global_head_dim</code> = 512, so 8,192 bytes per token per layer, and these grow with the context. llama.cpp's converter writes these as a per-layer head count (<a href="https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/conversion/gemma.py">conversion/gemma.py</a>), and the model code reads the head size per layer type (<a href="https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/llama-hparams.cpp">src/llama-hparams.cpp</a>, <code>n_embd_head_k</code>).</li>
+    <li><strong>K equals V.</strong> The config sets <code>attention_k_eq_v</code>. Where a layer has no separate value projection, llama.cpp reuses the key projection as the value (<a href="https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/models/gemma4.cpp">src/models/gemma4.cpp</a>). That saves weights, not cache: the key is then normalized and rotated, the value only normalized, and llama.cpp stores both, so the cache holds the usual two tensors per layer.</li>
+  </ul>
+  <p>For the 31B that gives 1,258,291,200 bytes for the sliding layers plus 81,920 bytes per token for the full layers: 1.93 GB at 8,192 tokens, 12.00 GB at 131,072 and 22.73 GB at the full 262,144-token window. For the 26B-A4B the same rules give 8,192 bytes per sliding layer and 4,096 per full layer per token: 3.00 GB at 131,072 tokens. If you run llama.cpp with <code>--swa-full</code>, every sliding layer keeps the whole context too, and the 31B cache at 32,768 tokens grows from 3.94 GB to 29.53 GB.</p>
+  <p>The 26B-A4B is a mixture of experts: 128 experts per layer, 8 used per token. As with any MoE, all experts must be loaded, so memory follows the full parameter count; llama.cpp's <code>--cpu-moe</code> and <code>--n-cpu-moe N</code> keep expert weights in system RAM when the card is too small, at a cost in speed.</p>
+
+  <h2>Pingala-8 and this model</h2>
+  <p>Pingala-8 is a 2-bit format at IQ2_XXS size. A Pingala-8 build of Gemma 4 31B or 26B-A4B is not released yet and its quality is not measured; the size would be about the IQ2_XXS row above, about 9.31 GB or 7.69 GB of weights. Request it here: open the <a href="https://genrius-ai-llm-vram-calculator.static.hf.space/index.html#m=gemma-4-31b-it&f=IQ2_XXS&c=8192&kv=f16&v=16&o=1.5" target="_blank" rel="noopener noreferrer">GPU fit calculator</a> and press Request, or <a href="https://github.com/Genrius-AI/pingala8-llm/issues/new?title=Model%20request%3A%20Pingala-8%20for%20Gemma%204%2031B%20or%2026B-A4B" target="_blank" rel="noopener noreferrer">open a GitHub issue</a> with the model, your card and the context you need.</p>
+  <p>What we have measured is on other models. On Qwen3-4B, Pingala-8 is 1.24 GB with a WikiText-2 perplexity of 16.64 against 28.61 for IQ2_XXS at the same size; on Qwen3-14B it loses narrowly to IQ2_KT (9.57 against 9.40). The released files run only in our patched llama.cpp on NVIDIA RTX 30, 40 or 50 series cards; stock llama.cpp, Ollama and LM Studio cannot load them. Details are in the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a> and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a>.</p>
+
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>How much VRAM does Gemma 4 31B need?</h3>
+  <p>On paper about 19.1 GB of weights at Q4_K_M and 9.3 GB at IQ2_XXS, plus a KV cache of 1.93 GB at 8,192 tokens and about 1.5 GB of working buffers. A 24 GB card fits Q4_K_M up to about 32k tokens, where it gets tight. These are estimates from the public config, not measurements.</p>
+  <h3>How much VRAM does Gemma 4 26B-A4B need?</h3>
+  <p>On paper about 15.8 GB of weights at Q4_K_M and 7.7 GB at IQ2_XXS, plus a KV cache of only 0.48 GB at 8,192 tokens. All 128 experts per layer must be loaded even though 8 run per token.</p>
+  <h3>Why does Gemma 4 31B have a bigger KV cache than its sliding window suggests?</h3>
+  <p>Its 50 sliding layers use 16 key-value heads of size 256, so even capped at 1,536 cells they take 1.26 GB, and its 10 full layers use heads of size 512 that grow with the context. llama.cpp stores both keys and values even where the model reuses the key projection as the value.</p>
+  <h3>Is there a Pingala-8 version of Gemma 4?</h3>
+  <p>Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 9.3 GB for the 31B or 7.7 GB for the 26B-A4B, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-trellis-coded-quantization.html">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT</a></li>
+      <li><a href="what-is-hadamard-rotation-quantization.html">What is Hadamard rotation in LLM quantization?</a></li>
+      <li><a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements: which GPU do you need?</a></li>
+      <li><a href="run-gpt-oss-20b-on-12gb-16gb-gpu.html">Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?</a></li>
+      <li><a href="qwen3-6-35b-a3b-on-consumer-gpu.html">Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Gemma, gpt-oss, Llama, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>

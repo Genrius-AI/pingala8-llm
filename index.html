@@ -72,7 +72,7 @@
       "primaryImageOfPage": "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg",
       "about": {"@id": "https://genrius-ai.github.io/pingala8-llm/#software"},
       "datePublished": "2026-10-24",
-      "dateModified": "2026-10-24",
+      "dateModified": "2026-10-25",
       "hasPart": [
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html#article", "headline": "How much VRAM do you need to run an LLM locally?", "url": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html#article", "headline": "What is a 2-bit LLM, and is 2-bit quantization usable?", "url": "https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html"},
@@ -81,7 +81,11 @@
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html#article", "headline": "How to run Qwen3-4B on a 4 GB or 6 GB GPU", "url": "https://genrius-ai.github.io/pingala8-llm/run-qwen3-4b-on-4gb-6gb-gpu.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html#article", "headline": "How to run Llama 3.1 8B on a 4 GB or 6 GB GPU", "url": "https://genrius-ai.github.io/pingala8-llm/run-llama-3-1-8b-on-4gb-6gb-gpu.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html#article", "headline": "What is trellis-coded quantization? TCQ, QTIP and IQ2_KT explained", "url": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html"},
-        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html#article", "headline": "What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained", "url": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html"}
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html#article", "headline": "What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained", "url": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html#article", "headline": "Qwen3.8 27B VRAM requirements: which GPU do you need?", "url": "https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html#article", "headline": "Gemma 4 VRAM requirements: 26B-A4B and 31B", "url": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html#article", "headline": "Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?", "url": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html#article", "headline": "Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload", "url": "https://genrius-ai.github.io/pingala8-llm/qwen3-6-35b-a3b-on-consumer-gpu.html"}
       ]
     },
     {
@@ -407,6 +411,22 @@
       <a class="card guide-card" href="what-is-hadamard-rotation-quantization.html">
         <h3>What is Hadamard rotation in LLM quantization?</h3>
         <p>Why quantizers rotate weights before rounding: outliers, incoherence, QuIP, QuaRot, with a worked example.</p>
+      </a>
+      <a class="card guide-card" href="qwen3-8-27b-vram-requirements.html">
+        <h3>Qwen3.8 27B VRAM requirements: which GPU do you need?</h3>
+        <p>VRAM for FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA cards fit at 4k to 32k context, and why the hybrid cache is small.</p>
+      </a>
+      <a class="card guide-card" href="gemma-4-vram-requirements.html">
+        <h3>Gemma 4 VRAM requirements: 26B-A4B and 31B</h3>
+        <p>Memory per quantization for both models, GPU fit at 4k to 32k, and how sliding windows and K-equals-V shape the cache.</p>
+      </a>
+      <a class="card guide-card" href="run-gpt-oss-20b-on-12gb-16gb-gpu.html">
+        <h3>Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?</h3>
+        <p>Real GGUF sizes (MXFP4 12.11 GB), the 128-token sliding-window cache, and expert offload for 12 GB cards.</p>
+      </a>
+      <a class="card guide-card" href="qwen3-6-35b-a3b-on-consumer-gpu.html">
+        <h3>Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload</h3>
+        <p>Why all 256 experts must be in memory, what fits on 12 to 32 GB cards, and how expert offload works.</p>
       </a>
     </div>
   </div>

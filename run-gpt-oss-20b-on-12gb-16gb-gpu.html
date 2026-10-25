@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can you run gpt-oss-20b on a 12 GB or 16 GB GPU? | Genrius AI</title>
+<meta name="description" content="gpt-oss-20b VRAM needs: real GGUF sizes (MXFP4 12.11 GB), KV cache with its 128-token sliding window, and which 8, 12, 16 and 24 GB NVIDIA cards fit.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?">
+<meta property="og:description" content="gpt-oss-20b VRAM needs: real GGUF sizes (MXFP4 12.11 GB), KV cache with its 128-token sliding window, and which 8, 12, 16 and 24 GB NVIDIA cards fit.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-10-25T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-10-25T00:00:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="gpt-oss-20b VRAM">
+<meta property="article:tag" content="gpt-oss-20b 16GB GPU">
+<meta property="article:tag" content="gpt-oss-20b 12GB GPU">
+<meta property="article:tag" content="gpt-oss-20b GGUF">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?">
+<meta name="twitter:description" content="gpt-oss-20b VRAM needs: real GGUF sizes (MXFP4 12.11 GB), KV cache with its 128-token sliding window, and which 8, 12, 16 and 24 GB NVIDIA cards fit.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html#article",
+      "headline": "Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?",
+      "description": "gpt-oss-20b VRAM needs: real GGUF sizes (MXFP4 12.11 GB), KV cache with its 128-token sliding window, and which 8, 12, 16 and 24 GB NVIDIA cards fit.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
+      ],
+      "datePublished": "2026-10-25T00:00:00+00:00",
+      "dateModified": "2026-10-25T00:00:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "GPU memory needed to run the gpt-oss-20b model locally on 12 GB and 16 GB GPUs",
+      "keywords": "gpt-oss-20b VRAM, gpt-oss-20b 16GB, gpt-oss-20b 12GB, gpt-oss MXFP4, gpt-oss GGUF, sliding window KV cache, n-cpu-moe, llama.cpp",
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can gpt-oss-20b run on a 16 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, on paper. The MXFP4 GGUF is 12.11 GB and the KV cache is 0.82 GB at 32,768 tokens, so about 12.9 GB before buffers, leaving room on a 16 GB card."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can gpt-oss-20b run on a 12 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not fully on the GPU with the published files: they are 11.5 to 12.1 GB before any cache. Keep some expert layers in system RAM with llama.cpp's --n-cpu-moe, which is slower but works with enough RAM."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is the gpt-oss-20b Q4_K_M file almost as big as MXFP4?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the expert weights, most of the model, are published in the 4-bit MXFP4 format and these GGUF builds keep them that way. Only the remaining tensors change with the quant name, so the files are all about 11.5 to 13.8 GB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a Pingala-8 version of gpt-oss-20b?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 6.2 GB on paper, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Run gpt-oss-20b on a 12 GB or 16 GB GPU",
+          "item": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?</h1>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-25">October 25, 2026</time>. About 7 minutes.</p>
+  <p><b><a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">Will it fit your GPU? Normal vs Pingala-8 calculator</a></b></p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>gpt-oss-20b ships with its expert weights already in a 4-bit format, MXFP4. The ready-made GGUF is 12.11 GB, and the common Q4_K_M and Q2_K files are about the same size, 11.5 to 11.6 GB.</li>
+      <li>16 GB card: yes. The MXFP4 file plus a 32,768-token cache is about 12.9 GB on paper, which leaves room for buffers.</li>
+      <li>12 GB card: not fully on the GPU. The weights alone are about 12 GB. Keep some experts in system RAM with <code>--n-cpu-moe</code>.</li>
+      <li>The cache is small because half the layers use a 128-token sliding window: 0.82 GB at 32k. All numbers are memory estimates from public configs and file sizes; we have not run this model.</li>
+    </ul>
+  </div>
+
+  <p>gpt-oss-20b is OpenAI's smaller open-weight model, and "will it run on my 12 GB or 16 GB card" is the first thing most people ask about it. The answer is unusual, because the file sizes do not follow the usual quantization ladder. This page works it out from the config, <a href="https://huggingface.co/openai/gpt-oss-20b/blob/6cee5e81ee83917806bbde320786a8fb61efebee/config.json">openai/gpt-oss-20b config.json @ 6cee5e8</a>, and the published GGUF files.</p>
+
+  <h2>Memory per quantization</h2>
+  <p>First, what our <a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">calculator</a>'s formula gives if every weight were stored at each format's bits per weight:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Format</th><th class="num">Weights</th><th class="num">+ 4,096 tokens</th><th class="num">+ 8,192 tokens</th><th class="num">+ 32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr class="ref"><td>FP16 (formula)</td><td class="num">41.83 GB</td><td class="num">41.95 GB</td><td class="num">42.05 GB</td><td class="num">42.65 GB</td></tr>
+        <tr><td>Q8_0 (formula)</td><td class="num">22.22 GB</td><td class="num">22.34 GB</td><td class="num">22.44 GB</td><td class="num">23.04 GB</td></tr>
+        <tr><td>Q4_K_M (formula)</td><td class="num">12.80 GB</td><td class="num">12.92 GB</td><td class="num">13.02 GB</td><td class="num">13.62 GB</td></tr>
+        <tr><td>IQ2_XXS (formula)</td><td class="num">6.23 GB</td><td class="num">6.35 GB</td><td class="num">6.45 GB</td><td class="num">7.05 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">Memory estimates from public configs, not measurements: we have not run this model. Weights = parameters x bits per weight / 8, with llama.cpp's whole-file bits per weight (FP16 16.0005, Q8_0 8.5008, Q4_K_M 4.8944, IQ2_XXS 2.3824, from the Llama-3.1-8B table in llama.cpp's <code>tools/quantize/README.md</code>). KV cache at 16-bit, context padded to 256 cells as llama.cpp does. GB = 10<sup>9</sup> bytes. Add about 1.5 GB for the runtime's compute buffers and your desktop. These are the <a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">calculator</a>'s formulas.</p>
+
+  <p>Now the files people actually download (sizes from the Hugging Face API, <a href="https://huggingface.co/ggml-org/gpt-oss-20b-GGUF/tree/15dcfc7e7c608c6161507211ed43c5b590801b4b">ggml-org/gpt-oss-20b-GGUF</a> and <a href="https://huggingface.co/unsloth/gpt-oss-20b-GGUF/tree/d449b42d93e1c2c7bda5312f5c25c8fb91dfa9b4">unsloth/gpt-oss-20b-GGUF</a>):</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Published file</th><th class="num">Weights</th><th class="num">+ 4,096 tokens</th><th class="num">+ 8,192 tokens</th><th class="num">+ 32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr><td>MXFP4 (ggml-org, the native format)</td><td class="num">12.11 GB</td><td class="num">12.23 GB</td><td class="num">12.33 GB</td><td class="num">12.93 GB</td></tr>
+        <tr><td>Q8_0 (unsloth)</td><td class="num">12.11 GB</td><td class="num">12.23 GB</td><td class="num">12.33 GB</td><td class="num">12.93 GB</td></tr>
+        <tr><td>Q4_K_M (unsloth)</td><td class="num">11.62 GB</td><td class="num">11.74 GB</td><td class="num">11.84 GB</td><td class="num">12.44 GB</td></tr>
+        <tr><td>Q2_K (unsloth)</td><td class="num">11.47 GB</td><td class="num">11.59 GB</td><td class="num">11.69 GB</td><td class="num">12.29 GB</td></tr>
+        <tr><td>F16 (unsloth)</td><td class="num">13.79 GB</td><td class="num">13.91 GB</td><td class="num">14.01 GB</td><td class="num">14.61 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="table-note">Real file sizes plus the same KV cache, calculated, not measured.</p>
+  <p>The real files are all between 11.5 and 13.8 GB, whatever their name says. That is because most of the model, the 32 experts in each of the 24 layers, is published in MXFP4 (the config's <code>quantization_config</code> leaves only attention, the router, the embeddings and the output layer unconverted), and the file sizes show that these builds keep the experts in that form. So the formula's FP16 and Q8_0 rows describe a model nobody downloads, and Q4_K_M is no smaller than MXFP4 in practice. The IQ2_XXS row, about 6.23 GB, is what a true 2-bit file of all weights would need; neither repo publishes one.</p>
+
+  <h2>Which GPU fits at 4k, 8k and 32k context</h2>
+  <p>Using the real MXFP4 and Q4_K_M files, and the on-paper IQ2_XXS size as a last resort:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Card memory</th><th>Common NVIDIA cards</th><th>4,096 tokens</th><th>8,192 tokens</th><th>32,768 tokens</th></tr></thead>
+      <tbody>
+        <tr><td>8 GB</td><td>RTX 3050 8 GB, 3060 Ti, 4060, 4060 Ti 8 GB, 5060; laptop 4060, 4070, 5060</td><td>2-bit IQ2_XXS, on paper</td><td>2-bit IQ2_XXS, on paper</td><td>2-bit IQ2_XXS, on paper (tight)</td></tr>
+        <tr><td>12 GB</td><td>RTX 3060 12 GB, 4070, 5070; laptop 5070 Ti</td><td>Q4_K_M file (tight)</td><td>Q4_K_M file (tight)</td><td>2-bit IQ2_XXS, on paper</td></tr>
+        <tr><td>16 GB</td><td>RTX 4060 Ti 16 GB, 4080, 5060 Ti 16 GB, 5070 Ti, 5080; laptop 4090</td><td>MXFP4</td><td>MXFP4</td><td>MXFP4</td></tr>
+        <tr><td>24 GB</td><td>RTX 3090, 4090; laptop 5090</td><td>MXFP4</td><td>MXFP4</td><td>MXFP4</td></tr>
+        <tr><td>32 GB</td><td>RTX 5090</td><td>MXFP4</td><td>MXFP4</td><td>MXFP4</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">The largest of the three options whose weights plus 16-bit KV cache leave at least 1.5 GB free on the card; "tight" means it fits but with less than 1.5 GB left. Card memory from NVIDIA's spec pages, taken at face value. On paper, not tested on these cards.</p>
+
+  <p>On 16 GB cards (RTX 4060 Ti 16 GB, 4080, 5060 Ti 16 GB, 5070 Ti, 5080) the MXFP4 file fits at every context in the table, and even at the full 131,072 tokens the cache is 3.24 GB, about 15.4 GB in total with no buffers counted, so very long context is tight. On 12 GB cards the MXFP4 file is larger than the card once the cache is added; the Q4_K_M file fits only as "tight" at 4k and 8k, with well under 1.5 GB left for buffers. On 8 GB nothing published fits fully; only a true 2-bit file, which does not exist yet in these repos, would.</p>
+
+  <h2>Running it on 12 GB: expert offload</h2>
+  <p>gpt-oss-20b is a mixture-of-experts model: 4 of 32 experts run per token, but the router picks different experts each time, so all of them must be loaded somewhere. llama.cpp can keep experts in system RAM with <code>--cpu-moe</code> (all layers) or <code>--n-cpu-moe N</code> (the first N layers) while attention and the cache stay on the GPU. On a 12 GB card, start with a few layers, for example <code>-ngl 99 --n-cpu-moe 4 -c 8192</code>, and lower N until it no longer loads. It writes more slowly than a full-GPU run, but far faster than offloading whole layers of a dense model.</p>
+
+  <h2>How the architecture keeps the cache small</h2>
+  <p>The config's <code>layer_types</code> alternate: 12 layers use sliding-window attention with a 128-token window and 12 use full attention. Every layer has 8 key-value heads of size 64, so each costs 2 x 8 x 64 x 2 bytes = 2,048 bytes per token at 16-bit. The full layers grow with the context. The sliding layers do not: llama.cpp gives them a separate cache of GGML_PAD(min(context, window + n_ubatch), 256) cells, which is 768 cells with the default n_ubatch of 512 (<a href="https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/llama-kv-cache-iswa.cpp">src/llama-kv-cache-iswa.cpp</a>; the alternating pattern is set by <code>load_swa_pattern(ml, 2)</code> in <a href="https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/models/openai-moe.cpp">src/models/openai-moe.cpp</a>).</p>
+  <p>So the cache is 2,048 x (12 x context + 12 x 768) bytes: 0.22 GB at 8,192 tokens and 0.82 GB at 32,768. Our calculator currently shows gpt-oss as "weights only"; the KV numbers on this page are derived by hand from the config and that llama.cpp source, at commit 1a0b56c.</p>
+
+  <h2>Pingala-8 and this model</h2>
+  <p>Pingala-8 is a 2-bit format at IQ2_XXS size. A Pingala-8 build of gpt-oss-20b is not released yet and its quality is not measured; the size would be about the IQ2_XXS row above, about 6.23 GB of weights on paper; because the experts ship in MXFP4, a 2-bit build would have to start from a higher-precision copy of the weights. Request it here: open the <a href="https://genrius-ai-llm-vram-calculator.static.hf.space/index.html#m=gpt-oss-20b&f=IQ2_XXS&c=8192&kv=f16&v=12&o=1.5" target="_blank" rel="noopener noreferrer">GPU fit calculator</a> and press Request, or <a href="https://github.com/Genrius-AI/pingala8-llm/issues/new?title=Model%20request%3A%20Pingala-8%20for%20gpt-oss-20b" target="_blank" rel="noopener noreferrer">open a GitHub issue</a> with the model, your card and the context you need.</p>
+  <p>What we have measured is on other models. On Qwen3-4B, Pingala-8 is 1.24 GB with a WikiText-2 perplexity of 16.64 against 28.61 for IQ2_XXS at the same size; on Qwen3-14B it loses narrowly to IQ2_KT (9.57 against 9.40). The released files run only in our patched llama.cpp on NVIDIA RTX 30, 40 or 50 series cards; stock llama.cpp, Ollama and LM Studio cannot load them. Details are in the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a> and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a>.</p>
+
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>Can gpt-oss-20b run on a 16 GB GPU?</h3>
+  <p>Yes, on paper. The MXFP4 GGUF is 12.11 GB and the KV cache is 0.82 GB at 32,768 tokens, so about 12.9 GB before buffers, leaving room on a 16 GB card.</p>
+  <h3>Can gpt-oss-20b run on a 12 GB GPU?</h3>
+  <p>Not fully on the GPU with the published files: they are 11.5 to 12.1 GB before any cache. Keep some expert layers in system RAM with llama.cpp's --n-cpu-moe, which is slower but works with enough RAM.</p>
+  <h3>Why is the gpt-oss-20b Q4_K_M file almost as big as MXFP4?</h3>
+  <p>Because the expert weights, most of the model, are published in the 4-bit MXFP4 format and these GGUF builds keep them that way. Only the remaining tensors change with the quant name, so the files are all about 11.5 to 13.8 GB.</p>
+  <h3>Is there a Pingala-8 version of gpt-oss-20b?</h3>
+  <p>Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 6.2 GB on paper, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues.</p>
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-trellis-coded-quantization.html">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT</a></li>
+      <li><a href="what-is-hadamard-rotation-quantization.html">What is Hadamard rotation in LLM quantization?</a></li>
+      <li><a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements: which GPU do you need?</a></li>
+      <li><a href="gemma-4-vram-requirements.html">Gemma 4 VRAM requirements: 26B-A4B and 31B</a></li>
+      <li><a href="qwen3-6-35b-a3b-on-consumer-gpu.html">Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Gemma, gpt-oss, Llama, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>
