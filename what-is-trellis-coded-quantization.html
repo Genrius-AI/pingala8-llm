@@ -253,7 +253,7 @@
     <li><strong>The trellis is not most of the gain over IQ2_XXS.</strong> At equal bytes, removing the trellis memory costs 0.076 nats per token: about 80% of our margin over a tuned IQ2_KT (a post hoc reading), but only 14% of the gain over IQ2_XXS. The rest comes from the rotation, the LDLQ rounding, the column scales and the table together.</li>
     <li><strong>It does not always win.</strong> It beats IQ2_KT on Llama-3.1-8B (8.44 against 9.36, with a BOS at every window) but loses narrowly on Qwen3-14B (9.57 against 9.40). It writes at least as fast as IQ2_XXS on Qwen3-4B, but reads prompts at 0.74x.</li>
   </ul>
-  <p>To run it you need the patched llama.cpp build from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">one-click release</a> and an NVIDIA RTX 30, 40 or 50 series GPU. Stock llama.cpp, Ollama and LM Studio cannot load Pingala-8 files. For all the 2-bit options side by side, see the <a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">GGUF quant comparison</a>.</p>
+  <p>To run it you need the patched llama.cpp build from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">one-click release</a> and an NVIDIA RTX 30, 40 or 50 series GPU. Stock llama.cpp, Ollama and LM Studio cannot load Pingala-8 files. For all the 2-bit options side by side, see the <a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">GGUF quant comparison</a>.</p>
 
   <h2 id="faq">Questions people ask</h2>
   <h3>What is trellis-coded quantization in simple terms?</h3>
@@ -269,7 +269,7 @@
     <ul>
       <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
       <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
-      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
       <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a>, and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a></li>
     </ul>
   </div>
@@ -303,7 +303,7 @@
       <div>
         <h3>Get it</h3>
         <ul>
-          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/tag/v2.4-oneclick">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click release</a></li>
           <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
           <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
           <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
