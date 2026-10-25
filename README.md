@@ -98,7 +98,7 @@ Llama-3.1-8B: `hf download Genrius-AI/Llama-3.1-8B-Pingala8-2bit` and pass
 
 | path | contents |
 |---|---|
-| `patches/` | `llama_cuda_vs_7ac59a6.patch` (CUDA runtime, 13 files) and `llama_cpu_vs_7ac59a6.patch` (AVX2 CPU backend plus CUDA, 18 files), both against llama.cpp `7ac59a6`; apply one, not both |
+| `patches/` | `llama_cuda_vs_7ac59a6.patch` (CUDA runtime, 13 files) and `llama_cpu_vs_7ac59a6.patch` (AVX2 CPU backend plus CUDA, 19 files), both against llama.cpp `7ac59a6`; apply one, not both |
 | `B4.md` | how the two released B4 files were built, their sizes and sha256, and where each B4 number is in the logs |
 | `REPRODUCE.md` | the supplementary README: runtime build, the B3 reference build step by step, and a file:line map for the B3-era numbers |
 | `research/detail/` | encoder, builders, native-file writers, evaluation and benchmark scripts |

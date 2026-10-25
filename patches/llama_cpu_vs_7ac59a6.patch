@@ -4633,18 +4633,19 @@ index 0000000..9ca3e14
 +    }
 +}
 diff --git a/src/llama-model-loader.cpp b/src/llama-model-loader.cpp
-index 43c396f..b1102ad 100644
+index 43c396f..ce8a6d6 100644
 --- a/src/llama-model-loader.cpp
 +++ b/src/llama-model-loader.cpp
-@@ -5,6 +5,7 @@
+@@ -5,6 +5,8 @@
  #include "gguf.h"
  #include "llama-hparams.h"
  #include "llama.h"
 +#include "ggml-vr-native.h"   // R51 native VR contract
++#include "llama-vr3.h"        // R59 B3+ VR3 file layout (vr.layout 3), expanded to the v2 bytes at load
  
  #include <algorithm>
  #include <array>
-@@ -717,6 +718,9 @@ llama_model_loader::llama_model_loader(
+@@ -717,6 +719,9 @@ llama_model_loader::llama_model_loader(
      n_kv      = gguf_get_n_kv(metadata);
      n_tensors = weights_map.size();
  
@@ -4654,7 +4655,7 @@ index 43c396f..b1102ad 100644
      fver = (enum llama_fver) gguf_get_version(metadata);
  
      LLAMA_LOG_INFO("%s: loaded meta data with %d key-value pairs and %d tensors from %s (version %s)\n",
-@@ -1459,13 +1463,13 @@ void llama_model_loader::get_mapping_range(size_t * first, size_t * last, void *
+@@ -1459,13 +1464,13 @@ void llama_model_loader::get_mapping_range(size_t * first, size_t * last, void *
              continue;
          }
          *first = std::min(*first, weight->offs);
@@ -4670,7 +4671,7 @@ index 43c396f..b1102ad 100644
  }
  
  const void * llama_model_loader::load_data_range(const llama_tensor_weight & w, size_t offs, size_t size, void * buf) const {
-@@ -1635,6 +1639,15 @@ bool llama_model_loader::load_all_data(
+@@ -1635,6 +1640,15 @@ bool llama_model_loader::load_all_data(
              }
          }
  
@@ -4686,7 +4687,7 @@ index 43c396f..b1102ad 100644
          size_t n_size = ggml_nbytes(cur);
  
          const bool from_mapping = use_mmap || lazy.has(cur);
-@@ -1809,3 +1822,150 @@ void llama_model_loader::print_info() const {
+@@ -1809,3 +1823,179 @@ void llama_model_loader::print_info() const {
          LLAMA_LOG_INFO("%s: file size   = %.2f GiB (%.2f BPW) \n", __func__, n_bytes/1024.0/1024.0/1024.0, n_bytes*8.0/n_elements);
      }
  }
@@ -4714,6 +4715,12 @@ index 43c396f..b1102ad 100644
 +        throw std::runtime_error("VR native: KV vr.trl must be 2 and vr.n_linear must be present");
 +    }
 +    const uint32_t n_linear = gguf_get_val_u32(metadata, knl);
++    {   // R59 B3+: vr.layout 3 = VR3 file tensors (natural rows, no M, no vr_prm; ggml-vr-native.h), expanded to the v2 bytes at load
++        const int64_t klay = gguf_find_key(metadata, "vr.layout");
++        if (klay >= 0 && gguf_get_kv_type(metadata, klay) != GGUF_TYPE_UINT32) throw std::runtime_error("VR native: KV vr.layout must be uint32");
++        vr_layout = klay < 0 ? 2u : gguf_get_val_u32(metadata, klay);
++        if (vr_layout != 2 && vr_layout != 3) throw std::runtime_error(format("VR native: vr.layout = %u (supported: 2, 3)", vr_layout));
++    }
 +    int64_t n_layer_vr = -1;   // gemma3 port: <arch>.block_count from the file KV
 +    { const int64_t ka = gguf_find_key(metadata, "general.architecture");
 +      if (ka >= 0) { const int64_t kb = gguf_find_key(metadata, (std::string(gguf_get_val_str(metadata, ka)) + ".block_count").c_str());
@@ -4744,10 +4751,22 @@ index 43c396f..b1102ad 100644
 +        if (t->type != GGML_TYPE_I8 || ggml_n_dims(t) != 1) throw std::runtime_error(format("VR native: '%s' must be I8 1-D", wn.c_str()));
 +        vr_native_tensor vt;
 +        vt.side.push_back(take(b + ".vr_c"));
-+        vt.side.push_back(take(b + ".vr_prm"));
-+        const ggml_tensor * tc = vt.side[0].tensor, * tp = vt.side[1].tensor;
-+        if (tc->type != GGML_TYPE_F16 || tp->type != GGML_TYPE_I16) throw std::runtime_error(format("VR native: '%s' vr_c F16 / vr_prm I16 expected", b.c_str()));
-+        vt.K = tc->ne[0]; vt.rows = tp->ne[0]; vt.kbytes = (size_t) t->ne[0];
++        if (vr_layout == 2) {
++            vt.side.push_back(take(b + ".vr_prm"));
++            const ggml_tensor * tc = vt.side[0].tensor, * tp = vt.side[1].tensor;
++            if (tc->type != GGML_TYPE_F16 || tp->type != GGML_TYPE_I16) throw std::runtime_error(format("VR native: '%s' vr_c F16 / vr_prm I16 expected", b.c_str()));
++            vt.K = tc->ne[0]; vt.rows = tp->ne[0]; vt.kbytes = vt.fbytes = (size_t) t->ne[0];
++        } else {   // VR3: rows from the file size, K and header word 515 (class tag); identity permutation, no vr_prm tensor
++            const ggml_tensor * tc = vt.side[0].tensor;
++            if (tc->type != GGML_TYPE_F16) throw std::runtime_error(format("VR native: '%s' vr_c F16 expected", b.c_str()));
++            if (weights_map.count(b + ".vr_prm")) throw std::runtime_error(format("VR native: '%s' has vr_prm in a vr.layout 3 file", b.c_str()));
++            vt.side.push_back(vt.side[0]);
++            vt.v3 = true; vt.K = tc->ne[0]; vt.fbytes = (size_t) t->ne[0];
++            uint32_t w515 = 0;
++            if (vt.fbytes >= 2064) { const llama_tensor_weight & ww = wit->second; files.at(ww.idx)->seek(ww.offs + 2060, SEEK_SET); files.at(ww.idx)->read_raw(&w515, 4); }
++            vt.rows = (int64_t) vrn3_rows(vt.fbytes, (size_t) vt.K, w515, &vt.kbytes);
++            if (vt.rows == 0) throw std::runtime_error(format("VR native: '%s' is not a valid VR3 tensor (%zu B, K %lld, word 515 0x%08x)", wn.c_str(), vt.fbytes, (long long) vt.K, w515));
++        }
 +        if (vt.K % 256 || vt.rows % 32 || vt.rows >= 32768) throw std::runtime_error(format("VR native: '%s' bad shape K %lld rows %lld", b.c_str(), (long long) vt.K, (long long) vt.rows));
 +        const bool has_d = weights_map.count(b + ".vr_didx") > 0;
 +        if (has_d != (weights_map.count(b + ".vr_dval") > 0)) throw std::runtime_error(format("VR native: '%s' needs both vr_didx and vr_dval", b.c_str()));
@@ -4776,12 +4795,12 @@ index 43c396f..b1102ad 100644
 +    if (vr_tensors.size() != n_linear || n_linear != 7u * (uint32_t) n_layer_vr) {   // R51 load-time assert; gemma3 port: count from vr.n_linear = 7 x n_layer (Qwen3-4B 252, Gemma-3-4B 238)
 +        throw std::runtime_error(format("VR native: %zu VR tensors, vr.n_linear %u, expected 7 x %u", vr_tensors.size(), n_linear, (uint32_t) n_layer_vr));
 +    }
-+    LLAMA_LOG_INFO("%s: VR native (Pingala-8, NS %u): %zu linears retyped to slots, %.2f MiB in memory\n", __func__, ns, vr_tensors.size(), mem / 1048576.0);
++    LLAMA_LOG_INFO("%s: VR native (Pingala-8, NS %u, layout %u): %zu linears retyped to slots, %.2f MiB in memory\n", __func__, ns, vr_layout, vr_tensors.size(), mem / 1048576.0);
 +}
 +
 +size_t llama_model_loader::vr_file_nbytes(const std::string & name, const ggml_tensor * t) const {
 +    const auto it = vr_tensors.find(name);
-+    return it == vr_tensors.end() ? ggml_nbytes(t) : it->second.kbytes;
++    return it == vr_tensors.end() ? ggml_nbytes(t) : it->second.fbytes;   // R59: file size (VR3 file tensor < in-memory kbytes)
 +}
 +
 +void llama_model_loader::vr_read_weight(const llama_tensor_weight & w, size_t n, void * dst) const {
@@ -4801,7 +4820,17 @@ index 43c396f..b1102ad 100644
 +    const size_t n = ggml_nbytes(cur);
 +    std::vector<uint8_t> buf(n, 0);
 +    const auto & w = require_weight(name.c_str());
-+    vr_read_weight(w, vt.kbytes, buf.data());
++    if (!vt.v3) {
++        vr_read_weight(w, vt.kbytes, buf.data());
++    } else {   // R59 VR3: expand the file bytes to the v2 in-memory bytes (arithmetic M, word 515 = 0); identity prm below
++        std::vector<uint8_t> f3(vt.fbytes);
++        vr_read_weight(w, vt.fbytes, f3.data());
++        uint32_t w515; memcpy(&w515, f3.data() + 2060, 4); size_t kb = 0;
++        if (vrn3_rows(vt.fbytes, (size_t) vt.K, w515, &kb) != (size_t) vt.rows || kb != vt.kbytes || vt.kbytes > n) {
++            throw std::runtime_error(format("VR native: '%s' VR3 header changed between init and load", name.c_str()));
++        }
++        vrn3_expand(f3.data(), vt.fbytes, (size_t) vt.rows, (size_t) vt.K, buf.data());
++    }
 +    const uint32_t * hw = (const uint32_t *) buf.data();
 +    if (hw[513] != VRN_NS || hw[514] != VRN_TRL) {
 +        throw std::runtime_error(format("VR native: '%s' header NS %u TRL %u (need %u / %u)", name.c_str(), hw[513], hw[514], VRN_NS, VRN_TRL));
@@ -4818,7 +4847,8 @@ index 43c396f..b1102ad 100644
 +    vrn_offsets(n, vt.rows, vt.K, vt.nd, &offE, &offC, &offP, &offQ, &offSG, &offT);
 +    GGML_ASSERT(vt.kbytes <= offE);
 +    vr_read_weight(vt.side[0], (size_t) 2 * vt.K, buf.data() + offC);
-+    vr_read_weight(vt.side[1], (size_t) 2 * vt.rows, buf.data() + offP);
++    if (!vt.v3) vr_read_weight(vt.side[1], (size_t) 2 * vt.rows, buf.data() + offP);
++    else { int16_t * p = (int16_t *) (buf.data() + offP); for (int64_t r = 0; r < vt.rows; ++r) p[r] = (int16_t) r; }   // VR3: natural rows
 +    {   // prm must be a permutation of 0..rows-1
 +        std::vector<uint8_t> seen(vt.rows, 0); const int16_t * p = (const int16_t *) (buf.data() + offP);
 +        for (int64_t r = 0; r < vt.rows; ++r) { if (p[r] < 0 || p[r] >= vt.rows || seen[p[r]]++) throw std::runtime_error(format("VR native: '%s' vr_prm is not a permutation", name.c_str())); }
@@ -4838,7 +4868,7 @@ index 43c396f..b1102ad 100644
 +    ggml_backend_tensor_set(cur, buf.data(), 0, n);
 +}
 diff --git a/src/llama-model-loader.h b/src/llama-model-loader.h
-index 9e51d0c..1dfe900 100644
+index 9e51d0c..ccd79f8 100644
 --- a/src/llama-model-loader.h
 +++ b/src/llama-model-loader.h
 @@ -15,6 +15,8 @@
@@ -4850,7 +4880,7 @@ index 9e51d0c..1dfe900 100644
  
  using llama_buf_map = std::unordered_map<uint32_t, ggml_backend_buffer_t>;
  
-@@ -124,6 +126,24 @@ struct llama_model_loader {
+@@ -124,6 +126,26 @@ struct llama_model_loader {
      llama_mmaps mappings;
  
      std::map<std::string, llama_tensor_weight, weight_name_comparer> weights_map;
@@ -4861,9 +4891,11 @@ index 9e51d0c..1dfe900 100644
 +    // tensors L.vr_c / L.vr_prm / L.vr_didx / L.vr_dval and vr.had_signs are removed from weights_map and packed into that slot.
 +    struct vr_native_tensor {
 +        int64_t K = 0, rows = 0, nd = 0; size_t kbytes = 0; ggml_type slot = GGML_TYPE_COUNT;
-+        std::vector<llama_tensor_weight> side;   // [0] vr_c, [1] vr_prm, then [2] vr_didx, [3] vr_dval only if nd > 0
++        size_t fbytes = 0; bool v3 = false;      // R59 VR3 (vr.layout 3): fbytes = file size (< kbytes = in-memory v2 size); v2: fbytes == kbytes
++        std::vector<llama_tensor_weight> side;   // [0] vr_c, [1] vr_prm (VR3: copy of [0], unused), then [2] vr_didx, [3] vr_dval only if nd > 0
 +    };
 +    bool vr_native = false;
++    uint32_t vr_layout = 2;                                      // KV vr.layout (absent = 2: r51 sorted rows + M + vr_prm; 3 = VR3, ggml-vr-native.h)
 +    std::map<std::string, vr_native_tensor> vr_tensors;          // key = L.weight name
 +    std::vector<llama_tensor_weight> vr_signs;                   // vr.had_signs (exactly one entry)
 +    mutable std::vector<uint8_t> vr_hdr0;                        // words 0-512 (A, B, c) of the first VR tensor loaded: all must match
@@ -4875,3 +4907,44 @@ index 9e51d0c..1dfe900 100644
      std::unordered_map<std::string, llama_model_kv_override> kv_overrides;
      const llama_model_tensor_buft_override * tensor_buft_overrides;
  
+diff --git a/src/llama-vr3.h b/src/llama-vr3.h
+new file mode 100644
+index 0000000..575eac3
+--- /dev/null
++++ b/src/llama-vr3.h
+@@ -0,0 +1,35 @@
++#pragma once
++// R59 B3+ VR3 file layout: loader-only (llama-model-loader.cpp). Kept out of ggml-vr-native.h so the CUDA TUs (f44.cu) do not change.
++#include "ggml-vr-native.h"
++#include <string.h>
++
++// R59 B3+ "VR3" FILE layout (KV vr.layout = 3, research/detail/b3p_native.py, research/agents/solver_b3plus_r59.md). One class c per tensor,
++// rows in natural order, no M words and no L.vr_prm tensor:
++//   L.weight I8 [fbytes] = A | B | cs, NS, TRL (2060 B) | word 515 = VRN_VR3_TAG | c | S fp16 [b][r] (64 nt B) at 2064 | D (nt * 64 NW(c) words)
++//   at 2064 + 64 nt, tile (g, b) at D word (g * nb + b) * 64 NW(c).
++// The loader expands it on the host into the in-memory layout above (vrn3_expand): M[i] = i * 64 NW(c) | c << 29, word 515 = 0 (the value a
++// v2 file carries), zero pad, D; prm = pinv = identity. The CUDA side sees exactly the v2 bytes of the natural-order tensor.
++#define VRN_VR3_TAG 0x56523300u   // "\0" "3RV" little-endian | class in bits 0-2
++static inline size_t vrn_nw(uint32_t c) { static const int NW[8] = {0, 4, 6, 8, 10, 12, 16, 24}; return (size_t) NW[c & 7u]; }
++// rows of a VR3 tensor from its file size, K and header word 515; 0 if inconsistent. *kbytes = in-memory (v2) kernel bytes.
++static inline size_t vrn3_rows(size_t fbytes, size_t K, uint32_t w515, size_t * kbytes) {
++    if ((w515 & 0xFFFFFFF8u) != VRN_VR3_TAG || (w515 & 7u) == 0 || K == 0 || K % 256 || fbytes < 2064) return 0;
++    const size_t tw = 64 * vrn_nw(w515), per = 64 + 4 * tw, nb = K / 256;
++    if ((fbytes - 2064) % per) return 0;
++    const size_t nt = (fbytes - 2064) / per;
++    if (nt == 0 || nt % nb || nt * tw >= ((size_t) 1 << 29)) return 0;
++    const size_t rows = 32 * (nt / nb);
++    if (rows >= 32768) return 0;
++    if (kbytes) *kbytes = vrn_kbytes(rows, K, nt * tw);
++    return rows;
++}
++// expand VR3 file bytes f[0, fbytes) into dst[0, vrn_kbytes) (rows from vrn3_rows); every dst byte is written.
++static inline void vrn3_expand(const uint8_t * f, size_t fbytes, size_t rows, size_t K, uint8_t * dst) {
++    uint32_t w515; memcpy(&w515, f + 2060, 4);
++    const uint32_t c = w515 & 7u; const size_t nt = (rows / 32) * (K / 256), tw = 64 * vrn_nw(c), offD = (2064 + 68 * nt + 15) & ~(size_t)15;
++    memcpy(dst, f, 2060); memset(dst + 2060, 0, 4);
++    for (size_t i = 0; i < nt; ++i) { const uint32_t m = (uint32_t) (i * tw) | (c << 29); memcpy(dst + 2064 + 4 * i, &m, 4); }
++    memcpy(dst + 2064 + 4 * nt, f + 2064, 64 * nt);
++    memset(dst + 2064 + 68 * nt, 0, offD - (2064 + 68 * nt));
++    memcpy(dst + offD, f + 2064 + 64 * nt, fbytes - 2064 - 64 * nt);
++}
