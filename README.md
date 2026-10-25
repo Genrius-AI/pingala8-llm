@@ -95,6 +95,7 @@ Llama-3.1-8B: `hf download Genrius-AI/Llama-3.1-8B-Pingala8-2bit` and pass
 
 - Qwen3-4B: https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit (Apache-2.0, inherited from Qwen3-4B)
 - Llama-3.1-8B: https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit (Llama 3.1 Community License; Built with Llama)
+- Qwen3.5-4B: https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit (Apache-2.0; text only, same patched build, not tested in the one-click build)
 
 ## Repository layout
 
