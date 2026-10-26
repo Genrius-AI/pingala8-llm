@@ -9,7 +9,7 @@ http://127.0.0.1:8080. Close the black window (Windows) or press Ctrl+C (Linux) 
 
   Model           Download   Windows                 Linux
   Qwen3-4B        1.24 GB    run_qwen3_4b.bat        ./run.sh qwen
-  Llama-3.1-8B    2.39 GB    run_llama31_8b.bat      ./run.sh llama   (Built with Llama)
+  Llama-3.1-8B    2.39 GB    run_llama31_8b.bat      ./run.sh llama   (base model: it continues text; Built with Llama)
   Qwen3.5-4B      1.51 GB    run_qwen35_4b.bat       ./run.sh qwen35-4b    (or ./run_qwen35_4b.sh)
   Qwen3.5-2B      0.78 GB    run_qwen35_2b.bat       ./run.sh qwen35-2b    (or ./run_qwen35_2b.sh)
   Qwen3.5-0.8B    0.35 GB    run_qwen35_0_8b.bat     ./run.sh qwen35-0.8b  (or ./run_qwen35_0_8b.sh)
