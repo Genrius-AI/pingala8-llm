@@ -20,7 +20,7 @@ Code, llama.cpp patches, build scripts and logs for the paper
 **Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp**
 Harshit Goyal, Genrius AI (harshit@genrius.in), former Google software engineer and IIIT Delhi alumnus. Preprint, October 2026, version 2.4, DOI [10.5281/zenodo.23481757](https://doi.org/10.5281/zenodo.23481757).
 
-**Try it in one click (Windows, NVIDIA RTX 30/40/50):** download `pingala8-windows-cuda12.zip` from the [latest release](https://github.com/Genrius-AI/pingala8-llm/releases/latest), unzip it and double-click `run_qwen3_4b.bat`. The model downloads once, then a chat page opens in your browser.
+**Try it in one click (Windows, NVIDIA RTX 30/40/50):** download `pingala8-windows-cuda12.zip` from the [latest release](https://github.com/Genrius-AI/pingala8-llm/releases/latest), unzip it and double-click `run_qwen3_4b.bat`. The model downloads once, then a chat page opens in your browser. Since v2.5 the build runs all five models: `run_llama31_8b.bat`, `run_qwen35_4b.bat`, `run_qwen35_2b.bat` and `run_qwen35_0_8b.bat` start the others (Linux: `./run.sh qwen|llama|qwen35-4b|qwen35-2b|qwen35-0.8b`).
 
 ## Summary
 
@@ -95,8 +95,8 @@ Llama-3.1-8B: `hf download Genrius-AI/Llama-3.1-8B-Pingala8-2bit` and pass
 
 - Qwen3-4B: https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit (Apache-2.0, inherited from Qwen3-4B)
 - Llama-3.1-8B: https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit (Llama 3.1 Community License; Built with Llama)
-- Qwen3.5-4B: https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit (Apache-2.0; text only, same patched build, not tested in the one-click build)
-- Qwen3.5-2B and Qwen3.5-0.8B: https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit and https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit (Apache-2.0; text only; need the rebuilt runtime, the released patch plus patches/q35_loader_count_delta.patch; the one-click build cannot load them yet)
+- Qwen3.5-4B: https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit (Apache-2.0; text only, same patched build; runs in the v2.5 one-click build: run_qwen35_4b.bat or ./run.sh qwen35-4b)
+- Qwen3.5-2B and Qwen3.5-0.8B: https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit and https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit (Apache-2.0; text only; need the released patch plus patches/q35_loader_count_delta.patch; use the v2.5 one-click build: run_qwen35_2b.bat / run_qwen35_0_8b.bat or ./run.sh qwen35-2b / qwen35-0.8b)
 
 ## Repository layout
 
