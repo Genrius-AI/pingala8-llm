@@ -1,0 +1,14 @@
+--- a/src/llama-model-loader.cpp
++++ b/src/llama-model-loader.cpp
+@@ -1924,8 +1924,9 @@
+     }
+     vr_signs.push_back(take("vr.had_signs"));
+     if (vr_signs[0].tensor->type != GGML_TYPE_I8 || vr_signs[0].tensor->ne[0] != 256) throw std::runtime_error("VR native: vr.had_signs must be I8 [256]");
+-    if (vr_tensors.size() != n_linear || n_linear != 7u * (uint32_t) n_layer_vr) {   // R51 load-time assert; gemma3 port: count from vr.n_linear = 7 x n_layer (Qwen3-4B 252, Gemma-3-4B 238)
+-        throw std::runtime_error(format("VR native: %zu VR tensors, vr.n_linear %u, expected 7 x %u", vr_tensors.size(), n_linear, (uint32_t) n_layer_vr));
++    if (vr_tensors.size() != n_linear || n_linear == 0 || n_linear > 16u * (uint32_t) n_layer_vr) {   // R51 load-time assert; q35 (2026-10-25): the count must equal
++        // vr.n_linear (was: 7 x n_layer). Hybrid models have a different number of VR linears per layer (Qwen3.5-2B/0.8B DeltaNet layers: 6, full attention: 7).
++        throw std::runtime_error(format("VR native: %zu VR tensors, vr.n_linear %u (block_count %u)", vr_tensors.size(), n_linear, (uint32_t) n_layer_vr));
+     }
+     LLAMA_LOG_INFO("%s: VR native (Pingala-8, NS %u, layout %u): %zu linears retyped to slots, %.2f MiB in memory\n", __func__, ns, vr_layout, vr_tensors.size(), mem / 1048576.0);
+ }
