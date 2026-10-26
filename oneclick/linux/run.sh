@@ -1,5 +1,5 @@
 #!/bin/bash
-# Pingala-8 one-click (Linux): ./run.sh qwen  or  ./run.sh llama
+# Pingala-8 one-click (Linux): ./run.sh qwen | llama | qwen35-4b | qwen35-2b | qwen35-0.8b
 # Downloads the B4 model once, then serves a chat page at http://127.0.0.1:8080
 set -e
 cd "$(dirname "$0")"
@@ -12,7 +12,14 @@ case "${1:-qwen}" in
          F="l31-8b-pingala8-flat-vrnative-cslfull-00001-of-00003.gguf 994298432 76b39997009a52e35cb31b32a42ad59ec7859c88ccb997d0ae76ed1da4e44686
             l31-8b-pingala8-flat-vrnative-cslfull-00002-of-00003.gguf 991815584 fbf44b6f9eac230ff654580592e8881da3dffb78ed98e78c42e1704e15fd2cf0
             l31-8b-pingala8-flat-vrnative-cslfull-00003-of-00003.gguf 402096800 8c0146744bc4a91ff067e2cc2fbb2f90fbd0ebb8ee7d279863906a22bc8e67bd" ;;
-  *) echo "usage: ./run.sh qwen|llama"; exit 1 ;;
+  qwen35-4b)   R=https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit/resolve/main
+         F="Qwen3.5-4B-Pingala8-2bit-00001-of-00002.gguf 985477344 2d78d7d4eccd4da1a2777ccc26ae399d262205b3fe5468fd30feb12105291050
+            Qwen3.5-4B-Pingala8-2bit-00002-of-00002.gguf 526138464 caacb42845e6ac3da4bdecec8ae92d157308b56d628eb6feee32a1cca33b1810" ;;
+  qwen35-2b)   R=https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit/resolve/main
+         F="Qwen3.5-2B-Pingala8-2bit.gguf 778744192 2420d29be9a04453714f180516da4510ee520954cdf6c7e2a08a08fcf113db8e" ;;
+  qwen35-0.8b) R=https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit/resolve/main
+         F="Qwen3.5-0.8B-Pingala8-2bit.gguf 346833696 8c80d48787d0dcd1a8aafb4d47d3e0e00c73214b103b376bfa764cc4c771df27" ;;
+  *) echo "usage: ./run.sh qwen|llama|qwen35-4b|qwen35-2b|qwen35-0.8b"; exit 1 ;;
 esac
 mkdir -p models
 # fetch NAME BYTES SHA256: keep a complete file; otherwise download to NAME.part, check it, then rename it.
