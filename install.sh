@@ -36,7 +36,13 @@ main() {
   tmp="$dest/.$asset.part"
   rm -f "$tmp"
   echo "Downloading to $dest ..."
-  curl -fL --retry 3 -o "$tmp" "$url" || { rm -f "$tmp"; echo "Download did not finish. Run this again." >&2; exit 1; }
+  # Resume after a dropped or stalled connection (no progress for 60 s), up to 10 tries.
+  local try ok=0
+  for try in 1 2 3 4 5 6 7 8 9 10; do
+    if curl -fL -C - --speed-limit 1024 --speed-time 60 -o "$tmp" "$url"; then ok=1; break; fi
+    [ "$try" -lt 10 ] && echo "Download interrupted. Resuming ($((try + 1)) of 10) ..."
+  done
+  [ "$ok" = 1 ] || { rm -f "$tmp"; echo "Download did not finish. Check your connection and run this again." >&2; exit 1; }
   have=$(( $(wc -c < "$tmp") ))
   if [ "$have" != "$size" ]; then
     rm -f "$tmp"; echo "Size check failed: got $have bytes, expected $size. Run this again." >&2; exit 1
