@@ -211,6 +211,35 @@
   </div>
 </section>
 
+<section id="results-5" aria-labelledby="results5-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Five models</span>
+      <h2 id="results5-h">Results across 5 models</h2>
+      <p>At the same file size, Pingala-8 stays much closer to the 8-bit model than llama.cpp's IQ2_XXS on every model we released. Used by others: about 2,390 downloads on Hugging Face across the five models (all-time, as of 27 Oct 2026).</p>
+    </div>
+    <figure>
+      <img src="media/results/results_summary_dark.png" width="1200" height="630" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius)"
+           alt="How much worse than 8-bit, at 2-bit size. Extra WikiText-2 perplexity over the 8-bit model at the same file size: Qwen3.5-0.8B Pingala-8 +66% vs IQ2_XXS +443%; Qwen3.5-2B +40% vs +161%; Qwen3.5-4B +23% vs +65%; Qwen3-4B (vs fp16) +34% vs +130%; Llama-3.1-8B no 8-bit reference, 9.14 vs 12.35.">
+    </figure>
+    <div class="table-wrap" style="margin-top:20px">
+      <table>
+        <thead>
+          <tr><th>Model</th><th class="num">Size</th><th class="num">Perplexity: Pingala-8 vs IQ2_XXS</th><th class="num">IQ2_XXS / Pingala-8</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a></td><td class="num">0.35 GB</td><td class="num"><strong>25.97</strong> vs 85.09</td><td class="num gain">3.28x lower</td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a></td><td class="num">0.78 GB</td><td class="num"><strong>15.62</strong> vs 29.08</td><td class="num gain">1.86x lower</td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a></td><td class="num">1.51 GB</td><td class="num"><strong>10.97</strong> vs 14.75</td><td class="num gain">1.34x lower</td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a></td><td class="num">1.24 GB</td><td class="num"><strong>16.64</strong> vs 28.61</td><td class="num gain">1.72x lower</td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a></td><td class="num">2.39 GB</td><td class="num"><strong>9.14</strong> vs 12.35</td><td class="num gain">1.35x lower</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted small" style="margin-top:12px">WikiText-2 perplexity, lower is better; IQ2_XXS (llama.cpp) at the same file size. Llama-3.1-8B: pre-registered; with a BOS at every window it is 8.44 vs 9.36 for IQ2_KT. Limits: the files need the patched build (v2.5 for the Qwen3.5 models; stock llama.cpp, Ollama and LM Studio cannot load them), prompt processing is 0.74-0.89x IQ2_XXS, some IQ2_KT files are smaller (Qwen3.5 rows), and on Qwen3-14B the recipe narrowly loses to IQ2_KT (9.57 vs 9.40). Per-model charts: <a href="media/results/results_qwen35_0.8b_dark.png">Qwen3.5-0.8B</a>, <a href="media/results/results_qwen35_2b_dark.png">Qwen3.5-2B</a>, <a href="media/results/results_qwen35_4b_dark.png">Qwen3.5-4B</a>, <a href="media/results/results_qwen3_4b_dark.png">Qwen3-4B</a>, <a href="media/results/results_llama31_8b_dark.png">Llama-3.1-8B</a>.</p>
+  </div>
+</section>
+
 <section aria-labelledby="quality-h">
   <div class="wrap">
     <div class="section-head">
@@ -491,6 +520,7 @@
         </ul>
       </div>
     </div>
+    <p class="star-line"><a href="https://github.com/Genrius-AI/pingala8-llm">Star on GitHub</a> <a href="https://github.com/Genrius-AI/pingala8-llm"><img src="https://img.shields.io/github/stars/Genrius-AI/pingala8-llm?style=social" alt="GitHub stars for Genrius-AI/pingala8-llm" height="20" style="height:20px;width:auto;vertical-align:middle"></a></p>
     <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Llama and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
   </div>
 </footer>
