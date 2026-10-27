@@ -7,6 +7,8 @@ rem Each model part: name, bytes, sha256 (values from the Hugging Face repo).
 call :fetch Qwen3.5-0.8B-Pingala8-2bit.gguf 346833696 8c80d48787d0dcd1a8aafb4d47d3e0e00c73214b103b376bfa764cc4c771df27 || goto :fail
 call "%~dp0env.bat"
 start "" http://127.0.0.1:8080
+rem Print the star line once the server answers (its /health returns 200 after the model has loaded).
+start "" /b cmd /c "for /l %%i in (1,1,900) do @(curl.exe -sf -o nul http://127.0.0.1:8080/health && (echo Running? A star helps others find it: https://github.com/Genrius-AI/pingala8-llm& exit) || ping -n 2 127.0.0.1 >nul)"
 llama-server.exe -m models\Qwen3.5-0.8B-Pingala8-2bit.gguf -ngl 99 -c 4096 --port 8080
 goto :eof
 :fail

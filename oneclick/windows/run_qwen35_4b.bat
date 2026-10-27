@@ -8,6 +8,8 @@ call :fetch Qwen3.5-4B-Pingala8-2bit-00001-of-00002.gguf 985477344 2d78d7d4eccd4
 call :fetch Qwen3.5-4B-Pingala8-2bit-00002-of-00002.gguf 526138464 caacb42845e6ac3da4bdecec8ae92d157308b56d628eb6feee32a1cca33b1810 || goto :fail
 call "%~dp0env.bat"
 start "" http://127.0.0.1:8080
+rem Print the star line once the server answers (its /health returns 200 after the model has loaded).
+start "" /b cmd /c "for /l %%i in (1,1,900) do @(curl.exe -sf -o nul http://127.0.0.1:8080/health && (echo Running? A star helps others find it: https://github.com/Genrius-AI/pingala8-llm& exit) || ping -n 2 127.0.0.1 >nul)"
 llama-server.exe -m models\Qwen3.5-4B-Pingala8-2bit-00001-of-00002.gguf -ngl 99 -c 4096 --port 8080
 goto :eof
 :fail

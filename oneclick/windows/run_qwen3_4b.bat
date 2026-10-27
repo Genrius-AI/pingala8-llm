@@ -8,6 +8,8 @@ call :fetch 4B-csq-vr3-00001-of-00002.gguf 995833472 4611812769418b2d0ffb8659f05
 call :fetch 4B-csq-vr3-00002-of-00002.gguf 247320320 ded47243d30315e49836bf51d652c56fe3b21a288c04f8842d93ff3a70300ff8 || goto :fail
 call "%~dp0env.bat"
 start "" http://127.0.0.1:8080
+rem Print the star line once the server answers (its /health returns 200 after the model has loaded).
+start "" /b cmd /c "for /l %%i in (1,1,900) do @(curl.exe -sf -o nul http://127.0.0.1:8080/health && (echo Running? A star helps others find it: https://github.com/Genrius-AI/pingala8-llm& exit) || ping -n 2 127.0.0.1 >nul)"
 llama-server.exe -m models\4B-csq-vr3-00001-of-00002.gguf -ngl 99 -c 4096 --port 8080
 goto :eof
 :fail

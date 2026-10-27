@@ -58,4 +58,13 @@ while [ $# -ge 3 ]; do fetch "$1" "$2" "$3"; shift 3; done
 export GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2
 export LD_LIBRARY_PATH="$PWD/lib:$LD_LIBRARY_PATH"
 echo "Open http://127.0.0.1:8080 in your browser."
-exec ./bin/llama-server -m "models/${F%% *}" -ngl 99 -c 4096 --port 8080
+./bin/llama-server -m "models/${F%% *}" -ngl 99 -c 4096 --port 8080 &
+PID=$!
+trap 'kill $PID 2>/dev/null' INT TERM
+# Print the star line once the server answers (its /health returns 200 after the model has loaded).
+until curl -sf -o /dev/null http://127.0.0.1:8080/health; do
+  kill -0 $PID 2>/dev/null || break
+  sleep 1
+done
+kill -0 $PID 2>/dev/null && echo "Running? A star helps others find it: https://github.com/Genrius-AI/pingala8-llm"
+wait $PID
