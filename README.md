@@ -5,7 +5,9 @@
   <br><sub>Click for the 31-second demo video (MP4, 4.3 MB). Text and timing from a real run; chat window recreated.</sub>
 </p>
 
-**Will it fit your GPU?** Try the [VRAM calculator](https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator) | [![Qwen3-4B on Hugging Face, last 30 days](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2FGenrius-AI%2FQwen3-4B-Pingala8-2bit&query=%24.downloads&label=Qwen3-4B%20downloads%20%2830%20days%29&color=D4AF37)](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit) [![Llama-3.1-8B on Hugging Face, last 30 days](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2FGenrius-AI%2FLlama-3.1-8B-Pingala8-2bit&query=%24.downloads&label=Llama-3.1-8B%20downloads%20%2830%20days%29&color=D4AF37)](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit)
+**Will it fit your GPU?** Try the [VRAM calculator](https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator) | [![Qwen3-4B on Hugging Face, last 30 days](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2FGenrius-AI%2FQwen3-4B-Pingala8-2bit&query=%24.downloads&label=Qwen3-4B%20downloads%20%2830%20days%29&color=D4AF37)](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit) [![Llama-3.1-8B on Hugging Face, last 30 days](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2FGenrius-AI%2FLlama-3.1-8B-Pingala8-2bit&query=%24.downloads&label=Llama-3.1-8B%20downloads%20%2830%20days%29&color=D4AF37)](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit) [![GitHub stars](https://img.shields.io/github/stars/Genrius-AI/pingala8-llm?style=social)](https://github.com/Genrius-AI/pingala8-llm)
+
+If Pingala-8 saves you VRAM, a star helps others find it.
 
 **We make LLMs 85% smaller, with no retraining.** Pingala-8 is a 2-bit format for llama.cpp: Qwen3-4B goes from 8.05 GB to 1.24 GB (6.5x smaller), Llama-3.1-8B from 16.08 GB to 2.39 GB.
 At the same file size as llama.cpp's IQ2_XXS, our Qwen3-4B scores 21% higher on a 5-task quiz (50.8 against 41.9; it keeps 90% of the 8-bit model's 56.3)
@@ -14,6 +16,27 @@ and writes replies 39% faster than Q4_K_M at half its size (batch 1, one RTX 507
 **[Download the one-click build](https://github.com/Genrius-AI/pingala8-llm/releases/latest)** (Windows and Linux, NVIDIA RTX 30/40/50) | **[Paper (DOI)](https://doi.org/10.5281/zenodo.23481757)** | [Paper page: abstract, PDF, BibTeX](https://genrius-ai.github.io/pingala8-llm/paper.html) | **Models on Hugging Face:** [Qwen3-4B](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit), [Llama-3.1-8B](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit)
 
 **How it compares:** at the same file size and without retraining, it beats llama.cpp's IQ2_XXS and ik_llama.cpp's IQ2_KT on Qwen3-4B and Llama-3.1-8B (WikiText-2 perplexity on Qwen3-4B: 16.64 against 28.61 and 18.15; lower is better), but loses narrowly to IQ2_KT on Qwen3-14B (9.57 against 9.40), reads long prompts slower (0.74x IQ2_XXS), and needs our patched llama.cpp (CUDA). Retrained models such as Ternary Bonsai 4B score higher (11.59 at 1.07 GB).
+
+## Results across 5 models
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/results/results_summary_dark.png">
+    <img src="docs/media/results/results_summary.png" width="800" alt="How much worse than 8-bit, at 2-bit size: Pingala-8 adds 23-66% WikiText-2 perplexity over the 8-bit model, IQ2_XXS adds 65-443%, at the same file size">
+  </picture>
+</p>
+
+| Model | Size | Perplexity: Pingala-8 vs IQ2_XXS | IQ2_XXS / Pingala-8 |
+|---|---|---|---|
+| [Qwen3.5-0.8B](https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit) | 0.35 GB | **25.97** vs 85.09 | 3.28x lower |
+| [Qwen3.5-2B](https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit) | 0.78 GB | **15.62** vs 29.08 | 1.86x lower |
+| [Qwen3.5-4B](https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit) | 1.51 GB | **10.97** vs 14.75 | 1.34x lower |
+| [Qwen3-4B](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit) | 1.24 GB | **16.64** vs 28.61 | 1.72x lower |
+| [Llama-3.1-8B](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit) | 2.39 GB | **9.14** vs 12.35 | 1.35x lower |
+
+WikiText-2 perplexity, lower is better; IQ2_XXS (llama.cpp) at the same file size. Llama-3.1-8B: pre-registered; with a BOS at every window it is 8.44 vs 9.36 for IQ2_KT. Limits: the files need the patched build (v2.5 for the Qwen3.5 models; stock llama.cpp, Ollama and LM Studio cannot load them), prompt processing is 0.74-0.89x IQ2_XXS, some IQ2_KT files are smaller (Qwen3.5 rows), and on Qwen3-14B the recipe narrowly loses to IQ2_KT (9.57 vs 9.40). Per-model charts: [Qwen3.5-0.8B](docs/media/results/results_qwen35_0.8b.png), [Qwen3.5-2B](docs/media/results/results_qwen35_2b.png), [Qwen3.5-4B](docs/media/results/results_qwen35_4b.png), [Qwen3-4B](docs/media/results/results_qwen3_4b.png), [Llama-3.1-8B](docs/media/results/results_llama31_8b.png) (SVG next to each PNG).
+
+Used by others: about 2,390 downloads on Hugging Face across the five models (all-time, as of 27 Oct 2026).
 
 Code, llama.cpp patches, build scripts and logs for the paper
 
