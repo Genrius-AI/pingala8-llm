@@ -36,7 +36,7 @@ and writes replies 39% faster than Q4_K_M at half its size (batch 1, one RTX 507
 
 WikiText-2 perplexity, lower is better; IQ2_XXS (llama.cpp) at the same file size. Llama-3.1-8B: pre-registered; with a BOS at every window it is 8.44 vs 9.36 for IQ2_KT. Limits: the files need the patched build (v2.5 for the Qwen3.5 models; stock llama.cpp, Ollama and LM Studio cannot load them), prompt processing is 0.74-0.89x IQ2_XXS, some IQ2_KT files are smaller (Qwen3.5 rows), and on Qwen3-14B the recipe narrowly loses to IQ2_KT (9.57 vs 9.40). Per-model charts: [Qwen3.5-0.8B](docs/media/results/results_qwen35_0.8b.png), [Qwen3.5-2B](docs/media/results/results_qwen35_2b.png), [Qwen3.5-4B](docs/media/results/results_qwen35_4b.png), [Qwen3-4B](docs/media/results/results_qwen3_4b.png), [Llama-3.1-8B](docs/media/results/results_llama31_8b.png) (SVG next to each PNG).
 
-Used by others: about 2,390 downloads on Hugging Face across the five models (all-time, as of 27 Oct 2026).
+Downloads so far: about 2,390 downloads on Hugging Face across the five models (all-time, as of 27 Oct 2026).
 
 Code, llama.cpp patches, build scripts and logs for the paper
 
