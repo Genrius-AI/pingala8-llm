@@ -43,7 +43,29 @@ Code, llama.cpp patches, build scripts and logs for the paper
 **Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp**
 Harshit Goyal, Genrius AI (harshit@genrius.in), former Google software engineer and IIIT Delhi alumnus. Preprint, October 2026, version 2.4, DOI [10.5281/zenodo.23481757](https://doi.org/10.5281/zenodo.23481757).
 
-**Try it in one click (Windows, NVIDIA RTX 30/40/50):** download `pingala8-windows-cuda12.zip` from the [latest release](https://github.com/Genrius-AI/pingala8-llm/releases/latest), unzip it and double-click `run_qwen3_4b.bat`. The model downloads once, then a chat page opens in your browser. Since v2.5 the build runs all five models: `run_llama31_8b.bat`, `run_qwen35_4b.bat`, `run_qwen35_2b.bat` and `run_qwen35_0_8b.bat` start the others (Linux: `./run.sh qwen|llama|qwen35-4b|qwen35-2b|qwen35-0.8b`).
+## Run it
+
+Needs an NVIDIA RTX 30, 40 or 50 series GPU and a recent driver. No Python, no build. Stock llama.cpp, Ollama and LM Studio will refuse these files with a load error; use one of these instead.
+
+- **Windows, one click:** download `pingala8-windows-cuda12.zip` (1.6 GB) from the [latest release](https://github.com/Genrius-AI/pingala8-llm/releases/latest), unzip it and double-click `run_qwen3_4b.bat`. The model downloads once (size and sha256 checked), then a chat page opens in your browser.
+- **Linux, one line:**
+
+  ```
+  curl -fsSL https://genrius-ai.github.io/pingala8-llm/install.sh | bash
+  ```
+
+  It downloads the latest Linux build from this repo's releases, checks its size and sha256 against the GitHub API, unpacks it to `~/pingala8` and prints the command for each model, for example `cd ~/pingala8 && ./run.sh qwen`. Then open http://127.0.0.1:8080. ([Read the script](https://genrius-ai.github.io/pingala8-llm/install.sh) first if you like.)
+- **Linux, one click:** download `pingala8-linux-cuda13.tar.gz` (1.4 GB) from the same release, extract it and run `./run.sh qwen`.
+
+| Model (Hugging Face) | Download | Windows | Linux |
+|---|---|---|---|
+| [Qwen3-4B](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit) | 1.24 GB | `run_qwen3_4b.bat` | `./run.sh qwen` |
+| [Llama-3.1-8B](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit) (base model, Built with Llama) | 2.39 GB | `run_llama31_8b.bat` | `./run.sh llama` |
+| [Qwen3.5-4B](https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit) (text only) | 1.51 GB | `run_qwen35_4b.bat` | `./run.sh qwen35-4b` |
+| [Qwen3.5-2B](https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit) (text only) | 0.78 GB | `run_qwen35_2b.bat` | `./run.sh qwen35-2b` |
+| [Qwen3.5-0.8B](https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit) (text only) | 0.35 GB | `run_qwen35_0_8b.bat` | `./run.sh qwen35-0.8b` |
+
+Running? A [star](https://github.com/Genrius-AI/pingala8-llm) helps others find it.
 
 ## Summary
 
