@@ -169,6 +169,7 @@
     <p class="lede">Pingala-8 stores Qwen3-4B in 1.24 GB instead of 8.05 GB. That is the same file size as llama.cpp's smallest common 2-bit format, IQ2_XXS, and it scores 21% higher on five standard quizzes. No retraining: it compresses the model you already have. Code, logs and a one-click Windows build are open.</p>
     <div class="actions">
       <a class="btn btn-primary" href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">Download for Windows <small>(1.6 GB)</small></a>
+      <a class="btn" href="#run">Linux: one line</a>
       <a class="btn" href="https://doi.org/10.5281/zenodo.23481757">Read the paper</a>
       <a class="btn" href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Model on Hugging Face</a>
     </div>
@@ -339,32 +340,45 @@
   </div>
 </section>
 
-<section id="try" aria-labelledby="try-h">
+<section id="try" aria-labelledby="run">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Try it</span>
-      <h2 id="try-h">Try it in 3 steps</h2>
-      <p>Windows or Linux with an NVIDIA RTX GPU (30, 40 or 50 series) and a recent driver. No Python, no build.</p>
+      <span class="eyebrow">Run it</span>
+      <h2 id="run">Run it: one click, or one line on Linux</h2>
+      <p>Windows or Linux with an NVIDIA RTX GPU (30, 40 or 50 series) and a recent driver. No Python, no build. Stock llama.cpp, Ollama and LM Studio will refuse these files with a load error; use one of these instead.</p>
     </div>
     <ol class="steps">
       <li class="card">
-        <h3>Download</h3>
-        <p>Get <code>pingala8-windows-cuda12.zip</code> (1.6 GB) from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">latest release</a>.</p>
-        <p>Linux: <code>pingala8-linux-cuda13.tar.gz</code> on the same page.</p>
+        <h3>Windows: one click</h3>
+        <p>Get <code>pingala8-windows-cuda12.zip</code> (1.6 GB) from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">latest release</a>, unzip it and double-click <code>run_qwen3_4b.bat</code>.</p>
+        <p>The model downloads once (size and sha256 checked), then a chat page opens at <code>http://127.0.0.1:8080</code>. Close the black window to stop.</p>
       </li>
       <li class="card">
-        <h3>Unzip and double-click</h3>
-        <p>Run <code>run_qwen3_4b.bat</code> (or <code>run_llama31_8b.bat</code>). The model downloads once from Hugging Face.</p>
-        <p>Linux: <code>./run.sh qwen</code> or <code>./run.sh llama</code>.</p>
+        <h3>Linux: one line</h3>
+        <pre><code>curl -fsSL https://genrius-ai.github.io/pingala8-llm/install.sh | bash</code></pre>
+        <p>It downloads the latest Linux build, checks its size and sha256, unpacks it to <code>~/pingala8</code> and prints the command for each model, such as <code>cd ~/pingala8 &amp;&amp; ./run.sh qwen</code>. <a href="install.sh">Read the script</a>.</p>
       </li>
       <li class="card">
-        <h3>Chat</h3>
-        <p>On Windows a chat page opens in your browser at <code>http://127.0.0.1:8080</code> (on Linux, open that address yourself). Everything runs on your machine.</p>
-        <p>Close the black window to stop.</p>
+        <h3>Linux: one click</h3>
+        <p>Or get <code>pingala8-linux-cuda13.tar.gz</code> (1.4 GB) from the <a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">same release</a>, extract it and run <code>./run.sh qwen</code>.</p>
+        <p>Then open <code>http://127.0.0.1:8080</code>. Everything runs on your machine.</p>
       </li>
     </ol>
+    <div class="table-wrap" style="margin-top:20px">
+      <table>
+        <thead><tr><th>Model (Hugging Face)</th><th>Download</th><th>Windows</th><th>Linux</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a></td><td>1.24 GB</td><td><code>run_qwen3_4b.bat</code></td><td><code>./run.sh qwen</code></td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a> (base model, Built with Llama)</td><td>2.39 GB</td><td><code>run_llama31_8b.bat</code></td><td><code>./run.sh llama</code></td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a> (text only)</td><td>1.51 GB</td><td><code>run_qwen35_4b.bat</code></td><td><code>./run.sh qwen35-4b</code></td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a> (text only)</td><td>0.78 GB</td><td><code>run_qwen35_2b.bat</code></td><td><code>./run.sh qwen35-2b</code></td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a> (text only)</td><td>0.35 GB</td><td><code>run_qwen35_0_8b.bat</code></td><td><code>./run.sh qwen35-0.8b</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="req">Running? A <a href="https://github.com/Genrius-AI/pingala8-llm">star on GitHub</a> helps others find it.</p>
     <p class="req"><a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">Will it fit your GPU? Normal vs Pingala-8 calculator</a></p>
-    <p class="req">Building from source, running the paper's perplexity test, or using the CPU patch: see the <a href="https://github.com/Genrius-AI/pingala8-llm#quick-start">quick start in the README</a>. Models: <a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a> and <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a>.</p>
+    <p class="req">Building from source, running the paper's perplexity test, or using the CPU patch: see the <a href="https://github.com/Genrius-AI/pingala8-llm#quick-start">quick start in the README</a>.</p>
   </div>
 </section>
 
