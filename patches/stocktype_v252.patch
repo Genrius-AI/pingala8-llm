@@ -1,0 +1,55 @@
+--- a/ggml/src/ggml-cuda/ggml-cuda.cu
++++ b/ggml/src/ggml-cuda/ggml-cuda.cu
+@@ -1787,6 +1787,25 @@
+     return use_mul_mat_vec_f;
+ }
+ 
++// Pingala-8 / VR patch: mmq.cuh reuses the MMQ util-func slots of these six stock types for the VR loaders
++// (IQ1_S, IQ3_XXS, IQ3_S, IQ4_XS -> load_tiles_vr47; IQ2_XS -> load_tiles_f44; IQ2_S -> load_tiles_mb47).
++// The VR path calls ggml_cuda_mul_mat_q directly from f44.cu, so the generic dispatch must never send a STOCK
++// tensor of these types to MMQ: it would be decoded with the wrong loader. Route them to MMF/cuBLAS instead
++// (convert.cu keeps the stock dequantizers for these types). MMVQ (batch <= 8) is not patched and stays enabled.
++static bool ggml_cuda_vr_mmq_slot_taken(const ggml_type type) {
++    switch (type) {
++        case GGML_TYPE_IQ1_S:
++        case GGML_TYPE_IQ2_XS:
++        case GGML_TYPE_IQ2_S:
++        case GGML_TYPE_IQ3_XXS:
++        case GGML_TYPE_IQ3_S:
++        case GGML_TYPE_IQ4_XS:
++            return true;
++        default:
++            return false;
++    }
++}
++
+ static bool ggml_cuda_should_fuse_mul_mat_vec_q(const ggml_tensor * tensor) {
+     ggml_tensor *       src0 = tensor->src[0];
+     ggml_tensor *       src1 = tensor->src[1];
+@@ -1882,7 +1901,7 @@
+         ggml_cuda_mul_mat_vec_q(ctx, src0, src1, nullptr, dst);
+         return;
+     }
+-    if (ggml_cuda_should_use_mmq(src0->type, cc, ne11, /*n_experts =*/ 0)) {
++    if (!ggml_cuda_vr_mmq_slot_taken(src0->type) && ggml_cuda_should_use_mmq(src0->type, cc, ne11, /*n_experts =*/ 0)) {
+         ggml_cuda_mul_mat_q(ctx, src0, src1, nullptr, dst);
+         return;
+     }
+@@ -1909,7 +1928,7 @@
+         }
+     }
+ 
+-    if (ggml_cuda_should_use_mmq(src0->type, cc, src1->ne[2], /*n_experts=*/src0->ne[2])) {
++    if (!ggml_cuda_vr_mmq_slot_taken(src0->type) && ggml_cuda_should_use_mmq(src0->type, cc, src1->ne[2], /*n_experts=*/src0->ne[2])) {
+         return false;
+     }
+ 
+@@ -1950,7 +1969,7 @@
+             }
+         }
+ 
+-        if (ggml_cuda_should_use_mmq(src0->type, cc, ne12, /*n_experts=*/ne02)) {
++        if (!ggml_cuda_vr_mmq_slot_taken(src0->type) && ggml_cuda_should_use_mmq(src0->type, cc, ne12, /*n_experts=*/ne02)) {
+             ggml_cuda_mul_mat_q(ctx, src0, src1, ids, dst);
+             return;
+         }

@@ -12,13 +12,14 @@ jobs:
           method: 'network'
           sub-packages: '["nvcc", "cudart", "cublas", "cublas_dev", "thrust", "visual_studio_integration"]'
       - uses: ilammy/msvc-dev-cmd@v1
-      - name: Patch and build llama.cpp 7ac59a6 (released patch + Qwen3.5 loader count delta)
+      - name: Patch and build llama.cpp 7ac59a6 (released patch + Qwen3.5 loader count delta + v2.5.2 stock-type MMQ guard)
         shell: bash
         run: |
           git clone -q https://github.com/ggml-org/llama.cpp src
           cd src && git checkout -q 7ac59a6e3ad851cd41af00f678effab0598ba9a8
           git apply ../patches/llama_cuda_vs_7ac59a6.patch
           git apply ../patches/q35_loader_count_delta.patch
+          git apply ../patches/stocktype_v252.patch
           cmake -S . -B build -G Ninja -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="86;89;120" \
             -DGGML_NATIVE=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DLLAMA_BUILD_TESTS=OFF \
             -DLLAMA_OPENSSL=OFF -DLLAMA_CURL=OFF

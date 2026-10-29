@@ -1,0 +1,64 @@
+# Reproduces the shipped Linux one-click toolchain (release/oneclick/src/build/CMakeCache.txt + ldd of llama-server):
+#   conda nvcc + cudart 13.2.51 (nvidia channel), conda gcc/g++ 15.2.0 (sysroot 2.28), cuBLAS 12.8.4.1 from the pip wheel
+#   nvidia-cublas-cu12 (headers + libcublas.so.12 / libcublasLt.so.12, linked against and shipped in lib/), static ggml/llama,
+#   archs 75-virtual;80;86;89;120, same C/CXX/linker flags the conda compilers inject.
+# Build time: the patched mmq-instance files are heavy (measured locally: ~70 min per file at 4 real archs on 1 core,
+# ptxas up to 3.9 GB). 22 such files on a 4-core 16 GB runner at -j3 is close to the 6 h job limit: watch the first run;
+# if it times out, use a larger runner or a self-hosted runner.
+name: build-linux-cuda
+on:
+  workflow_dispatch:
+  push:
+    branches: [v2.5.2-fix]
+jobs:
+  linux-cuda:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 355
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL; df -h /
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          activate-environment: p8
+          auto-activate-base: false
+      - name: Toolchain (pinned to the shipped build)
+        run: |
+          conda install -y -c nvidia -c conda-forge cuda-version=13.2 cuda-nvcc=13.2.51 cuda-cudart-dev=13.2.51 \
+            gcc_linux-64=15.2.0 gxx_linux-64=15.2.0 sysroot_linux-64=2.28 cmake make
+          pip install nvidia-cublas-cu12==12.8.4.1
+          CB=$(python -c "import nvidia.cublas, os; print(os.path.dirname(nvidia.cublas.__file__))")
+          cp $CB/include/*.h $CONDA_PREFIX/targets/x86_64-linux/include/
+          ln -sf $CB/lib/libcublas.so.12 $CONDA_PREFIX/lib/libcublas.so.12;   ln -sf libcublas.so.12 $CONDA_PREFIX/lib/libcublas.so
+          ln -sf $CB/lib/libcublasLt.so.12 $CONDA_PREFIX/lib/libcublasLt.so.12; ln -sf libcublasLt.so.12 $CONDA_PREFIX/lib/libcublasLt.so
+          nvcc --version; $CXX --version
+      - name: Patch and build llama.cpp 7ac59a6 (released patch + Qwen3.5 loader count delta + v2.5.2 stock-type MMQ guard)
+        run: |
+          git clone -q https://github.com/ggml-org/llama.cpp src
+          cd src && git checkout -q 7ac59a6e3ad851cd41af00f678effab0598ba9a8
+          git apply ../patches/llama_cuda_vs_7ac59a6.patch
+          git apply ../patches/q35_loader_count_delta.patch
+          git apply ../patches/stocktype_v252.patch
+          cmake -S . -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80;86;89;120" \
+            -DGGML_NATIVE=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DLLAMA_BUILD_TESTS=OFF \
+            -DLLAMA_OPENSSL=OFF -DLLAMA_CURL=OFF -DCMAKE_CUDA_COMPILER=$CONDA_PREFIX/bin/nvcc
+          cmake --build build -j3 --target llama-cli llama-server llama-perplexity llama-bench
+      - name: Package (same layout as release/oneclick/package_v25.sh)
+        run: |
+          P=pingala8-linux-cuda13; mkdir -p pkg/$P/bin pkg/$P/lib
+          cp src/build/bin/llama-server src/build/bin/llama-perplexity pkg/$P/bin/
+          for l in $(ldd src/build/bin/llama-server | awk '/cudart|cublas/{print $3}'); do cp -L "$l" pkg/$P/lib/; done
+          cp oneclick/linux/run.sh oneclick/linux/run_qwen35_*.sh oneclick/README.txt LICENSE NOTICE pkg/$P/
+          cp third_party/llama.cpp-LICENSE pkg/$P/
+          ls -la pkg/$P pkg/$P/bin pkg/$P/lib
+          ldd pkg/$P/bin/llama-server | grep -E 'cudart|cublas|not found' || true
+          objdump -T pkg/$P/bin/llama-server | grep -o 'GLIBC_[0-9.]*' | sort -Vu | tail -1
+          tar -C pkg -czf pingala8-linux-cuda13.tar.gz $P && sha256sum pingala8-linux-cuda13.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pingala8-linux-cuda13
+          path: pingala8-linux-cuda13.tar.gz
