@@ -215,15 +215,15 @@
 <section id="results-5" aria-labelledby="results5-h">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Five models</span>
-      <h2 id="results5-h">Results across 5 models</h2>
-      <p>At the same file size, Pingala-8 stays much closer to the 8-bit model than llama.cpp's IQ2_XXS on every model we released. Downloads so far: about 2,390 downloads on Hugging Face across the five models (all-time, as of 27 Oct 2026).</p>
+      <span class="eyebrow">Seven models</span>
+      <h2 id="results5-h">Results across 7 models</h2>
+      <p>At the same file size, Pingala-8 stays much closer to the 8-bit model than llama.cpp's IQ2_XXS on every model we released. It is not always the best 2-bit file: on Qwen3-1.7B, ik_llama.cpp's IQ2_KT (3.3% larger) is better. Downloads so far: about 3,650 downloads on Hugging Face across the seven models (all-time, as of 29 Oct 2026).</p>
     </div>
     <figure>
       <a href="media/results/results_summary_dark.png"><img src="media/results/results_summary_dark.png" width="1200" height="630" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius)"
-           alt="How much worse than 8-bit, at 2-bit size. Extra WikiText-2 perplexity over the 8-bit model at the same file size: Qwen3.5-0.8B Pingala-8 +66% vs IQ2_XXS +443%; Qwen3.5-2B +40% vs +161%; Qwen3.5-4B +23% vs +65%; Qwen3-4B (vs fp16) +34% vs +130%; Llama-3.1-8B no 8-bit reference, 9.14 vs 12.35."></a>
+           alt="How much worse than 8-bit, at 2-bit size. Extra WikiText-2 perplexity over the 8-bit model at the same file size: Qwen3.5-0.8B Pingala-8 +66% vs IQ2_XXS +443%; Qwen3.5-2B +40% vs +161%; Qwen3.5-4B +23% vs +65%; Qwen3-0.6B +116% vs +56,364% (IQ2_XXS collapses); Qwen3-1.7B +80% vs +206%, but IQ2_KT (3.3% larger file) is +34%, better than Pingala-8; Qwen3-4B (vs fp16) +34% vs +130%; Llama-3.1-8B no 8-bit reference, 9.14 vs 12.35."></a>
     </figure>
-    <style>.table-wrap table.r5{min-width:0}@media (max-width:640px){.r5 th{white-space:normal}.r5 th,.r5 td{padding:10px 8px;font-size:13.5px}}</style>
+    <style>.table-wrap table.r5{min-width:0}@media (max-width:640px){.r5 th{white-space:normal}.r5 td.num{white-space:normal}.r5 th,.r5 td{padding:10px 8px;font-size:13.5px}}</style>
     <div class="table-wrap" style="margin-top:20px">
       <table class="r5">
         <thead>
@@ -233,12 +233,14 @@
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a></td><td class="num">0.35 GB</td><td class="num"><strong>25.97</strong> vs 85.09</td><td class="num gain">3.28x lower</td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a></td><td class="num">0.78 GB</td><td class="num"><strong>15.62</strong> vs 29.08</td><td class="num gain">1.86x lower</td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a></td><td class="num">1.51 GB</td><td class="num"><strong>10.97</strong> vs 14.75</td><td class="num gain">1.34x lower</td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit">Qwen3-0.6B</a></td><td class="num">0.28 GB</td><td class="num"><strong>41.34</strong> vs 10,791</td><td class="num"><span class="gain">261x lower</span><br><span class="muted small" style="white-space:normal">IQ2_XXS collapses; generates at 0.70x IQ2_XXS speed</span></td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a></td><td class="num">0.69 GB</td><td class="num"><strong>28.23</strong> vs 47.96</td><td class="num"><span class="gain">1.70x lower</span><br><span class="muted small" style="white-space:normal">loses to IQ2_KT (20.89, 3.3% larger file)</span></td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a></td><td class="num">1.24 GB</td><td class="num"><strong>16.64</strong> vs 28.61</td><td class="num gain">1.72x lower</td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a></td><td class="num">2.39 GB</td><td class="num"><strong>9.14</strong> vs 12.35</td><td class="num gain">1.35x lower</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="muted small" style="margin-top:12px">WikiText-2 perplexity, lower is better; IQ2_XXS (llama.cpp) at the same file size. Llama-3.1-8B: pre-registered; with a BOS at every window it is 8.44 vs 9.36 for IQ2_KT. Limits: the files need the patched build (v2.5 for the Qwen3.5 models; stock llama.cpp, Ollama and LM Studio cannot load them), prompt processing is 0.74-0.89x IQ2_XXS, some IQ2_KT files are smaller (Qwen3.5 rows), and on Qwen3-14B the recipe narrowly loses to IQ2_KT (9.57 vs 9.40). Per-model charts: <a href="media/results/results_qwen35_0.8b_dark.png">Qwen3.5-0.8B</a>, <a href="media/results/results_qwen35_2b_dark.png">Qwen3.5-2B</a>, <a href="media/results/results_qwen35_4b_dark.png">Qwen3.5-4B</a>, <a href="media/results/results_qwen3_4b_dark.png">Qwen3-4B</a>, <a href="media/results/results_llama31_8b_dark.png">Llama-3.1-8B</a>.</p>
+    <p class="muted small" style="margin-top:12px">WikiText-2 perplexity, lower is better; IQ2_XXS (llama.cpp) at the same file size. Qwen3-1.7B: ik_llama.cpp's IQ2_KT beats Pingala-8 (20.89 vs 28.23, IQ2_KT file 3.3% larger). Qwen3-0.6B: IQ2_XXS collapses (10,791); IQ2_KT 48.97 in a 3.1% larger file; Pingala-8 generates at 0.70x IQ2_XXS speed. Llama-3.1-8B: pre-registered; with a BOS at every window it is 8.44 vs 9.36 for IQ2_KT. Limits: the files need the patched build (v2.5 for the Qwen3.5, Qwen3-1.7B and Qwen3-0.6B models; stock llama.cpp, Ollama and LM Studio cannot load them; Qwen3-1.7B and Qwen3-0.6B have no one-click launcher yet), prompt processing is 0.74-0.89x IQ2_XXS, some IQ2_KT files are smaller (Qwen3.5 rows), and on Qwen3-14B the recipe narrowly loses to IQ2_KT (9.57 vs 9.40). Per-model charts: <a href="media/results/results_qwen35_0.8b_dark.png">Qwen3.5-0.8B</a>, <a href="media/results/results_qwen35_2b_dark.png">Qwen3.5-2B</a>, <a href="media/results/results_qwen35_4b_dark.png">Qwen3.5-4B</a>, <a href="media/results/results_qwen3_0.6b_dark.png">Qwen3-0.6B</a>, <a href="media/results/results_qwen3_1.7b_dark.png">Qwen3-1.7B</a>, <a href="media/results/results_qwen3_4b_dark.png">Qwen3-4B</a>, <a href="media/results/results_llama31_8b_dark.png">Llama-3.1-8B</a>.</p>
   </div>
 </section>
 
@@ -373,6 +375,8 @@
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a> (text only)</td><td>1.51 GB</td><td><code>run_qwen35_4b.bat</code></td><td><code>./run.sh qwen35-4b</code></td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a> (text only)</td><td>0.78 GB</td><td><code>run_qwen35_2b.bat</code></td><td><code>./run.sh qwen35-2b</code></td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a> (text only)</td><td>0.35 GB</td><td><code>run_qwen35_0_8b.bat</code></td><td><code>./run.sh qwen35-0.8b</code></td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a> (IQ2_KT is better on this model)</td><td>0.69 GB</td><td>no launcher yet: <code>bin\llama-server.exe</code> (<a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit#how-to-run">how to run</a>)</td><td>no launcher yet: <code>./bin/llama-server</code> (<a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit#how-to-run">how to run</a>)</td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit">Qwen3-0.6B</a> (generates at 0.70x IQ2_XXS speed)</td><td>0.28 GB</td><td>no launcher yet: <code>bin\llama-server.exe</code> (<a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit#how-to-run">how to run</a>)</td><td>no launcher yet: <code>./bin/llama-server</code> (<a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit#how-to-run">how to run</a>)</td></tr>
         </tbody>
       </table>
     </div>
@@ -522,6 +526,7 @@
           <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
           <li><a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B model</a> (new, text only)</li>
           <li><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a> and <a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a> models (new, text only; use the v2.5 one-click build)</li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a> (IQ2_KT is better on this model) and <a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit">Qwen3-0.6B</a> (slower generation) models (new; no one-click launcher yet, run with the v2.5 runtime's llama-server)</li>
         </ul>
       </div>
       <div>
