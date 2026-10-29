@@ -15,14 +15,14 @@ and writes replies 39% faster than Q4_K_M at half its size (batch 1, one RTX 507
 
 **[Download the one-click build](https://github.com/Genrius-AI/pingala8-llm/releases/latest)** (Windows and Linux, NVIDIA RTX 30/40/50) | **[Paper (DOI)](https://doi.org/10.5281/zenodo.23481757)** | [Paper page: abstract, PDF, BibTeX](https://genrius-ai.github.io/pingala8-llm/paper.html) | **Models on Hugging Face:** [Qwen3-4B](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit), [Llama-3.1-8B](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit)
 
-**How it compares:** at the same file size and without retraining, it beats llama.cpp's IQ2_XXS and ik_llama.cpp's IQ2_KT on Qwen3-4B and Llama-3.1-8B (WikiText-2 perplexity on Qwen3-4B: 16.64 against 28.61 and 18.15; lower is better), but loses narrowly to IQ2_KT on Qwen3-14B (9.57 against 9.40), reads long prompts slower (0.74x IQ2_XXS), and needs our patched llama.cpp (CUDA). Retrained models such as Ternary Bonsai 4B score higher (11.59 at 1.07 GB).
+**How it compares:** at the same file size and without retraining, it beats llama.cpp's IQ2_XXS and ik_llama.cpp's IQ2_KT on Qwen3-4B and Llama-3.1-8B (WikiText-2 perplexity on Qwen3-4B: 16.64 against 28.61 and 18.15; lower is better), but loses narrowly to IQ2_KT on Qwen3-14B (9.57 against 9.40) and clearly on Qwen3-1.7B (28.23 against 20.89, IQ2_KT file 3.3% larger), reads long prompts slower (0.74x IQ2_XXS), and needs our patched llama.cpp (CUDA). Retrained models such as Ternary Bonsai 4B score higher (11.59 at 1.07 GB).
 
-## Results across 5 models
+## Results across 7 models
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/media/results/results_summary_dark.png">
-    <img src="docs/media/results/results_summary.png" width="800" alt="How much worse than 8-bit, at 2-bit size: Pingala-8 adds 23-66% WikiText-2 perplexity over the 8-bit model, IQ2_XXS adds 65-443%, at the same file size">
+    <img src="docs/media/results/results_summary.png" width="800" alt="How much worse than 8-bit, at 2-bit size: Pingala-8 adds 23-116% perplexity over the 8-bit model, IQ2_XXS adds 65-443% and collapses on Qwen3-0.6B, at the same file size; on Qwen3-1.7B ik_llama.cpp IQ2_KT (3.3% larger file) beats Pingala-8">
   </picture>
 </p>
 
@@ -31,12 +31,14 @@ and writes replies 39% faster than Q4_K_M at half its size (batch 1, one RTX 507
 | [Qwen3.5-0.8B](https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit) | 0.35 GB | **25.97** vs 85.09 | 3.28x lower |
 | [Qwen3.5-2B](https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit) | 0.78 GB | **15.62** vs 29.08 | 1.86x lower |
 | [Qwen3.5-4B](https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit) | 1.51 GB | **10.97** vs 14.75 | 1.34x lower |
+| [Qwen3-0.6B](https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit) | 0.28 GB | **41.34** vs 10,791 | 261x lower (IQ2_XXS collapses); generates at 0.70x IQ2_XXS speed |
+| [Qwen3-1.7B](https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit) | 0.69 GB | **28.23** vs 47.96 | 1.70x lower; loses to IQ2_KT (20.89, 3.3% larger file) |
 | [Qwen3-4B](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit) | 1.24 GB | **16.64** vs 28.61 | 1.72x lower |
 | [Llama-3.1-8B](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit) | 2.39 GB | **9.14** vs 12.35 | 1.35x lower |
 
-WikiText-2 perplexity, lower is better; IQ2_XXS (llama.cpp) at the same file size. Llama-3.1-8B: pre-registered; with a BOS at every window it is 8.44 vs 9.36 for IQ2_KT. Limits: the files need the patched build (v2.5 for the Qwen3.5 models; stock llama.cpp, Ollama and LM Studio cannot load them), prompt processing is 0.74-0.89x IQ2_XXS, some IQ2_KT files are smaller (Qwen3.5 rows), and on Qwen3-14B the recipe narrowly loses to IQ2_KT (9.57 vs 9.40). Per-model charts: [Qwen3.5-0.8B](docs/media/results/results_qwen35_0.8b.png), [Qwen3.5-2B](docs/media/results/results_qwen35_2b.png), [Qwen3.5-4B](docs/media/results/results_qwen35_4b.png), [Qwen3-4B](docs/media/results/results_qwen3_4b.png), [Llama-3.1-8B](docs/media/results/results_llama31_8b.png) (SVG next to each PNG).
+WikiText-2 perplexity, lower is better; IQ2_XXS (llama.cpp) at the same file size. Qwen3-1.7B: ik_llama.cpp's IQ2_KT beats Pingala-8 (20.89 vs 28.23, IQ2_KT file 3.3% larger). Qwen3-0.6B: IQ2_XXS collapses (10,791); IQ2_KT 48.97 in a 3.1% larger file; Pingala-8 generates at 0.70x IQ2_XXS speed. Llama-3.1-8B: pre-registered; with a BOS at every window it is 8.44 vs 9.36 for IQ2_KT. Limits: the files need the patched build (v2.5 for the Qwen3.5, Qwen3-1.7B and Qwen3-0.6B models; stock llama.cpp, Ollama and LM Studio cannot load them; Qwen3-1.7B and Qwen3-0.6B have no one-click launcher yet), prompt processing is 0.74-0.89x IQ2_XXS, some IQ2_KT files are smaller (Qwen3.5 rows), and on Qwen3-14B the recipe narrowly loses to IQ2_KT (9.57 vs 9.40). Per-model charts: [Qwen3.5-0.8B](docs/media/results/results_qwen35_0.8b.png), [Qwen3.5-2B](docs/media/results/results_qwen35_2b.png), [Qwen3.5-4B](docs/media/results/results_qwen35_4b.png), [Qwen3-0.6B](docs/media/results/results_qwen3_0.6b.png), [Qwen3-1.7B](docs/media/results/results_qwen3_1.7b.png), [Qwen3-4B](docs/media/results/results_qwen3_4b.png), [Llama-3.1-8B](docs/media/results/results_llama31_8b.png) (SVG next to each PNG).
 
-Downloads so far: about 2,390 downloads on Hugging Face across the five models (all-time, as of 27 Oct 2026).
+Downloads so far: about 3,650 downloads on Hugging Face across the seven models (all-time, as of 29 Oct 2026).
 
 Code, llama.cpp patches, build scripts and logs for the paper
 
@@ -64,6 +66,8 @@ Needs an NVIDIA RTX 30, 40 or 50 series GPU and a recent driver. No Python, no b
 | [Qwen3.5-4B](https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit) (text only) | 1.51 GB | `run_qwen35_4b.bat` | `./run.sh qwen35-4b` |
 | [Qwen3.5-2B](https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit) (text only) | 0.78 GB | `run_qwen35_2b.bat` | `./run.sh qwen35-2b` |
 | [Qwen3.5-0.8B](https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit) (text only) | 0.35 GB | `run_qwen35_0_8b.bat` | `./run.sh qwen35-0.8b` |
+| [Qwen3-1.7B](https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit) (IQ2_KT is better on this model) | 0.69 GB | no launcher yet: `bin\llama-server.exe` ([how to run](https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit#how-to-run)) | no launcher yet: `./bin/llama-server` ([how to run](https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit#how-to-run)) |
+| [Qwen3-0.6B](https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit) (generates at 0.70x IQ2_XXS speed) | 0.28 GB | no launcher yet: `bin\llama-server.exe` ([how to run](https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit#how-to-run)) | no launcher yet: `./bin/llama-server` ([how to run](https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit#how-to-run)) |
 
 Running? A [star](https://github.com/Genrius-AI/pingala8-llm) helps others find it.
 
@@ -142,6 +146,8 @@ Llama-3.1-8B: `hf download Genrius-AI/Llama-3.1-8B-Pingala8-2bit` and pass
 - Llama-3.1-8B: https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit (Llama 3.1 Community License; Built with Llama)
 - Qwen3.5-4B: https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit (Apache-2.0; text only, same patched build; runs in the v2.5 one-click build: run_qwen35_4b.bat or ./run.sh qwen35-4b)
 - Qwen3.5-2B and Qwen3.5-0.8B: https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit and https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit (Apache-2.0; text only; need the released patch plus patches/q35_loader_count_delta.patch; use the v2.5 one-click build: run_qwen35_2b.bat / run_qwen35_0_8b.bat or ./run.sh qwen35-2b / qwen35-0.8b)
+- Qwen3-1.7B: https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit (Apache-2.0; beats llama.cpp IQ2_XXS at equal bytes, 28.23 vs 47.96, but loses to ik_llama.cpp IQ2_KT, 20.89 with a 3.3% larger file; no one-click launcher yet: start the v2.5 runtime's llama-server with it, see the card's How to run)
+- Qwen3-0.6B: https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit (Apache-2.0; 41.34 vs 10,791 for IQ2_XXS, which collapses, and 48.97 for IQ2_KT with a 3.1% larger file; generates at 0.70x IQ2_XXS speed; no one-click launcher yet: start the v2.5 runtime's llama-server with it)
 
 ## Repository layout
 
