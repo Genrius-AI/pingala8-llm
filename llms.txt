@@ -18,6 +18,9 @@ Newest results (November 1, 2026), with the losses:
 - [Qwen3.5-2B under 1 GB: 2-bit GGUFs measured](https://genrius-ai.github.io/pingala8-llm/qwen3-5-2b-under-1gb-2bit.html): six 2-bit files compared, DASH-Q first
 - [Qwen3.8 27B VRAM requirements](https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html): which GPU, and the measured 8.31 GB file on a 12 GB GPU
 - [NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU](https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html): what we saw on our GPU and the -ot CPU workaround
+- [Article: How we fit a 27B model on a 12 GB laptop GPU](https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html): Qwen3.8-27B in 8.31 GB on one 12 GB laptop GPU: what 2-bit means, the real-speed demo, bits by role and depth learned from DASH-Q, and what failed.
+- [Article: 8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps](https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html): Size, perplexity and speed for eight 2-bit files, what perplexity means in plain words, and where DASH-Q, IQ2_KT and retrained models beat us.
+- [Article: Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs](https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html): Same text, same windows, paired per-window loss: why a lower average won only 9 of 20 windows, and the IQ1_S/IQ2_S/IQ3_S NaN trap on our RTX 50 GPU.
 - [Article: how we fit Qwen3-4B into 1.24 GB](https://genrius-ai.github.io/pingala8-llm/article.html)
 - [GitHub repo: code, patches, logs](https://github.com/Genrius-AI/pingala8-llm)
 - [How to reproduce](https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md)

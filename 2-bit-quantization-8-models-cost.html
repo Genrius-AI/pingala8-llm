@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps | Genrius AI</title>
+<meta name="description" content="Eight Pingala-8 2-bit files, Qwen3-0.6B to Qwen3.8-27B: 77-85% smaller than 16-bit, 13-70% lower WikiText-2 perplexity than IQ2_XXS at the same size, speed, perplexity in plain words, and where DASH-Q, IQ2_KT and retrained ternary models beat us.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Harshit Goyal">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="alternate" type="application/atom+xml" title="Pingala-8 by Genrius AI" href="feed.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps">
+<meta property="og:description" content="Eight 2-bit files, 77-85% smaller than 16-bit, 13-70% lower perplexity than IQ2_XXS at the same size. Plus what perplexity means and where DASH-Q, IQ2_KT and retrained models beat us.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/og-2-bit-quantization-8-models-cost.png">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/og-2-bit-quantization-8-models-cost.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Card: 8 open models, 77-85% smaller. 2-bit files with 13-70% lower perplexity than IQ2_XXS at the same size.">
+<meta property="article:published_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:modified_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:author" content="Harshit Goyal">
+<meta property="article:section" content="Research">
+<meta property="article:tag" content="LLM quantization">
+<meta property="article:tag" content="llama.cpp">
+<meta property="article:tag" content="2-bit">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps">
+<meta name="twitter:description" content="Eight 2-bit files, 77-85% smaller than 16-bit, 13-70% lower perplexity than IQ2_XXS at the same size. Plus what perplexity means and where DASH-Q, IQ2_KT and retrained models beat us.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/og-2-bit-quantization-8-models-cost.png">
+<meta name="twitter:image:alt" content="Card: 8 open models, 77-85% smaller. 2-bit files with 13-70% lower perplexity than IQ2_XXS at the same size.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+@media (max-width: 600px) {
+  .table-wrap table.fit { min-width: 0; }
+  table.fit th, table.fit td { padding: 9px 8px; font-size: 13.5px; }
+  table.fit th { white-space: normal; }
+}
+.demo27b img { max-width: 100%; height: auto; display: block; border-radius: 10px; }
+.more-articles { margin-top: 8px; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#harshit-goyal",
+      "name": "Harshit Goyal",
+      "jobTitle": "Founder",
+      "worksFor": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "description": "Founder of Genrius AI, former Google software engineer, IIIT Delhi alumnus",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Indraprastha Institute of Information Technology Delhi",
+        "alternateName": "IIIT Delhi"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html#article",
+      "headline": "8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps",
+      "description": "Eight Pingala-8 2-bit files, Qwen3-0.6B to Qwen3.8-27B: 77-85% smaller than 16-bit, 13-70% lower WikiText-2 perplexity than IQ2_XXS at the same size, speed, perplexity in plain words, and where DASH-Q, IQ2_KT and retrained ternary models beat us.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/og-2-bit-quantization-8-models-cost.png"
+      ],
+      "datePublished": "2026-11-01T08:30:00+00:00",
+      "dateModified": "2026-11-01T08:30:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#harshit-goyal"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "What 2-bit weight quantization costs and keeps across eight open language models",
+      "keywords": "2-bit quantization, GGUF, IQ2_XXS, perplexity, Qwen3, Qwen3.5, Llama-3.1-8B, DASH-Q, IQ2_KT, Pingala-8",
+      "wordCount": 1454,
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757",
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.23481757"
+        }
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results">Results</a>
+      <a href="./#articles" class="hide-sm">Articles</a>
+      <a href="./#try">Try it</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#articles">Genrius AI articles</a>
+  <h1>8 open models, <span style="white-space:nowrap">77-85%</span> smaller: what <span style="white-space:nowrap">2-bit</span> quantization costs and what it keeps</h1>
+  <p class="byline">Harshit Goyal, Founder, Genrius AI (ex-Google software engineer, IIIT Delhi alumnus). <time datetime="2026-11-01">November 1, 2026</time>. About 6 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>We have released 2-bit Pingala-8 files of eight open models, from Qwen3-0.6B to Qwen3.8-27B. They are 77-85% smaller than the 16-bit weights.</li>
+      <li>At about the same file size as llama.cpp's IQ2_XXS, made with the same imatrix, WikiText-2 perplexity is 13-70% lower. On Qwen3-0.6B, IQ2_XXS collapses.</li>
+      <li>Token generation matches or beats IQ2_XXS on 5 of the 6 models we measured against it (+0% to +9%). Qwen3-0.6B is 30% slower.</li>
+      <li>We lose on prompt speed (0.74-0.89x IQ2_XXS), to DASH-Q on Qwen3.8-27B and Qwen3.5-2B, to ik_llama.cpp's IQ2_KT on Qwen3-1.7B and narrowly on Qwen3-14B, and to retrained ternary models such as Bonsai 4B.</li>
+    </ul>
+  </div>
+
+  <h2 id="perplexity">First, what perplexity means</h2>
+  <p>Every number below that is not a size or a speed is a perplexity, so it is worth a minute on what it measures.</p>
+  <p>A language model reads text one token at a time (a token is a word or a piece of a word) and, before each token, gives a probability to every token that could come next. Perplexity takes the probability the model gave to the token that actually came next, averages its logarithm over a long text, and turns the average back into a plain number. The result has a simple reading: a perplexity of 7 means that, on average, the model was as unsure as if it were choosing among 7 equally likely tokens. A perfect predictor would score 1. Lower is better.</p>
+  <p>For compression, perplexity is a damage meter. Rounding the weights to 2 bits makes the model a little less sure of the right next token, and perplexity goes up. Two files of the same model and the same size can then be compared directly: the one with the lower perplexity kept more of the original.</p>
+  <p>Three cautions:</p>
+  <ul>
+    <li><strong>It is one text.</strong> All of our numbers are on WikiText-2, English Wikipedia articles. It says little about code, other languages or long conversations.</li>
+    <li><strong>It is not a task score.</strong> Lower perplexity usually goes with better answers, but not one for one. On Qwen3-4B, our 41.8% lower perplexity went with a 21% higher average on five quizzes (50.8 against 41.9), which is 90% of the 8-bit score. On Qwen3.5-4B, a 25.6% drop went with 53.8 against 49.1 on zero-shot tasks.</li>
+    <li><strong>Only compare like with like.</strong> Same model, same text, same context length, same windows. A perplexity from one model card and one from another are often not comparable. Our <a href="benchmarking-2-bit-ggufs-paired-windows.html">benchmarking article</a> goes into this.</li>
+  </ul>
+  <p>For more, see <a href="what-is-perplexity-llm.html">what perplexity is, in plain English</a>.</p>
+
+  <h2 id="measured">How we measured</h2>
+  <ul>
+    <li><strong>Smaller</strong>: the Pingala-8 file in bytes against the model's 16-bit text weights, computed from the base repository's safetensors headers, with vision and multi-token-prediction tensors left out. For Llama-3.1-8B we use the 16.08 GB on its model card.</li>
+    <li><strong>Lower perplexity</strong>: WikiText-2 at context 4,096, against llama.cpp's IQ2_XXS at about the same file size, built with the same importance matrix (imatrix) we used for our file.</li>
+    <li><strong>Speed</strong>: token generation for one user (batch 1) against IQ2_XXS of the same model, on the same laptop GPU, an RTX 5070 Ti Laptop with 12 GB. The figures come from each model card.</li>
+  </ul>
+
+  <h2 id="table">The eight models</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Model</th><th class="num">16-bit to Pingala-8</th><th class="num">Smaller</th><th class="num">PPL: ours vs IQ2_XXS</th><th class="num">Lower PPL</th><th>Generation speed</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B</a> (v2)</td><td class="num">53.8 to 8.31 GB</td><td class="num">84.5% (6.5x)</td><td class="num">6.89 vs 7.88</td><td class="num">12.6%</td><td>37.7 vs 36.4 tok/s (+4%); fits one 12 GB GPU</td></tr>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a></td><td class="num">16.08 to 2.39 GB</td><td class="num">85.1% (6.7x)</td><td class="num">9.14 vs 12.35</td><td class="num">26.0%</td><td>not measured</td></tr>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a></td><td class="num">8.41 to 1.51 GB</td><td class="num">82.0% (5.6x)</td><td class="num">10.97 vs 14.75</td><td class="num">25.6%</td><td>1.09x (+9%)</td></tr>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a></td><td class="num">8.04 to 1.24 GB</td><td class="num">84.5% (6.5x)</td><td class="num">16.64 vs 28.61</td><td class="num">41.8%</td><td>39% faster than 4-bit Q4_K_M at half its size</td></tr>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a> (v2)</td><td class="num">3.76 to 0.78 GB</td><td class="num">79.3% (4.8x)</td><td class="num">14.06 vs 29.08</td><td class="num">51.7%</td><td>v1 file 1.09x (noisy); v2 not benchmarked</td></tr>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a></td><td class="num">4.06 to 0.69 GB</td><td class="num">83.0% (5.9x)</td><td class="num">28.23 vs 47.96</td><td class="num">41.1%</td><td>1.02x</td></tr>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a></td><td class="num">1.50 to 0.35 GB</td><td class="num">77.0% (4.3x)</td><td class="num">25.97 vs 85.09</td><td class="num">69.5%</td><td>1.00x (tie)</td></tr>
+        <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit">Qwen3-0.6B</a></td><td class="num">1.50 to 0.28 GB</td><td class="num">81.3% (5.4x)</td><td class="num">41.34 vs 10,791</td><td class="num">IQ2_XXS collapses</td><td>0.70x (30% slower)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">On a phone, swipe the table sideways. Perplexity is WikiText-2, lower is better; "Lower PPL" is how much lower ours is than IQ2_XXS. Speed is token generation at batch 1 against IQ2_XXS of the same model unless the row says otherwise. Each model name links to its Hugging Face page.</p>
+
+  <h2 id="keeps">What 2-bit keeps</h2>
+  <h3>Size: 77-85% smaller</h3>
+  <p>A pure 2-bit file would be 87.5% smaller than 16 bits (2 out of 16). No row reaches that, because some parts of each file keep more bits: the per-block scales, a few sensitive tensors, and above all the token embedding and output head. That last table is large in small models. In Qwen3.5-2B the embedding and output head are one shared matrix, and at the 4-bit Q4_K type it takes 286 MB of a 778 MB file. That is a large part of why the smallest Qwen3.5 models shrink least (77.0% and 79.3%) and the 8B and 27B models shrink most.</p>
+  <h3>Quality: the gap to IQ2_XXS grows as models shrink</h3>
+  <p>Read the "Lower PPL" column from top to bottom. On Qwen3.8-27B our file is 12.6% lower than IQ2_XXS; on the 4B and 8B models about 26-42%; on the models of 2B and below 41-70%; and on Qwen3-0.6B, IQ2_XXS reaches a perplexity of 10,791, which means its output is close to noise, while ours is 41.34. In this table, the smaller the model, the harder 2 bits hits a simple format, and the more a careful coder saves. Large models seem to have more slack, so even the simple format holds up better on them.</p>
+  <p>The flip side: on the large models the differences between good 2-bit files are small, a few percent, and need careful testing to tell apart.</p>
+  <h3>Speed: about the same as IQ2_XXS</h3>
+  <p>Writing a reply for one user is mostly a matter of reading the weights from memory once per token, so files of the same size tend to run at about the same speed. Ours matches or beats IQ2_XXS on 5 of the 6 models measured against it, from +0% to +9%, with 37.7 against 36.4 tokens/s on Qwen3.8-27B. On Qwen3-4B, our 1.24 GB file is 39% faster than the 4-bit Q4_K_M file, which is twice its size.</p>
+
+  <h2 id="costs">What 2-bit costs, and where we lose</h2>
+  <p>The table compares us with IQ2_XXS because it is the common llama.cpp format at this size. It is not the strongest rival. These are the places where we are behind:</p>
+  <ul>
+    <li><strong>Prompt speed.</strong> Reading a prompt runs at 0.74-0.89x the speed of IQ2_XXS. A long document takes longer before the first word of the reply appears.</li>
+    <li><strong>Qwen3-0.6B speed.</strong> Generation is 30% slower than IQ2_XXS on the smallest model.</li>
+    <li><strong>DASH-Q.</strong> On Qwen3.8-27B, DASH-Q IQ2_XS scores 6.54 against our 6.89. On Qwen3.5-2B, DASH-Q IQ2_XS scores 13.90 and IQ2_M 13.33, against our 14.06. Both of our version 2 files copy DASH-Q's way of splitting bits between tensors (<a href="how-we-fit-27b-model-on-12gb-laptop-gpu.html">how we did it</a>), and DASH-Q is still ahead.</li>
+    <li><strong>IQ2_KT.</strong> ik_llama.cpp's IQ2_KT type beats us on Qwen3-1.7B, 20.89 against 28.23, and narrowly on Qwen3-14B, 9.40 against 9.57.</li>
+    <li><strong>Retrained ternary models.</strong> Bonsai 4B scores 11.59 at 1.07 GB, better and smaller than our Qwen3-4B file (16.64 at 1.24 GB). Bonsai is a model trained to work with very few bits, not a compression of an existing one. If you just want a strong small model, a retrained one like it is the better choice. Pingala-8 is for compressing models nobody has retrained for you.</li>
+    <li><strong>Runtime.</strong> Our files need our patched llama.cpp runtime on an NVIDIA GPU with CUDA. Stock llama.cpp, Ollama and LM Studio cannot load them. DASH-Q, unsloth and IQ2_XXS files run in stock llama.cpp.</li>
+    <li><strong>Gaps in the speed column.</strong> We have not measured Llama-3.1-8B speed or benchmarked the Qwen3.5-2B version 2 file, and the version 1 2B figure is noisy.</li>
+  </ul>
+
+  <h2 id="when">When 2-bit makes sense</h2>
+  <p>2-bit is a trade. You give up some quality, measured above, to run a model on hardware that could not hold it otherwise. The clearest case in this table is Qwen3.8-27B: 53.8 GB of weights becomes 8.31 GB and runs fully on one 12 GB laptop GPU. The <a href="run-qwen3-8-27b-on-12gb-gpu.html">12 GB guide</a> lists the three 2-bit files that fit, ours and two rivals. For small models on small cards, the <a href="run-qwen3-4b-on-4gb-6gb-gpu.html">Qwen3-4B</a> and <a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">Llama 3.1 8B</a> guides show what fits on 4 and 6 GB.</p>
+  <p>If your GPU can hold a 4-bit or 8-bit file of the model you want, those keep more of the original; our tables do not argue otherwise. And at 2 bits, check the rival files for your model before picking ours. The <a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">2-bit GGUF leaderboard</a> ranks every file we measured, and DASH-Q is first on both models it covers.</p>
+  <p>Our <a href="is-2-bit-quantization-usable.html">guide to 2-bit quantization</a> and the <a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">GGUF quant comparison</a> cover the formats in more depth.</p>
+
+  <div class="summary next">
+    <h2>Models, data and guides</h2>
+    <ul>
+      <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B Pingala-8 2-bit</a> (8.31 GB) and the other models: <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit">Qwen3-0.6B</a></li>
+      <li><a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">2-bit GGUF leaderboard</a> and the per-window <a href="https://huggingface.co/datasets/Genrius-AI/2bit-gguf-wikitext2-eval">eval dataset</a></li>
+      <li>Guides: <a href="run-qwen3-8-27b-on-12gb-gpu.html">Qwen3.8-27B on a 12 GB GPU</a>, <a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements</a>, <a href="qwen3-5-2b-under-1gb-2bit.html">Qwen3.5-2B under 1 GB</a>, <a href="2bit-gguf-nan-perplexity-rtx-50.html">NaN perplexity on RTX 50</a>, <a href="what-is-perplexity-llm.html">what perplexity is</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs on GitHub</a> and the paper, <a href="https://doi.org/10.5281/zenodo.23481757">DOI 10.5281/zenodo.23481757</a> (the Qwen3.8-27B and Qwen3.5-2B version 2 numbers are newer than the paper)</li>
+    </ul>
+  </div>
+  <h2>More articles</h2>
+  <ul class="guide-list more-articles">
+      <li><a href="how-we-fit-27b-model-on-12gb-laptop-gpu.html">How we fit a 27B model on a 12 GB laptop GPU</a></li>
+      <li><a href="benchmarking-2-bit-ggufs-paired-windows.html">Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs</a></li>
+      <li><a href="article.html">How we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+  </ul>
+  <p style="margin-top:28px">Questions, corrections or a model you want compressed next? Open a <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issue</a>.</p>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#articles">All articles</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="star-line"><a href="https://github.com/Genrius-AI/pingala8-llm">Star on GitHub</a> <a href="https://github.com/Genrius-AI/pingala8-llm"><img src="https://img.shields.io/github/stars/Genrius-AI/pingala8-llm?style=social" alt="GitHub stars for Genrius-AI/pingala8-llm" height="20" style="height:20px;width:auto;vertical-align:middle"></a></p>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Gemma, gpt-oss, Llama, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+
+</body>
+</html>

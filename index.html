@@ -74,6 +74,9 @@
       "datePublished": "2026-10-24",
       "dateModified": "2026-10-25",
       "hasPart": [
+        {"@type": "Article", "@id": "https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html#article", "headline": "How we fit a 27B model on a 12 GB laptop GPU", "url": "https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html"},
+        {"@type": "Article", "@id": "https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html#article", "headline": "8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps", "url": "https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html"},
+        {"@type": "Article", "@id": "https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html#article", "headline": "Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs", "url": "https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html#article", "headline": "How much VRAM do you need to run an LLM locally?", "url": "https://genrius-ai.github.io/pingala8-llm/how-much-vram-for-local-llm.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html#article", "headline": "What is a 2-bit LLM, and is 2-bit quantization usable?", "url": "https://genrius-ai.github.io/pingala8-llm/is-2-bit-quantization-usable.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html#article", "headline": "IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant should you pick?", "url": "https://genrius-ai.github.io/pingala8-llm/iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html"},
@@ -156,7 +159,7 @@
       <a href="#results" class="hide-sm">Results</a>
       <a href="#compare" class="hide-sm">Compare</a>
       <a href="#try">Try it</a>
-      <a href="article.html">Article</a>
+      <a href="#articles">Articles</a>
       <a href="#guides">Guides</a>
       <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
     </nav>
@@ -422,6 +425,34 @@
       <li><strong>The Qwen3-4B number is tuned.</strong>That file is the last of many builds tested on WikiText-2. C4 was held out; the Llama-3.1-8B and Qwen3-14B runs were pre-registered.</li>
       <li><strong>One GPU, no safety evaluation.</strong>Speed was measured on one RTX 5070 Ti Laptop. We have not evaluated the safety behaviour of the compressed models.</li>
     </ul>
+  </div>
+</section>
+
+<section id="articles" aria-labelledby="articles-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Articles</span>
+      <h2 id="articles-h">Articles by Harshit Goyal</h2>
+      <p>How the files were built, what they cost, and how we measure them, with the numbers we lose on.</p>
+    </div>
+    <div class="guides">
+      <a class="card guide-card" href="how-we-fit-27b-model-on-12gb-laptop-gpu.html">
+        <h3>How we fit a 27B model on a 12 GB laptop GPU</h3>
+        <p>Qwen3.8-27B in 8.31 GB on one 12 GB laptop GPU: what 2-bit means, the real-speed demo, bits by role and depth learned from DASH-Q, and what failed.</p>
+      </a>
+      <a class="card guide-card" href="2-bit-quantization-8-models-cost.html">
+        <h3>8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps</h3>
+        <p>Size, perplexity and speed for eight 2-bit files, what perplexity means in plain words, and where DASH-Q, IQ2_KT and retrained models beat us.</p>
+      </a>
+      <a class="card guide-card" href="benchmarking-2-bit-ggufs-paired-windows.html">
+        <h3>Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs</h3>
+        <p>Same text, same windows, paired per-window loss: why a lower average won only 9 of 20 windows, and the IQ1_S/IQ2_S/IQ3_S NaN trap on our RTX 50 GPU.</p>
+      </a>
+      <a class="card guide-card" href="article.html">
+        <h3>How we fit Qwen3-4B into 1.24 GB without retraining</h3>
+        <p>What Pingala-8 is, why 2-bit matters, the Qwen3-4B and Llama-3.1-8B numbers with their scope, and what we lose (Oct 24, 2026).</p>
+      </a>
+    </div>
   </div>
 </section>
 

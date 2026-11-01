@@ -153,4 +153,31 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://genrius-ai.github.io/pingala8-llm/media/og-how-we-fit-27b-model-on-12gb-laptop-gpu.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://genrius-ai.github.io/pingala8-llm/media/og-2-bit-quantization-8-models-cost.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://genrius-ai.github.io/pingala8-llm/media/og-benchmarking-2-bit-ggufs-paired-windows.png</image:loc>
+    </image:image>
+  </url>
 </urlset>

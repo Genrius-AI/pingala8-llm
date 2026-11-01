@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How we fit a 27B model on a 12 GB laptop GPU | Genrius AI</title>
+<meta name="description" content="Qwen3.8-27B in 8.31 GB at 2 bits, fully on one 12 GB laptop GPU: what 2-bit means, the real-speed demo, the v2 bit allocation by role and depth learned from DASH-Q, the water-filling idea that failed, and where DASH-Q is better.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Harshit Goyal">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="alternate" type="application/atom+xml" title="Pingala-8 by Genrius AI" href="feed.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How we fit a 27B model on a 12 GB laptop GPU">
+<meta property="og:description" content="Qwen3.8-27B in 8.31 GB, fully on one 12 GB laptop GPU at 37.7 tok/s. How v2 moved bits by role and depth (learned from DASH-Q), what failed, and where DASH-Q is still better.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/og-how-we-fit-27b-model-on-12gb-laptop-gpu.png">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/og-how-we-fit-27b-model-on-12gb-laptop-gpu.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Card: How we fit a 27B model on a 12 GB laptop GPU. 8.31 GB: Qwen3.8-27B at 2 bits, every layer on one 12 GB laptop GPU.">
+<meta property="article:published_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:modified_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:author" content="Harshit Goyal">
+<meta property="article:section" content="Research">
+<meta property="article:tag" content="LLM quantization">
+<meta property="article:tag" content="llama.cpp">
+<meta property="article:tag" content="2-bit">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How we fit a 27B model on a 12 GB laptop GPU">
+<meta name="twitter:description" content="Qwen3.8-27B in 8.31 GB, fully on one 12 GB laptop GPU at 37.7 tok/s. How v2 moved bits by role and depth (learned from DASH-Q), what failed, and where DASH-Q is still better.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/og-how-we-fit-27b-model-on-12gb-laptop-gpu.png">
+<meta name="twitter:image:alt" content="Card: How we fit a 27B model on a 12 GB laptop GPU. 8.31 GB: Qwen3.8-27B at 2 bits, every layer on one 12 GB laptop GPU.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+@media (max-width: 600px) {
+  .table-wrap table.fit { min-width: 0; }
+  table.fit th, table.fit td { padding: 9px 8px; font-size: 13.5px; }
+  table.fit th { white-space: normal; }
+}
+.demo27b img { max-width: 100%; height: auto; display: block; border-radius: 10px; }
+.more-articles { margin-top: 8px; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#harshit-goyal",
+      "name": "Harshit Goyal",
+      "jobTitle": "Founder",
+      "worksFor": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "description": "Founder of Genrius AI, former Google software engineer, IIIT Delhi alumnus",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Indraprastha Institute of Information Technology Delhi",
+        "alternateName": "IIIT Delhi"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html#article",
+      "headline": "How we fit a 27B model on a 12 GB laptop GPU",
+      "description": "Qwen3.8-27B in 8.31 GB at 2 bits, fully on one 12 GB laptop GPU: what 2-bit means, the real-speed demo, the v2 bit allocation by role and depth learned from DASH-Q, the water-filling idea that failed, and where DASH-Q is better.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/og-how-we-fit-27b-model-on-12gb-laptop-gpu.png"
+      ],
+      "datePublished": "2026-11-01T08:30:00+00:00",
+      "dateModified": "2026-11-01T08:30:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#harshit-goyal"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "Fitting the Qwen3.8-27B model on a 12 GB laptop GPU with a 2-bit GGUF file",
+      "keywords": "Qwen3.8-27B, 27B on 12GB GPU, 2-bit GGUF, bit allocation, DASH-Q, water-filling, llama.cpp, Pingala-8",
+      "wordCount": 1788,
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757",
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.23481757"
+        }
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results">Results</a>
+      <a href="./#articles" class="hide-sm">Articles</a>
+      <a href="./#try">Try it</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#articles">Genrius AI articles</a>
+  <h1>How we fit a 27B model on a 12 GB laptop GPU</h1>
+  <p class="byline">Harshit Goyal, Founder, Genrius AI (ex-Google software engineer, IIIT Delhi alumnus). <time datetime="2026-11-01">November 1, 2026</time>. About 8 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Qwen3.8-27B goes from 53.8 GB of 16-bit weights to an 8.31 GB Pingala-8 file, 84.5% smaller (6.5x). It runs with every layer on one 12 GB RTX 5070 Ti Laptop GPU at 37.7 tokens/s (llama-bench, batch 1).</li>
+      <li>Version 2 moves bits between tensor roles and layer depths, following the allocation in DASH-Q's published files. WikiText-2 perplexity fell from 7.34 to 6.89 at the same size, better on 20 of 20 test windows.</li>
+      <li>DASH-Q IQ2_XS (8.55 GB) is still better than ours: 6.54, ahead on 20 of 20 windows. Against unsloth UD-IQ2_S (8.37 GB, 7.34) our lower average is not a significant win.</li>
+      <li>The file needs our patched llama.cpp runtime on an NVIDIA GPU. Stock llama.cpp, Ollama and LM Studio cannot load it.</li>
+    </ul>
+  </div>
+
+  <h2 id="problem">The problem: 53.8 GB of weights, 12 GB of memory</h2>
+  <p>Qwen3.8-27B is a 27-billion-parameter model. Its text weights, stored the way the Qwen team ships them at 16 bits each, come to 53.8 GB. That count leaves out the vision tower and the multi-token-prediction block, which we do not ship either.</p>
+  <p>A model runs at full speed only when its weights sit in GPU memory, next to the cache that holds the conversation. A laptop GPU with 12 GB cannot hold 53.8 GB. Even at 4 bits per weight, the weights alone would be about 13.5 GB (a quarter of 53.8), more than the whole card before any cache. The usual answer is to leave some layers in system RAM, which slows generation to the speed of that slower memory.</p>
+  <p>We wanted the whole model on the GPU. That means about 2 bits per weight.</p>
+
+  <h2 id="two-bit">What 2-bit means</h2>
+  <p>A weight is one number in one of the model's matrices. At 16 bits it takes 2 bytes. At 2 bits it takes a quarter of a byte, so on its own it could take only 4 different values. No useful format stores weights that crudely. 2-bit formats code small groups of weights together, keep a scale for each block of weights, and store a few sensitive tensors with more bits. The "2-bit" label describes the bulk of the file, not every byte of it.</p>
+  <p>For our file the arithmetic is simple: 8.31 GB for 53.8 GB of 16-bit weights is 6.5x smaller, or about 2.5 bits per weight averaged over the whole file. The extra half bit pays for the scales, the token embedding and output head, and the tensors that get more than 2 bits.</p>
+  <p>Fewer bits means rounding error, and the error adds up across 27 billion weights. We measure what that costs with WikiText-2 perplexity, a standard score for how well a model predicts real text; lower is better. Our <a href="2-bit-quantization-8-models-cost.html">article on 8 models</a> explains the score in plain words.</p>
+  <p>Pingala-8 codes each row of weights in groups of 4 with an 8-state trellis code, after a random Hadamard rotation and LDLQ rounding. These ideas come from QuIP, QuIP# and QTIP; the <a href="what-is-trellis-coded-quantization.html">trellis-coded quantization guide</a> explains them. This article is about something else: how many bits each tensor gets.</p>
+
+  <h2 id="file">The 8.31 GB file</h2>
+  <p>The release is 8,314,241,600 bytes in 9 parts on <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Hugging Face</a>. On our one test machine, an RTX 5070 Ti Laptop GPU with 12 GB under WSL2, it loads with every layer on the GPU (<code>-ngl 99</code>) and leaves room for a 4,096-token context. The <a href="run-qwen3-8-27b-on-12gb-gpu.html">12 GB guide</a> and the <a href="qwen3-8-27b-vram-requirements.html">VRAM requirements page</a> show the memory arithmetic for longer contexts and other cards. We have not run this file on any other GPU.</p>
+
+  <h2 id="demo">The real-speed demo</h2>
+  <figure class="demo27b">
+    <a href="media/demo27b.mp4"><picture><source media="(max-width: 600px)" srcset="media/demo27b-phone.gif" width="640" height="1340"><img src="media/demo27b.gif" width="800" height="470" loading="lazy" decoding="async"
+         alt="Terminal replay: Qwen3.8-27B Pingala-8 2-bit on one 12 GB RTX 5070 Ti Laptop GPU answers in 5 bullet points (feasibility, privacy, speed, cost, capability), 125 tokens, runtime eval 31.63 tokens per second."></picture></a>
+    <figcaption>Real run, real speed. Text and timing captured from the run; terminal view re-rendered. Chat speed in this run: 31.63 tokens/s (runtime eval, 124 tokens, thinking off); the 37.7 tokens/s above is llama-bench tg64. <a href="media/demo27b.mp4">Watch the 1080p MP4</a>.</figcaption>
+  </figure>
+  <p>The clip replays one chat run on that laptop: every token appears when it was captured, nothing is sped up, and only the terminal view is redrawn. It shows two speeds on purpose. 37.7 tokens/s is the llama-bench generation test. 31.63 tokens/s is the runtime's own count for this chat answer. They are different measurements, we have not yet looked into the gap, and we report both.</p>
+
+  <h2 id="v2">What we changed in version 2: bits by role and depth</h2>
+  <p>A transformer is a stack of layers, and each layer holds several kinds of matrix: the attention projections (<code>attn_qkv</code> builds the queries, keys and values), the feed-forward matrices (<code>ffn_up</code>, <code>ffn_gate</code>, <code>ffn_down</code>), and in Qwen3.8's linear-attention layers an output projection called <code>ssm_out</code>. We call the kind of matrix its role, and its position in the stack its depth. A 2-bit file does not have to give every tensor the same number of bits. The question is where the extra bits do the most good.</p>
+  <p>Version 1 copied the layout llama.cpp uses for its IQ2_XXS type. That layout spent 4.5 bits per weight on <code>attn_qkv</code>, and the rest of the budget had to come from somewhere else.</p>
+  <p>DASH-Q, a set of 2-bit GGUF files published by jkim96, splits the budget differently. We read the type of every tensor out of their Qwen3.8-27B file and built the same plan for ours: a bit budget for each role in each band of layers, from early to late. Same total bytes, different placement; the change was the allocation, not the coding method.</p>
+  <p>The result, on the same 20 WikiText-2 windows:</p>
+  <ul>
+    <li>Version 1: perplexity 7.34.</li>
+    <li>Version 2: perplexity 6.89, lower on all 20 windows, at the same 8.31 GB.</li>
+  </ul>
+  <p>The allocation idea is DASH-Q's, not ours. What we added is the evidence that the same plan helps a different coder.</p>
+
+  <h3>The smaller model taught us the rest</h3>
+  <p>We then tried to copy the 27B plan onto Qwen3.5-2B. It did not help: perplexity 15.80 against 15.62 for version 1, better on only 22 of 70 windows. The 27B plan spent too much on the late feed-forward layers (4.1 bits per weight) and starved <code>ssm_out</code> (2.6) for a model of this size. A plan learned on one model is not a plan for every model.</p>
+  <p>The second gap was the embedding. In the 2B, the token embedding and the output head are the same matrix. DASH-Q stores it at Q4_K, 286 MB. We stored it at Q5_K, 350 MB. At equal file size, that left DASH-Q 489 MB for the other matrices against our 429 MB, 14% more.</p>
+  <p>So the third try moved the embedding to Q4_K, which freed 61.6 MB, and used DASH-Q's own 2B plan for the rest. That file scored 14.06 at 778,189,408 bytes, slightly smaller than version 1 and better on 70 of 70 windows, a 10.0% drop in perplexity. It is now version 2 of our Qwen3.5-2B. The lesson we wrote down: the embedding and output head are part of the byte budget, so copy the leading file's whole-file allocation, not just its large matrices.</p>
+
+  <h2 id="failed">What failed: water-filling</h2>
+  <p>We also tried to derive an allocation ourselves instead of copying one. Water-filling is the textbook answer from rate-distortion theory: measure how much error each tensor suffers at each bit rate, then hand out bits where they cut the most error, until every tensor gains the same from one more bit. We used a per-tensor error measure from our encoder.</p>
+  <p>We tested it where tests are cheap, on Qwen3.5-0.8B, at about 35 minutes of GPU time in all:</p>
+  <div class="table-wrap">
+    <table class="fit">
+      <thead><tr><th>Qwen3.5-0.8B plan</th><th class="num">Perplexity</th><th class="num">vs DASH-Q plan</th></tr></thead>
+      <tbody>
+        <tr class="ours"><td><strong>DASH-Q role and depth plan</strong></td><td class="num"><strong>23.72</strong></td><td class="num">reference</td></tr>
+        <tr><td>Water-filling, variant 1</td><td class="num">26.72</td><td class="num">+0.120 nats/token</td></tr>
+        <tr><td>Water-filling, variant 2</td><td class="num">25.71</td><td class="num">+0.081 nats/token</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">WikiText-2, lower is better. The last column is the paired per-window loss difference; positive means worse than the DASH-Q plan.</p>
+  <p>Both variants lost clearly, so we stopped and logged the result. We do not know exactly why. One plausible reason is that the error of a tensor measured on its own is a poor guide to what the whole model loses when that tensor gets fewer bits. Either way, the DASH-Q plan won, and that is the one we shipped.</p>
+
+  <h2 id="compare">The honest comparison</h2>
+  <p>Here are the five Qwen3.8-27B files we measured on the same text, the same 20 windows and the same laptop. Lower is better.</p>
+  <div class="table-wrap">
+    <table class="fit">
+      <thead><tr><th>2-bit file</th><th class="num">Size</th><th class="num">PPL</th><th>Against ours (v2)</th></tr></thead>
+      <tbody>
+        <tr><td>DASH-Q IQ2_XS</td><td class="num">8.55 GB</td><td class="num">6.54</td><td>Better than ours on 20/20 windows</td></tr>
+        <tr class="ours"><td><strong>Pingala-8 v2 (ours)</strong></td><td class="num"><strong>8.31 GB</strong></td><td class="num"><strong>6.89</strong></td><td></td></tr>
+        <tr><td>unsloth UD-IQ2_S</td><td class="num">8.37 GB</td><td class="num">7.34</td><td>Ours lower on average; not significant (9/20)</td></tr>
+        <tr><td>Pingala-8 v1 (ours)</td><td class="num">8.31 GB</td><td class="num">7.34</td><td>v2 better on 20/20</td></tr>
+        <tr><td>llama.cpp IQ2_XXS, same imatrix</td><td class="num">8.43 GB</td><td class="num">7.88</td><td>Ours lower</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">WikiText-2 test, 4,096-token windows, the first 20 windows for every file. Every window is in the <a href="https://huggingface.co/datasets/Genrius-AI/2bit-gguf-wikitext2-eval">eval dataset</a> and ranked on the <a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">2-bit GGUF leaderboard</a>.</p>
+  <p>DASH-Q is better. Its lead over us is 0.052 nats per token, with a 95% interval of plus or minus 0.012, and it holds on every window. That is about 5% in perplexity, for 0.24 GB more file.</p>
+  <p>The unsloth comparison is the opposite case. Our average is lower, 6.89 against 7.34, but we are better on only 9 of 20 windows, and the paired interval (-0.064 plus or minus 0.075) includes zero. We do not count that as a win. Our <a href="benchmarking-2-bit-ggufs-paired-windows.html">benchmarking article</a> explains the paired test and why a lower average is not enough.</p>
+  <p>We did not compare speed with the rival files. On our GPU their IQ1_S, IQ2_S and IQ3_S tensors had to run on the CPU (the <a href="2bit-gguf-nan-perplexity-rtx-50.html">NaN page</a> explains why), so a speed number from our machine would be unfair to them. Both rival files use standard llama.cpp types and load in stock llama.cpp; ours does not.</p>
+  <p>So when is ours the right file? When you run our runtime on an NVIDIA card and want the smallest of the files that fit, and one measured fully on the GPU. If quality comes first, or you want stock llama.cpp, Ollama or LM Studio, take DASH-Q.</p>
+
+  <h2 id="run">How to run it</h2>
+  <p>Build llama.cpp at commit <code>7ac59a6</code> with the Pingala-8 CUDA patch and the Qwen3.5 loader change, then download the 9 parts and pass part 1:</p>
+  <pre><code>git clone https://github.com/Genrius-AI/pingala8-llm
+git clone https://github.com/ggml-org/llama.cpp &amp;&amp; cd llama.cpp
+git checkout 7ac59a6e3ad851cd41af00f678effab0598ba9a8
+git apply ../pingala8-llm/patches/llama_cuda_vs_7ac59a6.patch
+git apply ../pingala8-llm/patches/q35_loader_count_delta.patch
+cmake -S . -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=120 -DCMAKE_BUILD_TYPE=Release -DLLAMA_OPENSSL=OFF
+cmake --build build -j8 --target llama-cli llama-perplexity llama-bench
+
+hf download Genrius-AI/Qwen3.8-27B-Pingala8-2bit --local-dir qwen3.8-27b-pingala8
+export GGML_F44=4 GGML_F44_BATCH=2 GGML_VR_NATIVE=1 GGML_VRC_V=5 GGML_VRC_NWP=8 GGML_VR_RL=1 GGML_VR_PRMG=1 GGML_VR_PPC=2
+./build/bin/llama-cli -m qwen3.8-27b-pingala8/Qwen3.8-27B-Pingala8-2bit-00001-of-00009.gguf -ngl 99 -c 4096</code></pre>
+  <p>The flag 120 matches our RTX 50 laptop GPU; use your card's value. This is the text model only, with no vision tower and no multi-token-prediction block, and it has not been tested with the one-click build. The <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit#how-to-run">model card</a> also has the exact perplexity command.</p>
+
+  <h2 id="next">What we take from this</h2>
+  <ul>
+    <li>Where the bits go mattered as much as how each weight is coded. The same coder gained 7.34 to 6.89 from a better plan.</li>
+    <li>Copy the whole plan of the file that leads, including the embedding, and test it on the model you ship.</li>
+    <li>Kill ideas on a small model first. Water-filling cost about 35 GPU minutes to rule out.</li>
+    <li>DASH-Q still leads at this size. Closing that gap is the next job.</li>
+  </ul>
+
+  <div class="summary next">
+    <h2>Models, data and guides</h2>
+    <ul>
+      <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B Pingala-8 2-bit</a> (8.31 GB) and the other models: <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit">Qwen3-0.6B</a></li>
+      <li><a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">2-bit GGUF leaderboard</a> and the per-window <a href="https://huggingface.co/datasets/Genrius-AI/2bit-gguf-wikitext2-eval">eval dataset</a></li>
+      <li>Guides: <a href="run-qwen3-8-27b-on-12gb-gpu.html">Qwen3.8-27B on a 12 GB GPU</a>, <a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements</a>, <a href="qwen3-5-2b-under-1gb-2bit.html">Qwen3.5-2B under 1 GB</a>, <a href="2bit-gguf-nan-perplexity-rtx-50.html">NaN perplexity on RTX 50</a>, <a href="what-is-perplexity-llm.html">what perplexity is</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs on GitHub</a> and the paper, <a href="https://doi.org/10.5281/zenodo.23481757">DOI 10.5281/zenodo.23481757</a> (the Qwen3.8-27B and Qwen3.5-2B version 2 numbers are newer than the paper)</li>
+    </ul>
+  </div>
+  <h2>More articles</h2>
+  <ul class="guide-list more-articles">
+      <li><a href="2-bit-quantization-8-models-cost.html">8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps</a></li>
+      <li><a href="benchmarking-2-bit-ggufs-paired-windows.html">Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs</a></li>
+      <li><a href="article.html">How we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+  </ul>
+  <p style="margin-top:28px">Questions, corrections or a model you want compressed next? Open a <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issue</a>.</p>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#articles">All articles</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="star-line"><a href="https://github.com/Genrius-AI/pingala8-llm">Star on GitHub</a> <a href="https://github.com/Genrius-AI/pingala8-llm"><img src="https://img.shields.io/github/stars/Genrius-AI/pingala8-llm?style=social" alt="GitHub stars for Genrius-AI/pingala8-llm" height="20" style="height:20px;width:auto;vertical-align:middle"></a></p>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Gemma, gpt-oss, Llama, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+
+</body>
+</html>

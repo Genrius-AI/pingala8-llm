@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs | Genrius AI</title>
+<meta name="description" content="How we compare 2-bit GGUF files: same text, 4096-token strided windows, paired per-window NLL with a 95% interval. Why a lower average is not a win (9 of 20 windows), the IQ1_S/IQ2_S/IQ3_S NaN on our RTX 50 GPU and the -ot CPU workaround.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Harshit Goyal">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="alternate" type="application/atom+xml" title="Pingala-8 by Genrius AI" href="feed.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs">
+<meta property="og:description" content="Same text, same windows, paired per-window loss. Why a lower average (6.89 vs 7.34) won only 9 of 20 windows, and the IQ1_S/IQ2_S/IQ3_S NaN trap on our RTX 50 laptop GPU.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/og-benchmarking-2-bit-ggufs-paired-windows.png">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/og-benchmarking-2-bit-ggufs-paired-windows.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Card: Benchmarking 2-bit GGUFs fairly. 9 of 20 windows: a lower average that is not a win.">
+<meta property="article:published_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:modified_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:author" content="Harshit Goyal">
+<meta property="article:section" content="Research">
+<meta property="article:tag" content="LLM quantization">
+<meta property="article:tag" content="llama.cpp">
+<meta property="article:tag" content="2-bit">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs">
+<meta name="twitter:description" content="Same text, same windows, paired per-window loss. Why a lower average (6.89 vs 7.34) won only 9 of 20 windows, and the IQ1_S/IQ2_S/IQ3_S NaN trap on our RTX 50 laptop GPU.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/og-benchmarking-2-bit-ggufs-paired-windows.png">
+<meta name="twitter:image:alt" content="Card: Benchmarking 2-bit GGUFs fairly. 9 of 20 windows: a lower average that is not a win.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+@media (max-width: 600px) {
+  .table-wrap table.fit { min-width: 0; }
+  table.fit th, table.fit td { padding: 9px 8px; font-size: 13.5px; }
+  table.fit th { white-space: normal; }
+}
+.demo27b img { max-width: 100%; height: auto; display: block; border-radius: 10px; }
+.more-articles { margin-top: 8px; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#harshit-goyal",
+      "name": "Harshit Goyal",
+      "jobTitle": "Founder",
+      "worksFor": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "description": "Founder of Genrius AI, former Google software engineer, IIIT Delhi alumnus",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Indraprastha Institute of Information Technology Delhi",
+        "alternateName": "IIIT Delhi"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html#article",
+      "headline": "Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs",
+      "description": "How we compare 2-bit GGUF files: same text, 4096-token strided windows, paired per-window NLL with a 95% interval. Why a lower average is not a win (9 of 20 windows), the IQ1_S/IQ2_S/IQ3_S NaN on our RTX 50 GPU and the -ot CPU workaround.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html",
+      "image": [
+        "https://genrius-ai.github.io/pingala8-llm/media/og-benchmarking-2-bit-ggufs-paired-windows.png"
+      ],
+      "datePublished": "2026-11-01T08:30:00+00:00",
+      "dateModified": "2026-11-01T08:30:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#harshit-goyal"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "A fair method to compare 2-bit GGUF files by paired per-window perplexity, and a CUDA NaN issue on an RTX 50 laptop GPU",
+      "keywords": "GGUF benchmark, perplexity, paired test, llama-perplexity, ppl-stride, IQ2_S NaN, RTX 50, test-backend-ops, override-tensor, 2-bit leaderboard",
+      "wordCount": 1773,
+      "mentions": {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
+        "name": "Pingala-8",
+        "codeRepository": "https://github.com/Genrius-AI/pingala8-llm"
+      },
+      "citation": {
+        "@type": "ScholarlyArticle",
+        "@id": "https://doi.org/10.5281/zenodo.23481757",
+        "headline": "Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp",
+        "url": "https://doi.org/10.5281/zenodo.23481757",
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "DOI",
+          "value": "10.5281/zenodo.23481757"
+        }
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results">Results</a>
+      <a href="./#articles" class="hide-sm">Articles</a>
+      <a href="./#try">Try it</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#articles">Genrius AI articles</a>
+  <h1>Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs</h1>
+  <p class="byline">Harshit Goyal, Founder, Genrius AI (ex-Google software engineer, IIIT Delhi alumnus). <time datetime="2026-11-01">November 1, 2026</time>. About 8 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>Score every file on the same text with the same windows, then compare the files window by window, not only by their final perplexity. We use the WikiText-2 test set, 4,096-token windows and batch 512.</li>
+      <li>Averages mislead. Our Qwen3.8-27B file averages 6.89 against 7.34 for unsloth UD-IQ2_S, yet it is better on only 9 of 20 windows, and the paired difference (-0.064 plus or minus 0.075 nats per token) is not significant. DASH-Q's smaller lead over us (+0.052 plus or minus 0.012) holds on 20 of 20 windows, and it is real.</li>
+      <li>On our RTX 5070 Ti Laptop GPU, llama.cpp's IQ1_S, IQ2_S and IQ3_S CUDA kernels failed its own operator test, and files that use them gave NaN perplexity. Keeping those tensors on the CPU with <code>-ot</code> gave normal numbers; a CPU-vs-GPU check agreed within 0.2%.</li>
+      <li>Every window is public, in a <a href="https://huggingface.co/datasets/Genrius-AI/2bit-gguf-wikitext2-eval">dataset</a> and on a <a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">leaderboard</a>, so anyone can check the ranking.</li>
+    </ul>
+  </div>
+
+  <h2 id="why">Why 2-bit files are hard to compare</h2>
+  <p>At 2 bits, good files of the same model often differ by only a few percent in perplexity. On Qwen3.8-27B, the five files we measured span 6.54 to 7.88. A few percent is easy to create or erase by accident: a different context length, a different slice of the test text, a different tokenizer setting, or a GPU kernel that quietly returns garbage.</p>
+  <p>There is also the question of who is measuring. We make Pingala-8, one of the files in every comparison here. The only answer to that we know is to publish the method, the commands and every window, and to report the comparisons we lose with the same care as the ones we win. Below is the method, two lessons from using it, and one trap we hit on our GPU.</p>
+
+  <h2 id="same-text">Rule 1: same text, same windows</h2>
+  <p>Every file is scored on the same bytes. We take the WikiText-2 raw test split from Hugging Face, join its rows into one file, and publish its SHA-256 hash in the dataset card. llama-perplexity runs in its strided mode with <code>-c 2049 --ppl-stride 4095</code>, which makes it score 4,096-token windows, 72 of them over the whole text. Batch size is 512 for every file.</p>
+  <p>For Qwen3.5-2B we score all 72 windows. For Qwen3.8-27B we stop after the first 20, about 82,000 tokens, because of the time a 27B model takes on one laptop GPU. Every file of a model is scored on exactly the same windows, so its numbers line up one for one.</p>
+  <p>Our IQ2_XXS reference files are built with stock llama-quantize and the same importance matrix (imatrix) we use for Pingala-8, so the comparison is about the format and not about the calibration data. The rival files are the ones their authors published, downloaded and scored unchanged.</p>
+  <p>One local change to disclose: in our upstream llama.cpp build, the strided path of <code>perplexity.cpp</code> scores each batch as soon as its logits are ready instead of keeping all logits for the window, to save host memory. The tokens scored and the formula are unchanged.</p>
+
+  <h2 id="paired">Rule 2: pair the windows</h2>
+  <p>A final perplexity is one number per file. It hides how the file did on each part of the text. llama-perplexity prints the running perplexity P<sub>k</sub> after each window k. Since every window has the same number of scored tokens, the mean loss of window k, in nats per token, falls out of two running values:</p>
+  <pre><code>NLL_1 = ln P_1
+NLL_k = k ln P_k - (k-1) ln P_(k-1)</code></pre>
+  <p>For two files A and B, take the difference d<sub>k</sub> = NLL<sub>A,k</sub> - NLL<sub>B,k</sub> on every window. Report three things: the mean of d, its 95% interval (1.96 times the standard deviation of d, divided by the square root of the number of windows), and the number of windows on which A has the lower loss. A mean difference converts back to a perplexity ratio with exp(): 0.052 nats per token is a ratio of about 1.053, or 5% in perplexity.</p>
+  <p>Why pair at all? Windows differ a lot in difficulty. A window of plain prose is easy; one full of names, dates and tables is hard. That difficulty is shared by every file scored on the window, so the difference between two files on the same window cancels most of it. What is left is the part that belongs to the files. A comparison of two averages keeps all the difficulty noise in; a paired comparison takes it out.</p>
+  <p>Here is a short script that does this from two llama-perplexity logs:</p>
+  <pre><code>import math, re, statistics as st, sys
+
+def window_nll(path):
+    # running perplexity [k]P_k as printed by llama-perplexity
+    run = {int(k): float(p) for k, p in re.findall(r"\[(\d+)\]([0-9.]+)", open(path).read())}
+    nll, prev = [], 0.0
+    for k in sorted(run):
+        cum = k * math.log(run[k])
+        nll.append(cum - prev)
+        prev = cum
+    return nll
+
+a, b = window_nll(sys.argv[1]), window_nll(sys.argv[2])
+n = min(len(a), len(b))
+d = [a[i] - b[i] for i in range(n)]
+m, h = st.mean(d), 1.96 * st.stdev(d) / math.sqrt(n)
+won = sum(x &lt; 0 for x in d)
+print(f"dNLL {m:+.3f} +/- {h:.3f} nats/token, A better on {won}/{n}, ppl ratio {math.exp(m):.3f}")</code></pre>
+  <p>Run it as <code>python3 paired.py a.log b.log</code>. A negative dNLL means file A lost less.</p>
+
+  <h2 id="averages">Why averages mislead: one lower average, one real loss</h2>
+  <p>These are the paired results from our recent runs, each one ours minus the other file:</p>
+  <div class="table-wrap">
+    <table class="fit">
+      <thead><tr><th>Ours minus</th><th class="num">dNLL (95%)</th><th class="num">Ours better on</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>27B: DASH-Q IQ2_XS</td><td class="num">+0.052 &plusmn; 0.012</td><td class="num">0/20</td><td>DASH-Q better</td></tr>
+        <tr><td>27B: unsloth UD-IQ2_S</td><td class="num">-0.064 &plusmn; 0.075</td><td class="num">9/20</td><td>Not significant</td></tr>
+        <tr><td>2B: our 2B v1</td><td class="num">-0.104 &plusmn; 0.008</td><td class="num">70/70</td><td>v2 better</td></tr>
+        <tr><td>2B: unsloth UD-IQ2_M</td><td class="num">-0.062 &plusmn; 0.009</td><td class="num">67/70</td><td>Ours better</td></tr>
+        <tr><td>2B: DASH-Q IQ2_XS</td><td class="num">+0.012 &plusmn; 0.007</td><td class="num">21/70</td><td>DASH-Q better</td></tr>
+        <tr><td>2B: DASH-Q IQ2_M</td><td class="num">+0.053 &plusmn; 0.008</td><td class="num">3/70</td><td>DASH-Q better</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">dNLL in nats per token; negative means ours lost less. 27B rows: Qwen3.8-27B, our v2 file, first 20 windows. 2B rows: Qwen3.5-2B, our v2 file, 70 paired windows.</p>
+  <p>Look at the first two rows. On final perplexity, our Qwen3.8-27B file is 6.89, unsloth UD-IQ2_S is 7.34, and DASH-Q IQ2_XS is 6.54. Read as averages, we beat unsloth by a wider margin (0.064 nats) than DASH-Q beats us (0.052 nats). It is tempting to report a clear win over unsloth and a narrow loss to DASH-Q.</p>
+  <p>The windows say otherwise. DASH-Q is better than us on every one of the 20 windows, and its interval is tight: plus or minus 0.012. Against unsloth we are better on only 9 of 20 windows, and the interval, plus or minus 0.075, is about six times wider and crosses zero. The difference between our file and unsloth's swings both ways from window to window. On a different 20 windows the average could come out the other way. So we report the DASH-Q result as a loss and the unsloth result as not significant, and that is how the <a href="run-qwen3-8-27b-on-12gb-gpu.html">27B guide</a> states it.</p>
+  <p>The 2B rows show the other side: with 70 windows, small differences become measurable. DASH-Q IQ2_XS beats our 2B file by only about 1.2% in perplexity, and it is still a clear result, because the interval is plus or minus 0.007.</p>
+  <p>Pairing also guards us against our own hopes. One build we tried for the 2B, which copied the bit plan of our 27B file, had a final perplexity of 15.80 against 15.62 for version 1. Paired, it was +0.011 plus or minus 0.008, better on only 22 of 70 windows: no gain, and we did not ship it.</p>
+
+  <h2 id="nan">The NaN trap on RTX 50 GPUs</h2>
+  <p>The first time we scored the DASH-Q and unsloth files on our laptop, with every layer on the GPU, the perplexity came out as NaN or as absurd values. Our machine is an RTX 5070 Ti Laptop GPU (compute capability sm_120) under WSL2. It happened with llama.cpp upstream at commit 889f2ec and with our own build at 7ac59a6.</p>
+  <p>All of the affected files contain tensors stored as IQ1_S, IQ2_S or IQ3_S. Mixed 2-bit recipes use these types for some of their tensors. llama.cpp ships an operator test, test-backend-ops, that runs each operator on the GPU and checks it against the CPU. On our machine the IQ1_S, IQ2_S and IQ3_S matrix-multiply cases failed it:</p>
+  <pre><code>./build/bin/test-backend-ops -o MUL_MAT -b CUDA0 2&gt;&amp;1 | grep -E "iq1_s|iq2_s|iq3_s"</code></pre>
+  <p>That points at those CUDA kernels on this machine, not at the files. The workaround that gave correct numbers: keep every tensor of those three types on the CPU with llama.cpp's <code>-ot</code> (override-tensor) option, and add <code>--no-op-offload</code> so llama.cpp does not copy those weights back to the GPU for large batches. Every other tensor stays on the GPU.</p>
+  <pre><code>llama-perplexity -m rival.gguf -f wikitext2_test_hfjoin.raw -c 2049 --ppl-stride 4095 -ngl 99 -b 512 \
+  -ot "^(&lt;names of the IQ1_S, IQ2_S and IQ3_S tensors&gt;)$=CPU" --no-op-offload</code></pre>
+  <p>The <a href="2bit-gguf-nan-perplexity-rtx-50.html">NaN troubleshooting page</a> has a short gguf-py script that builds the regex from a file's tensor types, and the dataset card lists the exact commands and the regex we used for each rival file.</p>
+  <p>How do we know the CPU path is right? We ran a file that the GPU handles correctly, unsloth's UD-IQ2_XXS of Qwen3.5-2B, once on the GPU and once on the CPU, on the same windows. The first 4 windows agreed within 0.2%.</p>
+  <p>Three limits to keep in mind:</p>
+  <ul>
+    <li><strong>One machine.</strong> We have tested one GPU, one driver setup and two llama.cpp builds. This is what we saw, not a claim about every RTX 50 card. Run test-backend-ops on your own setup first.</li>
+    <li><strong>No speed comparison.</strong> With part of each rival file on the CPU, its speed on our machine says nothing fair about the file. We report speed only for files that ran fully on the GPU.</li>
+    <li><strong>Two runtimes.</strong> Rival files ran on upstream llama.cpp; ours ran on our patched runtime. The perplexity formula is the same, and the dataset records the runtime and the tensor placement of every row.</li>
+  </ul>
+  <p>The broader lesson: a NaN is the easy case, because you notice it. Before you trust a perplexity from a new GPU, a new build or a new quant type, check it against a second path once.</p>
+
+  <h2 id="leaderboard">The leaderboard</h2>
+  <p>The <a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">2-bit GGUF leaderboard</a> ranks the published 2-bit files of Qwen3.8-27B and Qwen3.5-2B by WikiText-2 perplexity, with the paired difference to the file in first place and the windows won. DASH-Q is first on both models. On Qwen3.8-27B our version 2 file ranks 2 of 5; on Qwen3.5-2B it ranks 3 of 6, ahead of both unsloth files.</p>
+  <p>The <a href="https://huggingface.co/datasets/Genrius-AI/2bit-gguf-wikitext2-eval">eval dataset</a> behind it has one row per file and window: the running perplexity as logged, the derived window loss, the runtime, the tensor placement and the source log. Download it and you can redo every paired number on this page, or score your own file on the same text and windows and compare.</p>
+
+  <h2 id="checklist">A checklist for your own comparisons</h2>
+  <ol>
+    <li>Use one text file for every model file, and publish its hash.</li>
+    <li>Fix the context, stride, window count and batch size, and use the same ones for every file.</li>
+    <li>Build your reference quants with the same imatrix as the file you are testing.</li>
+    <li>Compare per window: mean difference, 95% interval, and windows won. Call a result a win only when the interval leaves zero out.</li>
+    <li>Run test-backend-ops on a new GPU or build, and cross-check one file on two paths.</li>
+    <li>Do not compare speed for a file that ran partly on the CPU.</li>
+    <li>Publish the windows, including the comparisons you lose.</li>
+  </ol>
+  <p>The same method is behind every number in our <a href="2-bit-quantization-8-models-cost.html">8-model article</a> and our <a href="how-we-fit-27b-model-on-12gb-laptop-gpu.html">27B article</a>.</p>
+
+  <div class="summary next">
+    <h2>Models, data and guides</h2>
+    <ul>
+      <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B Pingala-8 2-bit</a> (8.31 GB) and the other models: <a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit">Qwen3.5-4B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit">Qwen3.5-0.8B</a>, <a href="https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit">Qwen3-0.6B</a></li>
+      <li><a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">2-bit GGUF leaderboard</a> and the per-window <a href="https://huggingface.co/datasets/Genrius-AI/2bit-gguf-wikitext2-eval">eval dataset</a></li>
+      <li>Guides: <a href="run-qwen3-8-27b-on-12gb-gpu.html">Qwen3.8-27B on a 12 GB GPU</a>, <a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements</a>, <a href="qwen3-5-2b-under-1gb-2bit.html">Qwen3.5-2B under 1 GB</a>, <a href="2bit-gguf-nan-perplexity-rtx-50.html">NaN perplexity on RTX 50</a>, <a href="what-is-perplexity-llm.html">what perplexity is</a></li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs on GitHub</a> and the paper, <a href="https://doi.org/10.5281/zenodo.23481757">DOI 10.5281/zenodo.23481757</a> (the Qwen3.8-27B and Qwen3.5-2B version 2 numbers are newer than the paper)</li>
+    </ul>
+  </div>
+  <h2>More articles</h2>
+  <ul class="guide-list more-articles">
+      <li><a href="how-we-fit-27b-model-on-12gb-laptop-gpu.html">How we fit a 27B model on a 12 GB laptop GPU</a></li>
+      <li><a href="2-bit-quantization-8-models-cost.html">8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps</a></li>
+      <li><a href="article.html">How we fit Qwen3-4B into 1.24 GB without retraining</a></li>
+  </ul>
+  <p style="margin-top:28px">Questions, corrections or a model you want compressed next? Open a <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issue</a>.</p>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#articles">All articles</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="star-line"><a href="https://github.com/Genrius-AI/pingala8-llm">Star on GitHub</a> <a href="https://github.com/Genrius-AI/pingala8-llm"><img src="https://img.shields.io/github/stars/Genrius-AI/pingala8-llm?style=social" alt="GitHub stars for Genrius-AI/pingala8-llm" height="20" style="height:20px;width:auto;vertical-align:middle"></a></p>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Gemma, gpt-oss, Llama, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+
+</body>
+</html>

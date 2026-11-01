@@ -5,12 +5,45 @@
   <link rel="self" type="application/atom+xml" href="https://genrius-ai.github.io/pingala8-llm/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>
   <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/feed</id>
-  <updated>2026-11-01T07:30:00Z</updated>
+  <updated>2026-11-01T08:30:00Z</updated>
   <author>
     <name>Genrius AI</name>
     <uri>https://github.com/Genrius-AI</uri>
   </author>
   <rights type="text">Pingala-8 is open source under the Apache License 2.0.</rights>
+  <entry>
+    <title type="text">How we fit a 27B model on a 12 GB laptop GPU</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html"/>
+    <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/how-we-fit-27b-model-on-12gb-laptop-gpu.html</id>
+    <published>2026-11-01T08:30:00Z</published>
+    <updated>2026-11-01T08:30:00Z</updated>
+    <author>
+      <name>Harshit Goyal</name>
+    </author>
+    <summary type="text">Qwen3.8-27B in 8.31 GB at 2 bits, fully on one 12 GB laptop GPU: what 2-bit means, the real-speed demo, the v2 bit allocation by role and depth learned from DASH-Q, the water-filling idea that failed, and where DASH-Q is better.</summary>
+  </entry>
+  <entry>
+    <title type="text">8 open models, 77-85% smaller: what 2-bit quantization costs and what it keeps</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/2-bit-quantization-8-models-cost.html"/>
+    <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/2-bit-quantization-8-models-cost.html</id>
+    <published>2026-11-01T08:30:00Z</published>
+    <updated>2026-11-01T08:30:00Z</updated>
+    <author>
+      <name>Harshit Goyal</name>
+    </author>
+    <summary type="text">Eight Pingala-8 2-bit files, Qwen3-0.6B to Qwen3.8-27B: 77-85% smaller than 16-bit, 13-70% lower WikiText-2 perplexity than IQ2_XXS at the same size, speed, perplexity in plain words, and where DASH-Q, IQ2_KT and retrained ternary models beat us.</summary>
+  </entry>
+  <entry>
+    <title type="text">Benchmarking 2-bit GGUFs fairly: paired windows, and the NaN trap on RTX 50 GPUs</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html"/>
+    <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/benchmarking-2-bit-ggufs-paired-windows.html</id>
+    <published>2026-11-01T08:30:00Z</published>
+    <updated>2026-11-01T08:30:00Z</updated>
+    <author>
+      <name>Harshit Goyal</name>
+    </author>
+    <summary type="text">How we compare 2-bit GGUF files: same text, 4096-token strided windows, paired per-window NLL with a 95% interval. Why a lower average is not a win (9 of 20 windows), the IQ1_S/IQ2_S/IQ3_S NaN on our RTX 50 GPU and the -ot CPU workaround.</summary>
+  </entry>
   <entry>
     <title type="text">Can you run Qwen3.8-27B on a 12 GB GPU?</title>
     <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/run-qwen3-8-27b-on-12gb-gpu.html"/>
