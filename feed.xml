@@ -5,12 +5,20 @@
   <link rel="self" type="application/atom+xml" href="https://genrius-ai.github.io/pingala8-llm/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>
   <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/feed</id>
-  <updated>2026-11-01T03:30:00Z</updated>
+  <updated>2026-11-01T03:45:00Z</updated>
   <author>
     <name>Genrius AI</name>
     <uri>https://github.com/Genrius-AI</uri>
   </author>
   <rights type="text">Pingala-8 is open source under the Apache License 2.0.</rights>
+  <entry>
+    <title type="text">NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html"/>
+    <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html</id>
+    <published>2026-11-01T03:45:00Z</published>
+    <updated>2026-11-01T03:45:00Z</updated>
+    <summary type="text">On our RTX 5070 Ti Laptop GPU (sm_120, WSL2), GGUFs with IQ1_S, IQ2_S or IQ3_S tensors gave NaN or a perplexity near 6.8e6 in llama.cpp, and test-backend-ops failed for those CUDA kernels. How to check your GPU, and the -ot CPU workaround that gave correct numbers on our machine.</summary>
+  </entry>
   <entry>
     <title type="text">Measured: Qwen3.8-27B in 8.31 GB on a 12 GB GPU</title>
     <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html#measured"/>

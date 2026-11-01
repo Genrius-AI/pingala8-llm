@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU: what we saw and a CPU workaround | Genrius AI</title>
+<meta name="description" content="On our RTX 5070 Ti Laptop GPU (sm_120), 2-bit GGUFs with IQ1_S, IQ2_S or IQ3_S tensors gave NaN or a perplexity near 6.8e6 in llama.cpp. How we checked it and the CPU workaround that gave correct numbers.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+<link rel="alternate" type="application/atom+xml" title="Pingala-8 by Genrius AI" href="https://genrius-ai.github.io/pingala8-llm/feed.xml">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU">
+<meta property="og:description" content="On our RTX 5070 Ti Laptop GPU (sm_120), 2-bit GGUFs with IQ1_S, IQ2_S or IQ3_S tensors gave NaN or a perplexity near 6.8e6 in llama.cpp. How we checked it and the CPU workaround that gave correct numbers.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+<meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
+<meta property="article:published_time" content="2026-11-01T03:45:00+00:00">
+<meta property="article:modified_time" content="2026-11-01T03:45:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Guides">
+<meta property="article:tag" content="llama.cpp NaN perplexity">
+<meta property="article:tag" content="IQ2_S CUDA">
+<meta property="article:tag" content="RTX 50 sm_120">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU">
+<meta name="twitter:description" content="On our RTX 5070 Ti Laptop GPU (sm_120), 2-bit GGUFs with IQ1_S, IQ2_S or IQ3_S tensors gave NaN or a perplexity near 6.8e6 in llama.cpp. How we checked it and the CPU workaround that gave correct numbers.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html#article",
+      "headline": "NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU",
+      "description": "On our RTX 5070 Ti Laptop GPU (sm_120), 2-bit GGUFs with IQ1_S, IQ2_S or IQ3_S tensors gave NaN or a perplexity near 6.8e6 in llama.cpp. How we checked it and the CPU workaround that gave correct numbers.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html",
+      "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html",
+      "datePublished": "2026-11-01T03:45:00+00:00",
+      "dateModified": "2026-11-01T03:45:00+00:00",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Pingala-8 by Genrius AI",
+        "url": "https://genrius-ai.github.io/pingala8-llm/"
+      },
+      "about": "NaN or very large perplexity from 2-bit GGUF files with IQ1_S, IQ2_S or IQ3_S tensors on one RTX 50 laptop GPU, and a CPU offload workaround",
+      "keywords": "llama.cpp NaN perplexity, IQ2_S NaN, IQ1_S CUDA, IQ3_S CUDA, RTX 5070 Ti, sm_120, test-backend-ops, override-tensor, -ot CPU, --no-op-offload, UD-IQ2_S, DASH-Q"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html#faq",
+      "url": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does my 2-bit GGUF give NaN perplexity in llama.cpp?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We can only say what we saw on our machine. On our RTX 5070 Ti Laptop GPU (sm_120, WSL2), llama.cpp upstream 889f2ec and our 7ac59a6 build gave NaN or a perplexity near 6.8e6 for GGUFs containing IQ1_S, IQ2_S or IQ3_S tensors, and test-backend-ops failed for those three CUDA kernels. Run test-backend-ops -o MUL_MAT on your own GPU to see whether yours behaves the same."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I keep IQ2_S tensors on the CPU in llama.cpp?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pass -ot with a regex of those tensor names followed by =CPU, plus --no-op-offload. On our machine that gave correct numbers: a CPU-vs-GPU check on a file the GPU handles agreed within 0.2% over 4 windows."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://genrius-ai.github.io/pingala8-llm/#guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs",
+          "item": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./#guides">Pingala-8 guides</a>
+  <h1>NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU</h1>
+  <p class="byline">Genrius AI troubleshooting note. <time datetime="2026-11-01">November 1, 2026</time>. About 4 minutes.</p>
+
+  <div class="summary">
+    <h2>In short</h2>
+    <ul>
+      <li>On our machine, an RTX 5070 Ti Laptop GPU (sm_120, WSL2), llama.cpp upstream <code>889f2ec</code> and our <code>7ac59a6</code> build gave NaN or a perplexity near 6.8e6 for GGUFs containing IQ1_S, IQ2_S or IQ3_S tensors.</li>
+      <li>On our machine, <code>test-backend-ops</code> failed for those three CUDA kernels.</li>
+      <li>Workaround that gave correct numbers on our machine: keep those tensors on the CPU with <code>-ot "&lt;regex of their names&gt;=CPU"</code> plus <code>--no-op-offload</code>.</li>
+      <li>We have not tested other cards, drivers or llama.cpp versions. This is what we saw on one machine, not a claim about a general bug.</li>
+    </ul>
+  </div>
+
+  <h2>What we saw on our machine</h2>
+  <p>We measured published 2-bit files of Qwen3.8-27B and Qwen3.5-2B to compare them with our own <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Pingala-8 Qwen3.8-27B</a> file. On our RTX 5070 Ti Laptop GPU (compute capability sm_120, under WSL2), with every layer on the GPU, these files gave NaN or a WikiText-2 perplexity near 6.8e6 (about 6.8 million) instead of a normal value:</p>
+  <ul>
+    <li>unsloth UD-IQ2_S (Qwen3.8-27B)</li>
+    <li>DASH-Q IQ2_XS and IQ2_M (Qwen3.8-27B and Qwen3.5-2B)</li>
+  </ul>
+  <p>All of them contain tensors stored as IQ1_S, IQ2_S or IQ3_S. It happened on two builds on our machine: llama.cpp upstream at <code>889f2ec</code>, and our own build at <code>7ac59a6</code>. llama.cpp's own operator test, <code>test-backend-ops</code>, failed for the IQ1_S, IQ2_S and IQ3_S CUDA kernels on this machine, which suggests those kernels rather than the files.</p>
+
+  <h2>Check your own GPU with test-backend-ops</h2>
+  <p><code>test-backend-ops</code> runs each operator on your GPU backend and compares it with the CPU. It is built with llama.cpp's tests (on by default in a normal CMake build). For matrix multiplication:</p>
+  <pre><code>./build/bin/test-backend-ops -o MUL_MAT -b CUDA0 2&gt;&amp;1 | grep -E "iq1_s|iq2_s|iq3_s"</code></pre>
+  <p>Each line names the case, for example <code>type_a=iq2_s</code>, and ends in <code>OK</code> or <code>FAIL</code>. On our machine the IQ1_S, IQ2_S and IQ3_S cases failed. If all of yours pass, your GPU and build are probably not affected, and the NaN has another cause. Drop <code>-b CUDA0</code> to test every backend, or add <code>MUL_MAT_ID</code> to <code>-o</code> (comma separated) for mixture-of-experts models.</p>
+
+  <h2>Workaround: keep those tensors on the CPU</h2>
+  <p>llama.cpp's <code>-ot</code> (<code>--override-tensor</code>) option takes <code>&lt;regex of tensor names&gt;=&lt;buffer type&gt;</code>. Pointing every IQ1_S, IQ2_S and IQ3_S tensor at <code>CPU</code> keeps their matrix multiplications off the GPU kernels that failed, while every other tensor stays on the GPU. Add <code>--no-op-offload</code> so llama.cpp does not copy those CPU-stored weights back to the GPU to run large batches there. This small script builds the regex from the tensor types in the file, using <code>gguf-py</code> (<code>pip install gguf</code>):</p>
+  <pre><code># make_ot.py: print an -ot value that keeps every IQ1_S, IQ2_S and IQ3_S tensor on the CPU.
+# Usage: python3 make_ot.py model-00001-of-00003.gguf [more parts ...]
+import re, sys
+from gguf import GGUFReader, GGMLQuantizationType as Q
+
+SLOW = {Q.IQ1_S, Q.IQ2_S, Q.IQ3_S}
+names = []
+for path in sys.argv[1:]:                  # pass every split part
+    for t in GGUFReader(path).tensors:
+        if t.tensor_type in SLOW:
+            names.append(re.escape(t.name))
+if names:
+    print("^(" + "|".join(names) + ")$=CPU")
+else:
+    sys.exit("no IQ1_S, IQ2_S or IQ3_S tensors in these files")</code></pre>
+  <p>Then pass it to llama.cpp:</p>
+  <pre><code>OT=$(python3 make_ot.py model-0000*-of-00003.gguf)
+./build/bin/llama-perplexity -m model-00001-of-00003.gguf -f wiki.test.raw -ngl 99 -ot "$OT" --no-op-offload</code></pre>
+  <p><code>llama-cli</code> and <code>llama-server</code> accept the same two options. Expect slower prompt processing and generation, since part of the model now runs on the CPU.</p>
+
+  <h2>How we checked that the CPU path is right</h2>
+  <p>As a check that the GPU and CPU paths agree on our machine, we ran the unsloth UD-IQ2_XXS file of Qwen3.5-2B on the same windows once on the GPU and once on the CPU. Window 1 gave 20.66 on the GPU and 20.67 on the CPU, and the first 4 windows agreed within 0.2%. With the workaround above, the IQ1_S, IQ2_S and IQ3_S files then gave normal perplexities on our machine; those are the DASH-Q and unsloth numbers on our <a href="qwen3-8-27b-vram-requirements.html#measured">Qwen3.8-27B page</a>.</p>
+
+  <h2>What we do not know</h2>
+  <p>We have tested one machine: one RTX 5070 Ti Laptop GPU under WSL2, with the two llama.cpp builds named above. We do not know whether other RTX 50 cards, native Windows or Linux, other drivers or newer llama.cpp versions behave the same. Run <code>test-backend-ops</code> on your own setup before relying on either the problem or the workaround.</p>
+
+  <h2 id="faq">Questions people ask</h2>
+  <h3>Why does my 2-bit GGUF give NaN perplexity in llama.cpp?</h3>
+  <p>We can only say what we saw on our machine. On our RTX 5070 Ti Laptop GPU (sm_120, WSL2), llama.cpp upstream 889f2ec and our 7ac59a6 build gave NaN or a perplexity near 6.8e6 for GGUFs containing IQ1_S, IQ2_S or IQ3_S tensors, and test-backend-ops failed for those three CUDA kernels. Run test-backend-ops -o MUL_MAT on your own GPU to see whether yours behaves the same.</p>
+  <h3>How do I keep IQ2_S tensors on the CPU in llama.cpp?</h3>
+  <p>Pass -ot with a regex of those tensor names followed by =CPU, plus --no-op-offload. On our machine that gave correct numbers: a CPU-vs-GPU check on a file the GPU handles agreed within 0.2% over 4 windows.</p>
+  <div class="summary next">
+    <h2>About Pingala-8</h2>
+    <ul>
+      <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B Pingala-8 2-bit on Hugging Face</a> (8.31 GB, patched CUDA runtime)</li>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+      <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper, DOI 10.5281/zenodo.23481757</a></li>
+    </ul>
+  </div>
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-trellis-coded-quantization.html">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT</a></li>
+      <li><a href="what-is-hadamard-rotation-quantization.html">What is Hadamard rotation in LLM quantization?</a></li>
+      <li><a href="gemma-4-vram-requirements.html">Gemma 4 VRAM requirements: 26B-A4B and 31B</a></li>
+      <li><a href="run-gpt-oss-20b-on-12gb-16gb-gpu.html">Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?</a></li>
+      <li><a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements: which GPU do you need?</a></li>
+      <li><a href="qwen3-6-35b-a3b-on-consumer-gpu.html">Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload</a></li>
+  </ul>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="star-line"><a href="https://github.com/Genrius-AI/pingala8-llm">Star on GitHub</a> <a href="https://github.com/Genrius-AI/pingala8-llm"><img src="https://img.shields.io/github/stars/Genrius-AI/pingala8-llm?style=social" alt="GitHub stars for Genrius-AI/pingala8-llm" height="20" style="height:20px;width:auto;vertical-align:middle"></a></p>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, Gemma, gpt-oss, Llama, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work. The Llama-3.1-8B model is under the Llama 3.1 Community License. Built with Llama.</p>
+  </div>
+</footer>
+</body>
+</html>
