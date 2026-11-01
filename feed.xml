@@ -5,12 +5,20 @@
   <link rel="self" type="application/atom+xml" href="https://genrius-ai.github.io/pingala8-llm/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>
   <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/feed</id>
-  <updated>2026-10-25T13:01:19Z</updated>
+  <updated>2026-11-01T03:30:00Z</updated>
   <author>
     <name>Genrius AI</name>
     <uri>https://github.com/Genrius-AI</uri>
   </author>
   <rights type="text">Pingala-8 is open source under the Apache License 2.0.</rights>
+  <entry>
+    <title type="text">Measured: Qwen3.8-27B in 8.31 GB on a 12 GB GPU</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html#measured"/>
+    <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/qwen3-8-27b-measured-v2</id>
+    <published>2026-11-01T03:30:00Z</published>
+    <updated>2026-11-01T03:30:00Z</updated>
+    <summary type="text">Pingala-8 Qwen3.8-27B version 2: 8.31 GB, runs fully on one 12 GB laptop GPU at 37.7 tokens/s. WikiText-2 perplexity 6.89 vs 7.88 for llama.cpp IQ2_XXS (8.43 GB) and 7.34 for our version 1. DASH-Q IQ2_XS (8.55 GB) is better at 6.54. Needs the patched Pingala-8 llama.cpp runtime (CUDA).</summary>
+  </entry>
   <entry>
     <title type="text">Pingala-8: 85% smaller 2-bit LLMs for llama.cpp</title>
     <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>

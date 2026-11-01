@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Qwen3.8 27B VRAM requirements: which GPU do you need? | Genrius AI</title>
-<meta name="description" content="How much VRAM Qwen3.8-27B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k, 8k and 32k context, and why its KV cache is small.">
+<meta name="description" content="Qwen3.8-27B VRAM at FP16, Q8_0, Q4_K_M and 2-bit, which NVIDIA GPUs fit at 4k to 32k context, and a measured 8.31 GB 2-bit file running fully on a 12 GB laptop GPU.">
 <link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Genrius AI">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Genrius AI">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Qwen3.8 27B VRAM requirements: which GPU do you need?">
-<meta property="og:description" content="How much VRAM Qwen3.8-27B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k, 8k and 32k context, and why its KV cache is small.">
+<meta property="og:description" content="Qwen3.8-27B VRAM at FP16, Q8_0, Q4_K_M and 2-bit, which NVIDIA GPUs fit at 4k to 32k context, and a measured 8.31 GB 2-bit file running fully on a 12 GB laptop GPU.">
 <meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html">
 <meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
 <meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
@@ -25,17 +25,19 @@
 <meta property="og:image:height" content="1080">
 <meta property="og:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window on an RTX 5070 Ti Laptop GPU.">
 <meta property="article:published_time" content="2026-10-25T00:00:00+00:00">
-<meta property="article:modified_time" content="2026-10-25T00:00:00+00:00">
+<meta property="article:modified_time" content="2026-11-01T03:30:00+00:00">
 <meta property="article:author" content="Genrius AI">
 <meta property="article:section" content="Guides">
 <meta property="article:tag" content="Qwen3.8 27B VRAM">
 <meta property="article:tag" content="Qwen3.8 27B GPU">
 <meta property="article:tag" content="Qwen3.8 27B GGUF">
 <meta property="article:tag" content="Qwen3.8 27B RTX 4090">
+<meta property="article:tag" content="Qwen3.8 27B 12 GB GPU">
+<meta property="article:tag" content="Qwen3.8 27B 2-bit">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Qwen3.8 27B VRAM requirements: which GPU do you need?">
-<meta name="twitter:description" content="How much VRAM Qwen3.8-27B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k, 8k and 32k context, and why its KV cache is small.">
+<meta name="twitter:description" content="Qwen3.8-27B VRAM at FP16, Q8_0, Q4_K_M and 2-bit, which NVIDIA GPUs fit at 4k to 32k context, and a measured 8.31 GB 2-bit file running fully on a 12 GB laptop GPU.">
 <meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg">
 <meta name="twitter:image:alt" content="Pingala-8 Qwen3-4B (1.24 GB) writing an email in a local chat window.">
 
@@ -72,14 +74,14 @@
       "@type": "TechArticle",
       "@id": "https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html#article",
       "headline": "Qwen3.8 27B VRAM requirements: which GPU do you need?",
-      "description": "How much VRAM Qwen3.8-27B needs at FP16, Q8_0, Q4_K_M and IQ2_XXS, which NVIDIA GPUs fit at 4k, 8k and 32k context, and why its KV cache is small.",
+      "description": "Qwen3.8-27B VRAM at FP16, Q8_0, Q4_K_M and 2-bit, which NVIDIA GPUs fit at 4k to 32k context, and a measured 8.31 GB 2-bit file running fully on a 12 GB laptop GPU.",
       "url": "https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html",
       "mainEntityOfPage": "https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html",
       "image": [
         "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg"
       ],
       "datePublished": "2026-10-25T00:00:00+00:00",
-      "dateModified": "2026-10-25T00:00:00+00:00",
+      "dateModified": "2026-11-01T03:30:00+00:00",
       "inLanguage": "en",
       "author": {
         "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
@@ -93,7 +95,7 @@
         "url": "https://genrius-ai.github.io/pingala8-llm/"
       },
       "about": "GPU memory needed to run the Qwen3.8-27B language model locally",
-      "keywords": "Qwen3.8 27B VRAM, Qwen3.8-27B GPU requirements, Qwen3.8 27B Q4_K_M, Qwen3.8 27B GGUF, KV cache, hybrid attention, llama.cpp",
+      "keywords": "Qwen3.8 27B VRAM, Qwen3.8-27B GPU requirements, Qwen3.8 27B 12 GB GPU, Qwen3.8 27B 2-bit GGUF, Qwen3.8 27B Q4_K_M, Qwen3.8 27B GGUF, KV cache, hybrid attention, llama.cpp",
       "mentions": {
         "@type": "SoftwareSourceCode",
         "@id": "https://genrius-ai.github.io/pingala8-llm/#software",
@@ -141,7 +143,15 @@
           "name": "Is there a Pingala-8 version of Qwen3.8-27B?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 8.3 GB, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues."
+            "text": "Yes, since November 1, 2026: Genrius-AI/Qwen3.8-27B-Pingala8-2bit on Hugging Face, version 2, 8.31 GB. Its WikiText-2 perplexity is 6.89, against 7.88 for llama.cpp IQ2_XXS (8.43 GB, same imatrix) and 7.34 for our version 1. The published DASH-Q IQ2_XS file (8.55 GB) is better, at 6.54. It needs the patched Pingala-8 llama.cpp runtime (CUDA); stock llama.cpp, Ollama and LM Studio cannot load it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Qwen3.8-27B run on a 12 GB GPU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, measured with a 2-bit file. Our Pingala-8 Qwen3.8-27B file (8.31 GB) runs with every layer on one 12 GB RTX 5070 Ti Laptop GPU (WSL2, -ngl 99) at 37.7 tokens per second token generation, batch 1. Q4_K_M, about 17 GB of weights, does not fit on a 12 GB card."
           }
         }
       ]
@@ -197,7 +207,32 @@
 <div class="prose">
   <a class="back" href="./#guides">Pingala-8 guides</a>
   <h1>Qwen3.8 27B VRAM requirements: which GPU do you need?</h1>
-  <p class="byline">Genrius AI guide. <time datetime="2026-10-25">October 25, 2026</time>. About 7 minutes.</p>
+  <p class="byline">Genrius AI guide. <time datetime="2026-10-25">October 25, 2026</time>, updated <time datetime="2026-11-01">November 1, 2026</time>. About 8 minutes.</p>
+
+  <div class="summary measured" id="measured">
+    <h2>Measured: Qwen3.8-27B in 8.31 GB on a 12 GB GPU</h2>
+    <p class="measured-lede"><b>Our 2-bit Pingala-8 build of Qwen3.8-27B (version 2, November 1, 2026) is 8.31 GB and runs fully on one 12 GB laptop GPU at 37.7 tokens/s.</b></p>
+    <ul>
+      <li>File: 8.31 GB (8,314,241,600 bytes), <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Genrius-AI/Qwen3.8-27B-Pingala8-2bit on Hugging Face</a>. Text model only.</li>
+      <li>Speed: 37.7 tokens/s token generation, batch 1, every layer on one RTX 5070 Ti Laptop GPU (12 GB, WSL2, <code>-ngl 99</code>).</li>
+      <li>Quality: WikiText-2 perplexity 6.89, against 7.34 for our version 1 (better on 20/20 windows) and 7.88 for llama.cpp IQ2_XXS at 8.43 GB (same imatrix). Lower is better.</li>
+      <li>Not the best 2-bit file: DASH-Q IQ2_XS (8.55 GB) scores 6.54, better than ours on 20/20 windows.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>2-bit file</th><th class="num">Size</th><th class="num">WikiText-2 PPL</th><th>Against Pingala-8 v2</th></tr></thead>
+        <tbody>
+          <tr><td>DASH-Q IQ2_XS</td><td class="num">8.55 GB</td><td class="num">6.54</td><td>DASH-Q better: +0.052 nats/token, on 20/20 windows</td></tr>
+          <tr class="ours"><td><strong>Pingala-8 v2 (ours)</strong></td><td class="num"><strong>8.31 GB</strong></td><td class="num"><strong>6.89</strong></td><td></td></tr>
+          <tr><td>unsloth UD-IQ2_S</td><td class="num">8.37 GB</td><td class="num">7.34</td><td>Ours lower on average, not significant (better on 9/20 windows)</td></tr>
+          <tr><td>Pingala-8 v1 (ours)</td><td class="num">8.31 GB</td><td class="num">7.34</td><td>v2 better on 20/20 windows</td></tr>
+          <tr><td>IQ2_XXS (llama.cpp, same imatrix)</td><td class="num">8.43 GB</td><td class="num">7.88</td><td>Ours lower</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">WikiText-2 test at context 4096, the first 20 of 72 windows (a time cap on one laptop GPU), every file on the same windows; lower is better. "Better on N/20 windows" counts the windows where that file has the lower loss. DASH-Q and unsloth files run in stock llama.cpp; ours does not.</p>
+    <p><b>Runtime:</b> the file needs the patched Pingala-8 llama.cpp runtime (CUDA). Stock llama.cpp, Ollama and LM Studio cannot load it. Build steps are on the <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit#how-to-run">model card (How to run)</a>; the patches and the one-click builds for our smaller models are in the <a href="https://github.com/Genrius-AI/pingala8-llm#run-it">GitHub repo (Run it)</a>. This 27B file has not been tested with the one-click build.</p>
+  </div>
   <p><b><a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">Will it fit your GPU? Normal vs Pingala-8 calculator</a></b></p>
 
   <div class="summary">
@@ -206,7 +241,7 @@
       <li>Qwen3.8-27B has 27.78 billion parameters. On paper that is about 55.56 GB at FP16, 17.00 GB at Q4_K_M and 8.27 GB at IQ2_XXS.</li>
       <li>Its KV cache is small for its size: only 16 of its 64 layers keep one. At 32,768 tokens it is 2.30 GB, against about 8.6 GB for a plain 64-layer model like Qwen3-32B.</li>
       <li>A 24 GB card (RTX 3090, RTX 4090) holds Q4_K_M with a 32k context. A 16 GB card needs a 2-bit file. On 8 GB it does not fit on the GPU at all.</li>
-      <li>All numbers here are memory estimates from the public config. We have not run this model.</li>
+      <li>The memory tables are estimates from the public config. The measured numbers on this page are the ones in the box above, for our 2-bit Pingala-8 file.</li>
     </ul>
   </div>
 
@@ -242,7 +277,7 @@
       </tbody>
     </table>
   </div>
-  <p class="table-note">The largest of the four formats in the table above whose weights plus 16-bit KV cache leave at least 1.5 GB free on the card; "tight" means it fits but with less than 1.5 GB left. Card memory from NVIDIA's spec pages, taken at face value. On paper, not tested on these cards.</p>
+  <p class="table-note">The largest of the four formats in the table above whose weights plus 16-bit KV cache leave at least 1.5 GB free on the card; "tight" means it fits but with less than 1.5 GB left. Card memory from NVIDIA's spec pages, taken at face value. On paper, not tested on these cards; the one measured run is our 8.31 GB Pingala-8 file on a 12 GB RTX 5070 Ti Laptop GPU, <a href="#measured">above</a>.</p>
 
   <p>The pattern is simple. On 24 GB, Q4_K_M fits at every context in the table, and at 32k tokens about 4.7 GB is still free before working buffers. Q8_0 at about 29.5 GB needs a 32 GB RTX 5090 and is tight there at 32k. On a 16 GB card, 17 GB of Q4_K_M weights alone do not fit, so you either drop to a 2-bit file or keep some layers in system RAM with llama.cpp's <code>-ngl</code>, which is much slower. On 12 GB only a 2-bit file fits, and it gets tight at 32k. On 8 GB even the 2-bit file is larger than the card.</p>
 
@@ -255,8 +290,8 @@
   <p>With llama.cpp, <code>-ngl 99</code> keeps every layer on the GPU and <code>-c</code> sets the context. <code>-fa on -ctk q8_0 -ctv q8_0</code> stores the full-attention cache at 8 bits, which roughly halves that part (the fixed state stays 32-bit). Start with the context you really need: at 32k the cache is only 2.30 GB, so on a 24 GB card Q4_K_M is the safe default.</p>
 
   <h2>Pingala-8 and this model</h2>
-  <p>Pingala-8 is a 2-bit format at IQ2_XXS size. A Pingala-8 build of Qwen3.8-27B is not released yet and its quality is not measured; the size would be about the IQ2_XXS row above, about 8.27 GB of weights. Request it here: open the <a href="https://genrius-ai-llm-vram-calculator.static.hf.space/index.html#m=qwen3.8-27b&f=IQ2_XXS&c=8192&kv=f16&v=16&o=1.5" target="_blank" rel="noopener noreferrer">GPU fit calculator</a> and press Request, or <a href="https://github.com/Genrius-AI/pingala8-llm/issues/new?title=Model%20request%3A%20Pingala-8%20for%20Qwen3.8-27B" target="_blank" rel="noopener noreferrer">open a GitHub issue</a> with the model, your card and the context you need.</p>
-  <p>What we have measured is on other models. On Qwen3-4B, Pingala-8 is 1.24 GB with a WikiText-2 perplexity of 16.64 against 28.61 for IQ2_XXS at the same size; on Qwen3-14B it loses narrowly to IQ2_KT (9.57 against 9.40). The released files run only in our patched llama.cpp on NVIDIA RTX 30, 40 or 50 series cards; stock llama.cpp, Ollama and LM Studio cannot load them. Details are in the <a href="https://doi.org/10.5281/zenodo.23481757">paper</a> and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a>.</p>
+  <p>Pingala-8 is a 2-bit format at IQ2_XXS size. The Qwen3.8-27B build is released: <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Genrius-AI/Qwen3.8-27B-Pingala8-2bit</a>, version 2, 8.31 GB, measured in the <a href="#measured">box at the top</a>. Version 2 keeps the trellis coder of version 1 and changes how bits are spread across tensors, which took perplexity from 7.34 to 6.89 at the same size. It is ahead of llama.cpp IQ2_XXS of the same model, roughly level with unsloth's UD-IQ2_S, and behind DASH-Q IQ2_XS.</p>
+  <p>The file runs only in our patched llama.cpp (CUDA); stock llama.cpp, Ollama and LM Studio cannot load it. On other models: on Qwen3-4B, Pingala-8 is 1.24 GB with a WikiText-2 perplexity of 16.64 against 28.61 for IQ2_XXS at the same size; on Qwen3-14B it loses narrowly to IQ2_KT (9.57 against 9.40). Details are in the paper, DOI <a href="https://doi.org/10.5281/zenodo.23481757">10.5281/zenodo.23481757</a> (the Qwen3.8-27B numbers are new and not in the paper), and the <a href="https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks">benchmark dataset</a>.</p>
 
 
   <h2 id="faq">Questions people ask</h2>
@@ -267,10 +302,13 @@
   <h3>Can an RTX 4090 run Qwen3.8-27B?</h3>
   <p>Yes, on paper. Q4_K_M weights of about 17 GB plus a 32,768-token cache of 2.3 GB leave about 4.7 GB of the 24 GB for working buffers.</p>
   <h3>Is there a Pingala-8 version of Qwen3.8-27B?</h3>
-  <p>Not yet. A Pingala-8 build would be about the IQ2_XXS size, about 8.3 GB, but it is not released and its quality is not measured. You can request it from the calculator or in our GitHub issues.</p>
+  <p>Yes, since November 1, 2026: Genrius-AI/Qwen3.8-27B-Pingala8-2bit on Hugging Face, version 2, 8.31 GB. Its WikiText-2 perplexity is 6.89, against 7.88 for llama.cpp IQ2_XXS (8.43 GB, same imatrix) and 7.34 for our version 1. The published DASH-Q IQ2_XS file (8.55 GB) is better, at 6.54. It needs the patched Pingala-8 llama.cpp runtime (CUDA); stock llama.cpp, Ollama and LM Studio cannot load it. <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Model card</a>.</p>
+  <h3>Can Qwen3.8-27B run on a 12 GB GPU?</h3>
+  <p>Yes, measured with a 2-bit file. Our Pingala-8 Qwen3.8-27B file (8.31 GB) runs with every layer on one 12 GB RTX 5070 Ti Laptop GPU (WSL2, -ngl 99) at 37.7 tokens per second token generation, batch 1. Q4_K_M, about 17 GB of weights, does not fit on a 12 GB card.</p>
   <div class="summary next">
     <h2>Try Pingala-8</h2>
     <ul>
+      <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B Pingala-8 2-bit on Hugging Face</a> (8.31 GB, patched CUDA runtime)</li>
       <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
       <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB without retraining</a></li>
       <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
@@ -311,6 +349,7 @@
           <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
           <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
           <li><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B model</a></li>
         </ul>
       </div>
       <div>

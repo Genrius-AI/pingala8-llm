@@ -213,3 +213,9 @@ a.guide-card:hover { border-color: var(--gold); color: var(--text); }
 .summary.next { margin-top: 44px; }
 .guide-list li { margin-bottom: 0.6em; }
 .prose code { overflow-wrap: anywhere; }
+
+/* Measured-result box on guide pages */
+.summary.measured .measured-lede { font-size: 18px; line-height: 1.45; color: var(--beige); margin: 0 0 12px; }
+.summary.measured ul { margin: 0 0 16px; }
+.summary.measured .table-wrap { margin: 0; }
+.summary.measured > p { margin: 12px 0 0; }
