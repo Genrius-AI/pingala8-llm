@@ -83,6 +83,7 @@
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html#article", "headline": "What is trellis-coded quantization? TCQ, QTIP and IQ2_KT explained", "url": "https://genrius-ai.github.io/pingala8-llm/what-is-trellis-coded-quantization.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html#article", "headline": "What is Hadamard rotation in LLM quantization? QuIP, QuaRot and incoherence explained", "url": "https://genrius-ai.github.io/pingala8-llm/what-is-hadamard-rotation-quantization.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html#article", "headline": "Qwen3.8 27B VRAM requirements: which GPU do you need?", "url": "https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html"},
+        {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/qwen3-5-2b-under-1gb-2bit.html#article", "headline": "Qwen3.5-2B under 1 GB: 2-bit GGUFs measured", "url": "https://genrius-ai.github.io/pingala8-llm/qwen3-5-2b-under-1gb-2bit.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html#article", "headline": "NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU", "url": "https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html#article", "headline": "Gemma 4 VRAM requirements: 26B-A4B and 31B", "url": "https://genrius-ai.github.io/pingala8-llm/gemma-4-vram-requirements.html"},
         {"@type": "TechArticle", "@id": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html#article", "headline": "Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?", "url": "https://genrius-ai.github.io/pingala8-llm/run-gpt-oss-20b-on-12gb-16gb-gpu.html"},
@@ -465,6 +466,10 @@
         <h3>Qwen3.8 27B VRAM requirements: which GPU do you need?</h3>
         <p>VRAM for FP16 to 2-bit, which NVIDIA cards fit at 4k to 32k context, and our measured 8.31 GB 2-bit file running fully on a 12 GB laptop GPU (Nov 1, 2026).</p>
       </a>
+      <a class="card guide-card" href="qwen3-5-2b-under-1gb-2bit.html">
+        <h3>Qwen3.5-2B under 1 GB: 2-bit GGUFs measured</h3>
+        <p>Six 2-bit files from 0.76 to 0.86 GB on WikiText-2: DASH-Q IQ2_M first at 13.33, our Pingala-8 v2 at 14.06 in 0.78 GB, ahead of both unsloth files (Nov 1, 2026).</p>
+      </a>
       <a class="card guide-card" href="gemma-4-vram-requirements.html">
         <h3>Gemma 4 VRAM requirements: 26B-A4B and 31B</h3>
         <p>Memory per quantization for both models, GPU fit at 4k to 32k, and how sliding windows and K-equals-V shape the cache.</p>
@@ -540,6 +545,7 @@
           <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
           <li><a href="#guides">Guides for small GPUs</a></li>
           <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="llms.txt">llms.txt</a> and <a href="llms-full.txt">llms-full.txt</a></li>
           <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
           <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
         </ul>

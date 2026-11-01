@@ -5,12 +5,20 @@
   <link rel="self" type="application/atom+xml" href="https://genrius-ai.github.io/pingala8-llm/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/"/>
   <id>tag:genrius-ai.github.io,2026-10-24:pingala8-llm/feed</id>
-  <updated>2026-11-01T03:45:00Z</updated>
+  <updated>2026-11-01T04:00:00Z</updated>
   <author>
     <name>Genrius AI</name>
     <uri>https://github.com/Genrius-AI</uri>
   </author>
   <rights type="text">Pingala-8 is open source under the Apache License 2.0.</rights>
+  <entry>
+    <title type="text">Qwen3.5-2B under 1 GB: 2-bit GGUFs measured</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/qwen3-5-2b-under-1gb-2bit.html"/>
+    <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/qwen3-5-2b-under-1gb-2bit.html</id>
+    <published>2026-11-01T04:00:00Z</published>
+    <updated>2026-11-01T04:00:00Z</updated>
+    <summary type="text">Six 2-bit GGUF files of Qwen3.5-2B, all under 1 GB, on WikiText-2 (72 windows of 4096 tokens). DASH-Q IQ2_M is first at 13.33 (0.79 GB) and DASH-Q IQ2_XS second at 13.90 (0.76 GB); both are better than our Pingala-8 version 2 at 14.06 (0.78 GB). Version 2 is better than unsloth UD-IQ2_M (14.96) on 67 of 70 windows, UD-IQ2_XXS (23.41) on 70 of 70, and our version 1 (15.62) on 70 of 70.</summary>
+  </entry>
   <entry>
     <title type="text">NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU</title>
     <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html"/>

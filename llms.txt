@@ -1,0 +1,60 @@
+# Pingala-8 by Genrius AI
+
+> Pingala-8 is an open-source 2-bit weight format for local LLMs in llama.cpp, at the file size of llama.cpp's IQ2_XXS: an 8-state trellis code over groups of 4 weights, after a Hadamard rotation and LDLQ rounding, run by a CUDA patch to llama.cpp. It compresses existing models without retraining. Files need the patched Pingala-8 runtime (CUDA, NVIDIA RTX 30/40/50); stock llama.cpp, Ollama and LM Studio cannot load them. Apache License 2.0.
+
+Genrius AI. Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.
+Paper: DOI 10.5281/zenodo.23481757 (https://doi.org/10.5281/zenodo.23481757). The Qwen3.5-2B version 2 and Qwen3.8-27B numbers below are newer than the paper and are not in it.
+All perplexities are WikiText-2 test, context 4096; lower is better. Full tables: https://genrius-ai.github.io/pingala8-llm/llms-full.txt
+
+Newest results (November 1, 2026), with the losses:
+
+- Qwen3.5-2B, Pingala-8 version 2: 0.78 GB (778,189,408 bytes), perplexity 14.06 (72 windows; paired over 70). Version 1: 15.62 (v2 better on 70/70 windows). unsloth UD-IQ2_M 0.86 GB 14.96 (v2 better on 67/70). unsloth UD-IQ2_XXS 0.77 GB 23.41 (v2 better on 70/70). DASH-Q is better than ours: IQ2_XS 0.76 GB 13.90 (v2 wins only 21/70) and IQ2_M 0.79 GB 13.33 (v2 wins 3/70). The one-click launcher still downloads version 1.
+- Qwen3.8-27B, Pingala-8 version 2: 8.31 GB, runs fully on one 12 GB GPU (RTX 5070 Ti Laptop) at 37.7 tokens/s, perplexity 6.89 (first 20 of 72 windows). DASH-Q IQ2_XS is better: 8.55 GB, 6.54 (20/20 windows). unsloth UD-IQ2_S 8.37 GB 7.34 (difference not significant, 9/20). Our version 1 7.34; llama.cpp IQ2_XXS 8.43 GB 7.88.
+- Other losses: Qwen3-1.7B loses to ik_llama.cpp IQ2_KT (20.89 vs 28.23, IQ2_KT file 3.3% larger). Qwen3-14B narrowly loses to IQ2_KT (9.57 vs 9.40). Prompt processing is 0.74-0.89x the speed of IQ2_XXS.
+
+## Docs
+
+- [Pingala-8 overview](https://genrius-ai.github.io/pingala8-llm/): results across 7 models, how to run, limits
+- [Qwen3.5-2B under 1 GB: 2-bit GGUFs measured](https://genrius-ai.github.io/pingala8-llm/qwen3-5-2b-under-1gb-2bit.html): six 2-bit files compared, DASH-Q first
+- [Qwen3.8 27B VRAM requirements](https://genrius-ai.github.io/pingala8-llm/qwen3-8-27b-vram-requirements.html): which GPU, and the measured 8.31 GB file on a 12 GB GPU
+- [NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU](https://genrius-ai.github.io/pingala8-llm/2bit-gguf-nan-perplexity-rtx-50.html): what we saw on our GPU and the -ot CPU workaround
+- [Article: how we fit Qwen3-4B into 1.24 GB](https://genrius-ai.github.io/pingala8-llm/article.html)
+- [GitHub repo: code, patches, logs](https://github.com/Genrius-AI/pingala8-llm)
+- [How to reproduce](https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md)
+- [One-click release for Windows and Linux](https://github.com/Genrius-AI/pingala8-llm/releases/latest)
+
+## Models
+
+- [Qwen3.8-27B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit): 8.31 GB, version 2
+- [Qwen3.5-2B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit): 0.78 GB, version 2 file Qwen3.5-2B-Pingala8-2bit-v2.gguf
+- [Qwen3.5-4B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Qwen3.5-4B-Pingala8-2bit): 1.51 GB
+- [Qwen3.5-0.8B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Qwen3.5-0.8B-Pingala8-2bit): 0.35 GB
+- [Qwen3-4B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit): 1.24 GB
+- [Qwen3-1.7B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit): 0.69 GB
+- [Qwen3-0.6B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Qwen3-0.6B-Pingala8-2bit): 0.28 GB
+- [Llama-3.1-8B-Pingala8-2bit](https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit): 2.39 GB
+
+## Results
+
+- [2-bit GGUF leaderboard](https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard): published 2-bit GGUF files of Qwen3.5-2B and Qwen3.8-27B ranked by WikiText-2 perplexity
+- [2-bit GGUF WikiText-2 eval dataset](https://huggingface.co/datasets/Genrius-AI/2bit-gguf-wikitext2-eval): per-window measurements behind the leaderboard
+- [Pingala-8 benchmark dataset](https://huggingface.co/datasets/Genrius-AI/pingala8-benchmarks): earlier results tables
+- [GPU fit calculator](https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator): normal vs Pingala-8 memory estimate
+
+## Paper
+
+- [Small-State Coset Trellis Coding at IQ2_XXS Size: An Equal-Bytes Study in llama.cpp, DOI 10.5281/zenodo.23481757](https://doi.org/10.5281/zenodo.23481757)
+- [Paper page: abstract, PDF and BibTeX](https://genrius-ai.github.io/pingala8-llm/paper.html)
+
+## Limits
+
+- CUDA only: the patched Pingala-8 llama.cpp runtime on NVIDIA RTX 30/40/50 GPUs. No Mac, AMD or CPU-only path.
+- Stock llama.cpp, Ollama and LM Studio cannot load Pingala-8 files.
+- Not the lowest perplexity at 2 bits: DASH-Q files are better on Qwen3.5-2B and Qwen3.8-27B; IQ2_KT is better on Qwen3-1.7B and narrowly on Qwen3-14B.
+- Qwen3-1.7B and Qwen3-0.6B have no one-click launcher yet; the one-click launcher downloads Qwen3.5-2B version 1, not version 2.
+
+## Optional
+
+- [Full results tables in plain text](https://genrius-ai.github.io/pingala8-llm/llms-full.txt)
+- [Sitemap](https://genrius-ai.github.io/pingala8-llm/sitemap.xml)
+- [Atom feed](https://genrius-ai.github.io/pingala8-llm/feed.xml)

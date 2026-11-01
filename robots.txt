@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://genrius-ai.github.io/pingala8-llm/sitemap.xml
+
+# llms.txt (plain-text summary for AI assistants): https://genrius-ai.github.io/pingala8-llm/llms.txt
+# llms-full.txt (full results tables): https://genrius-ai.github.io/pingala8-llm/llms-full.txt
