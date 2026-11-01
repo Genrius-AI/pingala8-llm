@@ -218,6 +218,11 @@
       <li>Quality: WikiText-2 perplexity 6.89, against 7.34 for our version 1 (better on 20/20 windows) and 7.88 for llama.cpp IQ2_XXS at 8.43 GB (same imatrix). Lower is better.</li>
       <li>Not the best 2-bit file: DASH-Q IQ2_XS (8.55 GB) scores 6.54, better than ours on 20/20 windows.</li>
     </ul>
+    <figure class="demo27b" style="margin:16px 0">
+      <a href="media/demo27b.mp4"><picture><source media="(max-width: 600px)" srcset="media/demo27b-phone.gif" width="640" height="1340"><img src="media/demo27b.gif" width="800" height="470" loading="lazy" decoding="async"
+           alt="Terminal replay: Qwen3.8-27B Pingala-8 2-bit on one 12 GB RTX 5070 Ti Laptop GPU answers in 5 bullet points (feasibility, privacy, speed, cost, capability), 125 tokens, runtime eval 31.63 tokens per second."></picture></a>
+      <figcaption>Real run, real speed. Text and timing captured from the run; terminal view re-rendered. Chat speed in this run: 31.63 tokens/s (runtime eval, 124 tokens, thinking off); the 37.7 tokens/s above is llama-bench tg64. <a href="media/demo27b.mp4">Watch the 1080p MP4</a>.</figcaption>
+    </figure>
     <div class="table-wrap">
       <table>
         <thead><tr><th>2-bit file</th><th class="num">Size</th><th class="num">WikiText-2 PPL</th><th>Against Pingala-8 v2</th></tr></thead>
