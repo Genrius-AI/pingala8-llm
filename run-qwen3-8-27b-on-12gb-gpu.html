@@ -231,19 +231,19 @@
   <p>Totals from our <a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">GPU fit calculator</a>: the file, plus the 16-bit KV cache, plus 1.5 GB for compute buffers and your desktop. Qwen3.8-27B has a small cache for its size (0.43 GB at 4,096 tokens, 0.69 GB at 8,192, 2.30 GB at 32,768), because only 16 of its 64 layers keep one; the <a href="qwen3-8-27b-vram-requirements.html">VRAM requirements page</a> shows the arithmetic.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>File</th><th class="num">Size</th><th class="num">4,096 tokens</th><th class="num">8,192 tokens</th><th class="num">32,768 tokens</th><th>On a 12 GB card</th></tr></thead>
+      <thead><tr><th>File</th><th class="num">Size</th><th class="num">4,096 tokens</th><th class="num">8,192 tokens</th><th class="num">32,768 tokens</th></tr></thead>
       <tbody>
-        <tr class="ours"><td><strong>Pingala-8 v2 (ours)</strong></td><td class="num"><strong>8.31 GB</strong></td><td class="num">10.24 GB</td><td class="num">10.51 GB</td><td class="num">12.12 GB</td><td>Fits at 4k and 8k; tight at 32k. Measured fully on the GPU at 4k.</td></tr>
-        <tr><td>unsloth UD-IQ2_S</td><td class="num">8.37 GB</td><td class="num">10.30 GB</td><td class="num">10.57 GB</td><td class="num">12.18 GB</td><td>Fits at 4k and 8k; tight at 32k</td></tr>
-        <tr><td>DASH-Q IQ2_XS</td><td class="num">8.55 GB</td><td class="num">10.48 GB</td><td class="num">10.74 GB</td><td class="num">12.36 GB</td><td>Fits at 4k and 8k; tight at 32k</td></tr>
-        <tr><td>unsloth UD-Q4_K_M</td><td class="num">16.46 GB</td><td class="num">18.39 GB</td><td class="num">18.65 GB</td><td class="num">20.26 GB</td><td>Does not fit</td></tr>
-        <tr><td>Q4_K_M (on paper)</td><td class="num">17.00 GB</td><td class="num">18.93 GB</td><td class="num">19.19 GB</td><td class="num">20.80 GB</td><td>Does not fit</td></tr>
-        <tr><td>unsloth Q8_0</td><td class="num">29.05 GB</td><td colspan="3" class="num">more than twice the card</td><td>Does not fit</td></tr>
-        <tr><td>FP16 (on paper)</td><td class="num">55.56 GB</td><td colspan="3" class="num">more than four times the card</td><td>Does not fit</td></tr>
+        <tr class="ours"><td><strong>Pingala-8 v2 (ours)</strong></td><td class="num"><strong>8.31 GB</strong></td><td class="num">10.24 GB fits</td><td class="num">10.51 GB fits</td><td class="num">12.12 GB tight</td></tr>
+        <tr><td>unsloth UD-IQ2_S</td><td class="num">8.37 GB</td><td class="num">10.30 GB fits</td><td class="num">10.57 GB fits</td><td class="num">12.18 GB tight</td></tr>
+        <tr><td>DASH-Q IQ2_XS</td><td class="num">8.55 GB</td><td class="num">10.48 GB fits</td><td class="num">10.74 GB fits</td><td class="num">12.36 GB tight</td></tr>
+        <tr><td>unsloth UD-Q4_K_M</td><td class="num">16.46 GB</td><td class="num">18.39 GB no</td><td class="num">18.65 GB no</td><td class="num">20.26 GB no</td></tr>
+        <tr><td>Q4_K_M (on paper)</td><td class="num">17.00 GB</td><td class="num">18.93 GB no</td><td class="num">19.19 GB no</td><td class="num">20.80 GB no</td></tr>
+        <tr><td>unsloth Q8_0</td><td class="num">29.05 GB</td><td class="num">no</td><td class="num">no</td><td class="num">no</td></tr>
+        <tr><td>FP16 (on paper)</td><td class="num">55.56 GB</td><td class="num">no</td><td class="num">no</td><td class="num">no</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="table-note">Calculator estimates, not measurements, except where marked: the one measured run is our file at context 4096 on one RTX 5070 Ti Laptop GPU. "Tight" means the file and cache fit but less than 1.5 GB is left for buffers. File sizes from Hugging Face (<a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">ours</a>, <a href="https://huggingface.co/jkim96/Qwen3.8-27B-DASHQ-Q2-GGUF">jkim96/Qwen3.8-27B-DASHQ-Q2-GGUF</a>, <a href="https://huggingface.co/unsloth/Qwen3.8-27B-GGUF">unsloth/Qwen3.8-27B-GGUF</a>); the Q4_K_M and FP16 rows are the formula sizes from the VRAM page. GB = 10<sup>9</sup> bytes. We have not run any of these files on an RTX 3060, 4070 or any other 12 GB card.</p>
+  <p class="table-note">Total memory on a 12 GB card by the calculator: estimates, not measurements, except where marked; the one measured run is our file, fully on the GPU at context 4096 on one RTX 5070 Ti Laptop GPU. "Fits" leaves at least 1.5 GB for buffers; "tight" means the file and cache fit but less than 1.5 GB is left for buffers. File sizes from Hugging Face (<a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">ours</a>, <a href="https://huggingface.co/jkim96/Qwen3.8-27B-DASHQ-Q2-GGUF">jkim96/Qwen3.8-27B-DASHQ-Q2-GGUF</a>, <a href="https://huggingface.co/unsloth/Qwen3.8-27B-GGUF">unsloth/Qwen3.8-27B-GGUF</a>); the Q4_K_M and FP16 rows are the formula sizes from the VRAM page. GB = 10<sup>9</sup> bytes. We have not run any of these files on an RTX 3060, 4070 or any other 12 GB card.</p>
   <p>At 32,768 tokens, <code>-fa on -ctk q8_0 -ctv q8_0</code> stores the full-attention cache at 8 bits, which roughly halves that part of the cache, or you can use a shorter context. Q4_K_M and larger files only run on a 12 GB card with some layers in system RAM (a lower <code>-ngl</code>), which is much slower.</p>
 
   <h2 id="quality">Quality: DASH-Q is ahead</h2>
