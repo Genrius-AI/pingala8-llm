@@ -45,6 +45,14 @@
     <summary type="text">How we compare 2-bit GGUF files: same text, 4096-token strided windows, paired per-window NLL with a 95% interval. Why a lower average is not a win (9 of 20 windows), the IQ1_S/IQ2_S/IQ3_S NaN on our RTX 50 GPU and the -ot CPU workaround.</summary>
   </entry>
   <entry>
+    <title type="text">Pingala-8 demo videos: real runs at real speed</title>
+    <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/demos.html"/>
+    <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/demos.html</id>
+    <published>2026-11-01T08:30:00Z</published>
+    <updated>2026-11-01T08:30:00Z</updated>
+    <summary type="text">Real runs on one 12 GB laptop GPU, replayed at real speed. Qwen3.5-2B at 2 bits, same prompt and seed: our Pingala-8 file (0.78 GB) gets a change-from-20-dollars question right and llama.cpp IQ2_XXS (0.79 GB) does not. That is 1 of 3 prompts; on the other 2 both files made factual errors, and IQ2_XXS was faster on 2 of 3 runs. DASH-Q IQ2_XS (0.76 GB, 13.90) has better perplexity than our 14.06. Also: Qwen3.8-27B at 31.63 tokens/s and Qwen3-4B writing an email. All outputs listed.</summary>
+  </entry>
+  <entry>
     <title type="text">Can you run Qwen3.8-27B on a 12 GB GPU?</title>
     <link rel="alternate" type="text/html" href="https://genrius-ai.github.io/pingala8-llm/run-qwen3-8-27b-on-12gb-gpu.html"/>
     <id>tag:genrius-ai.github.io,2026-11-01:pingala8-llm/run-qwen3-8-27b-on-12gb-gpu.html</id>

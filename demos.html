@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pingala-8 demo videos: real runs at real speed | Genrius AI</title>
+<meta name="description" content="Replays of real Pingala-8 runs on one 12 GB laptop GPU, at the speed they were written: Qwen3.5-2B side by side with llama.cpp IQ2_XXS at the same size, Qwen3.5-2B alone, Qwen3.8-27B and Qwen3-4B. All outputs listed, wrong answers included.">
+<link rel="canonical" href="https://genrius-ai.github.io/pingala8-llm/demos.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Genrius AI">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23D4AF37'%3EP8%3C/text%3E%3C/svg%3E">
+<link rel="sitemap" type="application/xml" href="https://genrius-ai.github.io/pingala8-llm/sitemap.xml">
+<link rel="alternate" type="text/plain" title="llms.txt" href="https://genrius-ai.github.io/pingala8-llm/llms.txt">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Genrius AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Pingala-8 demo videos: real runs at real speed">
+<meta property="og:description" content="Replays of real Pingala-8 runs on one 12 GB laptop GPU, at the speed they were written: Qwen3.5-2B side by side with llama.cpp IQ2_XXS at the same size, Qwen3.5-2B alone, Qwen3.8-27B and Qwen3-4B. All outputs listed, wrong answers included.">
+<meta property="og:url" content="https://genrius-ai.github.io/pingala8-llm/demos.html">
+<meta property="og:image" content="https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare-poster.jpg">
+<meta property="og:image:secure_url" content="https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare-poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Side-by-side replay: Pingala-8 Qwen3.5-2B (0.78 GB) and llama.cpp IQ2_XXS (0.79 GB) answer the same word problem on one laptop GPU.">
+<meta property="article:published_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:modified_time" content="2026-11-01T08:30:00+00:00">
+<meta property="article:author" content="Genrius AI">
+<meta property="article:section" content="Demos">
+<meta property="article:tag" content="Pingala-8 demo">
+<meta property="article:tag" content="Qwen3.5-2B 2-bit">
+<meta property="article:tag" content="IQ2_XXS comparison">
+<meta property="article:tag" content="Qwen3.8-27B 12 GB GPU">
+<meta property="article:tag" content="local LLM speed">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pingala-8 demo videos: real runs at real speed">
+<meta name="twitter:description" content="Replays of real Pingala-8 runs on one 12 GB laptop GPU, at the speed they were written: Qwen3.5-2B side by side with llama.cpp IQ2_XXS at the same size, Qwen3.5-2B alone, Qwen3.8-27B and Qwen3-4B. All outputs listed, wrong answers included.">
+<meta name="twitter:image" content="https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare-poster.jpg">
+<meta name="twitter:image:alt" content="Side-by-side replay: Pingala-8 Qwen3.5-2B (0.78 GB) and llama.cpp IQ2_XXS (0.79 GB) answer the same word problem on one laptop GPU.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/#org",
+      "name": "Genrius AI",
+      "slogan": "Generating Real Intelligence",
+      "url": "https://github.com/Genrius-AI",
+      "sameAs": [
+        "https://github.com/Genrius-AI",
+        "https://huggingface.co/Genrius-AI"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Harshit Goyal",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "alternateName": "IIIT Delhi"
+        }
+      }
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#page",
+      "name": "Pingala-8 demo videos: real runs at real speed",
+      "description": "Replays of real Pingala-8 runs on one 12 GB laptop GPU, at the speed they were written: Qwen3.5-2B side by side with llama.cpp IQ2_XXS at the same size, Qwen3.5-2B alone, Qwen3.8-27B and Qwen3-4B. All outputs listed, wrong answers included.",
+      "url": "https://genrius-ai.github.io/pingala8-llm/demos.html",
+      "inLanguage": "en",
+      "datePublished": "2026-11-01",
+      "dateModified": "2026-11-01",
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      },
+      "primaryImageOfPage": "https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare-poster.jpg",
+      "hasPart": [
+        {
+          "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-demo2b_compare"
+        },
+        {
+          "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-demo2b_solo"
+        },
+        {
+          "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-demo27b"
+        },
+        {
+          "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-pingala8-demo-1080p"
+        }
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-demo2b_compare",
+      "name": "Qwen3.5-2B, 2-bit: Pingala-8 vs llama.cpp IQ2_XXS at the same size",
+      "description": "Same prompt and seed on one RTX 5070 Ti Laptop GPU, replayed at real speed. Pingala-8 (0.78 GB) answers 5 dollars, which is right; IQ2_XXS (0.79 GB) answers 8.00 dollars and repeats itself. 1 of 3 prompts run; on the other 2 both files made errors.",
+      "thumbnailUrl": "https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare-poster.jpg",
+      "contentUrl": "https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare.mp4",
+      "uploadDate": "2026-11-01T08:30:00+00:00",
+      "duration": "PT10S",
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-demo2b_solo",
+      "name": "Qwen3.5-2B in 0.78 GB answering on a laptop GPU",
+      "description": "Pingala-8 Qwen3.5-2B (0.78 GB) works out a shopping-change question step by step on one RTX 5070 Ti Laptop GPU, 266.54 tokens per second in this run, replayed at real speed.",
+      "thumbnailUrl": "https://genrius-ai.github.io/pingala8-llm/media/demo2b_solo-poster.jpg",
+      "contentUrl": "https://genrius-ai.github.io/pingala8-llm/media/demo2b_solo.mp4",
+      "uploadDate": "2026-11-01T08:30:00+00:00",
+      "duration": "PT16S",
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-demo27b",
+      "name": "Qwen3.8-27B, 2-bit (8.31 GB), on one 12 GB laptop GPU",
+      "description": "Pingala-8 Qwen3.8-27B answers in 5 bullet points on one RTX 5070 Ti Laptop GPU at 31.63 tokens per second (runtime eval), replayed at real speed.",
+      "thumbnailUrl": "https://genrius-ai.github.io/pingala8-llm/media/demo27b-poster.jpg",
+      "contentUrl": "https://genrius-ai.github.io/pingala8-llm/media/demo27b.mp4",
+      "uploadDate": "2026-11-01T08:30:00+00:00",
+      "duration": "PT10S",
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://genrius-ai.github.io/pingala8-llm/demos.html#video-pingala8-demo-1080p",
+      "name": "Pingala-8 Qwen3-4B (1.24 GB) writing an email in real time",
+      "description": "Text and timing from a real run of Pingala-8 Qwen3-4B (1.24 GB) on an RTX 5070 Ti Laptop GPU, shown at the speed it was written. Chat window recreated.",
+      "thumbnailUrl": "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-poster.jpg",
+      "contentUrl": "https://genrius-ai.github.io/pingala8-llm/media/pingala8-demo-1080p.mp4",
+      "uploadDate": "2026-10-24T00:00:00+00:00",
+      "duration": "PT32S",
+      "publisher": {
+        "@id": "https://genrius-ai.github.io/pingala8-llm/#org"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Pingala-8",
+          "item": "https://genrius-ai.github.io/pingala8-llm/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Demo videos",
+          "item": "https://genrius-ai.github.io/pingala8-llm/demos.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+.demo-out { white-space: pre-wrap; word-break: break-word; font-size: 13px; line-height: 1.45; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 8px; padding: 12px 14px; max-height: 26em; overflow: auto; }
+.demo-details { margin: 8px 0; }
+.demo-details summary { cursor: pointer; color: var(--gold); }
+.prose figure.demo img { width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Pingala-8 home">
+      <span class="brand-mark">Pingala-8</span>
+      <span class="brand-sub">by Genrius AI</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="./#results" class="hide-sm">Results</a>
+      <a href="./#try">Try it</a>
+      <a href="article.html">Article</a>
+      <a href="./#guides">Guides</a>
+      <a href="https://github.com/Genrius-AI/pingala8-llm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="article">
+<article class="wrap">
+<div class="prose">
+  <a class="back" href="./">Pingala-8 overview</a>
+  <h1>Pingala-8 demo videos: real runs at real speed</h1>
+  <p class="byline">Genrius AI. <time datetime="2026-11-01">November 1, 2026</time>. Four clips, about 50 seconds in all.</p>
+
+  <div class="summary measured" id="measured">
+    <h2>What you are watching</h2>
+    <p class="measured-lede"><b>Every clip replays a real run on one NVIDIA RTX 5070 Ti Laptop GPU (12 GB) at the speed it was written. Nothing is sped up.</b></p>
+    <ul>
+      <li>The text and a timestamp for every piece of output were captured from the run. Only the terminal or chat window is drawn again, so it reads well in a video.</li>
+      <li>One second of video is one second of the run. The short still intro and the hold at the end are the only added time. Model loading is not shown.</li>
+      <li>Speeds marked "runtime eval" are the runtime's own timing line for that run. The live counter is computed from the captured timestamps.</li>
+      <li>Model text is shown exactly as written, wrong answers and odd formatting included.</li>
+    </ul>
+  </div>
+
+  <h2 id="compare-2b">Qwen3.5-2B: Pingala-8 vs llama.cpp IQ2_XXS at the same size</h2>
+    <figure class="demo" id="video-demo2b_compare" style="margin:16px 0">
+      <a href="media/demo2b_compare.mp4"><picture><source media="(max-width: 600px)" srcset="media/demo2b_compare-phone.gif" width="540" height="960"><img src="media/demo2b_compare.gif" width="1280" height="720" loading="lazy" decoding="async" alt="Side-by-side terminal replay on one RTX 5070 Ti Laptop GPU. Left, Pingala-8 Qwen3.5-2B v2 (0.78 GB) works out Sam's change in 4 steps and answers 5 dollars, which is right. Right, llama.cpp IQ2_XXS of the same model (0.79 GB) answers 8.00 dollars and then repeats Step 8."></picture></a>
+      <figcaption>Real runs, real speed, same prompt and seed. WikiText-2 perplexity 14.06 vs 29.08. <a href="media/demo2b_compare.mp4">Watch the 1080p MP4</a>.</figcaption>
+    </figure>
+  <p>Both files are Qwen3.5-2B at about the same size: our Pingala-8 version 2 file (778,189,408 bytes) and llama.cpp IQ2_XXS (790,275,264 bytes, stock llama.cpp types). Both ran on the same GPU with the same runtime binary and the same settings: all layers on the GPU, flash attention on, up to 200 tokens, seed 42, default sampling, thinking off (the chat template's empty think block). The IQ2_XXS file ran with none of the Pingala-8 settings switched on.</p>
+  <ul>
+    <li><b>We ran 3 prompts on both files and show prompt 2</b>, where the difference is plainest. On the other 2 both files made factual errors, and IQ2_XXS also fell into repetition. All 6 answers are below, unedited.</li>
+    <li><b>Speed is not a win here.</b> These runs are short (under 1 second each) and noisy. IQ2_XXS was faster on 2 of the 3 prompts.</li>
+    <li><b>DASH-Q is better than our 2B file.</b> DASH-Q IQ2_XS scores WikiText-2 perplexity 13.90 at 0.76 GB, and DASH-Q IQ2_M 13.33 at 0.79 GB, against our 14.06. DASH-Q was not part of this demo. See the <a href="qwen3-5-2b-under-1gb-2bit.html">Qwen3.5-2B measurements</a> and the <a href="https://huggingface.co/spaces/Genrius-AI/2bit-gguf-leaderboard">2-bit GGUF leaderboard</a>.</li>
+    <li>The Pingala-8 file needs our patched CUDA runtime; stock llama.cpp, Ollama and LM Studio cannot load it.</li>
+  </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Prompt</th><th>Pingala-8 v2 (0.78 GB)</th><th>llama.cpp IQ2_XXS (0.79 GB)</th></tr></thead>
+        <tbody>
+          <tr><td>1. "List the 8 planets of the Solar System in order from the Sun, with one short fact about each."</td><td>Wrong. Lists the Sun as a planet, Earth twice and Jupiter third. 256.00 tok/s, 200 tokens, cut at the limit.</td><td>Wrong. Names no planet; repeats one sentence as items 2 to 6. 280.20 tok/s, 200 tokens, cut at the limit.</td></tr>
+          <tr><td>2. "Sam buys 3 notebooks at &#36;4 each and 2 pens at &#36;1.50 each. He pays with a &#36;20 bill. How much change does he get? Show the steps briefly." (in the video)</td><td>Right: 5 dollars, with correct steps. 266.54 tok/s, 170 tokens, stopped on its own.</td><td>Wrong: 8.00 dollars, then repeats "Step 8". 256.11 tok/s, 200 tokens, cut at the limit.</td></tr>
+          <tr><td>3. "Name the first 6 elements of the periodic table, in order, with their symbols."</td><td>Wrong. Hydrogen twice, then carbon, oxygen, nitrogen, oxygen (1 of 6 right). 216.53 tok/s, 200 tokens, cut at the limit.</td><td>Wrong. Letters A to F, then hydrogen and helium, then helium repeated (2 of 6 right). 245.27 tok/s, 200 tokens, cut at the limit.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Speeds are each run's runtime eval line (tokens/s). Tokens counted from the captured output; 200 is the limit we set.</p>
+    <details class="demo-details">
+      <summary>Prompt 1, Pingala-8 v2: full answer</summary>
+      <p class="table-note">Prompt: "List the 8 planets of the Solar System in order from the Sun, with one short fact about each.". 256.00 tokens/s (runtime eval), 200 tokens, cut at the limit.</p>
+      <pre class="demo-out">Here is a list of the 8 planets of the Solar System in order from the Sun, with one short fact about each:
+
+### 1. **Sun (Sun)**
+*   **Fact:** The Sun is the star at the center of our Solar System and the hottest and most luminous object in the universe.
+
+### 2. **Earth (Earth)**
+*   **Fact:** Earth is the only planet in our Solar System that has a natural satellite, a moon, called the Moon.
+
+### 3. **Jupiter (Jupiter)**
+*   **Fact:** Jupiter is the largest planet in our Solar System and the third-largest planet in the Solar System.
+
+### 4. **Venus (Venus)**
+*   **Fact:** Venus has a thick, dense, sulfuric acid atmosphere that prevents water from escaping into space.
+
+### 5. **Earth (Earth)**
+*   **Fact:** Earth is the only planet</pre>
+    </details>
+    <details class="demo-details">
+      <summary>Prompt 1, llama.cpp IQ2_XXS: full answer</summary>
+      <p class="table-note">Prompt: "List the 8 planets of the Solar System in order from the Sun, with one short fact about each.". 280.20 tokens/s (runtime eval), 200 tokens, cut at the limit.</p>
+      <pre class="demo-out">Based on the scientific classification of planetary bodies, there is no actual list that can be created. However, the classification of planets of the Sun is an ancient method of astronomy which divides the planets into categories such as the planets of the Sun, the planets of the Moon and the planets of the Earth. The Solar System's Solar System is a collection of planets that orbit the Sun, and this is a collection of planets that orbit the Sun.
+
+Here are some facts about the planets:
+
+1. The Sun is the Sun, and the Solar System is the collection of planets that orbit the Sun.
+
+2. The Solar System is the collection of planets that orbit the Sun.
+
+3. The Solar System is the collection of planets that orbit the Sun.
+
+4. The Solar System is the collection of planets that orbit the Sun.
+
+5. The Solar System is the collection of planets that orbit the Sun.
+
+6. The Solar System is the collection of planets that orbit the Sun.</pre>
+    </details>
+    <details class="demo-details">
+      <summary>Prompt 2, Pingala-8 v2: full answer (in the video)</summary>
+      <p class="table-note">Prompt: "Sam buys 3 notebooks at $4 each and 2 pens at $1.50 each. He pays with a $20 bill. How much change does he get? Show the steps briefly.". 266.54 tokens/s (runtime eval), 170 tokens, stopped on its own.</p>
+      <pre class="demo-out">To find the amount Sam gets back, we calculate the total price of items and subtract the amount paid.
+
+Step 1: Calculate the cost of the notebooks.
+Sam buys 3 notebooks at $4 each.
+Cost = $3 \times \$4 = \$12$
+
+Step 2: Calculate the cost of the pens.
+Sam buys 2 pens at $1.50 each.
+Cost = $2 \times \$1.50 = \$3$
+
+Step 3: Calculate the total price of the items.
+Total Cost = $12 + $3 = $15$
+
+Step 4: Calculate the change Sam receives.
+Sam pays a $20 bill.
+Change = $20 - $15 = $5
+
+Sam receives $5 in change.</pre>
+    </details>
+    <details class="demo-details">
+      <summary>Prompt 2, llama.cpp IQ2_XXS: full answer (in the video)</summary>
+      <p class="table-note">Prompt: "Sam buys 3 notebooks at $4 each and 2 pens at $1.50 each. He pays with a $20 bill. How much change does he get? Show the steps briefly.". 256.11 tokens/s (runtime eval), 200 tokens, cut at the limit.</p>
+      <pre class="demo-out">**$8.00**
+
+**Step 1:**
+$$
+2 + 2 = 8
+**Step 1:** $8.00
+**Step 2:** $2.00
+
+**Step 3:** $8.00
+
+**Step 4:** $2.00
+
+**Step 5:** $8.00
+
+**Step 6:** $2.00
+
+Step 6: $8.00
+
+Step 7: $2.00
+
+Step 8: $8.00
+
+Step 8: $8.00
+
+Step 8: $8.00
+
+Step 8: $8.00
+
+Step 8: $8.00
+
+Step 8: $8.00
+
+Step 8: $8.00
+
+Step 8: $8.00
+
+**Step 8:** $8.00</pre>
+    </details>
+    <details class="demo-details">
+      <summary>Prompt 3, Pingala-8 v2: full answer</summary>
+      <p class="table-note">Prompt: "Name the first 6 elements of the periodic table, in order, with their symbols.". 216.53 tokens/s (runtime eval), 200 tokens, cut at the limit.</p>
+      <pre class="demo-out">Here are the first six elements of the periodic table, listed in order (by atomic number), with their symbols:
+
+1.  Hydrogen
+2.  Hydrogen
+3.  Carbon
+4.  Oxygen
+5.  Nitrogen
+6.  Oxygen
+
+**Summary:**
+1. **Hydrogen** (Symbol: H)
+2. **Hydrogen** (Symbol: H)
+3. **Carbon** (Symbol: C)
+4. **Oxygen** (Symbol: O)
+5. **Nitrogen** (Symbol: N)
+6. **Oxygen** (Symbol: O)
+
+*Note: The second element listed above (Hydrogen) is a typo; the correct symbol for Hydrogen is **H** (not H2).*
+
+Here is the correct list in order:
+1. **Hydrogen** (Symbol: **H**)
+2. **Hydrogen** (Symbol:</pre>
+    </details>
+    <details class="demo-details">
+      <summary>Prompt 3, llama.cpp IQ2_XXS: full answer</summary>
+      <p class="table-note">Prompt: "Name the first 6 elements of the periodic table, in order, with their symbols.". 245.27 tokens/s (runtime eval), 200 tokens, cut at the limit.</p>
+      <pre class="demo-out">**First 6 Elements of the Periodic Table**
+
+If you have not yet memorized the order of these elements, then you could have forgotten a few things or you could have forgotten the most recent memory of the periodic table.
+
+**The Order of Elements of the Periodic Table**:
+1. **A**
+2. **B**
+3. **C**
+4. **D**
+5. **E**
+6. **F**
+
+**The Elements of the Periodic Table**:
+1. **A** - Hydrogen
+2. **B** - Helium
+3. **C** - Helium
+4. **D** - Helium
+5. **E** - Helium
+6. **F** - Helium
+
+**A First Order**
+1. **A** - Hydrogen
+2. **B** - Helium
+3. **C** - Helium
+4. **D** - Hel</pre>
+    </details>
+
+  <h2 id="solo-2b">Qwen3.5-2B alone: a 16-second clip</h2>
+    <figure class="demo" id="video-demo2b_solo" style="margin:16px 0">
+      <a href="media/demo2b_solo.mp4"><img src="media/demo2b_solo.gif" width="1280" height="720" loading="lazy" decoding="async" alt="Terminal replay: Pingala-8 Qwen3.5-2B (0.78 GB) answers how much change Sam gets from a 20 dollar bill in 4 steps, 170 tokens at 266.54 tokens per second, with the numbers shown beside it."></a>
+      <figcaption>Real run, real speed. Text and timing captured from the run; terminal view re-rendered. Runtime eval 266.54 tokens/s, 170 tokens. <a href="media/demo2b_solo.mp4">Watch the 1080p MP4</a>.</figcaption>
+    </figure>
+  <p>This is the same run as the left side of the comparison above, drawn as one panel with the numbers beside it. For this clip we first tried 2 other practical questions in new runs. Both answers were poor, so we did not use them. Here they are, unedited. A 2-bit 2B model is fast and small, but it makes mistakes; check what it tells you.</p>
+    <details class="demo-details">
+      <summary>Not used: "My laptop feels slow" (weak advice)</summary>
+      <p class="table-note">Prompt: "My laptop feels slow. Give 5 quick things I can check, one line each.". 241.05 tokens/s (runtime eval), 185 tokens, stopped on its own.</p>
+      <pre class="demo-out">You can check the following five things to see if your laptop feels slow.
+
+1. **Restart** the device to clear the system RAM and unplug the charger, then plug it back in.
+2. **Check** the system tray for an error or freeze icon.
+3. **Increase** the clock speed to 100% to see if it runs faster.
+4. **Unplug** the charger and wait 5 minutes before plugging it back in to see if the battery works.
+5. **Plug** in the charger and wait 5 minutes before plugging in the laptop to see if it works.
+
+Note: If you plug in the charger and the system tray becomes blank (no error or freeze icon), the battery works. If you plug in the charger and the system tray remains blank, the battery doesn't work.
+
+I will be here to help.</pre>
+    </details>
+    <details class="demo-details">
+      <summary>Not used: scaling a rice recipe (wrong: 1800 g; the right answer is 450 g)</summary>
+      <p class="table-note">Prompt: "A recipe for 4 people needs 300 g of rice. How much rice do I need for 6 people? Show the steps briefly.". 246.83 tokens/s (runtime eval), 256 tokens, cut at the limit.</p>
+      <pre class="demo-out">To determine how much rice you need for 6 people, we first understand that the recipe is designed for 4 people. This means that for every person, 300 grams of rice is required.
+
+To calculate the amount needed for 6 people, multiply the amount per person by 6:
+
+*   **Step 1:** Calculate the amount needed for 1 person:
+    $$300 \text{ grams} $$ \times 1 = 300 grams $$
+*   **Step 2:** Calculate the amount needed for 6 people (6 times the amount for 1 person):
+    $$300 \text{ grams} $$ \times 6 = 1800 grams $$
+*   **Step 3:** Calculate the amount needed for 6 people (6 times the amount for 6 people):
+    $$300 \text{ grams} $$ $\times 6 = 1800 $$ \text{ grams} $$
+*   **Step 4:** Calculate the amount needed for 6 people (6 times the amount for 6 people):
+    $$300 $$ \text{ grams} $$ $\times 6 = 1800</pre>
+    </details>
+
+  <h2 id="demo-27b">Qwen3.8-27B on one 12 GB laptop GPU</h2>
+    <figure class="demo" id="video-demo27b" style="margin:16px 0">
+      <a href="media/demo27b.mp4"><picture><source media="(max-width: 600px)" srcset="media/demo27b-phone.gif" width="640" height="1340"><img src="media/demo27b.gif" width="800" height="470" loading="lazy" decoding="async" alt="Terminal replay: Qwen3.8-27B Pingala-8 2-bit on one 12 GB RTX 5070 Ti Laptop GPU answers in 5 bullet points (feasibility, privacy, speed, cost, capability), 125 tokens, runtime eval 31.63 tokens per second."></picture></a>
+      <figcaption>Real run, real speed. Text and timing captured from the run; terminal view re-rendered. Chat speed in this run: 31.63 tokens/s (runtime eval, 124 tokens, thinking off). Our separate llama-bench measurement (tg64) is 37.7 tokens/s. <a href="media/demo27b.mp4">Watch the 1080p MP4</a>.</figcaption>
+    </figure>
+  <p>The file is 8.31 GB and runs with all layers on the GPU. Its WikiText-2 perplexity is 6.89, against 7.88 for llama.cpp IQ2_XXS at 8.43 GB. DASH-Q IQ2_XS (8.55 GB) is better than ours at 6.54. Details: <a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements</a>.</p>
+
+  <h2 id="demo-4b">Qwen3-4B writing an email</h2>
+    <figure class="demo" id="video-pingala8-demo-1080p" style="margin:16px 0">
+      <div class="video-frame">
+        <video controls muted playsinline preload="none" width="1920" height="1080" poster="media/pingala8-demo-poster.jpg"
+               aria-label="Demo: Pingala-8 Qwen3-4B writes a short email in a local chat page, 105 tokens in 0.55 seconds">
+          <source src="media/pingala8-demo-1080p.mp4" type="video/mp4">
+          <a href="media/pingala8-demo-1080p.mp4">Watch the 31-second demo (MP4, 4.3 MB)</a>
+        </video>
+      </div>
+      <figcaption>Real time, not sped up. Text and timing come from a real run of Pingala-8 Qwen3-4B (1.24 GB) on an RTX 5070 Ti Laptop GPU; the chat window is recreated. <a href="media/pingala8-demo-1080p.mp4">Watch the MP4</a>.</figcaption>
+    </figure>
+
+  <h2 id="method">How these clips are made</h2>
+  <p>A small wrapper starts the runtime's completion tool with the prompt already in the model's chat template, and stamps every read of its output with a clock time. A renderer then draws each frame from those timestamps: the text on screen at video time t is exactly the text the run had written by that time. The 2B runs used the tool's own timing lines for the runtime eval speed. Capture and render scripts, commands and raw logs are kept with the release files.</p>
+
+  <div class="summary next">
+    <h2>Try Pingala-8</h2>
+    <ul>
+      <li><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B Pingala-8 2-bit on Hugging Face</a> (0.78 GB, version 2 file <code>Qwen3.5-2B-Pingala8-2bit-v2.gguf</code>, patched CUDA runtime)</li>
+      <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B Pingala-8 2-bit on Hugging Face</a> (8.31 GB, one 12 GB GPU)</li>
+      <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click build for Windows and Linux</a> (NVIDIA RTX 30, 40 or 50 series)</li>
+      <li><a href="./">Pingala-8 overview: results, comparisons and limits</a></li>
+    </ul>
+  </div>
+
+  <h2>More guides</h2>
+  <ul class="guide-list">
+      <li><a href="qwen3-5-2b-under-1gb-2bit.html">Qwen3.5-2B under 1 GB: 2-bit GGUFs measured</a></li>
+      <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
+      <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
+      <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
+      <li><a href="what-is-perplexity-llm.html">What is perplexity? LLM perplexity in plain English</a></li>
+      <li><a href="run-qwen3-4b-on-4gb-6gb-gpu.html">How to run Qwen3-4B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="run-llama-3-1-8b-on-4gb-6gb-gpu.html">How to run Llama 3.1 8B on a 4 GB or 6 GB GPU</a></li>
+      <li><a href="what-is-trellis-coded-quantization.html">What is trellis-coded quantization? TCQ, QTIP and IQ2_KT</a></li>
+      <li><a href="what-is-hadamard-rotation-quantization.html">What is Hadamard rotation in LLM quantization?</a></li>
+      <li><a href="qwen3-8-27b-vram-requirements.html">Qwen3.8 27B VRAM requirements: which GPU do you need?</a></li>
+      <li><a href="gemma-4-vram-requirements.html">Gemma 4 VRAM requirements: 26B-A4B and 31B</a></li>
+      <li><a href="run-gpt-oss-20b-on-12gb-16gb-gpu.html">Can you run gpt-oss-20b on a 12 GB or 16 GB GPU?</a></li>
+      <li><a href="qwen3-6-35b-a3b-on-consumer-gpu.html">Qwen3.6 35B-A3B on a consumer GPU: VRAM and MoE offload</a></li>
+      <li><a href="2bit-gguf-nan-perplexity-rtx-50.html">NaN perplexity with IQ1_S, IQ2_S or IQ3_S GGUFs on an RTX 50 laptop GPU</a></li>
+  </ul>
+</div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-mark">Genrius AI</div>
+        <p class="tagline">Generating Real Intelligence</p>
+        <p>Founded by Harshit Goyal, former Google software engineer and IIIT Delhi alumnus.</p>
+        <p>Pingala-8 is open source under the Apache License 2.0. Questions and requests: <a href="https://github.com/Genrius-AI/pingala8-llm/issues">GitHub issues</a>.</p>
+      </div>
+      <div>
+        <h3>Get it</h3>
+        <ul>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/releases/latest">One-click release</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm">Code, patches and logs</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3.5-2B-Pingala8-2bit">Qwen3.5-2B model</a></li>
+          <li><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Read</h3>
+        <ul>
+          <li><a href="./">Pingala-8 overview</a></li>
+          <li><a href="article.html">Article: how we fit Qwen3-4B into 1.24 GB</a></li>
+          <li><a href="./#guides">Guides for small GPUs</a></li>
+          <li><a href="paper.html">Paper: abstract, PDF and BibTeX</a></li>
+          <li><a href="https://doi.org/10.5281/zenodo.23481757">Paper (DOI 10.5281/zenodo.23481757)</a></li>
+          <li><a href="https://github.com/Genrius-AI/pingala8-llm/blob/main/REPRODUCE.md">How to reproduce</a></li>
+          <li><a href="llms.txt">llms.txt</a> and <a href="llms-full.txt">llms-full.txt</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="star-line"><a href="https://github.com/Genrius-AI/pingala8-llm">Star on GitHub</a> <a href="https://github.com/Genrius-AI/pingala8-llm"><img src="https://img.shields.io/github/stars/Genrius-AI/pingala8-llm?style=social" alt="GitHub stars for Genrius-AI/pingala8-llm" height="20" style="height:20px;width:auto;vertical-align:middle"></a></p>
+    <p class="legal">"Pingala-8" and "Genrius AI" are names of Genrius AI. llama.cpp, Qwen, DASH-Q, unsloth, NVIDIA, GeForce and other names belong to their owners and are used only to identify their work.</p>
+  </div>
+</footer>
+</body>
+</html>

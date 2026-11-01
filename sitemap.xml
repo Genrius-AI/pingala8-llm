@@ -180,4 +180,28 @@
       <image:loc>https://genrius-ai.github.io/pingala8-llm/media/og-benchmarking-2-bit-ggufs-paired-windows.png</image:loc>
     </image:image>
   </url>
+  <url>
+    <loc>https://genrius-ai.github.io/pingala8-llm/demos.html</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare-poster.jpg</video:thumbnail_loc>
+      <video:title>Qwen3.5-2B 2-bit: Pingala-8 vs llama.cpp IQ2_XXS at the same size</video:title>
+      <video:description>Same prompt and seed on one RTX 5070 Ti Laptop GPU, replayed at real speed. Pingala-8 (0.78 GB) gets the change right, IQ2_XXS (0.79 GB) does not. 1 of 3 prompts run; on the other 2 both files made errors.</video:description>
+      <video:content_loc>https://genrius-ai.github.io/pingala8-llm/media/demo2b_compare.mp4</video:content_loc>
+      <video:duration>10</video:duration>
+      <video:publication_date>2026-11-01T08:30:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://genrius-ai.github.io/pingala8-llm/media/demo2b_solo-poster.jpg</video:thumbnail_loc>
+      <video:title>Qwen3.5-2B in 0.78 GB answering on a laptop GPU</video:title>
+      <video:description>Pingala-8 Qwen3.5-2B works out a shopping-change question on one RTX 5070 Ti Laptop GPU, 266.54 tokens per second in this run, replayed at real speed.</video:description>
+      <video:content_loc>https://genrius-ai.github.io/pingala8-llm/media/demo2b_solo.mp4</video:content_loc>
+      <video:duration>16</video:duration>
+      <video:publication_date>2026-11-01T08:30:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
 </urlset>
