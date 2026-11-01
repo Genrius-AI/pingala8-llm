@@ -232,6 +232,7 @@
     </div>
     <p class="table-note">WikiText-2 test at context 4096, the first 20 of 72 windows (a time cap on one laptop GPU), every file on the same windows; lower is better. "Better on N/20 windows" counts the windows where that file has the lower loss. DASH-Q and unsloth files run in stock llama.cpp; ours does not. We ran their IQ1_S, IQ2_S and IQ3_S tensors on the CPU, because those CUDA kernels gave NaN on our GPU (<a href="2bit-gguf-nan-perplexity-rtx-50.html">details</a>).</p>
     <p><b>Runtime:</b> the file needs the patched Pingala-8 llama.cpp runtime (CUDA). Stock llama.cpp, Ollama and LM Studio cannot load it. Build steps are on the <a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit#how-to-run">model card (How to run)</a>; the patches and the one-click builds for our smaller models are in the <a href="https://github.com/Genrius-AI/pingala8-llm#run-it">GitHub repo (Run it)</a>. This 27B file has not been tested with the one-click build.</p>
+    <p><b>On a 12 GB card:</b> which 2-bit files fit, at which context, and when to pick DASH-Q or unsloth instead: <a href="run-qwen3-8-27b-on-12gb-gpu.html">Can you run Qwen3.8-27B on a 12 GB GPU?</a></p>
   </div>
   <p><b><a href="https://huggingface.co/spaces/Genrius-AI/llm-vram-calculator" target="_blank" rel="noopener noreferrer">Will it fit your GPU? Normal vs Pingala-8 calculator</a></b></p>
 
@@ -317,6 +318,7 @@
   </div>
   <h2>More guides</h2>
   <ul class="guide-list">
+      <li><a href="run-qwen3-8-27b-on-12gb-gpu.html">Can you run Qwen3.8-27B on a 12 GB GPU?</a></li>
       <li><a href="how-much-vram-for-local-llm.html">How much VRAM do you need to run an LLM locally?</a></li>
       <li><a href="is-2-bit-quantization-usable.html">What is a 2-bit LLM, and is 2-bit quantization usable?</a></li>
       <li><a href="iq2-xxs-vs-iq2-kt-vs-q2-k-vs-q4-k-m.html">IQ2_XXS vs IQ2_KT vs Q2_K vs Q4_K_M: which GGUF quant?</a></li>
