@@ -219,7 +219,8 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Seven models</span>
-      <h2 id="results5-h">Results across 7 models</h2>
+      <h2 id="results5-h">Results across 8 models</h2>
+      <p><strong>77-85% smaller than the 16-bit weights, with 13-70% lower perplexity than llama.cpp IQ2_XXS at the same size.</strong> Token generation matches or beats IQ2_XXS on 5 of the 6 models we measured (Qwen3-0.6B is 30% slower); Qwen3-4B generates 39% faster than 4-bit Q4_K_M at half its size; Qwen3.8-27B runs on one 12 GB GPU. Prompt processing is slower (0.74-0.89x IQ2_XXS).</p>
       <p>At the same file size, Pingala-8 stays much closer to the 8-bit model than llama.cpp's IQ2_XXS on every model we released. It is not always the best 2-bit file: on Qwen3-1.7B, ik_llama.cpp's IQ2_KT (3.3% larger) is better. Downloads so far: about 3,650 downloads on Hugging Face across the seven models (all-time, as of 29 Oct 2026).</p>
     </div>
     <figure>
@@ -240,6 +241,7 @@
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-1.7B-Pingala8-2bit">Qwen3-1.7B</a></td><td class="num">0.69 GB</td><td class="num"><strong>28.23</strong> vs 47.96</td><td class="num"><span class="gain">1.70x lower</span><br><span class="muted small" style="white-space:normal">loses to IQ2_KT (20.89, 3.3% larger file)</span></td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3-4B-Pingala8-2bit">Qwen3-4B</a></td><td class="num">1.24 GB</td><td class="num"><strong>16.64</strong> vs 28.61</td><td class="num gain">1.72x lower</td></tr>
           <tr><td><a href="https://huggingface.co/Genrius-AI/Llama-3.1-8B-Pingala8-2bit">Llama-3.1-8B</a></td><td class="num">2.39 GB</td><td class="num"><strong>9.14</strong> vs 12.35</td><td class="num gain">1.35x lower</td></tr>
+          <tr><td><a href="https://huggingface.co/Genrius-AI/Qwen3.8-27B-Pingala8-2bit">Qwen3.8-27B</a> v2</td><td class="num">8.31 GB</td><td class="num"><strong>6.89</strong> vs 7.88</td><td class="num"><span class="gain">1.14x lower</span><br><span class="muted small">DASH-Q IQ2_XS (8.55 GB) is better: 6.54</span></td></tr>
         </tbody>
       </table>
     </div>
